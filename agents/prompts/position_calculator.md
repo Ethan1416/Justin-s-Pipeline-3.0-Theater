@@ -425,7 +425,7 @@ def clamp_to_safe_zone(position, width, height, safe_zone):
         'top': top
     }
 
-# Default safe zones for NCLEX slides
+# Default safe zones for theater slides
 SAFE_ZONES = {
     'standard': {
         'left': 0.5,
@@ -621,7 +621,7 @@ VISUAL_AREA = {
 }
 ```
 
-### NCLEX Tip Position
+### Performance Tip Position
 ```python
 TIP_POSITION = {
     'left': 0.07,
@@ -662,5 +662,9 @@ TIP_POSITION = {
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX slides/tips -> Theater/Performance
+- **v1.0** (2026-01-04): Initial position calculator agent

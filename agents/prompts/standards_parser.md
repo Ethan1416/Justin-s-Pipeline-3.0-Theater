@@ -130,7 +130,7 @@ This is a **deterministic parsing** sub-agent that:
       },
       "required_markers": ["[PAUSE]", "[EMPHASIS]"],
       "include_requirements": [
-        "NCLEX pattern callouts",
+        "Performance pattern callouts",
         "Transitions between concepts",
         "Rhetorical questions"
       ]
@@ -284,7 +284,7 @@ FIXED_SLIDES = {
     "answer": {
         "position": "after_vignette",
         "content_spec": {"header": "Answer: [Letter]", "body": "Correct answer + rationale + distractor analysis"},
-        "presenter_notes_spec": "Reveal, explain reasoning, connect to anchors, NCLEX pattern insight"
+        "presenter_notes_spec": "Reveal, explain reasoning, connect to anchors, Performance pattern insight"
     }
 }
 ```
@@ -415,6 +415,10 @@ class ParsedStandards:
 
 ---
 
-**Sub-Agent Version:** 1.0
-**Last Updated:** 2026-01-05
+**Sub-Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 **Parent Agent:** standards_loader (Step 5)
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX pattern callouts -> Performance pattern callouts
+- **v1.0** (2026-01-05): Initial standards parser agent

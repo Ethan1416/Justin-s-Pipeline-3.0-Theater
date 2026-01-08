@@ -1,6 +1,65 @@
 """
-Utility skills for the NCLEX pipeline.
+Utility Skills Package
+Skills for utility functions in the theater education pipeline.
+
+Theater Pipeline - Timing, objectives, text processing utilities.
 """
+
+# =============================================================================
+# THEATER-SPECIFIC UTILITY SKILLS
+# =============================================================================
+
+# Timing Pacer (pace content to duration)
+from .timing_pacer import (
+    pace_content,
+    pace_presentation,
+    calculate_target_words,
+    suggest_content_adjustments,
+    validate_pacing,
+    distribute_words,
+    estimate_duration as pacer_estimate_duration,
+    count_words as pacer_count_words,
+    SPEAKING_RATE_WPM,
+    TOTAL_WORDS_MIN,
+    TOTAL_WORDS_MAX,
+    TOTAL_WORDS_TARGET,
+    SLIDE_WORD_TARGETS
+)
+
+# Bloom's Verb Selector (learning objectives)
+from .blooms_verb_selector import (
+    select_verb,
+    get_verbs_for_level,
+    classify_verb,
+    validate_objective,
+    generate_objective,
+    suggest_objectives_for_lesson,
+    get_level_info,
+    BLOOMS_LEVELS,
+    BLOOMS_VERBS,
+    THEATER_VERBS,
+    LEVEL_DESCRIPTIONS
+)
+
+# Timing Allocator (56-minute structure)
+from .timing_allocator import (
+    allocate_lesson_time,
+    allocate_activity_time,
+    allocate_reflection_time,
+    validate_timing,
+    suggest_adjustments,
+    generate_timing_script,
+    format_time_marker,
+    get_time_markers,
+    LESSON_STRUCTURE,
+    ACTIVITY_STRUCTURE,
+    REFLECTION_STRUCTURE,
+    ACTIVITY_TYPE_TIMING
+)
+
+# =============================================================================
+# LEGACY UTILITY SKILLS (from NCLEX pipeline)
+# =============================================================================
 
 from .text_splitter import (
     split_at_word_boundary, split_slide_content,
@@ -36,6 +95,56 @@ from .smart_retry_controller import (
 )
 
 __all__ = [
+    # ==========================================================================
+    # THEATER-SPECIFIC UTILITY SKILLS
+    # ==========================================================================
+
+    # Timing Pacer (pace content to duration targets)
+    'pace_content',
+    'pace_presentation',
+    'calculate_target_words',
+    'suggest_content_adjustments',
+    'validate_pacing',
+    'distribute_words',
+    'pacer_estimate_duration',
+    'pacer_count_words',
+    'SPEAKING_RATE_WPM',
+    'TOTAL_WORDS_MIN',
+    'TOTAL_WORDS_MAX',
+    'TOTAL_WORDS_TARGET',
+    'SLIDE_WORD_TARGETS',
+
+    # Bloom's Verb Selector (learning objectives)
+    'select_verb',
+    'get_verbs_for_level',
+    'classify_verb',
+    'validate_objective',
+    'generate_objective',
+    'suggest_objectives_for_lesson',
+    'get_level_info',
+    'BLOOMS_LEVELS',
+    'BLOOMS_VERBS',
+    'THEATER_VERBS',
+    'LEVEL_DESCRIPTIONS',
+
+    # Timing Allocator (56-minute structure)
+    'allocate_lesson_time',
+    'allocate_activity_time',
+    'allocate_reflection_time',
+    'validate_timing',
+    'suggest_adjustments',
+    'generate_timing_script',
+    'format_time_marker',
+    'get_time_markers',
+    'LESSON_STRUCTURE',
+    'ACTIVITY_STRUCTURE',
+    'REFLECTION_STRUCTURE',
+    'ACTIVITY_TYPE_TIMING',
+
+    # ==========================================================================
+    # LEGACY UTILITY SKILLS
+    # ==========================================================================
+
     # Text splitting
     'split_at_word_boundary', 'split_slide_content',
     'smart_split', 'split_for_continuation_slide',

@@ -28,10 +28,10 @@ notes = generate_presenter_notes(
     topic=slide['header'],
     anchors=slide['anchors_covered'],
     section_name=section_context['section_name'],
-    nclex_tip=slide.get('nclex_tip', ''),
+    performance_tip=slide.get('performance_tip', ''),
     slide_num=slide['slide_number'],
     total_slides=section_context['total_slides'],
-    domain=section_context.get('domain', 'NCLEX')
+    domain=section_context.get('domain', 'theater')
 )
 
 # Validate notes
@@ -80,7 +80,7 @@ marker_validation = validate_markers(notes, 'content')
 |-------------|-------------------|--------|
 | [PAUSE] | 2 | `[PAUSE]` or `[PAUSE - X seconds]` |
 | [EMPHASIS] | 1 (content/answer slides) | `[EMPHASIS: term]` |
-| NCLEX Callout | Recommended | "On the NCLEX..." |
+| Performance Callout | Recommended | "In performance..." |
 
 ---
 
@@ -95,7 +95,7 @@ marker_validation = validate_markers(notes, 'content')
       "body": "string",
       "presenter_notes": "string (existing notes to validate)",
       "anchors_covered": "array (optional)",
-      "nclex_tip": "string (optional)"
+      "performance_tip": "string (optional)"
     }
   ],
   "section_context": {
@@ -167,7 +167,7 @@ for slide in slides:
             topic=slide['header'],
             anchors=slide.get('anchors_covered', []),
             section_name=section_context['section_name'],
-            nclex_tip=slide.get('nclex_tip', ''),
+            performance_tip=slide.get('performance_tip', ''),
             slide_num=slide['slide_number'],
             total_slides=section_context['total_slides']
         )
@@ -249,5 +249,9 @@ Before returning output, verify:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-06
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-06): Initial presenter notes enforcer agent

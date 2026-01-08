@@ -11,7 +11,7 @@
 ```json
 {
   "blueprint": "string (Step 7 revised blueprint content)",
-  "domain_config": "reference to config/nclex.yaml",
+  "domain_config": "reference to config/theater.yaml",
   "section_name": "string (current section)",
   "validation_mode": "string (strict/lenient)"
 }
@@ -39,7 +39,7 @@
 
 1. **Character Limit Checking** - Validate text against per-element limits
 2. **Format Compliance** - Verify blueprint structure matches spec
-3. **Content Rules** - Check NCLEX-specific content requirements
+3. **Content Rules** - Check theater-specific content requirements
 4. **Constraint Configuration** - Load and apply domain-specific constraints
 5. **Violation Reporting** - Generate actionable violation reports
 
@@ -66,19 +66,20 @@ character_limits:
     max_lines: 8            # From config/constraints.yaml
     severity: ERROR
 
-  # R4: NCLEX tip constraints
-  nclex_tip:
+  # R4: Performance tip constraints
+  performance_tip:
     chars_per_line: 66      # From config/constraints.yaml
     max_lines: 2
-    total_max_chars: 132    # CANONICAL VALUE - not 120
+    total_max_chars: 132    # CANONICAL VALUE
     severity: WARN
 
-  # Presenter notes constraints
+  # Presenter notes constraints (15-minute verbatim scripts)
   presenter_notes:
-    min_words: 130          # ~1 minute at 130 WPM
-    max_words: 450          # CANONICAL VALUE - not 300
-    max_duration_seconds: 180
-    severity: WARN
+    min_words: 1950         # ~14 minutes at 140 WPM
+    max_words: 2250         # ~16 minutes at 140 WPM
+    target_words: 2100      # ~15 minutes at 140 WPM
+    max_duration_seconds: 960  # 16 minutes max
+    severity: ERROR
 
   visual_elements:
     table_cell: 60
@@ -97,7 +98,7 @@ structural_requirements:
   required_sections:
     - HEADER
     - BODY
-    - NCLEX TIP  # Can be "None"
+    - PERFORMANCE TIP  # Can be "None"
     - PRESENTER NOTES
 
   slide_types:
@@ -105,8 +106,8 @@ structural_requirements:
       - Section Intro
       - Content
       - Visual
-      - Vignette
-      - Answer
+      - Activity
+      - Summary
 
   visual_marker:
     required: true
@@ -125,52 +126,57 @@ structural_requirements:
 
 ```yaml
 content_rules:
-  nclex_tip:
-    must_mention_nclex: true
+  performance_tip:
+    must_be_actionable: true
     keywords:
-      - NCLEX
-      - exam
-      - test
-      - question
-      - select all that apply
-      - priority
+      - PERFORMANCE TIP
+      - stage
+      - blocking
+      - character
+      - rehearsal
+      - technique
 
   presenter_notes:
     must_include_monologue: true
+    must_be_verbatim: true    # Full script, not bullet points
     should_expand_bullets: true
-    min_sentences: 5
+    min_sentences: 10         # Complete 15-minute script
+    required_markers:
+      - "[PAUSE]"             # At least 2 per slide
+      - "[EMPHASIS]"          # At least 1 for content slides
 
-  vignette_slides:
-    must_have_question_stem: true
-    must_have_four_options: true
-    options_must_be_labeled: true  # A, B, C, D
-
-  answer_slides:
-    must_identify_correct_answer: true
-    must_provide_rationale: true
+  activity_slides:
+    must_have_instructions: true
+    must_have_duration: true
+    must_have_setup: true
 ```
 
-### Category 4: NCLEX-Specific Requirements
+### Category 4: Theater-Specific Requirements
 
 ```yaml
-nclex_requirements:
-  clinical_accuracy:
-    check_nursing_terminology: true
-    check_drug_names: true
-    check_lab_values: true
+theater_requirements:
+  content_accuracy:
+    check_theater_terminology: true
+    check_historical_accuracy: true
+    check_technique_names: true
 
-  question_format:
-    vignette_style: true
-    no_absolute_terms: true  # "always", "never"
-    positive_stem: true  # Avoid "NOT", "EXCEPT"
+  lesson_format:
+    56_minute_structure: true
+    components:
+      - agenda (5 min)
+      - warmup (5 min)
+      - lecture (15 min)
+      - activity (15 min)
+      - reflection (10 min)
+      - buffer (6 min)
 
   content_coverage:
-    must_tag_category: true
-    valid_categories:
-      - Safe and Effective Care Environment
-      - Health Promotion and Maintenance
-      - Psychosocial Integrity
-      - Physiological Integrity
+    must_tag_unit: true
+    valid_units:
+      - Unit 1: Greek Theater
+      - Unit 2: Commedia dell'Arte
+      - Unit 3: Shakespeare
+      - Unit 4: Student-Directed One Acts
 ```
 
 ---
@@ -189,7 +195,7 @@ def load_constraints(domain_config_path):
         'character_limits': config.get('character_limits', {}),
         'structural_requirements': config.get('structural_requirements', {}),
         'content_rules': config.get('content_rules', {}),
-        'nclex_requirements': config.get('nclex_requirements', {})
+        'theater_requirements': config.get('theater_requirements', {})
     }
 
     return constraints
@@ -215,7 +221,7 @@ def parse_blueprint_for_validation(blueprint_content):
             'title': slide_title,
             'header': extract_section(slide_content, 'HEADER'),
             'body': extract_section(slide_content, 'BODY'),
-            'tip': extract_section(slide_content, 'NCLEX TIP'),
+            'tip': extract_section(slide_content, 'PERFORMANCE TIP'),
             'notes': extract_section(slide_content, 'PRESENTER NOTES'),
             'type': extract_field(slide_content, 'Type'),
             'visual_marker': extract_field(slide_content, 'Visual'),
@@ -236,8 +242,8 @@ def validate_character_limits(slides, limits):
     CANONICAL VALUES from config/constraints.yaml:
     - Header: 32 chars/line, 2 lines max (64 total)
     - Body: 66 chars/line, 8 lines max
-    - NCLEX Tip: 66 chars/line, 2 lines max (132 total)
-    - Presenter Notes: 130-450 words, 180 seconds max
+    - Performance Tip: 66 chars/line, 2 lines max (132 total)
+    - Presenter Notes: 1,950-2,250 words (15-min verbatim script)
     """
 
     violations = []
@@ -302,24 +308,24 @@ def validate_character_limits(slides, limits):
                         'limit': chars_per_line
                     })
 
-        # R4: NCLEX tip limit (132 chars total, not 120)
+        # R4: Performance tip limit (132 chars total)
         if slide['tip'] and slide['tip'].lower() not in ['none', 'n/a']:
             tip_len = len(slide['tip'])
-            tip_limit = limits.get('nclex_tip', {}).get('total_max_chars', 132)  # FIXED: was 120
+            tip_limit = limits.get('performance_tip', {}).get('total_max_chars', 132)
             if tip_len > tip_limit:
                 warnings.append({
                     'slide': slide_num,
-                    'element': 'NCLEX TIP',
+                    'element': 'PERFORMANCE TIP',
                     'type': 'CHARACTER_LIMIT',
                     'severity': 'WARN',
                     'message': f"Tip exceeds {tip_limit} chars ({tip_len} chars)"
                 })
 
-        # Presenter notes limits (450 words max, not 300)
+        # Presenter notes limits (15-minute verbatim script: 1,950-2,250 words)
         if slide['notes']:
             words = len(slide['notes'].split())
-            min_words = limits.get('presenter_notes', {}).get('min_words', 130)  # FIXED: was 100
-            max_words = limits.get('presenter_notes', {}).get('max_words', 450)  # FIXED: was 300
+            min_words = limits.get('presenter_notes', {}).get('min_words', 1950)
+            max_words = limits.get('presenter_notes', {}).get('max_words', 2250)
 
             if words < min_words:
                 warnings.append({
@@ -356,8 +362,8 @@ def validate_structure(slides, requirements):
 
         # Check required sections
         for section in required_sections:
-            section_key = section.lower().replace(' ', '_').replace('nclex_tip', 'tip')
-            if section_key == 'nclex_tip':
+            section_key = section.lower().replace(' ', '_').replace('performance_tip', 'tip')
+            if section_key == 'performance_tip':
                 section_key = 'tip'
 
             if not slide.get(section_key):
@@ -409,29 +415,28 @@ def validate_content_rules(slides, rules):
     violations = []
     warnings = []
 
-    tip_rules = rules.get('nclex_tip', {})
+    tip_rules = rules.get('performance_tip', {})
     notes_rules = rules.get('presenter_notes', {})
-    vignette_rules = rules.get('vignette_slides', {})
-    answer_rules = rules.get('answer_slides', {})
+    activity_rules = rules.get('activity_slides', {})
 
     for slide in slides:
         slide_num = slide['number']
         slide_type = slide.get('type', 'Content')
 
-        # NCLEX tip validation
+        # Performance tip validation
         if slide['tip'] and slide['tip'].lower() not in ['none', 'n/a']:
-            if tip_rules.get('must_mention_nclex'):
-                keywords = tip_rules.get('keywords', ['NCLEX'])
+            if tip_rules.get('must_be_actionable'):
+                keywords = tip_rules.get('keywords', ['PERFORMANCE TIP'])
                 if not any(kw.lower() in slide['tip'].lower() for kw in keywords):
                     warnings.append({
                         'slide': slide_num,
-                        'element': 'NCLEX TIP',
+                        'element': 'PERFORMANCE TIP',
                         'type': 'CONTENT_RULE',
                         'severity': 'WARN',
-                        'message': "Tip should mention NCLEX or exam-related terms"
+                        'message': "Tip should include actionable theater guidance"
                     })
 
-        # Presenter notes validation
+        # Presenter notes validation (15-minute verbatim script)
         if slide['notes']:
             if notes_rules.get('min_sentences'):
                 sentences = len(re.findall(r'[.!?]+', slide['notes']))
@@ -445,53 +450,40 @@ def validate_content_rules(slides, rules):
                         'message': f"Notes have only {sentences} sentences (min {min_sent})"
                     })
 
-        # Vignette slide validation
-        if slide_type == 'Vignette':
+            # Check for required markers
+            required_markers = notes_rules.get('required_markers', ['[PAUSE]', '[EMPHASIS]'])
+            for marker in required_markers:
+                if marker not in slide['notes']:
+                    warnings.append({
+                        'slide': slide_num,
+                        'element': 'PRESENTER NOTES',
+                        'type': 'MISSING_MARKER',
+                        'severity': 'WARN',
+                        'message': f"Notes missing required marker: {marker}"
+                    })
+
+        # Activity slide validation
+        if slide_type == 'Activity':
             body = slide.get('body', '')
 
-            if vignette_rules.get('must_have_question_stem'):
-                if '?' not in body:
+            if activity_rules.get('must_have_instructions'):
+                if 'instruction' not in body.lower() and 'step' not in body.lower():
                     violations.append({
                         'slide': slide_num,
                         'element': 'BODY',
                         'type': 'CONTENT_RULE',
                         'severity': 'ERROR',
-                        'message': "Vignette must contain a question"
+                        'message': "Activity slide must contain instructions"
                     })
 
-            if vignette_rules.get('must_have_four_options'):
-                options = re.findall(r'^[A-D][\.\)]\s', body, re.MULTILINE)
-                if len(options) < 4:
-                    violations.append({
-                        'slide': slide_num,
-                        'element': 'BODY',
-                        'type': 'CONTENT_RULE',
-                        'severity': 'ERROR',
-                        'message': f"Vignette must have 4 options (found {len(options)})"
-                    })
-
-        # Answer slide validation
-        if slide_type == 'Answer':
-            body = slide.get('body', '')
-
-            if answer_rules.get('must_identify_correct_answer'):
-                if not re.search(r'(correct|answer|right)\s*(is|:)', body.lower()):
-                    violations.append({
-                        'slide': slide_num,
-                        'element': 'BODY',
-                        'type': 'CONTENT_RULE',
-                        'severity': 'ERROR',
-                        'message': "Answer slide must identify correct answer"
-                    })
-
-            if answer_rules.get('must_provide_rationale'):
-                if 'rationale' not in body.lower() and 'because' not in body.lower():
+            if activity_rules.get('must_have_duration'):
+                if 'minute' not in body.lower() and 'min' not in body.lower():
                     warnings.append({
                         'slide': slide_num,
                         'element': 'BODY',
                         'type': 'CONTENT_RULE',
                         'severity': 'WARN',
-                        'message': "Answer slide should include rationale"
+                        'message': "Activity slide should specify duration"
                     })
 
     return violations, warnings
@@ -566,7 +558,7 @@ def generate_recommendations(violations, warnings):
             recommendations.append({
                 'type': 'CONTENT_RULE',
                 'count': len(items),
-                'action': 'Review content for NCLEX compliance',
+                'action': 'Review content for theater domain compliance',
                 'affected_slides': list(set(i['slide'] for i in items))
             })
 
@@ -647,17 +639,19 @@ All constraint values MUST align with `config/constraints.yaml`:
 | Header | max_lines | 2 | config/constraints.yaml |
 | Body | chars_per_line | 66 | config/constraints.yaml |
 | Body | max_lines | 8 | config/constraints.yaml |
-| NCLEX Tip | total_max_chars | **132** | config/constraints.yaml |
-| NCLEX Tip | max_lines | 2 | config/constraints.yaml |
-| Presenter Notes | max_words | **450** | config/constraints.yaml |
-| Presenter Notes | max_duration | 180s | config/constraints.yaml |
+| Performance Tip | total_max_chars | **132** | config/constraints.yaml |
+| Performance Tip | max_lines | 2 | config/constraints.yaml |
+| Presenter Notes | min_words | **1,950** | config/constraints.yaml |
+| Presenter Notes | max_words | **2,250** | config/constraints.yaml |
+| Presenter Notes | target_words | **2,100** | config/constraints.yaml |
 | Visual | max_percentage | 40% | config/constraints.yaml |
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-06
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 
 ### Version History
-- **v1.1** (2026-01-06): Fixed constraint conflicts - NCLEX tip limit 120→132, presenter notes 300→450 words
+- **v2.0** (2026-01-08): Adapted for theater pipeline - replaced NCLEX with performance tips, updated presenter notes for 15-min verbatim scripts
+- **v1.1** (2026-01-06): Fixed constraint conflicts - tip limit 120→132, presenter notes 300→450 words
 - **v1.0** (2026-01-04): Initial constraint validator agent

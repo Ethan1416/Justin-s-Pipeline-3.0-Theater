@@ -3,7 +3,7 @@
 ## Agent Identity
 - **Name:** glossary_lookup
 - **Step:** Utility (Cross-Pipeline Support)
-- **Purpose:** Lookup NCLEX terms, nursing abbreviations, and medical terminology for consistent definitions across the pipeline
+- **Purpose:** Lookup theater terms, dramatic terminology, and performance vocabulary for consistent definitions across the pipeline
 
 ---
 
@@ -13,7 +13,7 @@
   "query": {
     "term": "string (the term or abbreviation to look up)",
     "context": "string (optional - surrounding context for disambiguation)",
-    "domain": "string (optional - NCLEX domain to scope the search)"
+    "unit": "string (optional - theater unit to scope the search)"
   },
   "batch_mode": "boolean (optional - true for multiple term lookups)",
   "terms": "array of strings (required if batch_mode is true)"
@@ -34,10 +34,10 @@
     "definition": "string (full definition)",
     "abbreviation": "string (if applicable)",
     "expansion": "string (if abbreviation)",
-    "domain": "string (NCLEX domain where term applies)",
+    "unit": "string (theater unit where term applies)",
     "related_terms": ["array of related terminology"],
-    "nclex_relevance": "string (how term appears on NCLEX)",
-    "usage_notes": "string (clinical context and usage guidance)"
+    "performance_relevance": "string (how term applies to performance)",
+    "usage_notes": "string (theatrical context and usage guidance)"
   },
   "alternatives": [
     {
@@ -66,7 +66,7 @@ Accept the term or abbreviation to look up.
 **Input Validation:**
 - Term must be non-empty string
 - If batch_mode is true, terms array must contain at least one term
-- Domain hint should match one of the 6 NCLEX domains if provided
+- Unit hint should match one of the 4 theater units if provided
 
 ### Step 2: Normalize Search Term
 
@@ -95,25 +95,23 @@ Search the glossary database using `term_search` skill:
 3. Partial match (term contained in glossary entry)
 4. Fuzzy match (for potential misspellings)
 
-**Domain Scoping:**
-If domain is specified, prioritize results from that domain:
-- `fundamentals` - Basic nursing terms
-- `pharmacology` - Drug names, mechanisms, classifications
-- `medical_surgical` - Conditions, procedures, assessments
-- `ob_maternity` - Pregnancy, labor, newborn terms
-- `pediatric` - Growth/development, pediatric conditions
-- `mental_health` - Psychiatric terminology, therapeutic terms
+**Unit Scoping:**
+If unit is specified, prioritize results from that unit:
+- `greek_theater` - Ancient Greek drama terms, conventions, staging
+- `commedia` - Stock characters, lazzi, improvisation terms
+- `shakespeare` - Elizabethan theater, verse terminology, Shakespearean devices
+- `one_acts` - Directing, production, rehearsal terminology
 
 ### Step 4: Retrieve Full Definition
 
 For matched terms, retrieve complete definition using `definition_retrieval` skill:
 
 **Definition Components:**
-- Primary definition (clinical context)
+- Primary definition (theatrical context)
 - Alternative definitions (if multiple meanings)
 - Etymology (if relevant)
 - Common usage examples
-- NCLEX testing context
+- Performance application context
 
 ### Step 5: Identify Related Terms
 
@@ -128,13 +126,13 @@ Related Term Types:
 - Antonyms (opposite concepts)
 ```
 
-### Step 6: Generate NCLEX Relevance
+### Step 6: Generate Performance Relevance
 
-Provide NCLEX-specific guidance:
+Provide performance-specific guidance:
 
-- How the term typically appears in NCLEX questions
-- Common distractors associated with the term
-- Key distinctions tested on NCLEX
+- How the term applies in actual performance
+- Common misconceptions about the term
+- Key distinctions for correct usage
 - Mnemonics or memory aids
 
 ### Step 7: Format Output
@@ -143,26 +141,26 @@ Return structured glossary response.
 
 ---
 
-## Common Nursing Abbreviations Reference
+## Common Theater Terms Reference
 
-| Abbreviation | Expansion | Domain |
-|-------------|-----------|--------|
-| PRN | As needed (pro re nata) | fundamentals |
-| BID | Twice daily (bis in die) | pharmacology |
-| TID | Three times daily (ter in die) | pharmacology |
-| QID | Four times daily (quater in die) | pharmacology |
-| AC | Before meals (ante cibum) | pharmacology |
-| PC | After meals (post cibum) | pharmacology |
-| NPO | Nothing by mouth (nil per os) | fundamentals |
-| BUN | Blood urea nitrogen | medical_surgical |
-| CBC | Complete blood count | medical_surgical |
-| ABG | Arterial blood gas | medical_surgical |
-| EFM | Electronic fetal monitoring | ob_maternity |
-| FHR | Fetal heart rate | ob_maternity |
-| APGAR | Activity, Pulse, Grimace, Appearance, Respiration | ob_maternity |
-| ADHD | Attention deficit hyperactivity disorder | pediatric |
-| GAD | Generalized anxiety disorder | mental_health |
-| SSRIs | Selective serotonin reuptake inhibitors | pharmacology |
+| Term | Definition | Unit |
+|------|-----------|------|
+| Amphitheater | Open-air circular venue with tiered seating | greek_theater |
+| Orchestra | Circular performance space in Greek theater | greek_theater |
+| Skene | Stage building behind the orchestra | greek_theater |
+| Catharsis | Emotional purification through tragedy | greek_theater |
+| Chorus | Group of performers who comment on action | greek_theater |
+| Lazzi | Comic physical routines in Commedia | commedia |
+| Zanni | Servant characters in Commedia | commedia |
+| Canovaccio | Scenario outline for Commedia improvisation | commedia |
+| Stock Character | Archetypal recurring character type | commedia |
+| Iambic Pentameter | Five-beat poetic line rhythm | shakespeare |
+| Soliloquy | Character speaking thoughts aloud alone | shakespeare |
+| Aside | Brief remark to audience, unheard by others | shakespeare |
+| Blocking | Staged movement patterns | one_acts |
+| Beat | Smallest unit of dramatic action | one_acts |
+| Given Circumstances | Character's background and situation | one_acts |
+| Objective | What a character wants in a scene | one_acts |
 
 ---
 
@@ -173,7 +171,7 @@ Return structured glossary response.
 | Empty search term | HALT, request valid term |
 | Term not found | Return alternatives with fuzzy matches |
 | Ambiguous term | Return all possible meanings with context |
-| Invalid domain specified | WARN, search all domains |
+| Invalid unit specified | WARN, search all units |
 | Batch exceeds 50 terms | WARN, process first 50, note truncation |
 
 ---
@@ -183,16 +181,16 @@ Return structured glossary response.
 When a term has multiple meanings:
 
 1. **Use Context:** If context provided, select best match
-2. **Use Domain:** If domain provided, prefer domain-specific meaning
-3. **Return All:** If neither, return all meanings ranked by NCLEX relevance
+2. **Use Unit:** If unit provided, prefer unit-specific meaning
+3. **Return All:** If neither, return all meanings ranked by performance relevance
 
 ```
-Example: "ALS"
-- medical_surgical: Amyotrophic Lateral Sclerosis
-- fundamentals: Advanced Life Support
+Example: "Mask"
+- greek_theater: Full-face theatrical mask for character/acoustic projection
+- commedia: Half-mask worn by stock characters, allows speech
 
-Context "cardiac arrest" -> Advanced Life Support
-Context "neurological" -> Amyotrophic Lateral Sclerosis
+Context "Greek tragedy" -> Greek theater mask
+Context "Pantalone" -> Commedia half-mask
 No context -> Return both with relevance scores
 ```
 
@@ -219,10 +217,10 @@ Expansion: [If abbreviation]
 Definition:
 [Full definition text]
 
-Domain: [NCLEX Domain]
+Unit: [Theater Unit]
 
-NCLEX Relevance:
-[How this term appears on NCLEX exams]
+Performance Relevance:
+[How this term applies in performance]
 
 Related Terms:
 - [Term 1]: [Brief definition]
@@ -230,7 +228,7 @@ Related Terms:
 - [Term 3]: [Brief definition]
 
 Usage Notes:
-[Clinical context and usage guidance]
+[Theatrical context and usage guidance]
 
 ----------------------------------------
 ALTERNATIVE MATCHES
@@ -262,11 +260,15 @@ This agent is called by other agents when:
 Before returning result:
 - [ ] Term search completed
 - [ ] Definition is accurate and current
-- [ ] NCLEX relevance is actionable
+- [ ] Performance relevance is actionable
 - [ ] Related terms enhance understanding
 - [ ] Alternatives provided if no exact match
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX/nursing terms → theater terminology
+- **v1.0** (2026-01-04): Initial glossary lookup agent

@@ -25,7 +25,7 @@
       "transparency": "number (0-100)"
     }
   },
-  "color_scheme": "string (optional, e.g., 'nclex_primary', 'decision_node')"
+  "color_scheme": "string (optional, e.g., 'theater_primary', 'decision_node')"
 }
 ```
 
@@ -97,15 +97,15 @@ def name_to_rgb(color_name):
         'gray': [128, 128, 128],
         'grey': [128, 128, 128],
 
-        # NCLEX brand colors
-        'nclex_dark_blue': [0, 51, 102],
-        'nclex_light_blue': [66, 133, 244],
-        'nclex_red': [220, 53, 69],
-        'nclex_green': [0, 102, 68],
-        'nclex_teal': [23, 162, 184],
-        'nclex_yellow': [255, 193, 7],
-        'nclex_dark_gray': [33, 37, 41],
-        'nclex_light_gray': [108, 117, 125],
+        # Theater brand colors
+        'theater_dark_blue': [0, 51, 102],
+        'theater_light_blue': [66, 133, 244],
+        'theater_red': [220, 53, 69],
+        'theater_green': [0, 102, 68],
+        'theater_teal': [23, 162, 184],
+        'theater_yellow': [255, 193, 7],
+        'theater_dark_gray': [33, 37, 41],
+        'theater_light_gray': [108, 117, 125],
 
         # Visual element colors
         'header_blue': [0, 51, 102],
@@ -280,7 +280,7 @@ def apply_line_transparency(shape, transparency_percent):
 
 ### Step 4: Color Scheme Application
 ```python
-# Predefined color schemes for NCLEX visual elements
+# Predefined color schemes for theater visual elements
 COLOR_SCHEMES = {
     'decision_node_header': {
         'fill': {'type': 'solid', 'color': [0, 51, 102]},
@@ -520,9 +520,9 @@ def get_color_palette(base_color, variations=5):
 
 ## Predefined Color Palettes
 
-### NCLEX Primary Palette
+### Theater Primary Palette
 ```python
-NCLEX_PRIMARY_PALETTE = {
+THEATER_PRIMARY_PALETTE = {
     'primary': [0, 51, 102],       # Dark blue
     'secondary': [66, 133, 244],   # Light blue
     'accent': [220, 53, 69],       # Red
@@ -592,5 +592,9 @@ TABLE_PALETTE = {
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - renamed color schemes from NCLEX to theater
+- **v1.0** (2026-01-04): Initial color applier agent

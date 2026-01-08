@@ -143,7 +143,7 @@ def set_text_frame_font_size(text_frame, size_pt):
 
     return text_frame
 
-# Common size presets for NCLEX slides
+# Common size presets for theater slides
 FONT_SIZE_PRESETS = {
     'title': 36,
     'subtitle': 28,
@@ -207,8 +207,8 @@ def apply_theme_color(run, theme_color_name):
 
     return run
 
-# NCLEX brand color palette
-NCLEX_COLORS = {
+# Theater brand color palette
+THEATER_COLORS = {
     'white': [255, 255, 255],
     'dark_blue': [0, 51, 102],
     'light_blue': [66, 133, 244],
@@ -220,10 +220,10 @@ NCLEX_COLORS = {
     'teal': [23, 162, 184]
 }
 
-def apply_nclex_color(run, color_name):
-    """Apply NCLEX brand color to text."""
+def apply_theater_color(run, color_name):
+    """Apply theater brand color to text."""
 
-    rgb = NCLEX_COLORS.get(color_name, [0, 0, 0])
+    rgb = THEATER_COLORS.get(color_name, [0, 0, 0])
     return apply_rgb_color(run, rgb)
 ```
 
@@ -450,12 +450,12 @@ def format_body_text(text_frame, text):
         {'horizontal': 'LEFT', 'vertical': 'TOP'}
     )
 
-def format_nclex_tip(text_frame, text):
-    """Format text as NCLEX tip."""
+def format_performance_tip(text_frame, text):
+    """Format text as performance tip."""
 
     return format_text(
         text_frame,
-        {'text': f"NCLEX TIP: {text}"},
+        {'text': f"PERFORMANCE TIP: {text}"},
         {'name': 'Aptos', 'size': 18, 'bold': True},
         {'rgb': [255, 255, 255]},
         {'horizontal': 'LEFT', 'vertical': 'MIDDLE'}
@@ -548,5 +548,9 @@ SHAPE_BODY_FORMAT = {
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial text formatter agent

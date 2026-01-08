@@ -1,0 +1,116 @@
+{
+  "unit": {
+    "number": 1,
+    "name": "Greek Theater",
+    "total_days": 20
+  },
+  "day": 1,
+  "topic": "Introduction to Greek Theater: Origins and the Festival of Dionysus",
+  "prior_knowledge": "None assumed - this is the first day of the first unit",
+  "standards": [
+    {
+      "code": "RL.9-10.5",
+      "full_text": "Analyze how an author's choices concerning how to structure a text, order events within it, and manipulate time create such effects as mystery, tension, or surprise."
+    },
+    {
+      "code": "SL.9-10.1",
+      "full_text": "Initiate and participate effectively in a range of collaborative discussions with diverse partners on topics, texts, and issues, building on others' ideas and expressing their own clearly and persuasively."
+    }
+  ],
+  "learning_objectives": [
+    "Explain the religious origins of Greek theater and its connection to the Festival of Dionysus",
+    "Identify the three main parts of a Greek theater (orchestra, theatron, skene)",
+    "Describe the role of the Festival of Dionysus in the development of Western theater"
+  ],
+  "vocabulary": [
+    {
+      "term": "Dionysus",
+      "definition": "Greek god of wine, fertility, and ritual madness; theater festivals were held in his honor",
+      "usage_example": "The entire Festival of Dionysus was a religious celebration honoring Dionysus, the god associated with transformation and ecstasy."
+    },
+    {
+      "term": "dithyramb",
+      "definition": "Choral hymn sung and danced by groups of 50 men, honoring Dionysus; precursor to drama",
+      "usage_example": "Before there were actors, the dithyramb was performed by a chorus that moved and sang together as one unit."
+    },
+    {
+      "term": "Thespis",
+      "definition": "Traditionally credited as the first actor (c. 534 BCE); stepped out of chorus to speak as a character",
+      "usage_example": "When Thespis stepped forward from the chorus to speak as a character, he created the art form we now call acting—which is why actors are sometimes called 'thespians.'"
+    },
+    {
+      "term": "orchestra",
+      "definition": "Circular dancing space at the base of Greek theater where the chorus performed",
+      "usage_example": "The chorus moved in synchronized patterns throughout the orchestra, the flat circular area at the foot of the seating."
+    },
+    {
+      "term": "theatron",
+      "definition": "Seating area for the audience, carved into hillside; could hold up to 17,000 spectators",
+      "usage_example": "Imagine sitting in the theatron with 17,000 other Athenians, all watching the same story unfold below you."
+    },
+    {
+      "term": "skene",
+      "definition": "Building behind the orchestra serving as backdrop and backstage; origin of word 'scene'",
+      "usage_example": "Actors entered and exited through doors in the skene, and its painted facade represented locations like palaces or temples."
+    }
+  ],
+  "warmup": {
+    "name": "The Story Circle",
+    "type": "social",
+    "instructions": "Students stand in a circle. One person starts telling a story with one sentence. Each person adds one sentence, building the story collaboratively. Go around the circle at least twice.",
+    "duration_minutes": 5,
+    "connection_to_lesson": "This mirrors how the Greek chorus worked collectively to tell stories, with each voice contributing to the larger narrative.",
+    "materials": []
+  },
+  "activity": {
+    "name": "Theater Origins Mind Map",
+    "type": "collaborative",
+    "instructions": "In groups of 4, students create a mind map on poster paper showing: 1) What they knew about theater before today, 2) What they learned about Greek theater origins, 3) How Greek theater influences theater today. Groups have 10 minutes to create, then 5 minutes to share with the class via gallery walk.",
+    "duration_minutes": 15,
+    "materials_needed": [
+      "Poster paper (1 per group)",
+      "Markers (multiple colors per group)",
+      "Tape for hanging"
+    ],
+    "grouping": "groups of 4",
+    "differentiation": {
+      "ell": "Provide word bank with key terms from today's lesson; pair ELL students with supportive peers",
+      "advanced": "Additional prompt: Research one additional fact about Greek theater to add to your mind map",
+      "struggling": "Provide partially completed mind map template with categories pre-labeled"
+    }
+  },
+  "journal_prompt": "If you lived in ancient Athens, what would it have been like to attend the Festival of Dionysus? Describe what you might see, hear, and feel. Use at least two vocabulary words from today's lesson.",
+  "exit_tickets": [
+    "Name the god whose festival gave birth to Greek theater.",
+    "Who was Thespis and why is he important to theater history?",
+    "List the three main parts of a Greek theater."
+  ],
+  "content_points": [
+    "Theater originated from religious rituals honoring Dionysus",
+    "The Festival of Dionysus (City Dionysia) was an annual celebration in Athens",
+    "Dithyrambs were the earliest form of theatrical performance",
+    "Thespis created the first 'actor' by stepping out of the chorus",
+    "Greek theaters were massive outdoor structures built into hillsides",
+    "The orchestra was the dancing/performing space for the chorus",
+    "The theatron held audiences of up to 17,000 people",
+    "The skene served as backdrop, backstage, and scenic element"
+  ],
+  "materials_list": [
+    "PowerPoint presentation (16 slides)",
+    "Projector",
+    "Poster paper",
+    "Markers",
+    "Tape",
+    "Exit ticket slips",
+    "Student journals"
+  ],
+  "assessment_connections": {
+    "formative": [
+      "Observation during Story Circle warmup",
+      "Mind map collaboration and content",
+      "Journal reflection depth",
+      "Exit ticket responses"
+    ],
+    "summative": "Unit 1 Performance Assessment: Greek Theater Scene with Chorus (end of Unit 1)"
+  }
+}

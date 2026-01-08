@@ -14,7 +14,7 @@
   "content": {
     "blueprint": "object (optional - single section blueprint)",
     "blueprints": "array (optional - multiple section blueprints)",
-    "domain": "string (optional - filter by NCLEX domain)",
+    "domain": "string (optional - filter by theater unit)",
     "outline": "object (optional - Step 4 outline for projection)"
   },
   "validation_mode": "boolean (optional - enable strict validation, default true)"
@@ -95,7 +95,7 @@ Accept blueprint(s) or outline for counting analysis.
 
 **Input Validation:**
 - At least one content source must be provided (blueprint, blueprints, or outline)
-- If domain filter specified, must match valid NCLEX domain
+- If domain filter specified, must match valid theater unit
 - Count type determines aggregation level
 
 ### Step 2: Extract Section Information
@@ -179,13 +179,11 @@ else:
 Use `section_aggregation` skill for domain-level stats:
 
 ```
-NCLEX Domains:
-1. fundamentals - Fundamentals of Nursing
-2. pharmacology - Pharmacology
-3. medical_surgical - Medical-Surgical Nursing
-4. ob_maternity - OB/Maternity Nursing
-5. pediatric - Pediatric Nursing
-6. mental_health - Mental Health Nursing
+Theater Units:
+1. greek_theater - Greek Theater (origins, masks, chorus, tragedy/comedy)
+2. commedia - Commedia dell'Arte (stock characters, lazzi, improvisation)
+3. shakespeare - Shakespeare (Elizabethan staging, verse, soliloquy)
+4. one_acts - Student-Directed One Acts (directing, production, collaboration)
 
 Aggregation:
 for each domain:
@@ -402,5 +400,9 @@ Before returning count report:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - 6 NCLEX domains → 4 theater units
+- **v1.0** (2026-01-04): Initial section counter agent

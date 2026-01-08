@@ -12,7 +12,7 @@
 {
   "step3_output": "object (sorting output with domain assignments)",
   "step2_output": "object (arc planning iterations, relationship mapping)",
-  "domain": "string (NCLEX domain)",
+  "domain": "string (theater unit)",
   "sorted_anchors": "array of anchors with domain assignments and flags"
 }
 ```
@@ -261,5 +261,9 @@ Before proceeding to Step 5:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX domain -> theater unit
+- **v1.0** (2026-01-04): Initial outline generator agent

@@ -1,16 +1,18 @@
 """
 Enforcement Skills Package
 Skills for enforcing requirements on generated content.
+
+Theater Pipeline Version - Uses performance tips instead of NCLEX tips.
 """
 
 from .slide_numbering import (
     enforce_sequential_numbering,
     validate_sequential_numbering
 )
-from .nclex_tip_fallback import (
-    ensure_nclex_tip,
+from .performance_tip_fallback import (
+    ensure_performance_tip,
     ensure_all_tips,
-    validate_nclex_tips,
+    validate_performance_tips,
     get_fallback_tip
 )
 from .header_enforcer import (
@@ -63,10 +65,10 @@ __all__ = [
     # Slide numbering (R15)
     'enforce_sequential_numbering',
     'validate_sequential_numbering',
-    # NCLEX tips (R4)
-    'ensure_nclex_tip',
+    # Performance tips (Theater equivalent of R4)
+    'ensure_performance_tip',
     'ensure_all_tips',
-    'validate_nclex_tips',
+    'validate_performance_tips',
     'get_fallback_tip',
     # Header limits (R1)
     'enforce_header_limits',

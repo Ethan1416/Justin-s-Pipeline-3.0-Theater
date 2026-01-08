@@ -133,7 +133,7 @@ For each slide, verify:
 - [ ] Each line <= 66 characters
 - [ ] Maximum 8 lines total
 
-**NCLEX Tip:**
+**Performance Tip:**
 - [ ] Each line <= 66 characters
 - [ ] Maximum 2 lines total
 - [ ] Present on content slides only
@@ -157,7 +157,7 @@ For each slide, verify:
 - Combine related points
 - If still over: split slide
 
-**NCLEX Tips exceeding limits:**
+**Performance Tips exceeding limits:**
 - Tighten language
 - Focus on single key insight
 - Remove redundant phrasing
@@ -231,11 +231,11 @@ After:
 - Bradykinesia
 ```
 
-### NCLEX Tip Condensing
+### Performance Tip Condensing
 
 | Before | After |
 |--------|-------|
-| "The NCLEX often tests this concept by presenting a patient scenario and asking you to identify the affected brain region" | "NCLEX tests this via patient scenarios asking for affected region" |
+| "Theater often tests this concept by presenting a performance scenario and asking you to identify the technique used" | "Theater tests this via performance scenarios asking for technique identification" |
 
 ---
 
@@ -283,13 +283,13 @@ Continuing with [topic]... [connection to previous]
 ### Character Limits
 - [ ] All headers <= 32 chars/line, <= 2 lines
 - [ ] All body text <= 66 chars/line, <= 8 lines
-- [ ] All NCLEX tips <= 66 chars/line, <= 2 lines
+- [ ] All performance tips <= 66 chars/line, <= 2 lines
 - [ ] All presenter notes <= 180 seconds
 
 ### Content Integrity
 - [ ] All anchor concepts preserved
 - [ ] Learning objectives still achievable
-- [ ] NCLEX tips still relevant
+- [ ] Performance tips still relevant
 - [ ] Presenter notes consistent with slides
 
 ### Documentation
@@ -363,7 +363,7 @@ Element: Body
 Issue: Exceeded 8 lines (was 11)
 Change: Condensed bullet points, combined related items
 
-Element: NCLEX Tip
+Element: Performance Tip
 Issue: Exceeded 2 lines (was 3)
 Change: Tightened language
 
@@ -404,7 +404,7 @@ CHANGELOG COMPLETE
 |-----------------|--------|
 | Cannot fit within limits | Split slide |
 | Presenter notes too long | Condense, preserve key points |
-| NCLEX tip missing | Add appropriate tip |
+| Performance tip missing | Add appropriate tip |
 | Validation script fails | Fix flagged issues, re-run |
 
 ---
@@ -420,5 +420,10 @@ Before proceeding to Step 8:
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.1** (2026-01-05): Enhanced formatting revision capabilities
+- **v1.0** (2026-01-04): Initial formatting reviser agent

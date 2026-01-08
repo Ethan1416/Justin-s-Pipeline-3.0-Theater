@@ -1,10 +1,10 @@
-# Tip Generator Agent
+# Performance Tip Generator Agent
 
 ## Agent Identity
-- **Name:** tip_generator
+- **Name:** tip_generator (performance_tip_generator)
 - **Step:** 6 (Blueprint Generation Sub-Agent)
 - **Parent Agent:** blueprint_generator
-- **Purpose:** Generate NCLEX exam tips for content slides that highlight testing patterns, common pitfalls, and strategic approaches
+- **Purpose:** Generate performance tips for content slides that highlight technique applications, common pitfalls, and practical strategies
 - **Invocation:** Called for every Content slide after body text is generated
 
 ---
@@ -18,12 +18,12 @@
     "header": "string",
     "body": "string (slide body content)",
     "subsection": "string",
-    "anchors_covered": "array of anchor summaries"
+    "objectives_covered": "array of learning objective summaries"
   },
   "section_context": {
     "section_name": "string",
-    "domain": "string",
-    "nclex_category": "string (optional - Safe Effective Care | Health Promotion | Psychosocial Integrity | Physiological Integrity)"
+    "unit": "string",
+    "unit_number": "integer (1-4)"
   },
   "existing_tips_in_section": "array of strings (to avoid repetition)"
 }
@@ -33,9 +33,9 @@
 ```json
 {
   "slide_number": "integer",
-  "nclex_tip": {
+  "performance_tip": {
     "text": "string (1-2 lines, max 132 characters)",
-    "tip_type": "string (pattern | priority | elimination | memory_aid | test_strategy)",
+    "tip_type": "string (technique | rehearsal | vocal | physical | character)",
     "character_count": "integer",
     "line_count": "integer"
   },
@@ -54,15 +54,15 @@
 
 ## Required Skills (Hardcoded)
 
-1. **NCLEX Tip Creation** - `skills/generation/nclex_tip_creation.py`
-   - Generates exam-focused tips relevant to slide content
-   - Creates actionable test-taking strategies
+1. **Performance Tip Creation** - `skills/generation/performance_tip_creation.py`
+   - Generates technique-focused tips relevant to slide content
+   - Creates actionable performance strategies
    - Produces concise, memorable guidance
 
 2. **Pattern Identification** - `skills/analysis/pattern_identification.py`
-   - Identifies NCLEX testing patterns for specific content areas
-   - Recognizes common question formats by topic
-   - Maps content to NCLEX-RN Test Plan categories
+   - Identifies theater performance patterns for specific content areas
+   - Recognizes common technique applications by topic
+   - Maps content to unit-specific skills
 
 ---
 
@@ -72,64 +72,64 @@
 
 Extract key information:
 - **Core Concept:** What is the main teaching point?
-- **Clinical Context:** What patient situations does this apply to?
-- **Anchor Coverage:** What testable concepts are present?
-- **Domain Relevance:** How does this fit NCLEX categories?
+- **Performance Context:** What performance situations does this apply to?
+- **Objective Coverage:** What skills are being developed?
+- **Unit Relevance:** How does this fit the unit's focus?
 
-### Step 2: Identify NCLEX Testing Patterns
+### Step 2: Identify Performance Patterns
 
-Match content to known NCLEX question patterns:
+Match content to known performance patterns:
 
-**By Question Type:**
+**By Skill Area:**
 | Pattern | When to Use | Example Topics |
 |---------|-------------|----------------|
-| Priority/First | Assessments, interventions requiring sequencing | ABCs, Maslow, Nursing Process |
-| Select All That Apply (SATA) | Multiple correct elements | Signs/symptoms, interventions, assessments |
-| Delegation | Task assignment decisions | UAP scope, LPN scope, RN responsibilities |
-| Safety | Risk identification, prevention | Fall prevention, infection control |
-| Therapeutic Communication | Patient interaction | Mental health, patient education |
-| Medication | Drug knowledge application | Pharmacology, administration |
+| Vocal Technique | Voice, projection, diction | Breath support, articulation, Greek chorus |
+| Physical Movement | Blocking, stage movement | Stage geography, levels, tableaux |
+| Character Work | Characterization, motivation | Stock characters, given circumstances |
+| Rehearsal Process | Practice strategies | Scene breakdown, memorization |
+| Ensemble | Group work, collaboration | Chorus, scene partners, directing |
+| Historical Context | Period-specific techniques | Masks, conventions, language |
 
-**By NCLEX Category:**
-| Category | Focus Areas |
-|----------|-------------|
-| Safe Effective Care | Infection control, safety, delegation, legal/ethical |
-| Health Promotion | Prevention, screening, growth & development |
-| Psychosocial Integrity | Coping, mental health, therapeutic communication |
-| Physiological Integrity | Basic care, pharmacology, reduction of risk, critical care |
+**By Unit:**
+| Unit | Focus Areas |
+|------|-------------|
+| Greek Theater | Masks, chorus, amphitheater projection, conventions |
+| Commedia dell'Arte | Stock characters, lazzi, improvisation, physicality |
+| Shakespeare | Verse, soliloquy, language, staging |
+| One Acts | Directing, production, collaboration, choices |
 
 ### Step 3: Select Tip Type
 
 Choose the most appropriate tip type for the content:
 
-**Pattern Tips** - Describe how content is typically tested
+**Technique Tips** - Specific performance technique advice
 ```
-Example: "NCLEX often tests diuretic side effects through scenarios
-showing potassium depletion symptoms."
-```
-
-**Priority Tips** - Help with sequencing/prioritization questions
-```
-Example: "When prioritizing respiratory patients, always address
-airway patency before oxygen saturation."
+Example: "Project from your diaphragm, not your throat -
+Greek actors reached 17,000 spectators this way."
 ```
 
-**Elimination Tips** - Strategies to rule out wrong answers
+**Rehearsal Tips** - Practice and preparation strategies
 ```
-Example: "Eliminate options containing 'always' or 'never' -
-nursing rarely deals in absolutes."
-```
-
-**Memory Aid Tips** - Mnemonics and recall strategies
-```
-Example: "Remember MONA for MI: Morphine, Oxygen, Nitrates, Aspirin
-- but assess first!"
+Example: "Practice your blocking at half-speed first,
+then add intention once the moves are automatic."
 ```
 
-**Test Strategy Tips** - General test-taking approaches
+**Vocal Tips** - Voice and speech guidance
 ```
-Example: "If unsure, choose the option that involves assessment
-before intervention."
+Example: "Emphasize operative words in Shakespeare -
+they carry the meaning and emotion of each line."
+```
+
+**Physical Tips** - Movement and body awareness
+```
+Example: "Commedia characters lead with different body parts -
+find your character's center of gravity."
+```
+
+**Character Tips** - Role development advice
+```
+Example: "Ask 'What does my character want?' for every scene -
+objectives drive all choices."
 ```
 
 ### Step 4: Generate Tip Text
@@ -142,37 +142,37 @@ before intervention."
 - Actionable when possible
 
 **Writing Guidelines:**
-1. Start with action verb or NCLEX reference when appropriate
+1. Start with action verb or specific reference when appropriate
 2. Be specific to the slide content
 3. Provide actionable guidance
 4. Avoid vague statements
-5. Use common abbreviations sparingly (NCLEX, SATA, ABCs)
+5. Use common theater terminology
 
 **Strong Tip Patterns:**
 
-Pattern 1: Testing Pattern Description
+Pattern 1: Technique Application
 ```
-NCLEX tests [topic] through [question type] asking about [specific element].
-```
-
-Pattern 2: Priority Guidance
-```
-When prioritizing [situation], always [action] before [other action].
+PERFORMANCE TIP: [technique] - [specific application or reasoning].
 ```
 
-Pattern 3: Elimination Strategy
+Pattern 2: Rehearsal Strategy
 ```
-Eliminate answers that [characteristic] - correct answers typically [characteristic].
-```
-
-Pattern 4: Memory Hook
-```
-Remember: [mnemonic or key phrase] for [topic application].
+PERFORMANCE TIP: Practice [element] by [specific method] first.
 ```
 
-Pattern 5: Direct Strategy
+Pattern 3: Physical Guidance
 ```
-For [question type], look for [key indicator] to identify the correct answer.
+PERFORMANCE TIP: [Physical instruction] - it [creates effect/supports technique].
+```
+
+Pattern 4: Historical Connection
+```
+PERFORMANCE TIP: [Historical technique] still works today for [reason].
+```
+
+Pattern 5: Common Pitfall
+```
+PERFORMANCE TIP: Avoid [mistake] - instead, [correct approach].
 ```
 
 ### Step 5: Validate Tip
@@ -207,80 +207,66 @@ Provide 2 backup tips in case primary is rejected:
 
 ---
 
-## Tip Examples by Domain
+## Tip Examples by Unit
 
-### Fundamentals of Nursing
+### Unit 1: Greek Theater
 ```
-"Safety questions: choose options that prevent harm before addressing comfort."
-"For vital signs questions, know normal ranges - abnormals point to priority."
-"NCLEX loves positioning questions - know therapeutic positions by condition."
-```
-
-### Pharmacology
-```
-"Drug name endings reveal class: -olol = beta blocker, -pril = ACE inhibitor."
-"For med admin questions, verify allergies before any intervention option."
-"When two meds seem correct, choose the one that addresses the root cause."
+"Project to the back row - Greek actors filled amphitheaters without microphones."
+"Let your mask do the work - Greek acting was larger than life by necessity."
+"Move with purpose - every step in the orchestra was visible to thousands."
 ```
 
-### Medical-Surgical Nursing
+### Unit 2: Commedia dell'Arte
 ```
-"Post-op assessment: check airway and vitals before wound and drain output."
-"For cardiac patients, potassium levels are tested with dig and diuretics."
-"SATA questions on complications: include ALL that could reasonably occur."
-```
-
-### OB/Maternity Nursing
-```
-"Fetal heart rate questions: know normal (110-160) and what decels mean."
-"Postpartum priority: always assess fundus and lochia together."
-"Antepartum danger signs: any bleeding, severe headache, visual changes."
+"Exaggerate physical choices - Commedia characters live in their bodies."
+"Find your character's signature walk before anything else."
+"Lazzi must land quickly - if the audience thinks, you've lost them."
 ```
 
-### Pediatric Nursing
+### Unit 3: Shakespeare
 ```
-"Peds dosing questions: always verify weight-based calculations are safe."
-"Growth questions: know developmental milestones by age range, not exact."
-"For pediatric safety: family-centered care is usually the right approach."
+"Breathe at the punctuation - Shakespeare's rhythm reveals character."
+"Antithesis drives Shakespeare's language - find the contrasts."
+"The audience is your scene partner in a soliloquy - include them."
 ```
 
-### Mental Health Nursing
+### Unit 4: Student-Directed One Acts
 ```
-"Therapeutic communication: choose responses that encourage patient expression."
-"Safety first in psych: assess for self-harm before addressing other needs."
-"Eliminate responses that give advice, change subject, or minimize feelings."
+"Directors: see every moment from the audience's perspective."
+"Give actors playable directions - verbs, not adjectives."
+"Block traffic patterns first, then refine for meaning."
 ```
 
 ---
 
-## NCLEX Pattern Reference
+## Theater Performance Reference
 
-### High-Yield Testing Patterns
+### High-Yield Performance Patterns
 
-**Pattern: Priority Questions**
-- Keywords: first, priority, most important, initial
-- Strategy: Apply ABCs, Maslow, or Nursing Process
-- Tip format: "When you see [keyword], apply [framework]."
+**Pattern: Projection and Breath**
+- Context: Voice work, space filling
+- Strategy: Support from the body, not strain
+- Tip format: "Support your voice by [technique] for [result]."
 
-**Pattern: Assessment vs. Intervention**
-- Keywords: best response, appropriate action
-- Strategy: Assess before intervene (unless emergency)
-- Tip format: "Choose assessment over intervention unless [exception]."
+**Pattern: Physical Characterization**
+- Context: Character work, physicality
+- Strategy: External choices inform internal life
+- Tip format: "[Physical choice] helps establish [character element]."
 
-**Pattern: Delegation**
-- Keywords: delegate, assign, appropriate task
-- Strategy: Consider scope, stability, predictability
-- Tip format: "Delegate only [criteria] tasks to UAP."
+**Pattern: Text Analysis**
+- Context: Script work, language
+- Strategy: Find clues in structure and word choice
+- Tip format: "Look for [text element] to discover [character insight]."
 
-**Pattern: Patient Teaching**
-- Keywords: teaching effective, need for teaching
-- Strategy: Look for return demonstration or correct repeat
-- Tip format: "Effective teaching shown by [indicator]."
+**Pattern: Rehearsal Process**
+- Context: Preparation, skill building
+- Strategy: Build layers, don't rush results
+- Tip format: "Master [basic element] before adding [complexity]."
 
-**Pattern: Lab Values**
-- Keywords: report, concerning, expected
-- Strategy: Know critical values and when to escalate
-- Tip format: "Report [lab] values outside [range] immediately."
+**Pattern: Ensemble Work**
+- Context: Group scenes, collaboration
+- Strategy: React and respond, don't just wait
+- Tip format: "Active listening [creates effect] on stage."
 
 ---
 
@@ -289,7 +275,7 @@ Provide 2 backup tips in case primary is rejected:
 | Error Condition | Action |
 |-----------------|--------|
 | Non-content slide type | SKIP, return null tip (tips only for Content slides) |
-| No anchors provided | WARN, generate generic domain tip |
+| No objectives provided | WARN, generate generic unit tip |
 | Character count exceeds 132 | FAIL, regenerate shorter tip |
 | Line count exceeds 2 | FAIL, condense or split differently |
 | Duplicate of existing tip | WARN, use alternative tip |
@@ -301,11 +287,11 @@ Provide 2 backup tips in case primary is rejected:
 
 ```
 ========================================
-NCLEX TIP - SLIDE [#]
+PERFORMANCE TIP - SLIDE [#]
 ========================================
 Slide Type: Content
 Section: [Section Name]
-Domain: [Domain]
+Unit: [Unit Name]
 
 ----------------------------------------
 TIP CONTENT
@@ -315,7 +301,7 @@ PRIMARY TIP:
 "[Tip text - line 1]
 [Tip text - line 2 if needed]"
 
-Type: [pattern | priority | elimination | memory_aid | test_strategy]
+Type: [technique | rehearsal | vocal | physical | character]
 Characters: [X] / 132 max
 Lines: [X] / 2 max
 
@@ -357,7 +343,7 @@ Before returning tip:
 - [ ] Relevant to slide content
 - [ ] Not duplicate of section tips
 - [ ] Actionable or informative
-- [ ] Proper NCLEX terminology
+- [ ] Proper theater terminology
 - [ ] Two alternatives provided
 
 ---
@@ -372,15 +358,19 @@ Before returning tip:
 - Before presenter notes generation
 
 **Output Used:**
-- NCLEX TIP field in slide blueprint
-- Referenced in presenter notes for NCLEX callouts
+- PERFORMANCE TIP field in slide blueprint
+- Referenced in presenter notes for technique callouts
 
 **Not Called For:**
 - Section Intro slides
-- Vignette slides
-- Answer slides
+- Activity slides
+- Summary slides
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX exam tips → Performance tips, added unit-specific guidance
+- **v1.0** (2026-01-04): Initial tip generator agent (NCLEX)

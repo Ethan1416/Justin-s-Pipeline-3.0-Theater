@@ -19,7 +19,7 @@
     "decision_node_count": "number (non-leaf nodes)",
     "max_path_length": "number (longest path from root to leaf)"
   },
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -215,5 +215,9 @@ Reasoning: Maximum complexity requires deep binary tree
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - config/nclex.yaml -> config/theater.yaml
+- **v1.0** (2026-01-04): Initial decision tree layout selector agent

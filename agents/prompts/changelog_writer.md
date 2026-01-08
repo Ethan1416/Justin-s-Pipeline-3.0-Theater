@@ -128,7 +128,7 @@ Diff Algorithm:
 ```
 - Header text modified
 - Body content modified
-- NCLEX tip modified
+- Performance tip modified
 - Presenter notes modified
 ```
 
@@ -403,7 +403,7 @@ Quality review pass - addressed QA feedback
 
 ### Fixed
 - Slide 7: Corrected drug dosage information
-- Slide 12: Fixed NCLEX tip formatting
+- Slide 12: Fixed Performance tip formatting
 
 ### Modified
 - Slide 15: Clarified mechanism of action explanation
@@ -476,5 +476,9 @@ Before completing changelog operation:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX tip -> Performance tip
+- **v1.0** (2026-01-04): Initial changelog writer agent

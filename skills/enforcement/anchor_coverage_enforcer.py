@@ -60,7 +60,7 @@ def generate_anchor_slide(anchor: Anchor, slide_number: int) -> Dict[str, Any]:
         'body': body,
         'subsection': anchor.subsection,
         'anchors_covered': [anchor.summary],
-        'nclex_tip': '',  # Will be filled by tip_generator
+        'performance_tip': '',  # Will be filled by tip_generator
         'presenter_notes': '',  # Will be filled by presenter_notes_writer
         '_generated_for_coverage': True,  # Flag for tracking
     }
@@ -257,7 +257,7 @@ def _generate_multi_anchor_slide(anchors: List[Anchor], slide_number: int) -> Di
         'body': body,
         'subsection': anchors[0].subsection,
         'anchors_covered': covered_summaries,
-        'nclex_tip': '',
+        'performance_tip': '',
         'presenter_notes': '',
         '_generated_for_coverage': True,
         '_multi_anchor': True,

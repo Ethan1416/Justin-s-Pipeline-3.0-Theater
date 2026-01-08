@@ -268,8 +268,8 @@ Format and return the operation outcome.
 ```json
 {
   "$schema": "pipeline_state.schema.json",
-  "pipeline_id": "nclex-pharm-20260104-001",
-  "pipeline_name": "NCLEX Pharmacology Lecture Generation",
+  "pipeline_id": "theater-unit1-20260104-001",
+  "pipeline_name": "Theater Performance Lecture Generation",
   "version": "1.0",
 
   "created_at": "2026-01-04T09:00:00Z",
@@ -479,5 +479,9 @@ Before completing operation:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX pipeline examples -> Theater examples
+- **v1.0** (2026-01-04): Initial state manager agent

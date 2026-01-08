@@ -20,7 +20,7 @@
     "is_cyclical": "boolean (process loops back)",
     "avg_step_chars": "number (average characters per step)"
   },
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -195,5 +195,9 @@ Reasoning: Five steps fit well in snake layout for optimal space use
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - config/nclex.yaml -> config/theater.yaml
+- **v1.0** (2026-01-04): Initial flowchart layout selector agent

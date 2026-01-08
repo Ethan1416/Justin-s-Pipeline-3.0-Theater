@@ -32,7 +32,7 @@
     "line_count": {"score": "integer", "max": 100, "issues": "array"},
     "character_count": {"score": "integer", "max": 100, "issues": "array"},
     "presentation_timing": {"score": "integer", "max": 100, "issues": "array"},
-    "nclex_tip_presence": {"score": "integer", "max": 100, "issues": "array"},
+    "performance_tip_presence": {"score": "integer", "max": 100, "issues": "array"},
     "visual_quota": {"score": "integer", "max": 100, "issues": "array"},
     "r10_vignette": {"score": "integer", "max": 100, "issues": "array", "slides_checked": "integer", "slides_passed": "integer"},
     "r11_answer": {"score": "integer", "max": 100, "issues": "array", "slides_checked": "integer", "slides_passed": "integer"},
@@ -125,7 +125,7 @@ Pull information from:
 **Checks:**
 - [ ] Headers: <= 2 lines
 - [ ] Body: <= 8 non-empty lines
-- [ ] NCLEX Tips: <= 2 lines
+- [ ] Performance Tips: <= 2 lines
 
 **Scoring:**
 - 100%: All elements compliant
@@ -137,7 +137,7 @@ Pull information from:
 **Checks:**
 - [ ] Headers: <= 32 characters/line
 - [ ] Body: <= 66 characters/line
-- [ ] NCLEX Tips: <= 66 characters/line, 132 total chars
+- [ ] Performance Tips: <= 66 characters/line, 132 total chars
 
 **Scoring:**
 - 100%: All elements compliant
@@ -155,11 +155,11 @@ Pull information from:
 - 100%: All timing standards met
 - Deduct 5 points per slide exceeding duration
 
-### Step 7: Validate Category 6 - NCLEX Tip Presence
+### Step 7: Validate Category 6 - Performance Tip Presence
 **Weight:** 10%
 
 **Checks:**
-- [ ] All content slides have NCLEX tips
+- [ ] All content slides have performance tips
 - [ ] Section intro slides do NOT have tips
 - [ ] Vignette slides do NOT have tips
 - [ ] Answer slides do NOT have tips
@@ -265,7 +265,7 @@ for slide in blueprint['slides']:
 **Checks:**
 - Minimum 2 [PAUSE] markers per slide
 - Minimum 1 [EMPHASIS: term] marker for content slides
-- NCLEX pattern callout present where relevant
+- Performance technique callout present where relevant
 
 **Validation Code:**
 ```python
@@ -310,7 +310,7 @@ score = (
     line_count_score * 0.10 +
     char_count_score * 0.10 +
     timing_score * 0.10 +
-    nclex_tip_score * 0.10 +
+    performance_tip_score * 0.10 +
     visual_quota_score * 0.10 +
     vignette_score * 0.10 +    # R10
     answer_score * 0.05 +       # R11
@@ -398,7 +398,7 @@ CATEGORY SCORES (10 Categories)
 | 3. Line Count | [X]/100 | 10% | [X] | [PASS/FAIL] |
 | 4. Character Count | [X]/100 | 10% | [X] | [PASS/FAIL] |
 | 5. Presentation Timing | [X]/100 | 10% | [X] | [PASS/FAIL] |
-| 6. NCLEX Tip Presence | [X]/100 | 10% | [X] | [PASS/FAIL] |
+| 6. Performance Tip Presence | [X]/100 | 10% | [X] | [PASS/FAIL] |
 | 7. Visual Quota | [X]/100 | 10% | [X] | [PASS/FAIL] |
 | 8. Vignette Structure (R10) | [X]/100 | 10% | [X] | [PASS/FAIL] |
 | 9. Answer Structure (R11) | [X]/100 | 5% | [X] | [PASS/FAIL] |
@@ -487,8 +487,8 @@ All validation thresholds MUST align with `config/constraints.yaml`:
 | Header | max_lines | 2 | Category 3 |
 | Body | chars_per_line | 66 | Category 4 |
 | Body | max_lines | 8 | Category 3 |
-| NCLEX Tip | total_max_chars | **132** | Category 4 |
-| NCLEX Tip | max_lines | 2 | Category 3 |
+| Performance Tip | total_max_chars | **132** | Category 4 |
+| Performance Tip | max_lines | 2 | Category 3 |
 | Presenter Notes | max_words | **450** | Category 5 |
 | Presenter Notes | max_duration | 180s | Category 5 |
 | Visual | max_percentage | 40% | Category 7 |
@@ -505,10 +505,11 @@ All validation thresholds MUST align with `config/constraints.yaml`:
 
 ---
 
-**Agent Version:** 1.2
-**Last Updated:** 2026-01-06
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 
 ### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX tips → Performance tips
 - **v1.2** (2026-01-06): Added canonical constraint reference table for uniformity
 - **v1.1** (2026-01-05): Added R10, R11, R14 validation categories
 - **v1.0** (2026-01-04): Initial quality reviewer agent

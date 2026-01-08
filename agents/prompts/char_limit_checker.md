@@ -65,7 +65,7 @@
 |---------|----------------|-----------|
 | HEADER (Title) | 32 | character_limits.title.chars_per_line |
 | BODY | 66 | character_limits.body.chars_per_line |
-| TIP (NCLEX TIP) | 66 | character_limits.tip.chars_per_line |
+| TIP (PERFORMANCE TIP) | 66 | character_limits.tip.chars_per_line |
 
 ### Total Character Limits
 
@@ -124,7 +124,7 @@ def parse_blueprint_for_chars(blueprint_content):
             current_element = 'header'
         elif 'BODY:' in line:
             current_element = 'body'
-        elif 'NCLEX TIP:' in line or 'TIP:' in line:
+        elif 'PERFORMANCE TIP:' in line or 'TIP:' in line:
             current_element = 'tip'
         elif 'PRESENTER NOTES:' in line or 'Visual:' in line:
             current_element = None  # Skip these
@@ -354,5 +354,9 @@ For slides marked Visual: Yes, additional limits apply:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX TIP -> PERFORMANCE TIP
+- **v1.0** (2026-01-04): Initial character limit checker agent

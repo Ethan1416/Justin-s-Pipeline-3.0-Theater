@@ -24,43 +24,55 @@ def count_markers(notes: str) -> Dict[str, int]:
     }
 
 
-def find_key_terms(text: str, domain: str = 'general') -> List[str]:
+def find_key_terms(text: str, unit: str = 'general') -> List[str]:
     """
-    Find key clinical terms that should be emphasized.
+    Find key theater terms that should be emphasized.
 
     Args:
         text: Notes text
-        domain: Clinical domain for context
+        unit: Theater unit for context
 
     Returns:
         List of terms to emphasize
     """
-    # Common nursing/clinical terms to emphasize
+    # Common theater terms to emphasize
     key_patterns = [
-        # Clinical terms
-        r'\b(assessment|intervention|evaluation)\b',
-        r'\b(airway|breathing|circulation)\b',
-        r'\b(priority|first|immediate)\b',
-        r'\b(infection|isolation|precaution)\b',
-        r'\b(safety|sterile|aseptic)\b',
+        # Performance terms
+        r'\b(blocking|staging|movement)\b',
+        r'\b(projection|articulation|diction)\b',
+        r'\b(motivation|objective|intention)\b',
+        r'\b(subtext|given circumstances)\b',
+        r'\b(ensemble|chorus|company)\b',
 
-        # Medication terms
-        r'\b(medication|drug|dose|administration)\b',
-        r'\b(adverse|side effect|contraindication)\b',
+        # Technical terms
+        r'\b(upstage|downstage|stage left|stage right)\b',
+        r'\b(wings|flies|apron)\b',
+        r'\b(cue|blackout|transition)\b',
+        r'\b(costume|props|set)\b',
 
-        # Body systems
-        r'\b(cardiac|respiratory|neurological|renal)\b',
+        # Acting technique
+        r'\b(beat|action|tactic)\b',
+        r'\b(emotional truth|sense memory)\b',
+        r'\b(physicality|gesture|posture)\b',
 
-        # Specific conditions
-        r'\b(diabetes|hypertension|infection)\b',
-        r'\b(tuberculosis|TB|MRSA|C\.\s*diff)\b',
+        # Greek theater terms
+        r'\b(theatron|orchestra|skene)\b',
+        r'\b(chorus|dithyramb|Dionysus)\b',
+        r'\b(tragedy|comedy|catharsis)\b',
+        r'\b(mask|protagonist|antagonist)\b',
 
-        # Equipment/procedures
-        r'\b(catheter|IV|ventilator|monitor)\b',
-        r'\b(hand\s+hygiene|PPE|N95|gown)\b',
+        # Commedia terms
+        r'\b(lazzi|stock character|improvisation)\b',
+        r'\b(Arlecchino|Pantalone|Zanni)\b',
 
-        # NCLEX keywords
-        r'\b(NCLEX|test|exam|question)\b',
+        # Shakespeare terms
+        r'\b(iambic pentameter|verse|prose)\b',
+        r'\b(soliloquy|monologue|aside)\b',
+        r'\b(scansion|antithesis)\b',
+
+        # Directing terms
+        r'\b(directorial|concept|vision)\b',
+        r'\b(rehearsal|table work|run-through)\b',
     ]
 
     found_terms = []
@@ -117,8 +129,8 @@ def insert_pause_markers(notes: str) -> str:
         # Add pause before transition words
         elif i < len(sentences) - 1:
             next_sentence_lower = sentences[i + 1].lower()
-            transition_words = ['now', 'next', 'let\'s', 'remember', 'on the nclex',
-                                'this is important', 'the key', 'so,']
+            transition_words = ['now', 'next', 'let\'s', 'remember', 'in performance',
+                                'this is important', 'the key', 'so,', 'on stage']
             if any(next_sentence_lower.startswith(tw) for tw in transition_words):
                 result.append(' [PAUSE]')
                 pause_count += 1
@@ -139,13 +151,13 @@ def insert_pause_markers(notes: str) -> str:
     return ' '.join(result)
 
 
-def insert_emphasis_markers(notes: str, domain: str = 'general') -> str:
+def insert_emphasis_markers(notes: str, unit: str = 'general') -> str:
     """
     Insert [EMPHASIS: term] markers for key vocabulary.
 
     Args:
         notes: Original presenter notes
-        domain: Clinical domain
+        unit: Theater unit for context
 
     Returns:
         Notes with [EMPHASIS] markers
@@ -155,7 +167,7 @@ def insert_emphasis_markers(notes: str, domain: str = 'general') -> str:
         if count_markers(notes)['emphasis'] >= MIN_EMPHASIS_MARKERS_CONTENT:
             return notes
 
-    key_terms = find_key_terms(notes, domain)
+    key_terms = find_key_terms(notes, unit)
 
     if not key_terms:
         return notes
@@ -181,15 +193,15 @@ def insert_emphasis_markers(notes: str, domain: str = 'general') -> str:
 def insert_markers(
     notes: str,
     slide_type: str,
-    domain: str = 'general'
+    unit: str = 'general'
 ) -> str:
     """
     Insert all required markers into presenter notes.
 
     Args:
         notes: Original presenter notes
-        slide_type: Type of slide (content, vignette, answer, etc.)
-        domain: Clinical domain
+        slide_type: Type of slide (content, activity, warmup, etc.)
+        unit: Theater unit for context
 
     Returns:
         Notes with all required markers
@@ -201,7 +213,7 @@ def insert_markers(
 
     # Insert [EMPHASIS] markers for content slides
     if slide_type.lower() == 'content':
-        result = insert_emphasis_markers(result, domain)
+        result = insert_emphasis_markers(result, unit)
 
     return result
 
@@ -240,18 +252,18 @@ def validate_markers(notes: str, slide_type: str) -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Test
-    test_notes = """Standard precautions are the foundation of infection control.
-We treat every patient's body fluids as potentially infectious.
-The components include hand hygiene and PPE.
-Safe injection practices are also critical.
-On the NCLEX, standard precautions questions are common."""
+    test_notes = """Greek theater originated from religious rituals honoring Dionysus.
+The theatron provided seating for up to 17,000 spectators.
+The chorus performed in the orchestra, the circular dancing space.
+Actors used masks to portray multiple characters.
+In performance, projection was essential to reach the entire audience."""
 
     print("Original:")
     print(test_notes)
     print(f"\nMarker counts: {count_markers(test_notes)}")
 
     print("\n\nAfter marker insertion:")
-    fixed = insert_markers(test_notes, slide_type='content', domain='fundamentals')
+    fixed = insert_markers(test_notes, slide_type='content', unit='greek_theater')
     print(fixed)
     print(f"\nMarker counts: {count_markers(fixed)}")
     print(f"Validation: {validate_markers(fixed, 'content')}")

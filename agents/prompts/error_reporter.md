@@ -84,18 +84,18 @@ content_errors:
     unclear_language: MEDIUM
 ```
 
-### Category 3: NCLEX Alignment Errors
+### Category 3: Theater Alignment Errors
 ```yaml
-nclex_errors:
+theater_errors:
   subcategories:
-    - missing_nclex_tip
+    - missing_performance_tip
     - invalid_vignette_format
-    - missing_client_needs_tag
+    - missing_theater_unit_tag
     - weak_critical_thinking
 
   severity_rules:
     invalid_vignette_format: HIGH
-    missing_nclex_tip: MEDIUM
+    missing_performance_tip: MEDIUM
     weak_critical_thinking: LOW
 ```
 
@@ -270,7 +270,7 @@ def generate_action_items(categorized_issues):
             'how_to_fix': [
                 'Add HEADER section with slide title',
                 'Add BODY section with content',
-                'Add NCLEX TIP section (can be "None" if not applicable)',
+                'Add PERFORMANCE TIP section (can be "None" if not applicable)',
                 'Add PRESENTER NOTES section with monologue'
             ]
         },
@@ -285,7 +285,7 @@ def generate_action_items(categorized_issues):
         },
         'CONTENT_RULE': {
             'action': 'Fix content compliance',
-            'details': 'Ensure content meets NCLEX requirements',
+            'details': 'Ensure content meets theater requirements',
             'how_to_fix': [
                 'Add proper question format for vignettes',
                 'Include 4 answer options labeled A, B, C, D',
@@ -636,5 +636,9 @@ STATUS: [REQUIRES IMMEDIATE ACTION / READY FOR NEXT STEP]
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial error reporter agent

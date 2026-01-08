@@ -13,7 +13,7 @@
   "step7_revised_blueprint": "string (formatted blueprint from Step 7)",
   "step9_visual_specs": "string (visual specifications from Step 9)",
   "section_name": "string (current section being processed)",
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -100,15 +100,15 @@ IF slide_num in visual_assignment_map:
     # Keep presenter notes
     Preserve: PRESENTER NOTES section
 
-    # Clear NCLEX tip (no tips on visual slides)
-    Set NCLEX TIP to: "None"
+    # Clear performance tip (no tips on visual slides)
+    Set PERFORMANCE TIP to: "None"
 
 ELSE:
     # This is a content slide
     Add: "Visual: No"
 
     # Preserve all existing content
-    Keep: HEADER, BODY, NCLEX TIP, PRESENTER NOTES
+    Keep: HEADER, BODY, PERFORMANCE TIP, PRESENTER NOTES
 ```
 
 ### Step 4: Validate Integration
@@ -171,7 +171,7 @@ Layout: [A/B/C/D/E]
 
 [Visual content - markdown table, tree structure, etc.]
 
-NCLEX TIP:
+PERFORMANCE TIP:
 [Tip text or "None"]
 
 PRESENTER NOTES:
@@ -360,7 +360,7 @@ Before proceeding to Step 11:
 - [ ] Visual quota met (minimum 2 per section, max 40%)
 - [ ] All visual specifications use valid types
 - [ ] Presenter notes preserved on all slides
-- [ ] NCLEX tips cleared on visual slides
+- [ ] Performance tips cleared on visual slides
 - [ ] Validation status: PASS
 
 ---
@@ -377,7 +377,7 @@ All constraints MUST align with `config/constraints.yaml`:
 | Header | max_lines | 2 | config/constraints.yaml |
 | Body | chars_per_line | 66 | config/constraints.yaml |
 | Body | max_lines | 8 | config/constraints.yaml |
-| NCLEX Tip | total_max_chars | **132** | config/constraints.yaml |
+| Performance Tip | total_max_chars | **132** | config/constraints.yaml |
 | Presenter Notes | max_words | **450** | config/constraints.yaml |
 | Presenter Notes | max_duration | 180s | config/constraints.yaml |
 
@@ -401,14 +401,15 @@ All constraints MUST align with `config/constraints.yaml`:
 
 When `Visual: Yes`:
 - Body content becomes `[See Visual]`
-- NCLEX Tip is cleared (set to `None`)
+- Performance Tip is cleared (set to `None`)
 - Presenter notes are PRESERVED (not cleared)
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-06
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 
 ### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
 - **v1.1** (2026-01-06): Added canonical constraint reference for uniformity with pipeline
 - **v1.0** (2026-01-04): Initial visual integrator agent

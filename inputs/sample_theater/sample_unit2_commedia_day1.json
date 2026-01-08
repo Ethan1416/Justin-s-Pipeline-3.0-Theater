@@ -1,0 +1,113 @@
+{
+  "unit": {
+    "number": 2,
+    "name": "Commedia dell'Arte",
+    "total_days": 18
+  },
+  "day": 1,
+  "topic": "Introduction to Commedia dell'Arte: History and the Italian Renaissance",
+  "prior_knowledge": "Students have completed Unit 1: Greek Theater. They understand origins of Western theater, concept of chorus, use of masks, outdoor performance spaces.",
+  "standards": [
+    {
+      "code": "RL.9-10.3",
+      "full_text": "Analyze how complex characters develop over the course of a text, interact with other characters, and advance the plot or develop the theme."
+    },
+    {
+      "code": "SL.9-10.6",
+      "full_text": "Adapt speech to a variety of contexts and tasks, demonstrating command of formal English when indicated or appropriate."
+    }
+  ],
+  "learning_objectives": [
+    "Explain the historical context of Commedia dell'Arte in Renaissance Italy",
+    "Define the key terms: stock character, scenario, and lazzi",
+    "Describe how Commedia differs from scripted theater"
+  ],
+  "vocabulary": [
+    {
+      "term": "Commedia dell'Arte",
+      "definition": "Italian theatrical form meaning 'comedy of the professional artists'; developed in 16th century Italy using improvisation, stock characters, and physical comedy",
+      "usage_example": "Unlike the amateurs who performed in religious plays, Commedia dell'Arte troupes were professional performers who made their living through theater."
+    },
+    {
+      "term": "stock character",
+      "definition": "A stereotypical character type that appears in multiple plays with consistent traits, costume, and behavior",
+      "usage_example": "The greedy old miser is a stock character you've seen before—think of Scrooge or Mr. Burns from The Simpsons."
+    },
+    {
+      "term": "scenario",
+      "definition": "An outline of a play's plot that actors use as a framework for improvisation; not a full script",
+      "usage_example": "The troupe received a scenario that said 'Pantalone catches the young lovers together and chases them'—but the exact words and movements were up to the actors."
+    },
+    {
+      "term": "lazzi",
+      "definition": "Rehearsed comic routines or gags that could be inserted into any performance; physical comedy bits",
+      "usage_example": "When the scene needed energy, Arlecchino would perform his famous lazzi of trying to catch an invisible fly—a bit the audience loved."
+    },
+    {
+      "term": "troupe",
+      "definition": "A traveling company of actors who performed together; Commedia troupes traveled throughout Europe",
+      "usage_example": "The Gelosi troupe was so famous that they were invited to perform for kings and queens across Europe."
+    }
+  ],
+  "warmup": {
+    "name": "Exaggerated Walks",
+    "type": "physical",
+    "instructions": "Students walk around the room normally. Teacher calls out emotions (happy, sad, angry, tired, excited). Students exaggerate their walk to show that emotion with their whole body—not just their face, but their posture, speed, and gestures.",
+    "duration_minutes": 5,
+    "connection_to_lesson": "Commedia characters use exaggerated physicality to communicate character type instantly to audiences who may not speak the same language.",
+    "materials": []
+  },
+  "activity": {
+    "name": "Stock Character Gallery Walk",
+    "type": "interpretive_exercise",
+    "instructions": "Teacher posts images of 6 Commedia stock characters around the room (Pantalone, Il Dottore, Arlecchino, Colombina, Il Capitano, the Lovers). Students rotate in pairs, spending 2 minutes at each station. At each station, they write observations: 1) What does this character look like? 2) What might their personality be based on appearance? 3) What social class do you think they represent? After rotation, class discusses observations.",
+    "duration_minutes": 15,
+    "materials_needed": [
+      "6 printed character images (laminated)",
+      "Observation worksheets",
+      "Pencils",
+      "Tape for posting images"
+    ],
+    "grouping": "pairs",
+    "differentiation": {
+      "ell": "Provide character description word bank; pair with bilingual buddy if available",
+      "advanced": "Additional prompt: What modern character (TV, film, etc.) does this remind you of and why?",
+      "struggling": "Reduce to 4 stations; provide sentence starters for observations"
+    }
+  },
+  "journal_prompt": "Think about characters you see in TV shows, movies, or video games today. Do any of them seem like 'stock characters' with predictable traits? Give an example and explain why they fit the definition.",
+  "exit_tickets": [
+    "What does 'Commedia dell'Arte' mean in English?",
+    "Explain the difference between a scenario and a full script.",
+    "What is a lazzi? Give an example of what one might look like."
+  ],
+  "content_points": [
+    "Commedia dell'Arte emerged in 16th century Italy during the Renaissance",
+    "Name means 'comedy of the professional artists' - actors were professionals",
+    "Troupes traveled throughout Italy and Europe, performing in marketplaces",
+    "Used scenarios (plot outlines) rather than full scripts",
+    "Actors improvised dialogue within the structure of the scenario",
+    "Stock characters had recognizable costumes, masks, and physicality",
+    "Lazzi were rehearsed comic bits that could be used in any show",
+    "Influenced modern comedy, sitcoms, and character archetypes"
+  ],
+  "materials_list": [
+    "PowerPoint presentation (16 slides)",
+    "Projector",
+    "6 laminated character images",
+    "Observation worksheets",
+    "Pencils",
+    "Tape",
+    "Exit ticket slips",
+    "Student journals"
+  ],
+  "assessment_connections": {
+    "formative": [
+      "Observation during Exaggerated Walks warmup",
+      "Gallery walk observation sheet quality",
+      "Class discussion participation",
+      "Exit ticket responses"
+    ],
+    "summative": "Unit 2 Performance Assessment: Original Commedia Scene with Stock Characters (end of Unit 2)"
+  }
+}

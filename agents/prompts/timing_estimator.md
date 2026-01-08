@@ -166,7 +166,7 @@ Recommendations:
 Recommendations:
 - Add more detailed explanation
 - Include additional examples
-- Expand on NCLEX relevance
+- Expand on Performance relevance
 - Add clinical context
 ```
 
@@ -307,5 +307,9 @@ Before returning timing estimate:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX relevance -> Performance relevance
+- **v1.0** (2026-01-04): Initial timing estimator agent

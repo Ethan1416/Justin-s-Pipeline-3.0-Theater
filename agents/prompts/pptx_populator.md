@@ -13,8 +13,8 @@
   "production_folder": "string (path to production folder)",
   "integrated_blueprints": "array of blueprint file paths",
   "template_path": "string (path to master template)",
-  "domain_name": "string (e.g., 'NCLEX_Fundamentals')",
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_name": "string (e.g., 'Theater_Greek')",
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -74,7 +74,7 @@ PRE-FLIGHT CHECKLIST:
 def load_population_config():
     """Load pipeline configuration."""
 
-    config = load_config_from_file('config/nclex.yaml')
+    config = load_config_from_file('config/theater.yaml')
 
     # Validate required paths
     required = [
@@ -230,7 +230,7 @@ def populate_content_slide(prs, slide_data):
                       font_size=Pt(20),
                       color=RGBColor(255, 255, 255))
 
-    # Handle NCLEX tip
+    # Handle performance tip
     if tip_shape:
         if slide_data['tip'] and slide_data['type'] == 'Content':
             set_shape_text(tip_shape, slide_data['tip'],
@@ -443,5 +443,9 @@ def run_population():
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial PPTX populator agent

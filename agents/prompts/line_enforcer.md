@@ -128,17 +128,17 @@ For slides exceeding 8 lines, apply condensation IN ORDER:
 
 1. **Combine related sub-bullets** into fewer, more concise points
 2. **Remove redundant information** implied or stated elsewhere
-3. **Prioritize NCLEX-testable information**
+3. **Prioritize performance-testable information**
 4. **Use more concise phrasing**
 5. **Remove examples if necessary** (move to presenter notes)
-6. **Keep the most clinically/exam-relevant points**
+6. **Keep the most performance-relevant points**
 
 ### Step 3: Preserve Critical Content
 
 **ALWAYS PRESERVE:**
-- Core clinical concepts
-- NCLEX-testable distinctions
-- Key diagnostic criteria
+- Core theater concepts
+- Performance-testable distinctions
+- Key technique criteria
 - Critical differences/comparisons
 - Primary mechanisms
 
@@ -160,7 +160,7 @@ For each condensed slide, annotate:
 
 After condensation:
 - [ ] All slides have <= 8 non-empty lines in BODY
-- [ ] No essential NCLEX content removed
+- [ ] No essential theater content removed
 - [ ] Key clinical points remain
 - [ ] Condensed versions are clear and accurate
 
@@ -257,8 +257,8 @@ After:
 - [ ] Line count verified after condensation
 
 ### Content Integrity Check
-- [ ] No essential NCLEX content removed
-- [ ] Key clinical points preserved
+- [ ] No essential theater content removed
+- [ ] Key performance points preserved
 - [ ] Condensed content remains accurate
 
 ### Documentation Check
@@ -346,5 +346,10 @@ Before proceeding to Step 7:
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.1** (2026-01-05): Enhanced line enforcement capabilities
+- **v1.0** (2026-01-04): Initial line enforcer agent

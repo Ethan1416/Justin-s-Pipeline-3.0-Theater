@@ -57,7 +57,7 @@ This is an **inference-based application** sub-agent that:
       }
     ]
   },
-  "domain_context": "string (e.g., 'NCLEX Fundamentals')"
+  "domain_context": "string (e.g., 'Theater Greek')"
 }
 ```
 
@@ -107,7 +107,7 @@ This is an **inference-based application** sub-agent that:
                 "verbatim_monologue": true,
                 "word_count_target": [260, 300],
                 "required_markers": ["[PAUSE]", "[EMPHASIS]"],
-                "include": ["NCLEX pattern callouts", "transitions"]
+                "include": ["theater pattern callouts", "transitions"]
               }
             }
           ]
@@ -510,7 +510,7 @@ These responsibilities belong to:
   "metadata": {
     "step": "Step 5: Presentation Standards",
     "date": "2026-01-05",
-    "domain": "NCLEX Fundamentals",
+    "domain": "Theater Greek",
     "standards_version": "1.0"
   },
   "sessions": [
@@ -550,7 +550,7 @@ These responsibilities belong to:
                 "verbatim_monologue": true,
                 "word_count_target": [390, 450],
                 "required_markers": ["[PAUSE]", "[EMPHASIS]"],
-                "include": ["NCLEX pattern callouts", "transitions"]
+                "include": ["theater pattern callouts", "transitions"]
               }
             }
           ]
@@ -584,6 +584,10 @@ These responsibilities belong to:
 
 ---
 
-**Sub-Agent Version:** 1.0
-**Last Updated:** 2026-01-05
+**Sub-Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 **Parent Agent:** standards_loader (Step 5)
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-05): Initial standards applier sub-agent

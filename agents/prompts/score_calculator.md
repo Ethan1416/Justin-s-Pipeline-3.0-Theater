@@ -12,7 +12,7 @@
 {
   "blueprint": "string (Step 7 revised blueprint content)",
   "validation_result": "object (from constraint_validator)",
-  "domain_config": "reference to config/nclex.yaml",
+  "domain_config": "reference to config/theater.yaml",
   "section_name": "string (current section)"
 }
 ```
@@ -24,7 +24,7 @@
   "category_scores": {
     "format_compliance": "number (0-25)",
     "content_quality": "number (0-25)",
-    "nclex_alignment": "number (0-25)",
+    "standards_alignment": "number (0-25)",
     "presentation_readiness": "number (0-25)"
   },
   "score_breakdown": "array of detailed score items",
@@ -117,13 +117,13 @@ content_quality:
         unclear: 0
 ```
 
-### Category 3: NCLEX Alignment (25 points)
+### Category 3: Standards Alignment (25 points)
 
 ```yaml
-nclex_alignment:
+standards_alignment:
   max_points: 25
   criteria:
-    client_needs_coverage:
+    ela_standards_coverage:
       weight: 8
       scoring:
         tagged_and_relevant: 8
@@ -131,7 +131,7 @@ nclex_alignment:
         partially_tagged: 3
         not_tagged: 0
 
-    test_taking_tips:
+    performance_tips:
       weight: 7
       scoring:
         helpful_specific: 7
@@ -139,10 +139,10 @@ nclex_alignment:
         present_not_helpful: 2
         missing: 0
 
-    vignette_quality:
+    activity_quality:
       weight: 5
       scoring:
-        realistic_stem: 5
+        engaging_relevant: 5
         acceptable: 3
         weak: 1
         none: 0
@@ -206,7 +206,7 @@ def initialize_score_tracker():
             'earned': 0,
             'items': []
         },
-        'nclex_alignment': {
+        'standards_alignment': {
             'max': 25,
             'earned': 0,
             'items': []
@@ -379,39 +379,39 @@ def calculate_avg_sentence_length(slides):
     return total_words / len(sentences)
 ```
 
-### Step 4: Score NCLEX Alignment
+### Step 4: Score Standards Alignment
 ```python
-def score_nclex_alignment(slides, rubric):
-    """Score NCLEX alignment category."""
+def score_standards_alignment(slides, rubric):
+    """Score standards alignment category."""
 
     scores = []
-    criteria = rubric['nclex_alignment']['criteria']
+    criteria = rubric['standards_alignment']['criteria']
 
-    # Client needs coverage
-    needs_weight = criteria['client_needs_coverage']['weight']
-    # Check for NCLEX category tags in content
-    nclex_keywords = ['safe', 'effective', 'health promotion', 'psychosocial',
-                      'physiological', 'client needs']
+    # ELA standards coverage
+    ela_weight = criteria['ela_standards_coverage']['weight']
+    # Check for ELA standard tags in content
+    ela_keywords = ['RL', 'SL', 'W', 'reading', 'speaking', 'listening',
+                    'writing', 'interpret', 'collaborate', 'present']
     tagged_slides = sum(1 for s in slides
                         if any(kw in (s.get('body', '') + s.get('notes', '')).lower()
-                               for kw in nclex_keywords))
+                               for kw in ela_keywords))
     tag_ratio = tagged_slides / len(slides) if slides else 0
 
     if tag_ratio >= 0.8:
-        needs_score = needs_weight
+        ela_score = ela_weight
     elif tag_ratio >= 0.5:
-        needs_score = criteria['client_needs_coverage']['scoring']['tagged_only']
+        ela_score = criteria['ela_standards_coverage']['scoring']['tagged_only']
     else:
-        needs_score = criteria['client_needs_coverage']['scoring']['partially_tagged']
+        ela_score = criteria['ela_standards_coverage']['scoring']['partially_tagged']
 
     scores.append({
-        'criterion': 'client_needs_coverage',
-        'earned': needs_score,
-        'max': needs_weight
+        'criterion': 'ela_standards_coverage',
+        'earned': ela_score,
+        'max': ela_weight
     })
 
-    # Test taking tips
-    tips_weight = criteria['test_taking_tips']['weight']
+    # Performance tips
+    tips_weight = criteria['performance_tips']['weight']
     slides_with_tips = sum(1 for s in slides
                            if s.get('tip') and s['tip'].lower() not in ['none', 'n/a'])
     tip_ratio = slides_with_tips / len(slides) if slides else 0
@@ -419,42 +419,42 @@ def score_nclex_alignment(slides, rubric):
     if tip_ratio >= 0.7:
         tips_score = tips_weight
     elif tip_ratio >= 0.4:
-        tips_score = criteria['test_taking_tips']['scoring']['helpful_general']
+        tips_score = criteria['performance_tips']['scoring']['helpful_general']
     elif tip_ratio > 0:
-        tips_score = criteria['test_taking_tips']['scoring']['present_not_helpful']
+        tips_score = criteria['performance_tips']['scoring']['present_not_helpful']
     else:
         tips_score = 0
 
     scores.append({
-        'criterion': 'test_taking_tips',
+        'criterion': 'performance_tips',
         'earned': tips_score,
         'max': tips_weight,
         'tip_ratio': tip_ratio
     })
 
-    # Vignette quality
-    vignette_weight = criteria['vignette_quality']['weight']
-    vignette_slides = [s for s in slides if s.get('type') == 'Vignette']
+    # Activity quality
+    activity_weight = criteria['activity_quality']['weight']
+    activity_slides = [s for s in slides if s.get('type') == 'Activity']
 
-    if vignette_slides:
-        well_formed = sum(1 for v in vignette_slides
-                          if '?' in v.get('body', '')
-                          and re.search(r'[A-D][\.\)]', v.get('body', '')))
-        vignette_score = (well_formed / len(vignette_slides)) * vignette_weight
+    if activity_slides:
+        well_formed = sum(1 for a in activity_slides
+                          if 'instruction' in a.get('body', '').lower()
+                          or 'step' in a.get('body', '').lower())
+        activity_score = (well_formed / len(activity_slides)) * activity_weight
     else:
-        vignette_score = vignette_weight * 0.5  # No vignettes, partial credit
+        activity_score = activity_weight * 0.5  # No activities, partial credit
 
     scores.append({
-        'criterion': 'vignette_quality',
-        'earned': vignette_score,
-        'max': vignette_weight
+        'criterion': 'activity_quality',
+        'earned': activity_score,
+        'max': activity_weight
     })
 
     # Critical thinking
     thinking_weight = criteria['critical_thinking']['weight']
     # Check for analysis-promoting language
-    analysis_terms = ['analyze', 'evaluate', 'prioritize', 'determine',
-                      'assess', 'compare', 'which', 'best', 'first']
+    analysis_terms = ['analyze', 'evaluate', 'interpret', 'critique',
+                      'assess', 'compare', 'perform', 'demonstrate', 'create']
     analysis_count = sum(1 for s in slides
                          if any(term in (s.get('body', '')).lower()
                                 for term in analysis_terms))
@@ -554,7 +554,7 @@ def calculate_final_score(blueprint_content, validation_result, rubric):
     # Score each category
     format_score, format_items = score_format_compliance(slides, validation_result, rubric)
     content_score, content_items = score_content_quality(slides, rubric)
-    nclex_score, nclex_items = score_nclex_alignment(slides, rubric)
+    standards_score, standards_items = score_standards_alignment(slides, rubric)
     ready_score, ready_items = score_presentation_readiness(slides, rubric)
 
     # Update tracker
@@ -562,13 +562,13 @@ def calculate_final_score(blueprint_content, validation_result, rubric):
     tracker['format_compliance']['items'] = format_items
     tracker['content_quality']['earned'] = content_score
     tracker['content_quality']['items'] = content_items
-    tracker['nclex_alignment']['earned'] = nclex_score
-    tracker['nclex_alignment']['items'] = nclex_items
+    tracker['standards_alignment']['earned'] = standards_score
+    tracker['standards_alignment']['items'] = standards_items
     tracker['presentation_readiness']['earned'] = ready_score
     tracker['presentation_readiness']['items'] = ready_items
 
     # Calculate total
-    total_score = format_score + content_score + nclex_score + ready_score
+    total_score = format_score + content_score + standards_score + ready_score
 
     # Assign grade
     grade = assign_grade(total_score)
@@ -585,7 +585,7 @@ def calculate_final_score(blueprint_content, validation_result, rubric):
         'category_scores': {
             'format_compliance': round(format_score, 1),
             'content_quality': round(content_score, 1),
-            'nclex_alignment': round(nclex_score, 1),
+            'standards_alignment': round(standards_score, 1),
             'presentation_readiness': round(ready_score, 1)
         },
         'score_breakdown': tracker,
@@ -644,7 +644,7 @@ CATEGORY BREAKDOWN:
 ----------------------------------------
 Format Compliance:      [XX]/25
 Content Quality:        [XX]/25
-NCLEX Alignment:        [XX]/25
+Standards Alignment:    [XX]/25
 Presentation Readiness: [XX]/25
 
 DETAILED SCORES:

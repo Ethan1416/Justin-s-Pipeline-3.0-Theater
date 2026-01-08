@@ -20,7 +20,7 @@
     "concept_labels": "array of strings",
     "differentiator_labels": "array of strings"
   },
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -204,12 +204,12 @@ Reasoning: Four anemia types with five features requires matrix format
 3. **Memorable** - Easy to recall on exam
 4. **Observable** - Can be assessed or measured
 
-### Common NCLEX Key Differentiators
-- **Lab Values:** Specific markers unique to condition
-- **Timing:** Acute vs chronic, onset patterns
-- **Location:** Anatomical differences
-- **Appearance:** Visual characteristics
-- **Response:** Treatment responses
+### Common Theater Key Differentiators
+- **Historical Period:** Era-specific conventions and styles
+- **Staging:** Arena vs proscenium vs thrust configurations
+- **Style:** Naturalism vs stylization approaches
+- **Character:** Stock types vs realistic portrayals
+- **Audience:** Interactive vs passive engagement
 
 ### Red Flags (NOT Key Differentiators)
 - Features present in both conditions
@@ -219,29 +219,33 @@ Reasoning: Four anemia types with five features requires matrix format
 
 ---
 
-## Special Considerations for NCLEX Content
+## Special Considerations for Theater Content
 
-### Disease Differentiation
-- Focus on "NCLEX-likely" distinguishing features
+### Style Differentiation
+- Focus on "performance-testable" distinguishing features
 - Prioritize actionable differences
-- Use Layout B or C for similar disease pairs
+- Use Layout B or C for similar style pairs
 
-### Medication Comparison
-- Drug class differentiators
-- Side effect profiles
-- Use Layout A or E based on drug count
+### Technique Comparison
+- Acting method differentiators
+- Movement/voice profiles
+- Use Layout A or E based on technique count
 
-### Assessment Findings
-- Normal vs Abnormal
-- Expected vs Unexpected
+### Performance Elements
+- Traditional vs Contemporary
+- Expected vs Experimental
 - Use Layout A for two-way, Layout D for three-way
 
-### Emergency Conditions
-- Time-sensitive differentiators
-- Treatment pathway differences
+### Historical Periods
+- Period-specific differentiators
+- Production style differences
 - Use Layout C for critical distinctions
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial key diff layout selector agent

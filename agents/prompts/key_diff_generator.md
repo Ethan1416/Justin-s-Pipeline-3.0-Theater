@@ -19,7 +19,7 @@
     "presenter_notes": "string"
   },
   "template_path": "string (path to visual template)",
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -65,7 +65,7 @@ Content should be KEY_DIFFERENTIATORS when:
 1. **DIFFERENTIAL DIAGNOSIS** - Distinguishing similar disorders
 2. **COMMONLY CONFUSED CONCEPTS** - Items frequently mistaken
 3. **CRITICAL DISTINGUISHING FEATURES** - One feature determines classification
-4. **NCLEX DISCRIMINATION ITEMS** - Content for discrimination questions
+4. **PERFORMANCE DISCRIMINATION ITEMS** - Content for discrimination questions
 5. **SIDE-BY-SIDE COMPARISONS** - Mutually exclusive categories
 
 DO NOT use key differentiators when:
@@ -577,31 +577,35 @@ DIFFERENTIATOR EXPLANATION:
 
 ---
 
-## NCLEX Discrimination Strategy
+## Theater Discrimination Strategy
 
-Key Differentiators are especially valuable for commonly confused nursing concepts:
+Key Differentiators are especially valuable for commonly confused theater concepts:
 
-**Nursing Assessments:**
-- Subjective vs Objective Data
-- Primary vs Secondary Assessment
-- Focused vs Comprehensive Assessment
+**Performance Styles:**
+- Greek Tragedy vs Greek Comedy
+- Commedia Masks vs Greek Masks
+- Shakespeare's Tragedy vs Comedy
 
-**Medication Classifications:**
-- ACE Inhibitors vs ARBs
-- Opioid vs Non-opioid Analgesics
-- Loop vs Thiazide Diuretics
+**Character Types:**
+- Tragic Hero vs Comic Hero
+- Zanni vs Innamorati (Commedia stock characters)
+- Protagonist vs Antagonist
 
-**Clinical Conditions:**
-- Type 1 vs Type 2 Diabetes
-- Hyperthyroidism vs Hypothyroidism
-- Systolic vs Diastolic Heart Failure
+**Staging Conventions:**
+- Thrust Stage vs Proscenium Stage
+- Elizabethan vs Greek Theater Space
+- Indoor vs Outdoor Performance Spaces
 
-**Nursing Interventions:**
-- Sterile vs Medical Aseptic Technique
-- Isolation Precautions Types
-- NG vs PEG Tube Feeding
+**Text Analysis:**
+- Verse vs Prose in Shakespeare
+- Soliloquy vs Aside
+- Subtext vs Text
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX nursing concepts → theater concepts
+- **v1.0** (2026-01-04): Initial key differentiators generator agent

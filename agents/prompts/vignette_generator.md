@@ -3,7 +3,7 @@
 ## Agent Identity
 - **Name:** vignette_generator
 - **Step:** 6 (Sub-agent of blueprint_generator)
-- **Purpose:** Generate NCLEX-style clinical vignettes for section application
+- **Purpose:** Generate performance-style theater scenarios for section application
 
 ---
 
@@ -154,7 +154,7 @@ The correct answer is [EMPHASIS: Letter]. [PAUSE]
 Let's look at why the other options don't work:
 [Walk through each distractor with brief rationale]
 
-[NCLEX pattern insight if applicable]
+[Performance pattern insight if applicable]
 [Transition to next section or wrap-up]
 ```
 
@@ -237,5 +237,9 @@ if not validation['valid']:
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX clinical vignettes -> theater scenarios
+- **v1.1** (2026-01-05): Initial vignette generator agent

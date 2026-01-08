@@ -73,7 +73,7 @@ This agent coordinates two specialized sub-agents that separate concerns:
 {
   "step4_output": "object (outline with sections and subsections)",
   "standards_config": "reference to standards/ directory files",
-  "domain": "string (NCLEX domain)"
+  "domain": "string (theater unit)"
 }
 ```
 
@@ -204,7 +204,7 @@ First subsection of section? -> Foundational Mode
 |---------|----------------|-----------|
 | Header | 32 | 2 |
 | Body | 66 | 8 |
-| NCLEX Tip | 66 | 2 |
+| Performance Tip | 66 | 2 |
 
 ### Step 7: Validate Standards Completeness
 
@@ -298,7 +298,7 @@ PRESENTER NOTES REQUIREMENTS
 - Word count: 130-150 words per minute
 - Maximum: 180 seconds (~450 words)
 - Markers: [PAUSE], [EMPHASIS]
-- Include: NCLEX pattern callouts, transitions
+- Include: Performance pattern callouts, transitions
 
 ========================================
 VALIDATION: PASS
@@ -334,6 +334,10 @@ Before proceeding to Step 6:
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
 **Sub-Agents:** standards_parser (5A), standards_applier (5B)
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX domain → theater unit, NCLEX Tip → Performance Tip
+- **v1.1** (2026-01-05): Added sub-agent architecture

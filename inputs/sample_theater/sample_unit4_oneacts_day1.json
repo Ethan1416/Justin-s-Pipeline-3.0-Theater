@@ -1,0 +1,128 @@
+{
+  "unit": {
+    "number": 4,
+    "name": "Student-Directed One Acts",
+    "total_days": 17
+  },
+  "day": 1,
+  "topic": "Introduction to Directing: The Director's Vision",
+  "standards": [
+    {
+      "code": "RL.9-10.3",
+      "full_text": "Analyze how complex characters develop over the course of a text, interact with other characters, and advance the plot or develop the theme."
+    },
+    {
+      "code": "SL.9-10.1",
+      "full_text": "Initiate and participate effectively in a range of collaborative discussions with diverse partners on topics, texts, and issues, building on others' ideas and expressing their own clearly and persuasively."
+    },
+    {
+      "code": "SL.9-10.4",
+      "full_text": "Present information, findings, and supporting evidence clearly, concisely, and logically such that listeners can follow the line of reasoning and the organization, development, substance, and style are appropriate to purpose, audience, and task."
+    }
+  ],
+  "learning_objectives": [
+    "Define the role of a director and articulate at least three responsibilities a director holds during production",
+    "Analyze how a director's vision shapes the interpretation of a script through examination of two contrasting directorial approaches",
+    "Begin developing a personal directorial vision statement for their upcoming one-act project"
+  ],
+  "vocabulary": [
+    {
+      "term": "director",
+      "definition": "The creative leader who interprets the script, guides actors' performances, and makes decisions about the overall artistic vision of a production",
+      "usage_example": "The director decided to set Romeo and Juliet in modern-day Los Angeles, completely changing how audiences experienced the classic story."
+    },
+    {
+      "term": "directorial concept",
+      "definition": "The central artistic idea or interpretation that unifies all elements of a production—acting, design, and staging",
+      "usage_example": "Her directorial concept was 'isolation in a connected world,' which influenced everything from the set design to how actors positioned themselves on stage."
+    },
+    {
+      "term": "blocking",
+      "definition": "The planned physical movement and positioning of actors on stage during a performance",
+      "usage_example": "During the argument scene, the blocking kept the two characters on opposite sides of the stage to emphasize their emotional distance."
+    },
+    {
+      "term": "rehearsal process",
+      "definition": "The structured period of preparation where the director works with actors to develop and refine the performance",
+      "usage_example": "The rehearsal process for our one-act will include three weeks of preparation before we perform for an audience."
+    },
+    {
+      "term": "production meeting",
+      "definition": "Regular gatherings where the director communicates with designers and technicians to ensure all elements support the directorial concept",
+      "usage_example": "At the production meeting, the director explained that she wanted all the costumes in shades of gray to support her concept of moral ambiguity."
+    },
+    {
+      "term": "table work",
+      "definition": "Early rehearsals focused on script analysis, character discussion, and understanding the play before physical staging begins",
+      "usage_example": "Before we started blocking, we spent two days on table work, just sitting and talking through what each character wants in every scene."
+    }
+  ],
+  "warmup": {
+    "name": "Director's Eye",
+    "type": "observation",
+    "instructions": "Students observe a 30-second video clip of a theatrical scene TWICE. First viewing: watch as an audience member (emotional response). Second viewing: watch as a director (technical observations—blocking, pacing, actor choices). Share observations with partner. This warmup introduces the shift in perspective that directing requires.",
+    "materials": ["30-second clip from a professional theater production", "projector"],
+    "connection_to_lesson": "Introduces the concept of viewing theater through a director's analytical lens versus an audience member's emotional lens"
+  },
+  "lecture_content": [
+    "Introduction to Unit 4 and the student-directed one-act project overview",
+    "What is a director? Defining the role beyond 'telling actors what to do'",
+    "The director's responsibilities: vision keeper, collaborator, communicator, decision-maker",
+    "Historical perspective: The rise of the modern director (19th century onwards)",
+    "The director as interpreter: How the same script becomes different productions",
+    "Case study: Two productions of Romeo and Juliet (traditional vs. modern/Luhrmann)",
+    "Developing a directorial concept: Starting with 'What is this play ABOUT?'",
+    "The director's toolkit: Script analysis, research, visual inspiration",
+    "Working with actors: The balance of guidance and freedom",
+    "The rehearsal process overview: Table work → Blocking → Working → Polishing",
+    "Communication skills: Giving notes, running production meetings",
+    "Preview of your role: You will direct your classmates in a 10-minute one-act"
+  ],
+  "activity": {
+    "name": "Directorial Vision Statement Draft",
+    "type": "writing",
+    "instructions": "Using the provided one-act script options (displayed on handout), students will: 1) Select one script that interests them, 2) Read the one-page synopsis provided, 3) Answer three guiding questions: What themes resonate with you? What visual or staging ideas come to mind? What would you want your audience to feel/think leaving the theater? 4) Write a 3-5 sentence 'Directorial Vision Statement' draft. These will be refined throughout the unit.",
+    "materials_needed": [
+      "One-act script options handout (5 synopses)",
+      "Directorial Vision Statement template",
+      "Student journals"
+    ],
+    "grouping": "individual",
+    "differentiation": {
+      "ell": "Provide sentence frames for vision statement: 'I want to direct [title] because... My vision focuses on... I want the audience to...'",
+      "advanced": "Additional prompt: How might your concept differ from a 'traditional' interpretation? What makes your vision unique?",
+      "struggling": "One-on-one conference during activity to talk through ideas verbally before writing"
+    }
+  },
+  "journal_prompt": "Reflect on a time you had a vision for something—a project, an event, a piece of art—and had to communicate that vision to others. What was challenging about it? What worked? How might this experience prepare you for directing?",
+  "exit_tickets": [
+    "Name two responsibilities of a theatrical director that surprised you or that you hadn't considered before.",
+    "In one sentence, what is a 'directorial concept' and why is it important?",
+    "On a scale of 1-5, how confident do you feel about developing your own directorial vision? What support would help increase your confidence?"
+  ],
+  "prior_knowledge": "Students have completed three units: Greek Theater (origins, chorus, masks), Commedia dell'Arte (stock characters, physicality, improvisation), and Shakespeare (language, verse, staging). They have acted in various classroom exercises and scenes but have not yet directed.",
+  "activity_preview": "Tomorrow we will begin the script selection process and start detailed script analysis with your potential one-act choices.",
+  "materials_list": [
+    "PowerPoint presentation (16 slides)",
+    "Projector and speakers",
+    "30-second professional theater clip",
+    "One-act script options handout",
+    "Directorial Vision Statement template",
+    "Student journals",
+    "Exit ticket slips"
+  ],
+  "assessment_connections": {
+    "formative": [
+      "Observation during Director's Eye warmup",
+      "Participation in class discussion",
+      "Directorial Vision Statement draft quality",
+      "Journal reflection depth"
+    ],
+    "summative": "Final Directorial Portfolio including vision statement, blocking plans, rehearsal notes, and self-evaluation (end of Unit 4)"
+  },
+  "content_accuracy_notes": {
+    "historical_context": "The concept of the director as a distinct artistic role emerged in the late 19th century with figures like George II, Duke of Saxe-Meiningen, and later Konstantin Stanislavski. Before this, actors and actor-managers controlled productions.",
+    "romeo_juliet_comparison": "Reference Baz Luhrmann's 1996 film as a widely-known example of a bold directorial concept (modern setting, original language) vs. traditional period staging.",
+    "one_act_definition": "A one-act play typically runs 15-45 minutes, has limited scene changes, and tells a complete story in a compressed format. For this unit, students will work with 10-minute one-acts."
+  }
+}

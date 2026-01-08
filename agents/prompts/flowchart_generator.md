@@ -20,7 +20,7 @@
     "presenter_notes": "string"
   },
   "template_path": "string (path to visual template)",
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -462,5 +462,9 @@ Before completing flowchart generation:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - config/nclex.yaml -> config/theater.yaml
+- **v1.0** (2026-01-04): Initial flowchart generator agent

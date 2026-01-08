@@ -15,8 +15,8 @@ This agent orchestrates the following sub-agents:
 |-----------|---------|-------|--------|
 | `slide_planner` | Plan slide sequence and assignments | Section outline | Slide plan with sequence |
 | `content_slide_generator` | Generate content slide body | Slide plan + anchors | Content slides |
-| `vignette_generator` | Generate NCLEX vignette | Section concepts | Vignette + answer slides |
-| `tip_generator` | Generate NCLEX tips | Content slides | Tips per slide |
+| `vignette_generator` | Generate performance scenario | Section concepts | Scenario + answer slides |
+| `tip_generator` | Generate performance tips | Content slides | Tips per slide |
 | `presenter_notes_writer` | Generate presenter monologues | All slides | Notes per slide |
 
 ### Execution Flow
@@ -130,7 +130,7 @@ For each slide, produce:
 2. Slide type
 3. Header text (max 32 chars/line, 2 lines)
 4. Body text (max 66 chars/line, 8 lines)
-5. NCLEX Tip (content slides only)
+5. Performance Tip (content slides only)
 6. Presenter notes (verbatim monologue)
 
 ### Step 5: Validate Anchor Coverage (CRITICAL - R8)
@@ -187,7 +187,7 @@ and primes the audience]"
 
 - [Attribution]
 
-NCLEX TIP:
+PERFORMANCE TIP:
 [None - omit for intro slides]
 
 PRESENTER NOTES:
@@ -222,8 +222,8 @@ BODY:
 - Mixed format acceptable
 - Prioritize clarity over density
 
-NCLEX TIP:
-[1-2 line insight about NCLEX testing patterns]
+PERFORMANCE TIP:
+[1-2 line insight about performance techniques]
 
 PRESENTER NOTES:
 [Opening statement]
@@ -234,7 +234,7 @@ PRESENTER NOTES:
 [PAUSE] where appropriate
 
 [Applied relevance]
-[NCLEX pattern callout if applicable]
+[Performance technique callout if applicable]
 [Transition to next slide]
 
 [Target: 130-150 words per minute, max 180 seconds]
@@ -248,18 +248,18 @@ SLIDE [#]: VIGNETTE
 Type: Vignette
 
 HEADER:
-[Section Name] - Clinical Application
+[Section Name] - Performance Application
 
 BODY:
-[2-4 sentence NCLEX-style vignette stem]
+[2-4 sentence theater-style scenario stem]
 
 A) [Plausible option]
 B) [Plausible option]
 C) [Plausible option]
 D) [Plausible option]
 
-NCLEX TIP:
-[None - omit for vignette slides]
+PERFORMANCE TIP:
+[None - omit for scenario slides]
 
 PRESENTER NOTES:
 Let's apply what we've learned. [PAUSE]
@@ -294,7 +294,7 @@ Why not the others:
 - C) [If wrong: explanation]
 - D) [If wrong: explanation]
 
-NCLEX TIP:
+PERFORMANCE TIP:
 [None - omit for answer slides]
 
 PRESENTER NOTES:
@@ -305,7 +305,7 @@ The correct answer is [EMPHASIS: Letter]. [PAUSE]
 Let's look at why the other options don't work:
 [Walk through each distractor]
 
-[NCLEX pattern insight]
+[Performance technique insight]
 [Transition to next section or wrap-up]
 ```
 
@@ -329,18 +329,18 @@ Let's look at why the other options don't work:
 | Comparisons | Side-by-side or table |
 | Single complex idea | Prose paragraph |
 
-### NCLEX Tips
+### Performance Tips
 - Present on ALL content slides
-- Omit for Intro/Vignette/Answer slides
+- Omit for Intro/Scenario/Answer slides
 - 1-2 lines maximum
-- Focus on testing patterns
+- Focus on technique applications
 
 ### Presenter Notes
 - Verbatim monologue (complete sentences)
 - 130-150 words per minute
 - Maximum 180 seconds per slide
 - Include [PAUSE] and [EMPHASIS] markers
-- Include NCLEX pattern callouts
+- Include performance technique callouts
 - Include transitions
 
 ---
@@ -350,12 +350,12 @@ Let's look at why the other options don't work:
 ### Line Count Validation
 - [ ] ALL BODY sections have <= 8 non-empty lines
 - [ ] Headers <= 2 lines, 32 chars/line
-- [ ] NCLEX Tips <= 2 lines
+- [ ] Performance Tips <= 2 lines
 
 ### Content Validation
 - [ ] All anchors from Step 4 covered (R8 - use anchor_coverage_tracker)
 - [ ] FRONTLOAD anchors appear early (within first 3 slides of subsection)
-- [ ] NCLEX tips on all content slides
+- [ ] Performance tips on all content slides
 - [ ] Fixed slides present (intro, vignette, answer)
 - [ ] Presenter notes complete on all slides
 
@@ -438,8 +438,8 @@ Before proceeding to Step 6.5:
 - [ ] All subsections addressed
 - [ ] Delivery modes correctly applied
 - [ ] Section intro includes quote
-- [ ] All content slides have NCLEX tips
-- [ ] Vignette is NCLEX-style
+- [ ] All content slides have performance tips
+- [ ] Scenario is theater-style
 - [ ] Answer slide includes distractor analysis
 - [ ] Presenter notes complete
 - [ ] All anchors covered
@@ -459,5 +459,9 @@ Step 6 -> Step 6.5 -> Step 7 -> Step 8 -> Step 9 -> Step 10 -> Step 11 -> Step 1
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX tips → Performance tips, clinical vignettes → theater scenarios
+- **v1.1** (2026-01-05): Added anchor coverage tracking

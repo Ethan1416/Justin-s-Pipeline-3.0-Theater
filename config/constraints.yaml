@@ -1,9 +1,47 @@
 # constraints.yaml
-# Canonical source for all pipeline constraints
+# Canonical source for all Theater Pipeline constraints
 # All agents and skills should reference this file
 
-version: "1.0"
+version: "2.0"
 last_updated: "2026-01-08"
+pipeline: "theater_education"
+
+# =============================================================================
+# DAILY STRUCTURE (56 minutes total)
+# =============================================================================
+
+daily_structure:
+  total_minutes: 56
+
+  components:
+    agenda_journal:
+      duration_minutes: 5
+      tolerance_seconds: 30
+      description: "Agenda display and journal-in prompt"
+
+    warmup:
+      duration_minutes: 5
+      tolerance_seconds: 30
+      description: "Content-connected theater warmup"
+
+    lecture:
+      duration_minutes: 15
+      tolerance_minutes: 1
+      description: "PowerPoint presentation with verbatim notes"
+
+    activity:
+      duration_minutes: 15
+      tolerance_minutes: 1
+      description: "Structured hands-on activity"
+
+    reflection:
+      duration_minutes: 10
+      tolerance_minutes: 1
+      description: "Journal reflection and exit ticket"
+
+    buffer:
+      duration_minutes: 6
+      description: "Transition and flexibility time"
 
 # =============================================================================
 # TEXT LIMITS
@@ -14,69 +52,177 @@ text_limits:
   header:
     chars_per_line: 36
     max_lines: 1
-    total_max_chars: 36  # Single line only
+    total_max_chars: 36
     revision_required: true  # NEVER truncate - always revise to fit
 
   # Body Constraints
   body:
-    # chars_per_line: REMOVED - PowerPoint handles word wrapping
-    max_lines: 12  # Increased - single TextBox with wrapping
-    word_wrap: true  # Text flows naturally within TextBox
+    max_lines: 12
+    word_wrap: true
     truncation: false  # NEVER truncate body content
 
   # Performance Tip Constraints
   performance_tip:
     chars_per_line: 66
     max_lines: 2
-    total_max_chars: 132  # CANONICAL VALUE
-
-  # Presenter Notes Constraints
-  presenter_notes:
-    max_words: 450
-    max_duration_seconds: 180
-    # NO per-line character limit (intentional)
-    # Notes are for speaker, not display
+    total_max_chars: 132
+    prefix: "PERFORMANCE TIP:"
 
 # =============================================================================
-# VISUAL QUOTAS
+# PRESENTER NOTES REQUIREMENTS (15-minute verbatim script)
 # =============================================================================
 
-visual_quotas:
-  # By section slide count
-  by_slide_count:
-    "12-15":
-      minimum: 2
-      target_min: 3
-      target_max: 4
-      maximum: 6
-    "16-20":
-      minimum: 3
-      target_min: 4
-      target_max: 5
-      maximum: 8
-    "21-25":
-      minimum: 3
-      target_min: 5
-      target_max: 6
-      maximum: 10
-    "26-35":
-      minimum: 4
-      target_min: 6
-      target_max: 8
-      maximum: 14
+presenter_notes:
+  # Word count targets for 15 minutes at 130-150 WPM
+  total_words:
+    minimum: 1950
+    target: 2100
+    maximum: 2250
 
-  # Maximum percentage of slides that can be visuals
-  max_percentage: 0.40  # 40%
+  # Per-slide targets (12 content slides)
+  per_slide:
+    minimum: 100
+    target_low: 160
+    target_high: 190
+    maximum: 250
 
-  # Visual types allowed
+  # Duration estimates
+  duration:
+    target_minutes: 15
+    minimum_minutes: 14
+    maximum_minutes: 16
+    speaking_rate_wpm: 140  # Average speaking rate
+
+  # Required markers
+  markers:
+    pause:
+      min_per_slide: 2
+      format: "[PAUSE]"
+    emphasis:
+      min_per_content_slide: 1
+      format: "[EMPHASIS: term]"
+    check_understanding:
+      min_per_presentation: 3
+      format: "[CHECK FOR UNDERSTANDING]"
+
+  # Style requirements
+  style:
+    verbatim: true  # Word-for-word script
+    contractions_allowed: true
+    direct_address: true  # "you", "we", "let's"
+    natural_spoken_language: true
+
+# =============================================================================
+# WARMUP REQUIREMENTS
+# =============================================================================
+
+warmup:
+  duration_minutes: 5
+
+  # Structure requirements
+  structure:
+    required_phases:
+      - setup           # 30 seconds
+      - demonstration   # 30 seconds (if needed)
+      - execution       # 3 minutes
+      - wrapup          # 30 seconds
+      - transition      # 30 seconds
+
+  # Content requirements
+  content:
+    must_connect_to_lesson: true
+    abstract_allowed: false
+
+    # Must include at least one of:
+    connection_types:
+      - vocabulary_reference
+      - skill_practice
+      - concept_preview
+
+  # Types by category
   types:
-    - TABLE
-    - FLOWCHART
-    - DECISION_TREE
-    - TIMELINE
-    - HIERARCHY
-    - SPECTRUM
-    - KEY_DIFFERENTIATORS
+    physical: ["voice", "body", "movement"]
+    mental: ["focus", "observation", "concentration"]
+    social: ["partner", "group", "ensemble"]
+    creative: ["improvisation", "imagination"]
+    content: ["skill_practice", "vocabulary"]
+
+# =============================================================================
+# ACTIVITY REQUIREMENTS
+# =============================================================================
+
+activity:
+  duration_minutes: 15
+
+  # Structure requirements
+  structure:
+    setup_minutes: 1.5
+    work_minutes: 11
+    sharing_minutes: 2.5
+
+    required_elements:
+      - numbered_steps
+      - time_allocations
+      - expected_outcomes
+      - teacher_actions
+      - student_actions
+
+  # Time warnings
+  time_warnings:
+    - at_minute: 10
+    - at_minute: 13
+
+  # Types allowed
+  types:
+    - writing
+    - discussion
+    - performance
+    - annotation
+    - creative
+    - physical
+    - collaborative
+
+  # Differentiation required
+  differentiation:
+    required_categories:
+      - ell_supports
+      - advanced_extensions
+      - struggling_modifications
+
+# =============================================================================
+# POWERPOINT STRUCTURE
+# =============================================================================
+
+powerpoint:
+  # Slide counts
+  slides:
+    content_slides: 12
+    auxiliary_slides: 4
+    total_slides: 16
+
+  # Slide structure
+  structure:
+    - slide: 1
+      type: "auxiliary"
+      content: "Agenda"
+      counted: false
+    - slide: 2
+      type: "auxiliary"
+      content: "Warmup Instructions"
+      counted: false
+    - slides: "3-14"
+      type: "content"
+      content: "Learning Content"
+      counted: true
+      count: 12
+    - slide: 15
+      type: "auxiliary"
+      content: "Activity Instructions"
+      counted: false
+    - slide: 16
+      type: "auxiliary"
+      content: "Journal & Exit Ticket"
+      counted: false
 
 # =============================================================================
 # MARKER REQUIREMENTS
@@ -91,67 +237,196 @@ markers:
 
   emphasis:
     min_per_content_slide: 1
-    min_per_scenario_slide: 0  # Optional
-    min_per_answer_slide: 1
     format: "[EMPHASIS: term]"
 
+  check_understanding:
+    min_per_presentation: 3
+    format: "[CHECK FOR UNDERSTANDING]"
+
   performance_callout:
-    required: false  # Recommended but not required
+    required: false
     patterns:
       - "In performance"
-      - "Performance tip"
       - "On stage"
+      - "When you're performing"
+
+# =============================================================================
+# VALIDATION THRESHOLDS (HARDCODED VALIDATORS)
+# =============================================================================
+
+validation:
+  # Truncation Validator (HARDCODED - CANNOT BE BYPASSED)
+  truncation:
+    rules:
+      - "Every sentence must end with . ! ? or :"
+      - "No trailing ellipsis (...)"
+      - "No mid-word cuts"
+      - "No incomplete thoughts"
+    auto_fix: true
+    must_pass: true
+
+  # Elaboration Validator (HARDCODED - CANNOT BE BYPASSED)
+  elaboration:
+    pass_threshold: 85  # Out of 100
+    scoring_weights:
+      depth: 0.30
+      examples: 0.20
+      procedure: 0.20
+      tone: 0.15
+      connections: 0.15
+    must_pass: true
+
+  # Timing Validator (HARDCODED - CANNOT BE BYPASSED)
+  timing:
+    presenter_notes:
+      min_words: 1950
+      max_words: 2250
+      min_minutes: 14
+      max_minutes: 16
+    per_slide:
+      min_words: 50
+      max_words: 300
+    must_pass: true
+
+  # Structure Validator (HARDCODED - CANNOT BE BYPASSED)
+  structure:
+    required_components:
+      - lesson_plan
+      - powerpoint
+      - presenter_notes
+      - warmup
+      - activity
+      - handout
+      - journal_prompt
+      - exit_tickets
+      - standards
+      - materials_list
+    must_pass: true
 
 # =============================================================================
 # QUALITY GATE THRESHOLDS
 # =============================================================================
 
 quality_gates:
-  step_8_qa:
-    pass_threshold: 90
-    warn_threshold: 80
-    max_retry_iterations: 3
+  # Gate 1: Post-Generation (MANDATORY)
+  gate_1:
+    name: "Post-Generation"
+    validators:
+      - truncation  # MUST PASS
+      - structure   # MUST PASS
+    action_on_fail: "return_to_generation"
 
-  visual_quota:
-    fail_if_below_minimum: true
-    warn_if_below_target: true
+  # Gate 2: Quality (Score-Based)
+  gate_2:
+    name: "Quality"
+    validators:
+      - elaboration: 85  # Score >= 85
+      - timing: "within_tolerance"
+      - coherence: 80
+    action_on_fail: "return_to_revision"
 
-# =============================================================================
-# SLIDE REQUIREMENTS
-# =============================================================================
-
-slide_requirements:
-  # Per section
-  section:
-    min_slides: 12
-    max_slides: 35
-    required_types:
-      - "Section Intro"  # First slide
-      - "Scenario"       # Practical application
-      - "Discussion"     # Scenario solution/analysis
-
-  # Scenario structure (practical application slides)
-  scenario:
-    stem_min_sentences: 2
-    stem_max_sentences: 4
-    required_options: ["A", "B", "C", "D"]
-    option_format: "letter + parenthesis"  # A) not A. or A:
-
-  # Discussion structure (scenario analysis)
-  discussion:
-    required_sections:
-      - "Best Approach"
-      - "Rationale"
-      - "Alternative Analysis"
-    min_rationale_sentences: 2
-    max_rationale_sentences: 3
+  # Gate 3: Standards (Coverage)
+  gate_3:
+    name: "Standards"
+    validators:
+      - standards_coverage: "all_objectives_linked"
+      - pedagogy: 80
+    action_on_fail: "return_to_revision"
 
 # =============================================================================
-# ANCHOR COVERAGE
+# LEARNING OBJECTIVE COVERAGE
 # =============================================================================
 
-anchor_coverage:
+learning_objective_coverage:
   required_rate: 1.0  # 100% coverage required
-  max_anchors_per_slide: 3
-  min_anchors_per_slide: 1
-  allow_anchor_repetition: true  # Same anchor on multiple slides OK
+  max_objectives_per_slide: 2
+  min_objectives_per_lesson: 2
+  max_objectives_per_lesson: 4
+
+  # Each objective must be:
+  requirements:
+    - addressed_in_lecture: true
+    - practiced_in_activity: true
+    - assessed_in_exit_ticket: true
+
+# =============================================================================
+# LESSON PLAN REQUIREMENTS
+# =============================================================================
+
+lesson_plan:
+  # Required sections
+  required_sections:
+    - basic_information
+    - standards
+    - learning_objectives
+    - vocabulary
+    - materials
+    - procedure
+    - differentiation
+    - assessment
+    - reflection_space
+
+  # Procedure must include
+  procedure_requirements:
+    - teacher_actions
+    - student_actions
+    - timing_per_component
+    - transitions
+
+  # Differentiation must address
+  differentiation_categories:
+    - ell_support
+    - advanced_learners
+    - struggling_learners
+
+# =============================================================================
+# UNIT STRUCTURE
+# =============================================================================
+
+units:
+  total_units: 4
+  total_instructional_days: 80
+
+  unit_list:
+    - number: 1
+      name: "Greek Theater"
+      days: 20
+      focus: ["origins", "tragedy", "comedy", "chorus", "masks"]
+
+    - number: 2
+      name: "Commedia dell'Arte"
+      days: 18
+      focus: ["stock_characters", "lazzi", "improvisation", "physicality"]
+
+    - number: 3
+      name: "Shakespeare"
+      days: 25
+      focus: ["language", "verse", "staging", "character_analysis"]
+
+    - number: 4
+      name: "Student-Directed One Acts"
+      days: 17
+      focus: ["directing", "blocking", "rehearsal", "production"]
+
+# =============================================================================
+# CALIFORNIA STANDARDS ALIGNMENT
+# =============================================================================
+
+standards:
+  framework: "California Common Core"
+  grade_levels: ["9-10", "11-12"]
+
+  required_domains:
+    - code_prefix: "RL"
+      name: "Reading Literature"
+      min_per_lesson: 1
+    - code_prefix: "SL"
+      name: "Speaking & Listening"
+      min_per_lesson: 1
+    - code_prefix: "W"
+      name: "Writing"
+      min_per_lesson: 0  # Optional
+
+  format:
+    include_full_text: true  # Not just codes
+    example: "RL.9-10.3: Analyze how complex characters develop..."

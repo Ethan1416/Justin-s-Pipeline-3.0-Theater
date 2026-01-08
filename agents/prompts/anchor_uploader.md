@@ -11,7 +11,7 @@
 ```json
 {
   "anchor_document": "string (file path or content of anchor point summaries)",
-  "domain_hint": "string (optional - expected NCLEX domain if known)"
+  "domain_hint": "string (optional - expected theater unit if known)"
 }
 ```
 
@@ -62,13 +62,11 @@ Extract the domain name from the document header or content.
 
 **Expected Domain Indicators:**
 - Explicit domain name in title (e.g., "Pharmacology Anchor Point Summaries")
-- Content indicators matching one of the 6 NCLEX domains:
-  - `fundamentals` - Fundamentals of Nursing
-  - `pharmacology` - Pharmacology
-  - `medical_surgical` - Medical-Surgical Nursing
-  - `ob_maternity` - OB/Maternity Nursing
-  - `pediatric` - Pediatric Nursing
-  - `mental_health` - Mental Health Nursing
+- Content indicators matching one of the 4 theater units:
+  - `unit1` - Acting Fundamentals
+  - `unit2` - Stagecraft and Design
+  - `unit3` - Directing and Production
+  - `unit4` - Performance and Analysis
 
 ### Step 3: Parse Anchors
 Extract each numbered anchor point from the document.
@@ -170,5 +168,9 @@ Before proceeding to Step 2:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - 6 NCLEX domains -> 4 theater units
+- **v1.0** (2026-01-04): Initial anchor uploader agent

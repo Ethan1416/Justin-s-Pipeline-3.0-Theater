@@ -21,7 +21,7 @@
     "right_pole_label": "string (high end label)",
     "segment_labels": "array of strings"
   },
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -219,7 +219,7 @@ Reasoning: Urgency vs Severity creates four-quadrant triage system
 
 ---
 
-## Special Considerations for NCLEX Content
+## Special Considerations for Theater Content
 
 ### Vital Signs
 - Normal ranges with abnormal poles
@@ -239,5 +239,9 @@ Reasoning: Urgency vs Severity creates four-quadrant triage system
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX content considerations -> Theater content
+- **v1.0** (2026-01-04): Initial spectrum layout selector agent

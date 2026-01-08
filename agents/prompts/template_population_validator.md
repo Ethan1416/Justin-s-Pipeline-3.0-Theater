@@ -31,11 +31,11 @@ slide_validation = validate_slide(
         'slide_type': 'content',
         'header': 'Medication Safety',
         'body': '• Point 1\n• Point 2',
-        'nclex_tip': 'Safety first when administering medications!',
+        'performance_tip': 'Project from your diaphragm, not your throat!',
         'presenter_notes': 'Full presenter notes text...'
     },
     slide_type='content',
-    template_name='template_nclex_tip.pptx'
+    template_name='template_performance_tip.pptx'
 )
 
 # Check if passed
@@ -75,7 +75,7 @@ if not validation['valid']:
 | R1.2 | Header lines | 2 max |
 | R2.1 | Body lines | 8 max |
 | R3.1 | Body chars/line | 66 max |
-| R4.1 | NCLEX tip chars | 132 max |
+| R4.1 | Performance tip chars | 132 max |
 
 ### Presenter Notes (R6)
 | Check ID | Requirement | Limit |
@@ -93,14 +93,14 @@ if not validation['valid']:
 ### Template (T1)
 | Check ID | Requirement | Expected |
 |----------|-------------|----------|
-| T1.1 | Template used | template_nclex_tip.pptx |
+| T1.1 | Template used | template_performance_tip.pptx |
 
 ### Content (C1)
 | Check ID | Requirement | Required |
 |----------|-------------|----------|
 | C1.1 | Header present | Yes |
 | C1.2 | Body present | Yes (content/summary) |
-| C1.3 | NCLEX tip present | Recommended |
+| C1.3 | Performance tip present | Recommended |
 | C1.4 | Presenter notes present | Yes |
 
 ---
@@ -117,13 +117,13 @@ if not validation['valid']:
         "slide_type": "string",
         "header": "string",
         "body": "string",
-        "nclex_tip": "string",
+        "performance_tip": "string",
         "presenter_notes": "string"
       }
     ]
   },
   "template_config": {
-    "template_name": "string (default: template_nclex_tip.pptx)",
+    "template_name": "string (default: template_performance_tip.pptx)",
     "strict_mode": "boolean (default: true)"
   }
 }
@@ -175,7 +175,7 @@ if not validation['valid']:
 section = input_data['section']
 section_name = section['section_name']
 slides = section['slides']
-template_name = input_data.get('template_config', {}).get('template_name', 'template_nclex_tip.pptx')
+template_name = input_data.get('template_config', {}).get('template_name', 'template_performance_tip.pptx')
 ```
 
 ### Step 2: Validate All Slides
@@ -240,10 +240,10 @@ return {
 Before allowing PowerPoint generation:
 - [ ] All slides pass R1 (header limits)
 - [ ] All slides pass R2/R3 (body limits)
-- [ ] All slides pass R4 (NCLEX tip limits - dedicated TextBox 24)
+- [ ] All slides pass R4 (Performance tip limits - dedicated TextBox 24)
 - [ ] All slides pass R6 (presenter notes word count)
 - [ ] All slides pass R14 (markers present)
-- [ ] NCLEX Tip template configured for all slides
+- [ ] Performance Tip template configured for all slides
 - [ ] Overall pass rate >= 95%
 
 ---
@@ -266,8 +266,8 @@ Before allowing PowerPoint generation:
 ```
 ======================================================================
 TEMPLATE POPULATION VALIDATION REPORT
-Section: Medication Safety & Administration
-Template: template_nclex_tip.pptx
+Section: Greek Theater Foundations
+Template: template_performance_tip.pptx
 ======================================================================
 
 SUMMARY
@@ -288,7 +288,7 @@ Slide 1 (title) [✓]
 Slide 2 (content) [✓]
 
 Slide 3 (content) [⚠]
-  ⚠ C1.3: NCLEX tip missing (recommended)
+  ⚠ C1.3: Performance tip missing (recommended)
 
 ...
 
@@ -297,5 +297,9 @@ Slide 3 (content) [⚠]
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-06
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX → Performance tips
+- **v1.0** (2026-01-06): Initial template population validator agent

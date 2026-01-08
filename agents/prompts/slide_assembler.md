@@ -148,10 +148,10 @@ def add_body_content(slide, text, config):
     return body_box
 ```
 
-### Step 5: Add NCLEX Tip
+### Step 5: Add Performance Tip
 ```python
-def add_nclex_tip(slide, text, config):
-    """Add NCLEX tip to bottom of slide."""
+def add_performance_tip(slide, text, config):
+    """Add performance tip to bottom of slide."""
 
     if not text or text.lower() in ['none', 'n/a', '']:
         return None
@@ -167,7 +167,7 @@ def add_nclex_tip(slide, text, config):
     tf.word_wrap = True
 
     p = tf.paragraphs[0]
-    p.text = f"NCLEX TIP: {text}"
+    p.text = f"PERFORMANCE TIP: {text}"
     p.font.size = Pt(tip_config.get('font_size', 18))
     p.font.name = tip_config.get('font_name', 'Aptos')
     p.font.bold = True
@@ -341,7 +341,7 @@ def assemble_slide(prs, slide_data, template_config, template_slide=None):
             add_body_content(slide, slide_data['body'], template_config)
 
         if slide_data.get('tip'):
-            add_nclex_tip(slide, slide_data['tip'], template_config)
+            add_performance_tip(slide, slide_data['tip'], template_config)
 
     elif slide_type == 'Visual':
         # Visual slide with generated elements
@@ -436,5 +436,9 @@ def ensure_z_order(slide, shape, position):
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial slide assembler agent

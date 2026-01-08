@@ -13,7 +13,7 @@
   "presentations": "array of presentation result objects",
   "pptx_output": "object (Step 12 pptx_populator output)",
   "blueprints": "array (original blueprints for comparison)",
-  "domain_config": "reference to config/nclex.yaml",
+  "domain_config": "reference to config/theater.yaml",
   "validation_level": "string (strict/standard/lenient)"
 }
 ```
@@ -82,7 +82,7 @@ content_accuracy:
   checks:
     - headers_match: "Slide headers match blueprint"
     - body_content_match: "Body text matches blueprint"
-    - nclex_tips_present: "Tips on correct slides"
+    - performance_tips_present: "Tips on correct slides"
     - presenter_notes_complete: "All notes populated"
     - visual_placeholders_filled: "No empty visual slots"
 
@@ -617,5 +617,9 @@ Before marking as DELIVERY READY:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX tips -> Performance tips
+- **v1.0** (2026-01-04): Initial final validator agent

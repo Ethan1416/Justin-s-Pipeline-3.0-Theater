@@ -62,7 +62,7 @@
 |---------|-----------|-----------|
 | HEADER (Title) | 2 | character_limits.title.max_lines |
 | BODY | **8** | character_limits.body.max_lines (R2 requirement) |
-| TIP (NCLEX TIP) | 2 | character_limits.tip.max_lines |
+| TIP (PERFORMANCE TIP) | 2 | character_limits.tip.max_lines |
 
 ### Counting Rules
 
@@ -74,7 +74,7 @@
 2. **Element Boundaries:**
    - HEADER: From "HEADER:" to next section marker
    - BODY: From "BODY:" to next section marker
-   - TIP: From "NCLEX TIP:" to next section marker or slide boundary
+   - TIP: From "PERFORMANCE TIP:" to next section marker or slide boundary
 
 3. **Special Cases:**
    - Bullet points count as separate lines
@@ -112,7 +112,7 @@ def parse_blueprint_for_lines(blueprint_content):
             current_slide['current_element'] = 'header'
         elif 'BODY:' in line:
             current_slide['current_element'] = 'body'
-        elif 'NCLEX TIP:' in line or 'TIP:' in line:
+        elif 'PERFORMANCE TIP:' in line or 'TIP:' in line:
             current_slide['current_element'] = 'tip'
         elif 'PRESENTER NOTES:' in line:
             current_slide['current_element'] = 'notes'  # Skip
@@ -310,5 +310,9 @@ Proceed to next validation check.
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX TIP → PERFORMANCE TIP
+- **v1.0** (2026-01-04): Initial line limit checker agent

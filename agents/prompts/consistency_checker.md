@@ -12,7 +12,7 @@
 {
   "blueprint": "string (blueprint content to validate)",
   "section_name": "string (current section name)",
-  "domain": "string (NCLEX domain)",
+  "domain": "string (theater unit)",
   "glossary_reference": "reference to terminology glossary (optional)",
   "previous_sections": "array of previous section blueprints (optional)"
 }
@@ -92,10 +92,10 @@
    - Spell out abbreviations on first use
    - Maintain consistent spelling (American English)
 
-2. **NCLEX-Specific Terms:**
-   - Use official NCLEX terminology
-   - Consistent use of "client" vs "patient"
-   - Standardized nursing process terms (ADPIE)
+2. **Theater-Specific Terms:**
+   - Use official theater terminology
+   - Consistent use of "performer" vs "actor"
+   - Standardized theater terminology
 
 3. **Nursing Process Terms:**
    - Assessment (not Assess, Assessing in isolation)
@@ -619,28 +619,28 @@ Consistency standards met. Proceed to next check.
 
 ---
 
-## Common NCLEX Terminology Reference
+## Common Theater Terminology Reference
 
 ### Preferred Terms
 | Instead Of | Use |
 |------------|-----|
-| patient | client |
-| heart attack | myocardial infarction (MI) |
-| stroke | cerebrovascular accident (CVA) |
-| sugar | glucose |
-| vitals | vital signs |
+| blocking | stage directions |
+| lines | dialogue |
+| props | properties |
+| stage left | actor's left |
+| stage right | actor's right |
 
 ### Standard Abbreviations
 | Abbreviation | Meaning | First Use |
 |--------------|---------|-----------|
-| BP | Blood Pressure | Spell out first |
-| HR | Heart Rate | Spell out first |
-| RR | Respiratory Rate | Spell out first |
-| SpO2 | Oxygen Saturation | Spell out first |
-| I&O | Intake and Output | Spell out first |
-| NPO | Nothing by Mouth | Spell out first |
-| PRN | As Needed | Spell out first |
-| ADL | Activities of Daily Living | Spell out first |
+| SL | Stage Left | Spell out first |
+| SR | Stage Right | Spell out first |
+| CS | Center Stage | Spell out first |
+| US | Upstage | Spell out first |
+| DS | Downstage | Spell out first |
+| SM | Stage Manager | Spell out first |
+| AD | Assistant Director | Spell out first |
+| ASM | Assistant Stage Manager | Spell out first |
 
 ---
 
@@ -654,5 +654,9 @@ Consistency standards met. Proceed to next check.
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.0** (2026-01-04): Initial consistency checker agent

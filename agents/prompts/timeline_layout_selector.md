@@ -20,7 +20,7 @@
     "has_descriptions": "boolean (events have detailed descriptions)",
     "avg_description_chars": "number (average description length)"
   },
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -196,7 +196,7 @@ Reasoning: Multiple events with detailed descriptions need milestone format
 
 ---
 
-## Special Considerations for NCLEX Content
+## Special Considerations for Theater Content
 
 ### Pharmacology Timelines
 - Onset, Peak, Duration, Half-life
@@ -216,5 +216,9 @@ Reasoning: Multiple events with detailed descriptions need milestone format
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX -> Theater content considerations
+- **v1.0** (2026-01-04): Initial timeline layout selector agent

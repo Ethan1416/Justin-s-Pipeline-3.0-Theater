@@ -11,9 +11,9 @@
 ```json
 {
   "step10_integrated_blueprints": "array of integrated blueprint files",
-  "domain_name": "string (e.g., 'NCLEX_Fundamentals')",
+  "domain_name": "string (e.g., 'Theater_GreekTheater')",
   "production_date": "string (YYYY-MM-DD format)",
-  "domain_config": "reference to config/nclex.yaml"
+  "domain_config": "reference to config/theater.yaml"
 }
 ```
 
@@ -319,7 +319,7 @@ Status: [READY FOR STEP 12 / NEEDS ATTENTION]
 ### Production Folder
 ```
 [Domain]_Production_[YYYY-MM-DD]
-Example: NCLEX_Fundamentals_Production_2026-01-04
+Example: Theater_GreekTheater_Production_2026-01-04
 ```
 
 ### Blueprint Files
@@ -384,5 +384,9 @@ VERIFICATION CHECKLIST:
 
 ---
 
-**Agent Version:** 1.0
-**Last Updated:** 2026-01-04
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Adapted for theater pipeline - NCLEX → Theater naming conventions
+- **v1.0** (2026-01-04): Initial blueprint organizer agent

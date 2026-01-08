@@ -1,0 +1,132 @@
+{
+  "unit": {
+    "number": 3,
+    "name": "Shakespeare",
+    "total_days": 25
+  },
+  "day": 1,
+  "topic": "Introduction to Shakespeare: The Man, the Myth, the Theater",
+  "prior_knowledge": "Students have completed Unit 1: Greek Theater and Unit 2: Commedia dell'Arte. They understand theatrical origins, use of masks, improvisation, stock characters, and physical comedy.",
+  "standards": [
+    {
+      "code": "RL.11-12.4",
+      "full_text": "Determine the meaning of words and phrases as they are used in the text, including figurative and connotative meanings; analyze the impact of specific word choices on meaning and tone, including words with multiple meanings or language that is particularly fresh, engaging, or beautiful. (Include Shakespeare as well as other authors.)"
+    },
+    {
+      "code": "RL.9-10.9",
+      "full_text": "Analyze how an author draws on and transforms source material in a specific work."
+    }
+  ],
+  "learning_objectives": [
+    "Describe Shakespeare's life, career, and historical context in Elizabethan England",
+    "Explain the structure and audience of the Globe Theatre",
+    "Define key theatrical terms: groundlings, soliloquy, aside"
+  ],
+  "vocabulary": [
+    {
+      "term": "Globe Theatre",
+      "definition": "The open-air playhouse in London where Shakespeare's company performed; built 1599, rebuilt after fire in 1614",
+      "usage_example": "When you stood in the yard of the Globe Theatre, you were just feet away from the actors—closer than any movie theater seat."
+    },
+    {
+      "term": "groundlings",
+      "definition": "Audience members who paid a penny to stand in the yard in front of the stage; typically working-class theatergoers",
+      "usage_example": "The groundlings would cheer, boo, and throw things at the stage—they were the most active part of Shakespeare's audience."
+    },
+    {
+      "term": "iambic pentameter",
+      "definition": "A line of verse containing five metrical feet, each consisting of an unstressed syllable followed by a stressed syllable (da-DUM da-DUM da-DUM da-DUM da-DUM)",
+      "usage_example": "Listen to the rhythm: 'But SOFT, what LIGHT through YONder WINdow BREAKS'—that's iambic pentameter, Shakespeare's signature beat."
+    },
+    {
+      "term": "soliloquy",
+      "definition": "A speech in which a character speaks their thoughts aloud while alone on stage, revealing their inner feelings to the audience",
+      "usage_example": "Hamlet's 'To be or not to be' is a soliloquy—he's sharing his deepest thoughts directly with us, the audience."
+    },
+    {
+      "term": "aside",
+      "definition": "A remark made by a character intended for the audience but supposedly not heard by other characters on stage",
+      "usage_example": "When a villain turns to the audience and whispers 'Little does she know...' that's an aside—a secret shared only with the audience."
+    }
+  ],
+  "warmup": {
+    "name": "Tongue Twisters and Projection",
+    "type": "vocal",
+    "instructions": "Students practice three tongue twisters: 1) 'She sells seashells by the seashore' 2) 'Unique New York' 3) 'Red leather, yellow leather'. First quietly, then projecting to the back of the room. Focus on clear articulation even at volume.",
+    "duration_minutes": 5,
+    "connection_to_lesson": "Shakespeare's actors needed to project in open-air theaters without microphones, and his language demands clear articulation to be understood.",
+    "materials": []
+  },
+  "activity": {
+    "name": "Myth vs. Reality: What Do We Really Know About Shakespeare?",
+    "type": "critical_thinking",
+    "instructions": "In groups of 3-4, students receive an envelope with 10 'facts' about Shakespeare. 5 are true, 5 are myths. Groups must sort them and explain their reasoning. After 10 minutes, teacher reveals answers. Discussion: What do we actually know about Shakespeare? What remains mysterious? Why does it matter?",
+    "duration_minutes": 15,
+    "materials_needed": [
+      "Envelopes with fact cards (1 set per group)",
+      "Answer key for teacher",
+      "Sorting worksheet",
+      "Pencils"
+    ],
+    "grouping": "groups of 3-4",
+    "differentiation": {
+      "ell": "Provide glossary for difficult vocabulary in fact cards; assign group roles",
+      "advanced": "Additional challenge: Create one additional myth and one fact to share with class",
+      "struggling": "Reduce to 6 facts (3 true, 3 myth); provide hint sheet"
+    },
+    "myth_vs_fact_cards": [
+      {"statement": "Shakespeare was born in Stratford-upon-Avon in 1564", "answer": "FACT"},
+      {"statement": "Shakespeare never went to school", "answer": "MYTH - he likely attended King's New School"},
+      {"statement": "Shakespeare married Anne Hathaway when he was 18", "answer": "FACT"},
+      {"statement": "Shakespeare wrote all his plays alone without collaboration", "answer": "MYTH - he collaborated on several plays"},
+      {"statement": "Shakespeare was an actor as well as a playwright", "answer": "FACT"},
+      {"statement": "Shakespeare invented the name 'Jessica'", "answer": "FACT - first appears in Merchant of Venice"},
+      {"statement": "Shakespeare wrote 37 plays", "answer": "FACT (approximately)"},
+      {"statement": "Shakespeare died on his birthday", "answer": "FACT - April 23"},
+      {"statement": "Shakespeare was always famous during his lifetime", "answer": "MYTH - his fame grew significantly after death"},
+      {"statement": "The original Globe Theatre is still standing today", "answer": "MYTH - it burned down in 1613; current Globe is a reconstruction"}
+    ]
+  },
+  "journal_prompt": "Shakespeare wrote over 400 years ago, yet we still perform, study, and adapt his work today. Why do you think his plays have lasted so long? What makes a story 'timeless'?",
+  "exit_tickets": [
+    "What was the Globe Theatre and when was it built?",
+    "Who were the 'groundlings' and where did they watch plays?",
+    "What is a soliloquy and how does it differ from dialogue?"
+  ],
+  "content_points": [
+    "William Shakespeare was born in Stratford-upon-Avon in 1564",
+    "He married Anne Hathaway at 18; they had three children",
+    "The 'Lost Years' (1585-1592) - we don't know what he was doing",
+    "By 1592 he was established in London as actor and playwright",
+    "He was part owner of the Lord Chamberlain's Men (later King's Men)",
+    "The Globe Theatre was built in 1599 on the south bank of the Thames",
+    "The Globe was an open-air theater holding about 3,000 people",
+    "Groundlings stood in the yard for a penny; wealthier patrons sat in galleries",
+    "Performances were in the afternoon using natural light",
+    "All female roles were played by boys/young men",
+    "Shakespeare wrote approximately 37 plays and 154 sonnets",
+    "He died on April 23, 1616, in Stratford"
+  ],
+  "materials_list": [
+    "PowerPoint presentation (16 slides)",
+    "Projector and speakers",
+    "30-second professional theater clip (optional)",
+    "Myth/Fact envelopes and cards",
+    "Sorting worksheets",
+    "Exit ticket slips",
+    "Student journals"
+  ],
+  "assessment_connections": {
+    "formative": [
+      "Observation during tongue twister warmup",
+      "Myth vs. Reality sorting accuracy and reasoning",
+      "Class discussion participation",
+      "Exit ticket responses"
+    ],
+    "summative": "Unit 3 Performance Assessment: Shakespeare Scene Analysis and Performance (end of Unit 3)"
+  },
+  "content_accuracy_notes": {
+    "historical_context": "Shakespeare's exact birthdate is unknown; April 23 is traditional based on his baptism date. The 'Lost Years' remain a subject of scholarly debate.",
+    "romeo_juliet_comparison": "Reference Baz Luhrmann's 1996 film as a widely-known example of a bold directorial concept (modern setting, original language) vs. traditional period staging—useful for later directing discussions."
+  }
+}

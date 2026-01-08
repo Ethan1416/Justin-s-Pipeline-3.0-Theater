@@ -57,7 +57,7 @@
       "max_line_chars": "integer"
     },
     "anchors_covered": ["anchor_id"],
-    "nclex_tip_placeholder": "string (to be filled by tip_generator)",
+    "performance_tip_placeholder": "string (to be filled by tip_generator)",
     "presenter_notes_placeholder": "string (to be filled by presenter_notes_writer)",
     "visual_opportunity": "boolean"
   },
@@ -133,7 +133,7 @@ Set visual_opportunity = true if applicable
 
 ### Step 5: Create Placeholders
 Add placeholder text for:
-- NCLEX tip (tip_generator will fill)
+- Performance tip (tip_generator will fill)
 - Presenter notes (presenter_notes_writer will fill)
 
 ### Step 6: Validate Output
@@ -196,15 +196,15 @@ When content exceeds 8 lines, apply in order:
 
 1. **Combine related sub-bullets** into fewer lines
 2. **Remove redundant information** stated elsewhere
-3. **Prioritize NCLEX-testable** information
+3. **Prioritize performance-testable** information
 4. **Use concise phrasing** - remove modifiers
 5. **Move examples to presenter notes**
 6. **Keep clinically/exam-relevant** points only
 
 ### What to Preserve
-- Core clinical concepts
-- NCLEX-testable distinctions
-- Key diagnostic criteria
+- Core theater concepts
+- Performance-testable distinctions
+- Key technique criteria
 - Critical differences/comparisons
 - Primary mechanisms
 
@@ -292,7 +292,7 @@ When content exceeds 8 lines, apply in order:
 - Receives anchor content from section data
 
 ### Downstream
-- Passes slide to tip_generator (adds NCLEX tip)
+- Passes slide to tip_generator (adds performance tip)
 - Passes slide to presenter_notes_writer (adds notes)
 - Reports anchors_covered to anchor_coverage_tracker
 
@@ -315,5 +315,10 @@ When content exceeds 8 lines, apply in order:
 
 ---
 
-**Agent Version:** 1.1
-**Last Updated:** 2026-01-05
+**Agent Version:** 2.0 (Theater Adaptation)
+**Last Updated:** 2026-01-08
+
+### Version History
+- **v2.0** (2026-01-08): Theater adaptation - renamed NCLEX references to theater terms
+- **v1.1** (2026-01-05): Enhanced content generation capabilities
+- **v1.0** (2026-01-04): Initial content slide generator agent
