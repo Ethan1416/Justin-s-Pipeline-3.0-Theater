@@ -21,6 +21,9 @@ from .daily_generation import (
     HandoutGeneratorAgent,
     JournalExitGeneratorAgent,
     PresenterNotesWriterAgent,
+    AuxiliarySlideGeneratorAgent,
+    DifferentiationAnnotatorAgent,
+    MaterialsListGeneratorAgent,
 )
 from .validation import (
     TruncationValidatorAgent,
@@ -61,6 +64,9 @@ def create_agent(agent_name: str, prompt_path=None):
         "handout_generator": HandoutGeneratorAgent,
         "journal_exit_generator": JournalExitGeneratorAgent,
         "presenter_notes_writer": PresenterNotesWriterAgent,
+        "auxiliary_slide_generator": AuxiliarySlideGeneratorAgent,
+        "differentiation_annotator": DifferentiationAnnotatorAgent,
+        "materials_list_generator": MaterialsListGeneratorAgent,
 
         # Validation (Phase 3)
         "truncation_validator": TruncationValidatorAgent,
@@ -103,6 +109,9 @@ __all__ = [
     "HandoutGeneratorAgent",
     "JournalExitGeneratorAgent",
     "PresenterNotesWriterAgent",
+    "AuxiliarySlideGeneratorAgent",
+    "DifferentiationAnnotatorAgent",
+    "MaterialsListGeneratorAgent",
 
     # Validation
     "TruncationValidatorAgent",

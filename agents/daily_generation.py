@@ -798,3 +798,554 @@ class PresenterNotesWriterAgent(Agent):
         notes.append(f"[PAUSE] Let's move into our activity!\n")
 
         return "".join(notes)
+
+
+class AuxiliarySlideGeneratorAgent(Agent):
+    """
+    Generates auxiliary (non-content) slides for the lesson.
+
+    Creates 4 slides:
+    - Slide 1: Agenda/Title
+    - Slide 2: Warmup Instructions
+    - Slide 15: Activity Instructions
+    - Slide 16: Journal & Exit Ticket
+    """
+
+    def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        lesson_data = extract_lesson_data(context)
+        if not lesson_data:
+            return {"error": "No lesson data provided"}
+
+        # Get previous outputs for warmup, activity, journal
+        previous = context.get('previous_outputs', {})
+        warmup_output = previous.get('warmup_generator', {})
+        activity_output = previous.get('activity_generator', {})
+        journal_output = previous.get('journal_exit_generator', {})
+
+        # Generate the 4 auxiliary slides
+        slides = []
+
+        # Slide 1: Agenda
+        slides.append(self._generate_agenda_slide(lesson_data))
+
+        # Slide 2: Warmup
+        slides.append(self._generate_warmup_slide(
+            lesson_data,
+            warmup_output.get('warmup', {})
+        ))
+
+        # Slide 15: Activity
+        slides.append(self._generate_activity_slide(
+            lesson_data,
+            activity_output.get('activity', {})
+        ))
+
+        # Slide 16: Journal & Exit
+        slides.append(self._generate_journal_slide(
+            lesson_data,
+            journal_output.get('journal', {}),
+            journal_output.get('exit_tickets', {})
+        ))
+
+        return {
+            "auxiliary_slides": slides,
+            "slide_positions": {
+                "agenda": 1,
+                "warmup": 2,
+                "activity": 15,
+                "journal_exit": 16
+            }
+        }
+
+    def _generate_agenda_slide(self, lesson_data: LessonData) -> Dict:
+        """Generate agenda/title slide."""
+        objectives = lesson_data.learning_objectives[:3]
+        vocab_terms = [v.get('term', '') for v in lesson_data.vocabulary[:5]]
+
+        return {
+            "slide_number": 1,
+            "type": "agenda",
+            "header": lesson_data.topic[:36] + ".",
+            "body": [
+                f"Unit {lesson_data.unit_number} | Day {lesson_data.day}.",
+                "",
+                "Today's Schedule:",
+                "• Journal-In & Agenda (5 min).",
+                "• Warmup (5 min).",
+                "• Lecture & Discussion (15 min).",
+                "• Activity (15 min).",
+                "• Reflection & Exit (10 min)."
+            ],
+            "sidebar": {
+                "objectives": objectives,
+                "vocabulary_preview": vocab_terms
+            },
+            "duration_on_screen": "5 minutes"
+        }
+
+    def _generate_warmup_slide(self, lesson_data: LessonData, warmup: Dict) -> Dict:
+        """Generate warmup instructions slide."""
+        warmup_name = warmup.get('warmup_name', 'Theater Warmup')
+        connection = warmup.get('connection_to_lesson', {})
+
+        return {
+            "slide_number": 2,
+            "type": "warmup",
+            "header": f"Warmup: {warmup_name[:30]}.",
+            "body": [
+                "Duration: 5 minutes.",
+                "",
+                "Instructions:",
+                "1. Stand and find your space.",
+                "2. Follow teacher demonstration.",
+                "3. Practice with a partner.",
+                "4. Connect to today's lesson."
+            ],
+            "connection_statement": connection.get('statement', f"This warmup connects to {lesson_data.topic}."),
+            "skill_focus": warmup.get('type', 'physical'),
+            "duration_on_screen": "5 minutes"
+        }
+
+    def _generate_activity_slide(self, lesson_data: LessonData, activity: Dict) -> Dict:
+        """Generate activity instructions slide."""
+        activity_name = activity.get('name', f'{lesson_data.topic} Activity')
+        instructions = activity.get('instructions', [
+            "Form groups of 3-4.",
+            "Review materials.",
+            "Complete the task.",
+            "Prepare to share."
+        ])
+
+        # Ensure instructions is a list
+        if isinstance(instructions, str):
+            instructions = [instructions]
+
+        structure = activity.get('structure', {})
+
+        return {
+            "slide_number": 15,
+            "type": "activity",
+            "header": f"Activity: {activity_name[:30]}.",
+            "body": [
+                f"Duration: {activity.get('duration', 15)} minutes.",
+                "",
+                "Instructions:",
+                *[f"• {inst[:60]}." if not inst.endswith('.') else f"• {inst[:60]}" for inst in instructions[:4]]
+            ],
+            "timing": {
+                "setup": f"{structure.get('setup', 2)} min",
+                "work": f"{structure.get('work_time', 10)} min",
+                "share": f"{structure.get('share_out', 3)} min"
+            },
+            "grouping": activity.get('grouping', 'groups of 3-4'),
+            "duration_on_screen": "15 minutes"
+        }
+
+    def _generate_journal_slide(self, lesson_data: LessonData, journal: Dict, exit_tickets: Dict) -> Dict:
+        """Generate journal & exit ticket slide."""
+        journal_prompt = journal.get('prompt', f"Reflect on today's learning about {lesson_data.topic}.")
+        exit_questions = exit_tickets.get('questions', [
+            f"What is one key concept from today's lesson?",
+            f"How will you apply what you learned?"
+        ])
+
+        return {
+            "slide_number": 16,
+            "type": "journal_exit",
+            "header": "Reflection & Exit Ticket.",
+            "body": [
+                "Journal (5 min):",
+                f"• {journal_prompt[:60]}.",
+                "",
+                "Exit Ticket (3 min):",
+                *[f"• {q[:55]}." if not q.endswith('.') else f"• {q[:55]}" for q in exit_questions[:2]]
+            ],
+            "sentence_starters": journal.get('format', {}).get('optional_sentence_starters', [
+                "Today I learned...",
+                "This connects to...",
+                "I'm wondering about..."
+            ]),
+            "duration_on_screen": "10 minutes"
+        }
+
+
+class DifferentiationAnnotatorAgent(Agent):
+    """
+    Annotates lesson components with differentiation strategies.
+
+    Adds support for:
+    - ELL (English Language Learners)
+    - Students with IEPs/504s
+    - Advanced learners
+    - Struggling learners
+    """
+
+    # Differentiation strategy templates
+    STRATEGIES = {
+        "ell": {
+            "visual_supports": [
+                "Graphic organizers with visual cues",
+                "Word walls with images",
+                "Sentence frames on handouts",
+                "Video clips with subtitles"
+            ],
+            "language_supports": [
+                "Vocabulary pre-teaching",
+                "Native language glossary if available",
+                "Simplified instructions",
+                "Strategic pairing with bilingual peers"
+            ],
+            "assessment_modifications": [
+                "Extended time for written responses",
+                "Oral demonstration options",
+                "Drawing to show understanding",
+                "Home language responses accepted"
+            ]
+        },
+        "struggling": {
+            "scaffolding": [
+                "Chunked instructions (one step at a time)",
+                "Graphic organizers pre-filled",
+                "Word banks provided",
+                "Check-ins every 5 minutes"
+            ],
+            "supports": [
+                "Peer tutor assigned",
+                "Reduced quantity expectations",
+                "Alternative ways to demonstrate learning",
+                "Extra modeling before independent work"
+            ]
+        },
+        "advanced": {
+            "extensions": [
+                "Leadership role in group work",
+                "Research connections to other periods",
+                "Create teaching materials for peers",
+                "Analysis of primary sources"
+            ],
+            "challenges": [
+                "Higher-order thinking questions",
+                "Cross-curricular connections",
+                "Independent project options",
+                "Peer mentoring opportunities"
+            ]
+        }
+    }
+
+    def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        lesson_data = extract_lesson_data(context)
+        if not lesson_data:
+            return {"error": "No lesson data provided"}
+
+        # Generate differentiation for each component
+        annotations = {
+            "lesson_overview": self._annotate_lesson(lesson_data),
+            "warmup": self._annotate_warmup(lesson_data),
+            "lecture": self._annotate_lecture(lesson_data),
+            "activity": self._annotate_activity(lesson_data),
+            "assessment": self._annotate_assessment(lesson_data)
+        }
+
+        return {
+            "differentiation_annotations": annotations,
+            "student_groups_addressed": ["ell", "struggling", "advanced", "iep_504"],
+            "implementation_notes": self._generate_implementation_notes(lesson_data)
+        }
+
+    def _annotate_lesson(self, lesson_data: LessonData) -> Dict:
+        """Generate lesson-level differentiation overview."""
+        return {
+            "ell": {
+                "pre_teaching": f"Pre-teach vocabulary: {', '.join([v.get('term', '') for v in lesson_data.vocabulary[:3]])}",
+                "visual_support": "Provide visual anchor chart for key concepts",
+                "partner_work": "Pair ELL students with supportive English speakers"
+            },
+            "struggling": {
+                "scaffolding": "Provide graphic organizer for note-taking",
+                "chunking": "Break lecture into 5-minute segments with processing time",
+                "check_ins": "Brief individual check-ins during transitions"
+            },
+            "advanced": {
+                "extension": f"Research connections between {lesson_data.topic} and contemporary theater",
+                "leadership": "Assign group leader role during activity",
+                "depth": "Provide primary source documents for analysis"
+            }
+        }
+
+    def _annotate_warmup(self, lesson_data: LessonData) -> Dict:
+        """Generate warmup-specific differentiation."""
+        return {
+            "ell": {
+                "strategy": "Demonstrate warmup visually, minimize verbal instructions",
+                "support": "Partner with student who can model"
+            },
+            "struggling": {
+                "strategy": "Simplify warmup steps, provide visual cue cards",
+                "support": "Position near teacher for guidance"
+            },
+            "advanced": {
+                "strategy": "Add complexity or leadership role",
+                "support": "Ask to demonstrate for class"
+            }
+        }
+
+    def _annotate_lecture(self, lesson_data: LessonData) -> Dict:
+        """Generate lecture-specific differentiation."""
+        return {
+            "ell": {
+                "visual_supports": "Use images, videos, gestures to support verbal content",
+                "vocabulary": "Highlight and define key terms as they appear",
+                "pacing": "Slower pace with frequent comprehension checks"
+            },
+            "struggling": {
+                "note_taking": "Provide guided notes with fill-in-the-blank sections",
+                "processing": "Pause every 5 minutes for partner discussion",
+                "review": "Brief recap before moving to new content"
+            },
+            "advanced": {
+                "questions": "Higher-order questions during lecture",
+                "connections": "Ask to identify connections to previous learning",
+                "analysis": "Provide supplementary primary sources"
+            }
+        }
+
+    def _annotate_activity(self, lesson_data: LessonData) -> Dict:
+        """Generate activity-specific differentiation."""
+        return {
+            "ell": {
+                "instructions": "Written and verbal instructions with visual steps",
+                "grouping": "Strategic group placement with language support",
+                "output": "Allow drawing or acting instead of writing"
+            },
+            "struggling": {
+                "instructions": "Step-by-step checklist, one task at a time",
+                "support": "Assign peer buddy, frequent teacher check-ins",
+                "modification": "Reduced output expectations, focus on key skills"
+            },
+            "advanced": {
+                "extension": "Additional challenge questions or tasks",
+                "role": "Facilitator or timekeeper role in group",
+                "depth": "Research or creative extension option"
+            }
+        }
+
+    def _annotate_assessment(self, lesson_data: LessonData) -> Dict:
+        """Generate assessment-specific differentiation."""
+        return {
+            "ell": {
+                "exit_ticket": "Simplified language, visual response options",
+                "journal": "Sentence starters, home language acceptable",
+                "alternative": "Verbal response to teacher if needed"
+            },
+            "struggling": {
+                "exit_ticket": "Reduced number of questions, word bank",
+                "journal": "Sentence starters required, reduced length",
+                "alternative": "Drawing with labels acceptable"
+            },
+            "advanced": {
+                "exit_ticket": "Additional analysis question",
+                "journal": "Deeper reflection prompt available",
+                "extension": "Optional take-home challenge"
+            }
+        }
+
+    def _generate_implementation_notes(self, lesson_data: LessonData) -> List[str]:
+        """Generate practical implementation notes for teacher."""
+        return [
+            "Review IEP/504 accommodations before class",
+            "Prepare materials in advance for differentiated groups",
+            "Have visual supports ready (anchor charts, images)",
+            "Plan strategic seating/grouping before students arrive",
+            "Prepare simplified and extended versions of key handouts",
+            f"Pre-teach vocabulary for ELL students: {', '.join([v.get('term', '') for v in lesson_data.vocabulary[:3]])}"
+        ]
+
+
+class MaterialsListGeneratorAgent(Agent):
+    """
+    Generates comprehensive materials and preparation lists.
+
+    Includes:
+    - Materials needed
+    - Teacher preparation tasks
+    - Room setup requirements
+    - Technology requirements
+    """
+
+    def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        lesson_data = extract_lesson_data(context)
+        if not lesson_data:
+            return {"error": "No lesson data provided"}
+
+        # Get previous outputs
+        previous = context.get('previous_outputs', {})
+
+        materials = self._generate_materials_list(lesson_data, previous)
+        prep_tasks = self._generate_prep_tasks(lesson_data, previous)
+        room_setup = self._generate_room_setup(lesson_data)
+        tech_requirements = self._generate_tech_requirements(lesson_data)
+
+        return {
+            "materials_list": materials,
+            "preparation_tasks": prep_tasks,
+            "room_setup": room_setup,
+            "technology_requirements": tech_requirements,
+            "prep_time_estimate": self._estimate_prep_time(materials, prep_tasks)
+        }
+
+    def _generate_materials_list(self, lesson_data: LessonData, previous: Dict) -> Dict:
+        """Generate categorized materials list."""
+        # Base materials for every lesson
+        base_materials = {
+            "presentation": [
+                {"item": "PowerPoint presentation", "quantity": "1", "source": "digital"},
+                {"item": "Projector/display", "quantity": "1", "source": "classroom"}
+            ],
+            "handouts": [],
+            "activity_materials": [],
+            "assessment_materials": []
+        }
+
+        # Add handouts
+        handout_output = previous.get('handout_generator', {})
+        handouts = handout_output.get('handouts', [])
+        for handout in handouts:
+            base_materials["handouts"].append({
+                "item": handout.get('name', 'Handout'),
+                "quantity": handout.get('copies_needed', '1 per student'),
+                "source": "print"
+            })
+
+        # Always include exit ticket
+        base_materials["assessment_materials"].append({
+            "item": "Exit tickets",
+            "quantity": "1 per student",
+            "source": "print"
+        })
+
+        # Add vocabulary cards if vocabulary exists
+        if lesson_data.vocabulary:
+            base_materials["handouts"].append({
+                "item": "Vocabulary reference sheet",
+                "quantity": "1 per student",
+                "source": "print"
+            })
+
+        # Add activity-specific materials
+        activity = lesson_data.activity or previous.get('activity_generator', {}).get('activity', {})
+        activity_materials = activity.get('materials_needed', [])
+        for mat in activity_materials:
+            if isinstance(mat, str):
+                base_materials["activity_materials"].append({
+                    "item": mat,
+                    "quantity": "as needed",
+                    "source": "classroom supplies"
+                })
+
+        return base_materials
+
+    def _generate_prep_tasks(self, lesson_data: LessonData, previous: Dict) -> List[Dict]:
+        """Generate teacher preparation checklist."""
+        tasks = [
+            {
+                "task": "Review and finalize PowerPoint presentation",
+                "when": "day before",
+                "time_minutes": 10,
+                "priority": "high"
+            },
+            {
+                "task": "Print handouts and exit tickets",
+                "when": "day before",
+                "time_minutes": 10,
+                "priority": "high"
+            },
+            {
+                "task": "Prepare differentiated materials for ELL/struggling students",
+                "when": "day before",
+                "time_minutes": 15,
+                "priority": "medium"
+            },
+            {
+                "task": "Test technology (projector, audio if needed)",
+                "when": "before class",
+                "time_minutes": 5,
+                "priority": "high"
+            },
+            {
+                "task": "Set up room for warmup activity",
+                "when": "before class",
+                "time_minutes": 5,
+                "priority": "medium"
+            },
+            {
+                "task": "Review lesson plan and presenter notes",
+                "when": "before class",
+                "time_minutes": 10,
+                "priority": "high"
+            }
+        ]
+
+        # Add vocabulary prep if needed
+        if lesson_data.vocabulary:
+            tasks.append({
+                "task": f"Prepare vocabulary visual aids for: {', '.join([v.get('term', '') for v in lesson_data.vocabulary[:3]])}",
+                "when": "day before",
+                "time_minutes": 15,
+                "priority": "medium"
+            })
+
+        return tasks
+
+    def _generate_room_setup(self, lesson_data: LessonData) -> Dict:
+        """Generate room setup requirements."""
+        return {
+            "desk_arrangement": {
+                "default": "rows facing front",
+                "for_warmup": "cleared center space or standing at desks",
+                "for_activity": "clusters of 3-4 for group work"
+            },
+            "front_of_room": [
+                "Projector screen visible",
+                "Whiteboard accessible",
+                "Agenda posted"
+            ],
+            "materials_station": [
+                "Handouts organized by class period",
+                "Extra pencils available",
+                "Exit ticket collection bin"
+            ],
+            "special_requirements": [
+                "Space for physical warmup",
+                "Clear pathways for circulation"
+            ]
+        }
+
+    def _generate_tech_requirements(self, lesson_data: LessonData) -> Dict:
+        """Generate technology requirements."""
+        return {
+            "required": [
+                {"item": "Computer with PowerPoint", "purpose": "Presentation"},
+                {"item": "Projector or display", "purpose": "Showing slides"}
+            ],
+            "optional": [
+                {"item": "Document camera", "purpose": "Showing handouts"},
+                {"item": "Timer display", "purpose": "Activity timing"},
+                {"item": "Audio speakers", "purpose": "Video clips if included"}
+            ],
+            "backup_plan": "Have printed copies of key slides in case of tech failure"
+        }
+
+    def _estimate_prep_time(self, materials: Dict, tasks: List[Dict]) -> Dict:
+        """Estimate total preparation time."""
+        total_minutes = sum(task.get('time_minutes', 0) for task in tasks)
+
+        return {
+            "day_before_minutes": sum(
+                t.get('time_minutes', 0) for t in tasks if t.get('when') == 'day before'
+            ),
+            "before_class_minutes": sum(
+                t.get('time_minutes', 0) for t in tasks if t.get('when') == 'before class'
+            ),
+            "total_minutes": total_minutes,
+            "recommendation": f"Plan approximately {total_minutes} minutes total preparation time"
+        }

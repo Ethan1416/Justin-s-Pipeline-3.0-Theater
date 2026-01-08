@@ -409,7 +409,10 @@ class DailyGenerationOrchestrator(BaseOrchestrator):
             "presenter_notes_writer",
             "activity_generator",
             "journal_exit_generator",
-            "handout_generator"
+            "handout_generator",
+            "auxiliary_slide_generator",
+            "differentiation_annotator",
+            "materials_list_generator"
         ]
 
     def get_parallel_agents(self) -> List[List[str]]:
