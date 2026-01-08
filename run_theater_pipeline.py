@@ -57,6 +57,39 @@ try:
 except ImportError:
     ORCHESTRATORS_AVAILABLE = False
 
+# Import agents package
+try:
+    from agents import (
+        Agent,
+        AgentStatus,
+        AgentResult,
+        create_agent,
+        # Unit Planning
+        UnitPlannerAgent,
+        StandardsMapperAgent,
+        UnitScopeValidatorAgent,
+        LearningObjectiveGeneratorAgent,
+        # Daily Generation
+        LessonPlanGeneratorAgent,
+        WarmupGeneratorAgent,
+        ActivityGeneratorAgent,
+        HandoutGeneratorAgent,
+        JournalExitGeneratorAgent,
+        PresenterNotesWriterAgent,
+        # Validation
+        TruncationValidatorAgent,
+        ElaborationValidatorAgent,
+        TimingValidatorAgent,
+        StructureValidatorAgent,
+        # Assembly
+        LessonAssemblerAgent,
+        PowerPointAssemblerAgent,
+        UnitFolderOrganizerAgent,
+    )
+    AGENTS_PACKAGE_AVAILABLE = True
+except ImportError:
+    AGENTS_PACKAGE_AVAILABLE = False
+
 # Pipeline root directory
 PIPELINE_ROOT = Path(__file__).parent
 
@@ -501,11 +534,15 @@ class OrchestratorManager:
         self.results: List[AgentResult] = []
         self.logger = logging.getLogger("OrchestratorManager")
 
-    def create_agent(self, agent_name: str) -> Agent:
+    def create_agent(self, agent_name: str):
         """Create an agent instance by name."""
         prompt_path = self.agents_dir / f"{agent_name}.md"
 
-        # Map agent names to specialized classes
+        # Use the agents package factory if available
+        if AGENTS_PACKAGE_AVAILABLE:
+            return create_agent(agent_name, prompt_path)
+
+        # Fallback to inline classes (for backwards compatibility)
         agent_classes = {
             "unit_planner": UnitPlannerAgent,
             "lesson_plan_generator": LessonPlanGeneratorAgent,

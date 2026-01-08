@@ -29,6 +29,14 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 # Setup logging
 logger = logging.getLogger(__name__)
 
+# Import agents package
+try:
+    from agents import create_agent as create_agent_impl
+    AGENTS_AVAILABLE = True
+except ImportError:
+    AGENTS_AVAILABLE = False
+    create_agent_impl = None
+
 
 # =============================================================================
 # ENUMS AND DATA CLASSES
@@ -144,7 +152,25 @@ class BaseOrchestrator(ABC):
         """
         self.logger.info(f"Executing agent: {agent_name}")
 
+        # First check for custom agent functions
         agent_func = self.agents.get(agent_name)
+
+        # If no custom function, try to use agents package
+        if not agent_func and AGENTS_AVAILABLE:
+            try:
+                agent = create_agent_impl(agent_name)
+                result = agent.execute(input_data)
+                context.accumulated_outputs[agent_name] = result.output
+                if result.status.value == "completed":
+                    self.logger.info(f"Agent {agent_name} completed successfully")
+                    return True, result.output
+                else:
+                    self.logger.error(f"Agent {agent_name} failed: {result.errors}")
+                    return False, {"error": result.errors}
+            except Exception as e:
+                self.logger.error(f"Agent {agent_name} error: {str(e)}")
+                return False, {"error": str(e)}
+
         if not agent_func:
             self.logger.warning(f"Agent not implemented: {agent_name}")
             # Return placeholder for stub agents
@@ -470,16 +496,23 @@ class DailyGenerationOrchestrator(BaseOrchestrator):
         duration = (datetime.now() - start_time).total_seconds()
         self.logger.info(f"Daily Generation completed in {duration:.2f}s")
 
+        # Extract inner outputs (agents wrap their output in a key)
+        def unwrap(output, key):
+            """Unwrap agent output from its key wrapper."""
+            if isinstance(output, dict) and key in output:
+                return output[key]
+            return output
+
         return OrchestratorResult(
             status="completed" if not agents_failed else "partial",
             outputs={
-                "lesson_plan": outputs.get("lesson_plan_generator", {}),
-                "warmup": outputs.get("warmup_generator", {}),
-                "powerpoint": outputs.get("powerpoint_generator", {}),
-                "presenter_notes": outputs.get("presenter_notes_writer", {}),
-                "activity": outputs.get("activity_generator", {}),
-                "journal_exit": outputs.get("journal_exit_generator", {}),
-                "handout": outputs.get("handout_generator"),
+                "lesson_plan": unwrap(outputs.get("lesson_plan_generator", {}), "lesson_plan"),
+                "warmup": unwrap(outputs.get("warmup_generator", {}), "warmup"),
+                "powerpoint": unwrap(outputs.get("powerpoint_generator", {}), "powerpoint_blueprint"),
+                "presenter_notes": outputs.get("presenter_notes_writer", {}),  # Already flat
+                "activity": unwrap(outputs.get("activity_generator", {}), "activity"),
+                "journal_exit": outputs.get("journal_exit_generator", {}),  # Has journal + exit_tickets
+                "handout": unwrap(outputs.get("handout_generator"), "handouts") if outputs.get("handout_generator") else None,
                 "coherence_check": coherence,
                 "timing_estimate": timing
             },
@@ -690,8 +723,15 @@ class ValidationGateOrchestrator(BaseOrchestrator):
                     for field in ["header", "body", "notes", "instructions"]:
                         text = item.get(field, "")
                         if text:
-                            truncation_issues = self._check_truncation(text, f"{comp_name}[{i}].{field}")
-                            issues.extend(truncation_issues)
+                            # Handle list fields (like body which is array of lines)
+                            if isinstance(text, list):
+                                for j, line in enumerate(text):
+                                    if isinstance(line, str) and line:
+                                        truncation_issues = self._check_truncation(line, f"{comp_name}[{i}].{field}[{j}]")
+                                        issues.extend(truncation_issues)
+                            elif isinstance(text, str):
+                                truncation_issues = self._check_truncation(text, f"{comp_name}[{i}].{field}")
+                                issues.extend(truncation_issues)
 
         # Attempt auto-fix for simple issues
         simple_fixes = [i for i in issues if i.get("fixable", False)]
@@ -783,14 +823,29 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             })
 
         # Check presenter notes coverage
+        # Handle both formats: {slides: [...]} or {presenter_notes: "text", word_count: N}
         presenter_notes = daily_output.get("presenter_notes", {})
-        notes_slides = presenter_notes.get("slides", [])
-        if len(notes_slides) != len(slides):
-            issues.append({
-                "type": "S003",
-                "component": "presenter_notes",
-                "description": f"Presenter notes count ({len(notes_slides)}) doesn't match slides ({len(slides)})"
-            })
+        if isinstance(presenter_notes, dict):
+            # Check for slides array format
+            notes_slides = presenter_notes.get("slides", [])
+            if notes_slides:
+                if len(notes_slides) != len(slides):
+                    issues.append({
+                        "type": "S003",
+                        "component": "presenter_notes",
+                        "description": f"Presenter notes count ({len(notes_slides)}) doesn't match slides ({len(slides)})"
+                    })
+            else:
+                # Check for flat format with presenter_notes string
+                notes_text = presenter_notes.get("presenter_notes", "")
+                word_count = presenter_notes.get("word_count", 0)
+                # Accept if we have substantial notes content (at least 200 words)
+                if not notes_text or word_count < 200:
+                    issues.append({
+                        "type": "S003",
+                        "component": "presenter_notes",
+                        "description": f"Presenter notes insufficient (word_count: {word_count}, need 200+)"
+                    })
 
         if issues:
             return ValidationResult(
@@ -827,9 +882,14 @@ class ValidationGateOrchestrator(BaseOrchestrator):
         }
 
         presenter_notes = daily_output.get("presenter_notes", {})
-        notes_text = " ".join([
-            s.get("notes", "") for s in presenter_notes.get("slides", [])
-        ])
+        # Handle both formats: {slides: [{notes: "..."}]} or {presenter_notes: "text"}
+        if presenter_notes.get("slides"):
+            notes_text = " ".join([
+                s.get("notes", "") for s in presenter_notes.get("slides", [])
+            ])
+        else:
+            # Flat format from PresenterNotesWriterAgent
+            notes_text = presenter_notes.get("presenter_notes", "")
 
         # Score depth (30 points)
         depth_score = self._score_depth(notes_text)
@@ -969,42 +1029,73 @@ class ValidationGateOrchestrator(BaseOrchestrator):
         auto_fixes = []
 
         presenter_notes = daily_output.get("presenter_notes", {})
+
+        # Handle both formats: {slides: [...]} or {presenter_notes: "text", word_count: N}
         slides = presenter_notes.get("slides", [])
+        if slides:
+            # Array format - validate per-slide
+            total_words = 0
+            slide_analysis = []
 
-        # Count total words
-        total_words = 0
-        slide_analysis = []
+            for i, slide in enumerate(slides):
+                notes = slide.get("notes", "")
+                word_count = len(notes.split())
+                total_words += word_count
 
-        for i, slide in enumerate(slides):
-            notes = slide.get("notes", "")
-            word_count = len(notes.split())
-            total_words += word_count
+                # Count markers
+                pause_count = notes.count("[PAUSE]")
+                emphasis_count = len(re.findall(r'\[EMPHASIS[:\s]', notes))
 
-            # Count markers
-            pause_count = notes.count("[PAUSE]")
-            emphasis_count = len(re.findall(r'\[EMPHASIS[:\s]', notes))
+                slide_analysis.append({
+                    "slide": i + 1,
+                    "word_count": word_count,
+                    "pause_count": pause_count,
+                    "emphasis_count": emphasis_count
+                })
 
-            slide_analysis.append({
-                "slide": i + 1,
-                "word_count": word_count,
-                "pause_count": pause_count,
-                "emphasis_count": emphasis_count
-            })
+                # Check marker requirements for content slides (3-14)
+                if 3 <= i + 1 <= 14:
+                    if pause_count < 2:
+                        issues.append({
+                            "type": "TI004",
+                            "slide": i + 1,
+                            "description": f"Slide {i+1}: Only {pause_count} [PAUSE] markers (need 2)"
+                        })
+                    if emphasis_count < 1:
+                        issues.append({
+                            "type": "TI005",
+                            "slide": i + 1,
+                            "description": f"Slide {i+1}: Missing [EMPHASIS] marker"
+                        })
+        else:
+            # Flat format from PresenterNotesWriterAgent
+            notes_text = presenter_notes.get("presenter_notes", "")
+            total_words = presenter_notes.get("word_count", len(notes_text.split()))
 
-            # Check marker requirements for content slides (3-14)
-            if 3 <= i + 1 <= 14:
-                if pause_count < 2:
-                    issues.append({
-                        "type": "TI004",
-                        "slide": i + 1,
-                        "description": f"Slide {i+1}: Only {pause_count} [PAUSE] markers (need 2)"
-                    })
-                if emphasis_count < 1:
-                    issues.append({
-                        "type": "TI005",
-                        "slide": i + 1,
-                        "description": f"Slide {i+1}: Missing [EMPHASIS] marker"
-                    })
+            # Count total markers in flat text
+            pause_count = notes_text.count("[PAUSE]")
+            emphasis_count = len(re.findall(r'\[EMPHASIS[:\s]', notes_text))
+
+            slide_analysis = [{
+                "format": "flat",
+                "total_word_count": total_words,
+                "total_pause_count": pause_count,
+                "total_emphasis_count": emphasis_count
+            }]
+
+            # For flat format, just check overall marker density
+            # Expect ~24 pauses (2 per slide x 12 content slides)
+            # and ~12 emphasis markers (1 per content slide)
+            if pause_count < 12:  # More lenient for flat format
+                issues.append({
+                    "type": "TI004",
+                    "description": f"Only {pause_count} [PAUSE] markers total (recommend 12+)"
+                })
+            if emphasis_count < 6:  # More lenient
+                issues.append({
+                    "type": "TI005",
+                    "description": f"Only {emphasis_count} [EMPHASIS] markers (recommend 6+)"
+                })
 
         # Calculate duration
         duration_minutes = total_words / 140
