@@ -27,6 +27,10 @@ from .validation import (
     ElaborationValidatorAgent,
     TimingValidatorAgent,
     StructureValidatorAgent,
+    StandardsCoverageValidatorAgent,
+    CoherenceValidatorAgent,
+    PedagogyValidatorAgent,
+    ContentAccuracyValidatorAgent,
 )
 from .assembly import (
     LessonAssemblerAgent,
@@ -63,6 +67,10 @@ def create_agent(agent_name: str, prompt_path=None):
         "elaboration_validator": ElaborationValidatorAgent,
         "timing_validator": TimingValidatorAgent,
         "structure_validator": StructureValidatorAgent,
+        "standards_coverage_validator": StandardsCoverageValidatorAgent,
+        "coherence_validator": CoherenceValidatorAgent,
+        "pedagogy_validator": PedagogyValidatorAgent,
+        "content_accuracy_validator": ContentAccuracyValidatorAgent,
 
         # Assembly (Phase 4)
         "lesson_assembler": LessonAssemblerAgent,
@@ -101,6 +109,10 @@ __all__ = [
     "ElaborationValidatorAgent",
     "TimingValidatorAgent",
     "StructureValidatorAgent",
+    "StandardsCoverageValidatorAgent",
+    "CoherenceValidatorAgent",
+    "PedagogyValidatorAgent",
+    "ContentAccuracyValidatorAgent",
 
     # Assembly
     "LessonAssemblerAgent",
