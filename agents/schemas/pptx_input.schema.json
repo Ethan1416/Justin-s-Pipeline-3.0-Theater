@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pptx_input.schema.json",
+  "title": "Step 12 PowerPoint Population Input Schema",
+  "description": "Schema for pptx_populator agent input - orchestrates PowerPoint generation from integrated blueprints",
+  "type": "object",
+  "required": ["metadata", "production_config", "blueprints"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 12: PowerPoint Population"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "domain_display_name": {
+          "type": "string",
+          "description": "Human-readable domain name (e.g., 'NCLEX_Fundamentals')"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "pipeline_run_id": {
+          "type": "string",
+          "description": "Unique identifier for this pipeline run"
+        }
+      }
+    },
+    "production_config": {
+      "type": "object",
+      "required": ["production_folder", "template_path"],
+      "properties": {
+        "production_folder": {
+          "type": "string",
+          "description": "Path to production output folder"
+        },
+        "template_path": {
+          "type": "string",
+          "description": "Path to master PowerPoint template (.pptx)"
+        },
+        "diagrams_folder": {
+          "type": "string",
+          "description": "Path to folder containing Python-generated visual diagrams"
+        },
+        "output_folder": {
+          "type": "string",
+          "description": "Path to output folder for generated presentations"
+        },
+        "logs_folder": {
+          "type": "string",
+          "description": "Path to folder for population logs"
+        }
+      }
+    },
+    "template_config": {
+      "type": "object",
+      "description": "Template shape name mappings",
+      "properties": {
+        "shape_mappings": {
+          "type": "object",
+          "properties": {
+            "title_shape": {
+              "type": "string",
+              "default": "TextBox 2"
+            },
+            "body_shape": {
+              "type": "string",
+              "default": "TextBox 19"
+            },
+            "tip_shape": {
+              "type": "string",
+              "default": "TextBox 18"
+            }
+          }
+        },
+        "font_config": {
+          "type": "object",
+          "properties": {
+            "title_font_size": {
+              "type": "integer",
+              "default": 36
+            },
+            "body_font_size": {
+              "type": "integer",
+              "default": 20
+            },
+            "tip_font_size": {
+              "type": "integer",
+              "default": 18
+            },
+            "font_family": {
+              "type": "string",
+              "default": "Aptos"
+            },
+            "text_color": {
+              "type": "object",
+              "properties": {
+                "r": { "type": "integer", "minimum": 0, "maximum": 255 },
+                "g": { "type": "integer", "minimum": 0, "maximum": 255 },
+                "b": { "type": "integer", "minimum": 0, "maximum": 255 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "blueprints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/blueprint_reference"
+      },
+      "description": "Array of integrated blueprint file references"
+    },
+    "domain_config": {
+      "type": "object",
+      "description": "Domain-specific configuration from nclex.yaml",
+      "properties": {
+        "accent_color": {
+          "type": "object",
+          "properties": {
+            "r": { "type": "integer" },
+            "g": { "type": "integer" },
+            "b": { "type": "integer" }
+          }
+        },
+        "visual_quota": {
+          "type": "object",
+          "properties": {
+            "min_per_section": { "type": "integer" },
+            "recommended": { "type": "integer" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_reference": {
+      "type": "object",
+      "required": ["file_path", "section_name"],
+      "properties": {
+        "file_path": {
+          "type": "string",
+          "description": "Path to integrated blueprint file (step10_integrated_blueprint_*.txt)"
+        },
+        "section_name": {
+          "type": "string",
+          "description": "Name of the section"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_count": {
+          "type": "integer",
+          "description": "Expected number of slides in this section"
+        },
+        "visual_count": {
+          "type": "integer",
+          "description": "Number of visual slides in this section"
+        },
+        "content_count": {
+          "type": "integer",
+          "description": "Number of content slides in this section"
+        }
+      }
+    },
+    "slide_data": {
+      "type": "object",
+      "description": "Parsed slide data structure",
+      "required": ["number", "title", "type"],
+      "properties": {
+        "number": {
+          "type": "string",
+          "description": "Slide number (e.g., '1', '2A', '2B')"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Section Intro", "Content", "Vignette", "Answer", "Visual"]
+        },
+        "visual": {
+          "type": "boolean",
+          "description": "Whether this is a visual slide"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_differentiators", "diagram"],
+          "description": "Type of visual if visual=true"
+        },
+        "header": {
+          "type": "string",
+          "description": "Slide header text"
+        },
+        "body": {
+          "type": "string",
+          "description": "Slide body content"
+        },
+        "tip": {
+          "type": "string",
+          "description": "NCLEX tip text (content slides only)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Presenter notes"
+        },
+        "visual_spec": {
+          "type": "object",
+          "description": "Visual specification for visual slides"
+        }
+      }
+    }
+  }
+}

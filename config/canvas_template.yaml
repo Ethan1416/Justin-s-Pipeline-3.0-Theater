@@ -1,0 +1,150 @@
+# Canvas Template Configuration
+# Single source of truth for NCLEX Canvas PowerPoint template
+# Last Updated: 2026-01-06
+
+template:
+  name: "NCLEX Canvas Template"
+  file: "templates/template_canvas.pptx"
+  version: "1.0"
+  description: "Unified canvas template for all NCLEX lecture slides"
+
+# Slide Dimensions (16:9 widescreen)
+dimensions:
+  width_inches: 13.33
+  height_inches: 7.50
+  width_emu: 12191695
+  height_emu: 6858000
+
+# Shape Mappings - Maps logical names to actual shape names in template
+# These are the shapes that will be populated with content
+shapes:
+  title:
+    name: "TextBox 9"
+    purpose: "Slide title/header"
+    position:
+      left_inches: 1.32
+      top_inches: 0.22
+    size:
+      width_inches: 9.72
+      height_inches: 0.42
+    placeholder_text: "Content Area"
+
+  subtitle:
+    name: "TextBox 10"
+    purpose: "Module identifier and layout type"
+    position:
+      left_inches: 1.32
+      top_inches: 0.56
+    size:
+      width_inches: 9.72
+      height_inches: 0.22
+    placeholder_text: "MODULE · CUSTOM LAYOUT"
+    format: "{domain} · {slide_type}"
+
+  body:
+    name: "TextBox 64"
+    purpose: "Main content area (includes NCLEX tips at bottom)"
+    position:
+      left_inches: 0.39
+      top_inches: 3.30
+    size:
+      width_inches: 12.56
+      height_inches: 0.56
+    placeholder_text: "Insert your content here"
+    note: "NCLEX tips are appended to body content with separator"
+
+  footer:
+    name: "TextBox 66"
+    purpose: "Program identifier and year"
+    position:
+      left_inches: 0.44
+      top_inches: 7.08
+    size:
+      width_inches: 4.17
+      height_inches: 0.31
+    placeholder_text: "NURSING PROGRAM · 2025"
+    format: "{program_name} · {year}"
+
+  slide_number:
+    name: "TextBox 69"
+    purpose: "Slide number display"
+    position:
+      left_inches: 12.56
+      top_inches: 7.08
+    size:
+      width_inches: 0.36
+      height_inches: 0.36
+    placeholder_text: "01"
+    format: "{slide_num:02d}"
+
+# Content Area (visual boundary)
+content_area:
+  name: "Rounded Rectangle 15"
+  purpose: "Main content container (visual boundary)"
+  position:
+    left_inches: 0.39
+    top_inches: 1.11
+  size:
+    width_inches: 12.56
+    height_inches: 4.93
+
+# Decorative elements (do not modify)
+decorative:
+  - "Rectangle 1"      # Header background
+  - "Rectangle 2-4"    # Header accent lines
+  - "Rectangle 7"      # Logo accent
+  - "Rectangle 11-14"  # Corner decorations
+  - "Rectangle 16-23"  # Content area corner accents
+  - "Rounded Rectangle 5-6"  # Logo placeholder
+  - "Rounded Rectangle 67-68"  # Slide number background
+  - "TextBox 8"        # Plus symbol in logo
+  - "Oval 24-63"       # Grid pattern dots
+
+# Text Limits (from constraints.yaml, adapted for canvas layout)
+text_limits:
+  title:
+    max_chars_per_line: 40
+    max_lines: 2
+  subtitle:
+    max_chars: 50
+  body:
+    max_chars_per_line: 80
+    max_lines: 10
+    note: "Wider canvas allows more characters per line"
+  nclex_tip:
+    max_chars: 132
+    separator: "\n\n---\nNCLEX TIP: "
+  footer:
+    max_chars: 40
+
+# NCLEX Tip Integration
+# Since there's no dedicated tip shape, tips are appended to body content
+nclex_tip_format:
+  enabled: true
+  position: "end_of_body"
+  separator: "\n\n---\nNCLEX TIP: "
+  style:
+    prefix: "NCLEX TIP: "
+    max_chars: 132
+
+# Font Settings (for validation)
+fonts:
+  default_family: "inherit"
+  note: "Font settings are inherited from template - do not override programmatically"
+
+# Slide Layouts Available
+slide_layouts:
+  0: "Title Slide"
+  1: "Title and Content"
+  2: "Section Header"
+  3: "Two Content"
+  4: "Comparison"
+  5: "Title Only"
+  6: "Blank"
+  7: "Content with Caption"
+  8: "Picture with Caption"
+  9: "Title and Vertical Text"
+  10: "Vertical Title and Text"
+
+# Recommended layout for NCLEX slides
+default_layout_index: 6  # Blank - we populate shapes directly

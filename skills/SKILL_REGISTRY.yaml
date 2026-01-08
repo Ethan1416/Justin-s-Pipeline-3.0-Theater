@@ -1,0 +1,2678 @@
+# SKILL_REGISTRY.yaml
+# Comprehensive Skill Definitions for 50-Agent NCLEX Lecture Generation Pipeline
+# Version: 1.0
+# Last Updated: 2026-01-04
+
+---
+metadata:
+  version: "1.0"
+  pipeline: "NCLEX Lecture Generation"
+  total_agents: 50
+  categories:
+    - preparation
+    - blueprint
+    - visual_generation
+    - powerpoint
+    - qa
+    - utility
+
+# =============================================================================
+# CATEGORY 1: PREPARATION AGENTS (5)
+# Purpose: Handle initial content processing (Steps 1-5)
+# =============================================================================
+preparation_agents:
+
+  - agent_name: anchor_uploader
+    description: "Load and validate anchor documents for lecture generation"
+    file: "agents/prompts/anchor_uploader.md"
+    skills:
+      - name: load_anchor_document
+        description: "Parse and load anchor document from file system"
+        inputs:
+          - name: file_path
+            type: string
+            required: true
+            description: "Path to anchor document file"
+          - name: document_type
+            type: string
+            required: false
+            description: "Type of anchor document (pdf, docx, txt)"
+        outputs:
+          - name: raw_content
+            type: string
+            description: "Raw text content extracted from document"
+          - name: metadata
+            type: object
+            description: "Document metadata (title, author, date)"
+
+      - name: validate_anchor_structure
+        description: "Validate anchor document has required structure"
+        inputs:
+          - name: raw_content
+            type: string
+            required: true
+            description: "Raw content to validate"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether document passes validation"
+          - name: validation_errors
+            type: array
+            description: "List of validation errors if any"
+
+      - name: extract_anchor_sections
+        description: "Extract logical sections from anchor content"
+        inputs:
+          - name: raw_content
+            type: string
+            required: true
+            description: "Raw content to parse"
+        outputs:
+          - name: sections
+            type: array
+            description: "Array of extracted sections with titles and content"
+    dependencies: []
+
+  - agent_name: lecture_mapper
+    description: "Map anchors to lecture structure using 5-phase analysis"
+    file: "agents/prompts/lecture_mapper.md"
+    skills:
+      - name: content_survey
+        description: "Phase 1: Inventory the anchor landscape"
+        inputs:
+          - name: anchor_sections
+            type: array
+            required: true
+            description: "Sections from anchor_uploader"
+        outputs:
+          - name: content_inventory
+            type: object
+            description: "Inventory of anchor content with topic counts"
+
+      - name: cluster_discovery
+        description: "Phase 2: Group related anchors into clusters"
+        inputs:
+          - name: content_inventory
+            type: object
+            required: true
+            description: "Inventory from content survey"
+        outputs:
+          - name: clusters
+            type: array
+            description: "Grouped topic clusters"
+
+      - name: relationship_mapping
+        description: "Phase 3: Map prerequisite dependencies between clusters"
+        inputs:
+          - name: clusters
+            type: array
+            required: true
+            description: "Topic clusters from discovery"
+        outputs:
+          - name: dependency_graph
+            type: object
+            description: "Graph of prerequisite relationships"
+
+      - name: section_formation
+        description: "Phase 4: Form lecture sections from clusters"
+        inputs:
+          - name: clusters
+            type: array
+            required: true
+            description: "Topic clusters"
+          - name: dependency_graph
+            type: object
+            required: true
+            description: "Dependency relationships"
+        outputs:
+          - name: lecture_sections
+            type: array
+            description: "Formed lecture sections"
+
+      - name: arc_planning
+        description: "Phase 5: Generate sequence iterations for learning arc"
+        inputs:
+          - name: lecture_sections
+            type: array
+            required: true
+            description: "Formed lecture sections"
+        outputs:
+          - name: learning_arc
+            type: object
+            description: "Complete learning arc with sequence"
+    dependencies:
+      - anchor_uploader
+
+  - agent_name: content_sorter
+    description: "Sort content by priority/relevance into 6 NCLEX domains"
+    file: "agents/prompts/content_sorter.md"
+    skills:
+      - name: classify_by_domain
+        description: "Classify content into 6 NCLEX domains"
+        inputs:
+          - name: content_items
+            type: array
+            required: true
+            description: "Content items to classify"
+        outputs:
+          - name: domain_assignments
+            type: object
+            description: "Content mapped to domains (fundamentals, pharmacology, medical_surgical, ob_maternity, pediatric, mental_health)"
+
+      - name: prioritize_content
+        description: "Rank content by NCLEX exam relevance"
+        inputs:
+          - name: domain_content
+            type: object
+            required: true
+            description: "Domain-classified content"
+        outputs:
+          - name: prioritized_content
+            type: object
+            description: "Content with priority scores"
+
+      - name: sequence_content
+        description: "Order content for optimal learning sequence"
+        inputs:
+          - name: prioritized_content
+            type: object
+            required: true
+            description: "Prioritized content by domain"
+        outputs:
+          - name: sequenced_content
+            type: array
+            description: "Ordered content sequence"
+    dependencies:
+      - lecture_mapper
+
+  - agent_name: outline_generator
+    description: "Generate section outlines for each lecture"
+    file: "agents/prompts/outline_generator.md"
+    skills:
+      - name: generate_section_outline
+        description: "Create detailed outline for a lecture section"
+        inputs:
+          - name: section_content
+            type: object
+            required: true
+            description: "Content for the section"
+          - name: target_duration
+            type: integer
+            required: false
+            description: "Target duration in minutes"
+        outputs:
+          - name: outline
+            type: object
+            description: "Structured outline with topics, subtopics, timing"
+
+      - name: estimate_slide_count
+        description: "Estimate number of slides needed for section"
+        inputs:
+          - name: outline
+            type: object
+            required: true
+            description: "Section outline"
+        outputs:
+          - name: slide_count
+            type: integer
+            description: "Estimated slide count"
+          - name: breakdown
+            type: object
+            description: "Slide count by topic"
+
+      - name: identify_visual_opportunities
+        description: "Flag topics that benefit from visual aids"
+        inputs:
+          - name: outline
+            type: object
+            required: true
+            description: "Section outline"
+        outputs:
+          - name: visual_flags
+            type: array
+            description: "Topics flagged for visual treatment"
+    dependencies:
+      - content_sorter
+
+  - agent_name: standards_loader
+    description: "Load presentation standards and constraints"
+    file: "agents/prompts/standards_loader.md"
+    skills:
+      - name: load_teaching_standards
+        description: "Load teaching methodology standards"
+        inputs:
+          - name: standards_path
+            type: string
+            required: false
+            description: "Path to teaching standards file"
+        outputs:
+          - name: teaching_standards
+            type: object
+            description: "Loaded teaching standards"
+
+      - name: load_presenting_standards
+        description: "Load presentation formatting standards"
+        inputs:
+          - name: standards_path
+            type: string
+            required: false
+            description: "Path to presenting standards file"
+        outputs:
+          - name: presenting_standards
+            type: object
+            description: "Loaded presenting standards"
+
+      - name: load_content_standards
+        description: "Load content creation standards"
+        inputs:
+          - name: standards_path
+            type: string
+            required: false
+            description: "Path to content standards file"
+        outputs:
+          - name: content_standards
+            type: object
+            description: "Loaded content standards"
+
+      - name: load_constraints
+        description: "Load character/line limit constraints"
+        inputs:
+          - name: config_path
+            type: string
+            required: false
+            description: "Path to constraints config"
+        outputs:
+          - name: constraints
+            type: object
+            description: "Character limits, line limits, visual quotas"
+    dependencies:
+      - outline_generator
+
+# =============================================================================
+# CATEGORY 2: BLUEPRINT AGENTS (10)
+# Purpose: Per-section blueprint creation and refinement (Steps 6-10)
+# =============================================================================
+blueprint_agents:
+
+  - agent_name: blueprint_generator
+    description: "Generate initial slide blueprints for each section"
+    file: "agents/prompts/blueprint_generator.md"
+    skills:
+      - name: generate_slide_blueprint
+        description: "Create initial blueprint for a single slide"
+        inputs:
+          - name: topic
+            type: string
+            required: true
+            description: "Topic for the slide"
+          - name: content_points
+            type: array
+            required: true
+            description: "Content points to include"
+          - name: slide_type
+            type: string
+            required: false
+            description: "Type of slide (title, content, visual)"
+        outputs:
+          - name: blueprint
+            type: object
+            description: "Slide blueprint with title, bullets, notes"
+
+      - name: generate_section_blueprints
+        description: "Create blueprints for entire section"
+        inputs:
+          - name: section_outline
+            type: object
+            required: true
+            description: "Section outline from outline_generator"
+        outputs:
+          - name: blueprints
+            type: array
+            description: "Array of slide blueprints for section"
+
+      - name: assign_visual_placeholders
+        description: "Mark slides needing visual aids"
+        inputs:
+          - name: blueprints
+            type: array
+            required: true
+            description: "Slide blueprints"
+          - name: visual_flags
+            type: array
+            required: false
+            description: "Topics flagged for visuals"
+        outputs:
+          - name: blueprints_with_visuals
+            type: array
+            description: "Blueprints with visual placeholders"
+    dependencies:
+      - outline_generator
+      - standards_loader
+
+  - agent_name: line_enforcer
+    description: "Enforce line limits on slide content (Step 6.5)"
+    file: "agents/prompts/line_enforcer.md"
+    skills:
+      - name: check_line_count
+        description: "Count lines in slide content"
+        inputs:
+          - name: slide_content
+            type: object
+            required: true
+            description: "Slide content to check"
+        outputs:
+          - name: line_count
+            type: integer
+            description: "Number of lines"
+          - name: exceeds_limit
+            type: boolean
+            description: "Whether limit is exceeded"
+
+      - name: condense_content
+        description: "Reduce content to fit line limits"
+        inputs:
+          - name: slide_content
+            type: object
+            required: true
+            description: "Content to condense"
+          - name: max_lines
+            type: integer
+            required: true
+            description: "Maximum allowed lines"
+        outputs:
+          - name: condensed_content
+            type: object
+            description: "Condensed slide content"
+
+      - name: split_slide
+        description: "Split over-limit slide into multiple slides"
+        inputs:
+          - name: slide_content
+            type: object
+            required: true
+            description: "Content to split"
+        outputs:
+          - name: split_slides
+            type: array
+            description: "Array of split slides"
+    dependencies:
+      - blueprint_generator
+
+  - agent_name: formatting_reviser
+    description: "Apply formatting constraints to blueprints"
+    file: "agents/prompts/formatting_reviser.md"
+    skills:
+      - name: apply_text_formatting
+        description: "Apply text formatting rules"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to format"
+          - name: formatting_rules
+            type: object
+            required: true
+            description: "Formatting rules to apply"
+        outputs:
+          - name: formatted_blueprint
+            type: object
+            description: "Formatted blueprint"
+
+      - name: standardize_bullets
+        description: "Standardize bullet point formatting"
+        inputs:
+          - name: bullets
+            type: array
+            required: true
+            description: "Bullet points to standardize"
+        outputs:
+          - name: standardized_bullets
+            type: array
+            description: "Standardized bullet points"
+
+      - name: apply_style_guide
+        description: "Apply brand style guide formatting"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to style"
+          - name: style_guide
+            type: object
+            required: true
+            description: "Style guide rules"
+        outputs:
+          - name: styled_blueprint
+            type: object
+            description: "Styled blueprint"
+    dependencies:
+      - line_enforcer
+
+  - agent_name: quality_reviewer
+    description: "Validate against all standards (must score 90+/100)"
+    file: "agents/prompts/quality_reviewer.md"
+    skills:
+      - name: review_content_quality
+        description: "Review content for accuracy and clarity"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to review"
+        outputs:
+          - name: quality_score
+            type: integer
+            description: "Quality score 0-100"
+          - name: issues
+            type: array
+            description: "List of quality issues"
+
+      - name: review_formatting_compliance
+        description: "Check formatting against standards"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to check"
+          - name: standards
+            type: object
+            required: true
+            description: "Standards to check against"
+        outputs:
+          - name: compliance_score
+            type: integer
+            description: "Compliance score 0-100"
+          - name: violations
+            type: array
+            description: "List of violations"
+
+      - name: calculate_overall_score
+        description: "Calculate weighted overall QA score"
+        inputs:
+          - name: quality_score
+            type: integer
+            required: true
+            description: "Content quality score"
+          - name: compliance_score
+            type: integer
+            required: true
+            description: "Formatting compliance score"
+        outputs:
+          - name: overall_score
+            type: integer
+            description: "Overall score 0-100"
+          - name: pass
+            type: boolean
+            description: "Whether score >= 90"
+    dependencies:
+      - formatting_reviser
+
+  - agent_name: visual_identifier
+    description: "Identify visual aid opportunities on slides"
+    file: "agents/prompts/visual_identifier.md"
+    skills:
+      - name: scan_for_visual_content
+        description: "Scan content for visual aid candidates"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to scan"
+        outputs:
+          - name: visual_candidates
+            type: array
+            description: "Content suitable for visual treatment"
+
+      - name: recommend_visual_type
+        description: "Recommend visual type for content"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content to visualize"
+        outputs:
+          - name: visual_type
+            type: string
+            description: "Recommended type (table, flowchart, decision_tree, timeline, hierarchy, spectrum, key_diff)"
+          - name: confidence
+            type: number
+            description: "Confidence score 0-1"
+
+      - name: check_visual_quota
+        description: "Check if visual quota is met for section"
+        inputs:
+          - name: section_blueprints
+            type: array
+            required: true
+            description: "All blueprints in section"
+          - name: quota
+            type: object
+            required: true
+            description: "Visual quota requirements"
+        outputs:
+          - name: quota_met
+            type: boolean
+            description: "Whether quota is satisfied"
+          - name: current_count
+            type: integer
+            description: "Current visual count"
+    dependencies:
+      - quality_reviewer
+
+  - agent_name: visual_integrator
+    description: "Merge generated visuals into blueprints"
+    file: "agents/prompts/visual_integrator.md"
+    skills:
+      - name: integrate_visual
+        description: "Integrate visual into blueprint"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to update"
+          - name: visual
+            type: object
+            required: true
+            description: "Visual to integrate"
+        outputs:
+          - name: updated_blueprint
+            type: object
+            description: "Blueprint with visual integrated"
+
+      - name: adjust_layout_for_visual
+        description: "Adjust slide layout for visual placement"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to adjust"
+          - name: visual_size
+            type: object
+            required: true
+            description: "Visual dimensions"
+        outputs:
+          - name: adjusted_blueprint
+            type: object
+            description: "Layout-adjusted blueprint"
+
+      - name: validate_visual_placement
+        description: "Validate visual placement meets standards"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint with visual"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether placement is valid"
+          - name: issues
+            type: array
+            description: "Placement issues if any"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: blueprint_organizer
+    description: "Organize blueprint structure and ordering"
+    file: "agents/prompts/blueprint_organizer.md"
+    skills:
+      - name: organize_slide_order
+        description: "Arrange slides in optimal order"
+        inputs:
+          - name: blueprints
+            type: array
+            required: true
+            description: "Blueprints to organize"
+        outputs:
+          - name: ordered_blueprints
+            type: array
+            description: "Ordered blueprint array"
+
+      - name: group_by_topic
+        description: "Group slides by topic/subtopic"
+        inputs:
+          - name: blueprints
+            type: array
+            required: true
+            description: "Blueprints to group"
+        outputs:
+          - name: grouped_blueprints
+            type: object
+            description: "Blueprints grouped by topic"
+
+      - name: insert_transition_slides
+        description: "Insert transition slides between topics"
+        inputs:
+          - name: grouped_blueprints
+            type: object
+            required: true
+            description: "Grouped blueprints"
+        outputs:
+          - name: blueprints_with_transitions
+            type: array
+            description: "Blueprints with transitions added"
+    dependencies:
+      - visual_integrator
+
+  - agent_name: constraint_validator
+    description: "Validate character/line limits on all content"
+    file: "agents/prompts/constraint_validator.md"
+    skills:
+      - name: validate_character_limits
+        description: "Check all text against character limits"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to validate"
+          - name: char_limits
+            type: object
+            required: true
+            description: "Character limit definitions"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether all limits met"
+          - name: violations
+            type: array
+            description: "Character limit violations"
+
+      - name: validate_line_limits
+        description: "Check all content against line limits"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Blueprint to validate"
+          - name: line_limits
+            type: object
+            required: true
+            description: "Line limit definitions"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether all limits met"
+          - name: violations
+            type: array
+            description: "Line limit violations"
+
+      - name: generate_constraint_report
+        description: "Generate comprehensive constraint validation report"
+        inputs:
+          - name: blueprints
+            type: array
+            required: true
+            description: "All blueprints to report on"
+        outputs:
+          - name: report
+            type: object
+            description: "Constraint validation report"
+    dependencies:
+      - blueprint_organizer
+
+  - agent_name: presenter_notes_writer
+    description: "Generate presenter notes for each slide"
+    file: "agents/prompts/presenter_notes_writer.md"
+    skills:
+      - name: generate_presenter_notes
+        description: "Create presenter notes for a slide"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Slide blueprint"
+          - name: talking_points
+            type: array
+            required: false
+            description: "Key talking points"
+        outputs:
+          - name: presenter_notes
+            type: string
+            description: "Formatted presenter notes"
+
+      - name: add_timing_cues
+        description: "Add timing cues to presenter notes"
+        inputs:
+          - name: notes
+            type: string
+            required: true
+            description: "Presenter notes"
+          - name: target_time
+            type: integer
+            required: true
+            description: "Target time in seconds"
+        outputs:
+          - name: timed_notes
+            type: string
+            description: "Notes with timing cues"
+
+      - name: add_engagement_prompts
+        description: "Add audience engagement prompts"
+        inputs:
+          - name: notes
+            type: string
+            required: true
+            description: "Presenter notes"
+          - name: slide_type
+            type: string
+            required: true
+            description: "Type of slide"
+        outputs:
+          - name: enhanced_notes
+            type: string
+            description: "Notes with engagement prompts"
+    dependencies:
+      - constraint_validator
+
+  - agent_name: tip_generator
+    description: "Generate NCLEX exam tips for relevant slides"
+    file: "agents/prompts/tip_generator.md"
+    skills:
+      - name: generate_exam_tip
+        description: "Generate NCLEX exam tip for content"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Slide content"
+          - name: domain
+            type: string
+            required: true
+            description: "NCLEX domain"
+        outputs:
+          - name: tip
+            type: string
+            description: "Generated exam tip"
+          - name: tip_type
+            type: string
+            description: "Type of tip (strategy, memory, concept)"
+
+      - name: identify_high_yield_content
+        description: "Identify high-yield NCLEX content"
+        inputs:
+          - name: blueprints
+            type: array
+            required: true
+            description: "Section blueprints"
+        outputs:
+          - name: high_yield_items
+            type: array
+            description: "High-yield content items"
+
+      - name: generate_memory_aids
+        description: "Create mnemonics and memory aids"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content to create aid for"
+        outputs:
+          - name: memory_aid
+            type: object
+            description: "Mnemonic or memory aid"
+    dependencies:
+      - presenter_notes_writer
+
+# =============================================================================
+# CATEGORY 3: VISUAL GENERATION AGENTS (14)
+# Purpose: Generate all visual types for Step 12
+# =============================================================================
+visual_generation_agents:
+
+  - agent_name: table_generator
+    description: "Generate comparison tables"
+    file: "agents/prompts/table_generator.md"
+    skills:
+      - name: generate_comparison_table
+        description: "Create comparison table from content"
+        inputs:
+          - name: items_to_compare
+            type: array
+            required: true
+            description: "Items to compare in table"
+          - name: comparison_criteria
+            type: array
+            required: true
+            description: "Criteria for comparison"
+        outputs:
+          - name: table
+            type: object
+            description: "Table data structure"
+
+      - name: format_table_cells
+        description: "Format cell content for display"
+        inputs:
+          - name: table
+            type: object
+            required: true
+            description: "Raw table data"
+        outputs:
+          - name: formatted_table
+            type: object
+            description: "Formatted table"
+
+      - name: validate_table_structure
+        description: "Validate table meets constraints"
+        inputs:
+          - name: table
+            type: object
+            required: true
+            description: "Table to validate"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether table is valid"
+          - name: issues
+            type: array
+            description: "Validation issues"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: table_layout_selector
+    description: "Select optimal table layout"
+    file: "agents/prompts/table_layout_selector.md"
+    skills:
+      - name: analyze_table_dimensions
+        description: "Analyze table rows/columns"
+        inputs:
+          - name: table
+            type: object
+            required: true
+            description: "Table to analyze"
+        outputs:
+          - name: dimensions
+            type: object
+            description: "Row/column counts and sizes"
+
+      - name: select_layout
+        description: "Select optimal layout for table"
+        inputs:
+          - name: table
+            type: object
+            required: true
+            description: "Table data"
+          - name: slide_area
+            type: object
+            required: true
+            description: "Available slide area"
+        outputs:
+          - name: layout
+            type: object
+            description: "Selected layout configuration"
+
+      - name: calculate_cell_sizes
+        description: "Calculate cell dimensions"
+        inputs:
+          - name: table
+            type: object
+            required: true
+            description: "Table data"
+          - name: layout
+            type: object
+            required: true
+            description: "Layout configuration"
+        outputs:
+          - name: cell_sizes
+            type: object
+            description: "Calculated cell dimensions"
+    dependencies:
+      - table_generator
+
+  - agent_name: flowchart_generator
+    description: "Generate process flowcharts"
+    file: "agents/prompts/flowchart_generator.md"
+    skills:
+      - name: parse_process_steps
+        description: "Parse content into process steps"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content describing process"
+        outputs:
+          - name: steps
+            type: array
+            description: "Parsed process steps"
+
+      - name: generate_flowchart_nodes
+        description: "Create flowchart nodes from steps"
+        inputs:
+          - name: steps
+            type: array
+            required: true
+            description: "Process steps"
+        outputs:
+          - name: nodes
+            type: array
+            description: "Flowchart nodes"
+
+      - name: connect_nodes
+        description: "Create connections between nodes"
+        inputs:
+          - name: nodes
+            type: array
+            required: true
+            description: "Flowchart nodes"
+          - name: flow_logic
+            type: object
+            required: false
+            description: "Logic for connections"
+        outputs:
+          - name: flowchart
+            type: object
+            description: "Complete flowchart with connections"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: flowchart_layout_selector
+    description: "Select optimal flowchart layout"
+    file: "agents/prompts/flowchart_layout_selector.md"
+    skills:
+      - name: analyze_flowchart_complexity
+        description: "Analyze flowchart node/edge count"
+        inputs:
+          - name: flowchart
+            type: object
+            required: true
+            description: "Flowchart to analyze"
+        outputs:
+          - name: complexity
+            type: object
+            description: "Complexity metrics"
+
+      - name: select_orientation
+        description: "Select horizontal or vertical orientation"
+        inputs:
+          - name: flowchart
+            type: object
+            required: true
+            description: "Flowchart data"
+          - name: slide_area
+            type: object
+            required: true
+            description: "Available slide area"
+        outputs:
+          - name: orientation
+            type: string
+            description: "Selected orientation"
+
+      - name: calculate_node_positions
+        description: "Calculate node positions"
+        inputs:
+          - name: flowchart
+            type: object
+            required: true
+            description: "Flowchart data"
+          - name: orientation
+            type: string
+            required: true
+            description: "Layout orientation"
+        outputs:
+          - name: positioned_nodes
+            type: array
+            description: "Nodes with positions"
+    dependencies:
+      - flowchart_generator
+
+  - agent_name: decision_tree_generator
+    description: "Generate decision trees for clinical scenarios"
+    file: "agents/prompts/decision_tree_generator.md"
+    skills:
+      - name: parse_decision_points
+        description: "Parse content into decision points"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content describing decisions"
+        outputs:
+          - name: decision_points
+            type: array
+            description: "Parsed decision points"
+
+      - name: build_decision_tree
+        description: "Build tree structure from decision points"
+        inputs:
+          - name: decision_points
+            type: array
+            required: true
+            description: "Decision points"
+        outputs:
+          - name: tree
+            type: object
+            description: "Decision tree structure"
+
+      - name: add_outcomes
+        description: "Add outcome nodes to tree"
+        inputs:
+          - name: tree
+            type: object
+            required: true
+            description: "Decision tree"
+          - name: outcomes
+            type: array
+            required: true
+            description: "Possible outcomes"
+        outputs:
+          - name: complete_tree
+            type: object
+            description: "Tree with outcomes"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: decision_tree_layout_selector
+    description: "Select optimal decision tree layout"
+    file: "agents/prompts/decision_tree_layout_selector.md"
+    skills:
+      - name: analyze_tree_depth
+        description: "Analyze tree depth and breadth"
+        inputs:
+          - name: tree
+            type: object
+            required: true
+            description: "Decision tree"
+        outputs:
+          - name: depth
+            type: integer
+            description: "Tree depth"
+          - name: max_breadth
+            type: integer
+            description: "Maximum breadth"
+
+      - name: select_tree_layout
+        description: "Select optimal tree layout style"
+        inputs:
+          - name: tree
+            type: object
+            required: true
+            description: "Decision tree"
+          - name: slide_area
+            type: object
+            required: true
+            description: "Available area"
+        outputs:
+          - name: layout_style
+            type: string
+            description: "Selected layout style"
+
+      - name: calculate_node_spacing
+        description: "Calculate spacing between nodes"
+        inputs:
+          - name: tree
+            type: object
+            required: true
+            description: "Decision tree"
+          - name: layout_style
+            type: string
+            required: true
+            description: "Layout style"
+        outputs:
+          - name: spacing
+            type: object
+            description: "Node spacing configuration"
+    dependencies:
+      - decision_tree_generator
+
+  - agent_name: timeline_generator
+    description: "Generate timelines for sequential content"
+    file: "agents/prompts/timeline_generator.md"
+    skills:
+      - name: extract_timeline_events
+        description: "Extract events from content"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content with sequential information"
+        outputs:
+          - name: events
+            type: array
+            description: "Timeline events"
+
+      - name: order_events_chronologically
+        description: "Order events in sequence"
+        inputs:
+          - name: events
+            type: array
+            required: true
+            description: "Events to order"
+        outputs:
+          - name: ordered_events
+            type: array
+            description: "Chronologically ordered events"
+
+      - name: generate_timeline_structure
+        description: "Create timeline visual structure"
+        inputs:
+          - name: ordered_events
+            type: array
+            required: true
+            description: "Ordered events"
+        outputs:
+          - name: timeline
+            type: object
+            description: "Timeline structure"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: timeline_layout_selector
+    description: "Select optimal timeline layout"
+    file: "agents/prompts/timeline_layout_selector.md"
+    skills:
+      - name: count_timeline_events
+        description: "Count events in timeline"
+        inputs:
+          - name: timeline
+            type: object
+            required: true
+            description: "Timeline"
+        outputs:
+          - name: event_count
+            type: integer
+            description: "Number of events"
+
+      - name: select_timeline_style
+        description: "Select horizontal or vertical style"
+        inputs:
+          - name: timeline
+            type: object
+            required: true
+            description: "Timeline data"
+          - name: event_count
+            type: integer
+            required: true
+            description: "Number of events"
+        outputs:
+          - name: style
+            type: string
+            description: "Selected style"
+
+      - name: calculate_event_positions
+        description: "Calculate event positions on timeline"
+        inputs:
+          - name: timeline
+            type: object
+            required: true
+            description: "Timeline data"
+          - name: style
+            type: string
+            required: true
+            description: "Timeline style"
+        outputs:
+          - name: positions
+            type: array
+            description: "Event positions"
+    dependencies:
+      - timeline_generator
+
+  - agent_name: hierarchy_generator
+    description: "Generate hierarchy diagrams"
+    file: "agents/prompts/hierarchy_generator.md"
+    skills:
+      - name: parse_hierarchical_content
+        description: "Parse content into hierarchy"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content with hierarchical structure"
+        outputs:
+          - name: hierarchy_data
+            type: object
+            description: "Parsed hierarchy"
+
+      - name: build_hierarchy_tree
+        description: "Build tree structure for hierarchy"
+        inputs:
+          - name: hierarchy_data
+            type: object
+            required: true
+            description: "Hierarchy data"
+        outputs:
+          - name: tree
+            type: object
+            description: "Hierarchy tree"
+
+      - name: assign_hierarchy_levels
+        description: "Assign visual levels to nodes"
+        inputs:
+          - name: tree
+            type: object
+            required: true
+            description: "Hierarchy tree"
+        outputs:
+          - name: leveled_tree
+            type: object
+            description: "Tree with level assignments"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: hierarchy_layout_selector
+    description: "Select optimal hierarchy layout"
+    file: "agents/prompts/hierarchy_layout_selector.md"
+    skills:
+      - name: analyze_hierarchy_structure
+        description: "Analyze hierarchy depth and nodes"
+        inputs:
+          - name: hierarchy
+            type: object
+            required: true
+            description: "Hierarchy tree"
+        outputs:
+          - name: structure_metrics
+            type: object
+            description: "Structure analysis"
+
+      - name: select_hierarchy_style
+        description: "Select org chart, radial, or indented"
+        inputs:
+          - name: hierarchy
+            type: object
+            required: true
+            description: "Hierarchy tree"
+          - name: metrics
+            type: object
+            required: true
+            description: "Structure metrics"
+        outputs:
+          - name: style
+            type: string
+            description: "Selected style"
+
+      - name: calculate_hierarchy_layout
+        description: "Calculate node positions for hierarchy"
+        inputs:
+          - name: hierarchy
+            type: object
+            required: true
+            description: "Hierarchy tree"
+          - name: style
+            type: string
+            required: true
+            description: "Layout style"
+        outputs:
+          - name: layout
+            type: object
+            description: "Node positions and sizes"
+    dependencies:
+      - hierarchy_generator
+
+  - agent_name: spectrum_generator
+    description: "Generate spectrum visuals (ranges, scales)"
+    file: "agents/prompts/spectrum_generator.md"
+    skills:
+      - name: parse_spectrum_content
+        description: "Parse content into spectrum data"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content with range/scale information"
+        outputs:
+          - name: spectrum_data
+            type: object
+            description: "Parsed spectrum data"
+
+      - name: define_spectrum_endpoints
+        description: "Define spectrum min/max endpoints"
+        inputs:
+          - name: spectrum_data
+            type: object
+            required: true
+            description: "Spectrum data"
+        outputs:
+          - name: endpoints
+            type: object
+            description: "Spectrum endpoints"
+
+      - name: generate_spectrum_visual
+        description: "Create spectrum visual structure"
+        inputs:
+          - name: spectrum_data
+            type: object
+            required: true
+            description: "Spectrum data"
+          - name: endpoints
+            type: object
+            required: true
+            description: "Endpoints"
+        outputs:
+          - name: spectrum
+            type: object
+            description: "Spectrum visual"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: spectrum_layout_selector
+    description: "Select optimal spectrum layout"
+    file: "agents/prompts/spectrum_layout_selector.md"
+    skills:
+      - name: analyze_spectrum_points
+        description: "Analyze points on spectrum"
+        inputs:
+          - name: spectrum
+            type: object
+            required: true
+            description: "Spectrum data"
+        outputs:
+          - name: point_count
+            type: integer
+            description: "Number of points"
+
+      - name: select_spectrum_style
+        description: "Select gradient, discrete, or labeled style"
+        inputs:
+          - name: spectrum
+            type: object
+            required: true
+            description: "Spectrum data"
+          - name: point_count
+            type: integer
+            required: true
+            description: "Point count"
+        outputs:
+          - name: style
+            type: string
+            description: "Selected style"
+
+      - name: calculate_spectrum_layout
+        description: "Calculate spectrum dimensions and positions"
+        inputs:
+          - name: spectrum
+            type: object
+            required: true
+            description: "Spectrum data"
+          - name: style
+            type: string
+            required: true
+            description: "Spectrum style"
+        outputs:
+          - name: layout
+            type: object
+            description: "Layout configuration"
+    dependencies:
+      - spectrum_generator
+
+  - agent_name: key_diff_generator
+    description: "Generate key differentiator visuals"
+    file: "agents/prompts/key_diff_generator.md"
+    skills:
+      - name: identify_key_differences
+        description: "Identify key differences between items"
+        inputs:
+          - name: items
+            type: array
+            required: true
+            description: "Items to differentiate"
+        outputs:
+          - name: differences
+            type: array
+            description: "Key differences identified"
+
+      - name: generate_diff_visual
+        description: "Create visual highlighting differences"
+        inputs:
+          - name: differences
+            type: array
+            required: true
+            description: "Key differences"
+        outputs:
+          - name: diff_visual
+            type: object
+            description: "Difference visual"
+
+      - name: emphasize_critical_diffs
+        description: "Emphasize most critical differences"
+        inputs:
+          - name: diff_visual
+            type: object
+            required: true
+            description: "Difference visual"
+          - name: critical_items
+            type: array
+            required: true
+            description: "Items to emphasize"
+        outputs:
+          - name: emphasized_visual
+            type: object
+            description: "Visual with emphasis"
+    dependencies:
+      - visual_identifier
+
+  - agent_name: key_diff_layout_selector
+    description: "Select optimal key diff layout"
+    file: "agents/prompts/key_diff_layout_selector.md"
+    skills:
+      - name: analyze_diff_count
+        description: "Analyze number of differences"
+        inputs:
+          - name: diff_visual
+            type: object
+            required: true
+            description: "Difference visual"
+        outputs:
+          - name: diff_count
+            type: integer
+            description: "Number of differences"
+
+      - name: select_diff_style
+        description: "Select side-by-side, overlay, or list style"
+        inputs:
+          - name: diff_visual
+            type: object
+            required: true
+            description: "Difference visual"
+          - name: diff_count
+            type: integer
+            required: true
+            description: "Difference count"
+        outputs:
+          - name: style
+            type: string
+            description: "Selected style"
+
+      - name: calculate_diff_layout
+        description: "Calculate layout for diff visual"
+        inputs:
+          - name: diff_visual
+            type: object
+            required: true
+            description: "Difference visual"
+          - name: style
+            type: string
+            required: true
+            description: "Diff style"
+        outputs:
+          - name: layout
+            type: object
+            description: "Layout configuration"
+    dependencies:
+      - key_diff_generator
+
+# =============================================================================
+# CATEGORY 4: POWERPOINT AGENTS (8)
+# Purpose: Final PowerPoint assembly
+# =============================================================================
+powerpoint_agents:
+
+  - agent_name: pptx_populator
+    description: "Populate PowerPoint templates with content"
+    file: "agents/prompts/pptx_populator.md"
+    skills:
+      - name: load_template
+        description: "Load PowerPoint template file"
+        inputs:
+          - name: template_path
+            type: string
+            required: true
+            description: "Path to PPTX template"
+        outputs:
+          - name: template
+            type: object
+            description: "Loaded template object"
+
+      - name: populate_slide
+        description: "Populate template slide with content"
+        inputs:
+          - name: template
+            type: object
+            required: true
+            description: "Template object"
+          - name: blueprint
+            type: object
+            required: true
+            description: "Slide blueprint"
+          - name: slide_index
+            type: integer
+            required: true
+            description: "Target slide index"
+        outputs:
+          - name: populated_slide
+            type: object
+            description: "Populated slide object"
+
+      - name: save_presentation
+        description: "Save populated presentation"
+        inputs:
+          - name: presentation
+            type: object
+            required: true
+            description: "Presentation object"
+          - name: output_path
+            type: string
+            required: true
+            description: "Output file path"
+        outputs:
+          - name: saved_path
+            type: string
+            description: "Path to saved file"
+    dependencies:
+      - tip_generator
+
+  - agent_name: slide_assembler
+    description: "Assemble final slides from blueprints"
+    file: "agents/prompts/slide_assembler.md"
+    skills:
+      - name: assemble_slide
+        description: "Assemble slide from blueprint components"
+        inputs:
+          - name: blueprint
+            type: object
+            required: true
+            description: "Slide blueprint"
+          - name: visuals
+            type: array
+            required: false
+            description: "Visual elements to include"
+        outputs:
+          - name: assembled_slide
+            type: object
+            description: "Assembled slide"
+
+      - name: order_slides
+        description: "Order slides for presentation"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to order"
+        outputs:
+          - name: ordered_slides
+            type: array
+            description: "Ordered slides"
+
+      - name: add_navigation
+        description: "Add navigation elements"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to update"
+        outputs:
+          - name: slides_with_nav
+            type: array
+            description: "Slides with navigation"
+    dependencies:
+      - pptx_populator
+
+  - agent_name: shape_renderer
+    description: "Render shapes and visuals to PowerPoint"
+    file: "agents/prompts/shape_renderer.md"
+    skills:
+      - name: render_shape
+        description: "Render a shape to slide"
+        inputs:
+          - name: shape_definition
+            type: object
+            required: true
+            description: "Shape specification"
+          - name: slide
+            type: object
+            required: true
+            description: "Target slide"
+        outputs:
+          - name: rendered_shape
+            type: object
+            description: "Rendered shape object"
+
+      - name: render_visual
+        description: "Render visual element to slide"
+        inputs:
+          - name: visual
+            type: object
+            required: true
+            description: "Visual element"
+          - name: slide
+            type: object
+            required: true
+            description: "Target slide"
+        outputs:
+          - name: rendered_visual
+            type: object
+            description: "Rendered visual object"
+
+      - name: render_connector
+        description: "Render connector between shapes"
+        inputs:
+          - name: start_shape
+            type: object
+            required: true
+            description: "Starting shape"
+          - name: end_shape
+            type: object
+            required: true
+            description: "Ending shape"
+          - name: style
+            type: object
+            required: false
+            description: "Connector style"
+        outputs:
+          - name: connector
+            type: object
+            description: "Rendered connector"
+    dependencies:
+      - slide_assembler
+
+  - agent_name: text_formatter
+    description: "Format text content for PowerPoint"
+    file: "agents/prompts/text_formatter.md"
+    skills:
+      - name: format_title
+        description: "Format slide title text"
+        inputs:
+          - name: title_text
+            type: string
+            required: true
+            description: "Title text"
+          - name: style
+            type: object
+            required: false
+            description: "Title style"
+        outputs:
+          - name: formatted_title
+            type: object
+            description: "Formatted title"
+
+      - name: format_bullets
+        description: "Format bullet point text"
+        inputs:
+          - name: bullets
+            type: array
+            required: true
+            description: "Bullet text array"
+          - name: style
+            type: object
+            required: false
+            description: "Bullet style"
+        outputs:
+          - name: formatted_bullets
+            type: array
+            description: "Formatted bullets"
+
+      - name: format_notes
+        description: "Format presenter notes text"
+        inputs:
+          - name: notes
+            type: string
+            required: true
+            description: "Notes text"
+        outputs:
+          - name: formatted_notes
+            type: string
+            description: "Formatted notes"
+    dependencies:
+      - shape_renderer
+
+  - agent_name: color_applier
+    description: "Apply color schemes to slides"
+    file: "agents/prompts/color_applier.md"
+    skills:
+      - name: load_color_scheme
+        description: "Load brand color scheme"
+        inputs:
+          - name: brand_config
+            type: object
+            required: true
+            description: "Brand configuration"
+        outputs:
+          - name: color_scheme
+            type: object
+            description: "Color scheme"
+
+      - name: apply_colors_to_slide
+        description: "Apply colors to slide elements"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to color"
+          - name: color_scheme
+            type: object
+            required: true
+            description: "Color scheme"
+        outputs:
+          - name: colored_slide
+            type: object
+            description: "Colored slide"
+
+      - name: apply_accent_colors
+        description: "Apply accent colors for emphasis"
+        inputs:
+          - name: elements
+            type: array
+            required: true
+            description: "Elements to accent"
+          - name: accent_color
+            type: string
+            required: true
+            description: "Accent color"
+        outputs:
+          - name: accented_elements
+            type: array
+            description: "Accented elements"
+    dependencies:
+      - text_formatter
+
+  - agent_name: position_calculator
+    description: "Calculate element positions on slides"
+    file: "agents/prompts/position_calculator.md"
+    skills:
+      - name: calculate_layout_positions
+        description: "Calculate positions for layout"
+        inputs:
+          - name: elements
+            type: array
+            required: true
+            description: "Elements to position"
+          - name: slide_dimensions
+            type: object
+            required: true
+            description: "Slide dimensions"
+        outputs:
+          - name: positions
+            type: array
+            description: "Element positions"
+
+      - name: calculate_visual_position
+        description: "Calculate position for visual element"
+        inputs:
+          - name: visual
+            type: object
+            required: true
+            description: "Visual element"
+          - name: available_area
+            type: object
+            required: true
+            description: "Available area"
+        outputs:
+          - name: position
+            type: object
+            description: "Visual position"
+
+      - name: calculate_spacing
+        description: "Calculate spacing between elements"
+        inputs:
+          - name: elements
+            type: array
+            required: true
+            description: "Elements"
+          - name: layout
+            type: object
+            required: true
+            description: "Layout configuration"
+        outputs:
+          - name: spacing
+            type: object
+            description: "Spacing values"
+    dependencies:
+      - color_applier
+
+  - agent_name: connector_drawer
+    description: "Draw connectors and arrows between elements"
+    file: "agents/prompts/connector_drawer.md"
+    skills:
+      - name: draw_arrow
+        description: "Draw arrow connector"
+        inputs:
+          - name: start_point
+            type: object
+            required: true
+            description: "Start coordinates"
+          - name: end_point
+            type: object
+            required: true
+            description: "End coordinates"
+          - name: style
+            type: object
+            required: false
+            description: "Arrow style"
+        outputs:
+          - name: arrow
+            type: object
+            description: "Arrow object"
+
+      - name: draw_line
+        description: "Draw line connector"
+        inputs:
+          - name: start_point
+            type: object
+            required: true
+            description: "Start coordinates"
+          - name: end_point
+            type: object
+            required: true
+            description: "End coordinates"
+        outputs:
+          - name: line
+            type: object
+            description: "Line object"
+
+      - name: draw_elbow_connector
+        description: "Draw elbow-style connector"
+        inputs:
+          - name: start_point
+            type: object
+            required: true
+            description: "Start coordinates"
+          - name: end_point
+            type: object
+            required: true
+            description: "End coordinates"
+          - name: bend_point
+            type: object
+            required: false
+            description: "Bend coordinates"
+        outputs:
+          - name: elbow
+            type: object
+            description: "Elbow connector object"
+    dependencies:
+      - position_calculator
+
+  - agent_name: final_validator
+    description: "Final output validation before export"
+    file: "agents/prompts/final_validator.md"
+    skills:
+      - name: validate_presentation
+        description: "Validate complete presentation"
+        inputs:
+          - name: presentation
+            type: object
+            required: true
+            description: "Presentation to validate"
+        outputs:
+          - name: is_valid
+            type: boolean
+            description: "Whether presentation is valid"
+          - name: issues
+            type: array
+            description: "Validation issues"
+
+      - name: validate_all_slides
+        description: "Validate all slides meet standards"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to validate"
+          - name: standards
+            type: object
+            required: true
+            description: "Validation standards"
+        outputs:
+          - name: results
+            type: array
+            description: "Validation results per slide"
+
+      - name: generate_validation_report
+        description: "Generate final validation report"
+        inputs:
+          - name: validation_results
+            type: object
+            required: true
+            description: "All validation results"
+        outputs:
+          - name: report
+            type: object
+            description: "Comprehensive validation report"
+    dependencies:
+      - connector_drawer
+
+# =============================================================================
+# CATEGORY 5: QUALITY ASSURANCE AGENTS (8)
+# Purpose: Validate content and generate QA reports
+# =============================================================================
+qa_agents:
+
+  - agent_name: line_limit_checker
+    description: "Verify line limits are met on all slides"
+    file: "agents/prompts/line_limit_checker.md"
+    skills:
+      - name: check_slide_lines
+        description: "Check line count on single slide"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to check"
+          - name: max_lines
+            type: integer
+            required: true
+            description: "Maximum lines allowed"
+        outputs:
+          - name: line_count
+            type: integer
+            description: "Actual line count"
+          - name: passes
+            type: boolean
+            description: "Whether limit is met"
+
+      - name: check_all_slides
+        description: "Check line limits on all slides"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "All slides"
+          - name: limits
+            type: object
+            required: true
+            description: "Line limit configuration"
+        outputs:
+          - name: results
+            type: array
+            description: "Results per slide"
+          - name: overall_pass
+            type: boolean
+            description: "Whether all pass"
+
+      - name: identify_violations
+        description: "List slides violating line limits"
+        inputs:
+          - name: check_results
+            type: array
+            required: true
+            description: "Check results"
+        outputs:
+          - name: violations
+            type: array
+            description: "Slides with violations"
+    dependencies:
+      - blueprint_organizer
+
+  - agent_name: char_limit_checker
+    description: "Verify character limits are met"
+    file: "agents/prompts/char_limit_checker.md"
+    skills:
+      - name: check_element_chars
+        description: "Check character count on element"
+        inputs:
+          - name: element
+            type: object
+            required: true
+            description: "Element to check"
+          - name: max_chars
+            type: integer
+            required: true
+            description: "Maximum characters"
+        outputs:
+          - name: char_count
+            type: integer
+            description: "Actual character count"
+          - name: passes
+            type: boolean
+            description: "Whether limit is met"
+
+      - name: check_all_elements
+        description: "Check character limits on all elements"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "All slides"
+          - name: limits
+            type: object
+            required: true
+            description: "Character limit configuration"
+        outputs:
+          - name: results
+            type: array
+            description: "Results per element"
+          - name: overall_pass
+            type: boolean
+            description: "Whether all pass"
+
+      - name: identify_char_violations
+        description: "List elements violating character limits"
+        inputs:
+          - name: check_results
+            type: array
+            required: true
+            description: "Check results"
+        outputs:
+          - name: violations
+            type: array
+            description: "Elements with violations"
+    dependencies:
+      - line_limit_checker
+
+  - agent_name: visual_quota_checker
+    description: "Verify visual minimums are met"
+    file: "agents/prompts/visual_quota_checker.md"
+    skills:
+      - name: count_visuals
+        description: "Count visuals in section"
+        inputs:
+          - name: section
+            type: object
+            required: true
+            description: "Section to count"
+        outputs:
+          - name: visual_count
+            type: integer
+            description: "Number of visuals"
+          - name: visual_types
+            type: object
+            description: "Count by type"
+
+      - name: check_quota
+        description: "Check if quota is met"
+        inputs:
+          - name: visual_count
+            type: integer
+            required: true
+            description: "Actual count"
+          - name: quota
+            type: object
+            required: true
+            description: "Quota requirements"
+        outputs:
+          - name: meets_quota
+            type: boolean
+            description: "Whether quota is met"
+          - name: deficit
+            type: integer
+            description: "Number below quota"
+
+      - name: generate_quota_report
+        description: "Generate visual quota report"
+        inputs:
+          - name: sections
+            type: array
+            required: true
+            description: "All sections"
+        outputs:
+          - name: report
+            type: object
+            description: "Quota report"
+    dependencies:
+      - char_limit_checker
+
+  - agent_name: brand_compliance_checker
+    description: "Check brand standards compliance"
+    file: "agents/prompts/brand_compliance_checker.md"
+    skills:
+      - name: check_colors
+        description: "Check color compliance"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to check"
+          - name: brand_colors
+            type: array
+            required: true
+            description: "Allowed brand colors"
+        outputs:
+          - name: compliant
+            type: boolean
+            description: "Whether colors comply"
+          - name: violations
+            type: array
+            description: "Non-compliant colors"
+
+      - name: check_fonts
+        description: "Check font compliance"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to check"
+          - name: brand_fonts
+            type: array
+            required: true
+            description: "Allowed brand fonts"
+        outputs:
+          - name: compliant
+            type: boolean
+            description: "Whether fonts comply"
+          - name: violations
+            type: array
+            description: "Non-compliant fonts"
+
+      - name: check_logo_placement
+        description: "Check logo placement"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to check"
+          - name: logo_rules
+            type: object
+            required: true
+            description: "Logo placement rules"
+        outputs:
+          - name: compliant
+            type: boolean
+            description: "Whether placement complies"
+    dependencies:
+      - visual_quota_checker
+
+  - agent_name: pedagogy_checker
+    description: "Check learning objectives alignment"
+    file: "agents/prompts/pedagogy_checker.md"
+    skills:
+      - name: check_learning_objectives
+        description: "Verify learning objectives are addressed"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content to check"
+          - name: objectives
+            type: array
+            required: true
+            description: "Learning objectives"
+        outputs:
+          - name: coverage
+            type: object
+            description: "Objective coverage"
+          - name: all_covered
+            type: boolean
+            description: "Whether all covered"
+
+      - name: check_bloom_levels
+        description: "Verify Bloom's taxonomy levels"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content to check"
+        outputs:
+          - name: levels_present
+            type: array
+            description: "Bloom levels found"
+
+      - name: check_engagement
+        description: "Check for engagement elements"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to check"
+        outputs:
+          - name: engagement_score
+            type: number
+            description: "Engagement score 0-100"
+    dependencies:
+      - brand_compliance_checker
+
+  - agent_name: consistency_checker
+    description: "Check terminology and style consistency"
+    file: "agents/prompts/consistency_checker.md"
+    skills:
+      - name: check_terminology
+        description: "Check terminology consistency"
+        inputs:
+          - name: content
+            type: object
+            required: true
+            description: "Content to check"
+          - name: glossary
+            type: object
+            required: true
+            description: "Approved terminology"
+        outputs:
+          - name: consistent
+            type: boolean
+            description: "Whether terminology is consistent"
+          - name: issues
+            type: array
+            description: "Terminology inconsistencies"
+
+      - name: check_style_consistency
+        description: "Check formatting style consistency"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to check"
+        outputs:
+          - name: consistent
+            type: boolean
+            description: "Whether style is consistent"
+          - name: issues
+            type: array
+            description: "Style inconsistencies"
+
+      - name: check_numbering
+        description: "Check numbering/ordering consistency"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Slides to check"
+        outputs:
+          - name: consistent
+            type: boolean
+            description: "Whether numbering is consistent"
+    dependencies:
+      - pedagogy_checker
+
+  - agent_name: score_calculator
+    description: "Calculate QA scores for sections"
+    file: "agents/prompts/score_calculator.md"
+    skills:
+      - name: calculate_section_score
+        description: "Calculate QA score for section"
+        inputs:
+          - name: qa_results
+            type: object
+            required: true
+            description: "All QA check results"
+          - name: weights
+            type: object
+            required: true
+            description: "Score weights"
+        outputs:
+          - name: score
+            type: integer
+            description: "Overall score 0-100"
+          - name: breakdown
+            type: object
+            description: "Score breakdown"
+
+      - name: calculate_presentation_score
+        description: "Calculate overall presentation score"
+        inputs:
+          - name: section_scores
+            type: array
+            required: true
+            description: "All section scores"
+        outputs:
+          - name: overall_score
+            type: integer
+            description: "Overall score"
+          - name: pass
+            type: boolean
+            description: "Whether >= 90"
+
+      - name: identify_improvement_areas
+        description: "Identify areas needing improvement"
+        inputs:
+          - name: score_breakdown
+            type: object
+            required: true
+            description: "Score breakdown"
+        outputs:
+          - name: improvements
+            type: array
+            description: "Areas to improve"
+    dependencies:
+      - consistency_checker
+
+  - agent_name: error_reporter
+    description: "Generate comprehensive error reports"
+    file: "agents/prompts/error_reporter.md"
+    skills:
+      - name: compile_errors
+        description: "Compile all errors from QA checks"
+        inputs:
+          - name: qa_results
+            type: object
+            required: true
+            description: "All QA results"
+        outputs:
+          - name: errors
+            type: array
+            description: "Compiled error list"
+
+      - name: categorize_errors
+        description: "Categorize errors by type and severity"
+        inputs:
+          - name: errors
+            type: array
+            required: true
+            description: "Error list"
+        outputs:
+          - name: categorized
+            type: object
+            description: "Errors by category"
+
+      - name: generate_report
+        description: "Generate formatted error report"
+        inputs:
+          - name: categorized_errors
+            type: object
+            required: true
+            description: "Categorized errors"
+        outputs:
+          - name: report
+            type: string
+            description: "Formatted report"
+    dependencies:
+      - score_calculator
+
+# =============================================================================
+# CATEGORY 6: UTILITY AGENTS (5)
+# Purpose: Helper utilities for pipeline operations
+# =============================================================================
+utility_agents:
+
+  - agent_name: glossary_lookup
+    description: "Terminology lookup for NCLEX terms"
+    file: "agents/prompts/glossary_lookup.md"
+    skills:
+      - name: lookup_term
+        description: "Look up a single term"
+        inputs:
+          - name: term
+            type: string
+            required: true
+            description: "Term to look up"
+        outputs:
+          - name: definition
+            type: string
+            description: "Term definition"
+          - name: found
+            type: boolean
+            description: "Whether term was found"
+
+      - name: lookup_multiple
+        description: "Look up multiple terms"
+        inputs:
+          - name: terms
+            type: array
+            required: true
+            description: "Terms to look up"
+        outputs:
+          - name: results
+            type: object
+            description: "Term-definition pairs"
+
+      - name: suggest_similar
+        description: "Suggest similar terms"
+        inputs:
+          - name: term
+            type: string
+            required: true
+            description: "Term to find similar"
+        outputs:
+          - name: suggestions
+            type: array
+            description: "Similar terms"
+    dependencies: []
+
+  - agent_name: timing_estimator
+    description: "Estimate presentation timing"
+    file: "agents/prompts/timing_estimator.md"
+    skills:
+      - name: estimate_slide_time
+        description: "Estimate time for single slide"
+        inputs:
+          - name: slide
+            type: object
+            required: true
+            description: "Slide to estimate"
+        outputs:
+          - name: estimated_seconds
+            type: integer
+            description: "Estimated time in seconds"
+
+      - name: estimate_section_time
+        description: "Estimate time for section"
+        inputs:
+          - name: slides
+            type: array
+            required: true
+            description: "Section slides"
+        outputs:
+          - name: estimated_minutes
+            type: integer
+            description: "Estimated time in minutes"
+
+      - name: estimate_presentation_time
+        description: "Estimate total presentation time"
+        inputs:
+          - name: sections
+            type: array
+            required: true
+            description: "All sections"
+        outputs:
+          - name: total_minutes
+            type: integer
+            description: "Total estimated minutes"
+          - name: breakdown
+            type: object
+            description: "Time per section"
+    dependencies: []
+
+  - agent_name: section_counter
+    description: "Count sections and slides"
+    file: "agents/prompts/section_counter.md"
+    skills:
+      - name: count_slides
+        description: "Count slides in section"
+        inputs:
+          - name: section
+            type: object
+            required: true
+            description: "Section to count"
+        outputs:
+          - name: slide_count
+            type: integer
+            description: "Number of slides"
+
+      - name: count_sections
+        description: "Count sections in presentation"
+        inputs:
+          - name: presentation
+            type: object
+            required: true
+            description: "Presentation to count"
+        outputs:
+          - name: section_count
+            type: integer
+            description: "Number of sections"
+
+      - name: generate_summary
+        description: "Generate count summary"
+        inputs:
+          - name: presentation
+            type: object
+            required: true
+            description: "Presentation"
+        outputs:
+          - name: summary
+            type: object
+            description: "Count summary"
+    dependencies: []
+
+  - agent_name: state_manager
+    description: "Manage pipeline state persistence"
+    file: "agents/prompts/state_manager.md"
+    skills:
+      - name: save_state
+        description: "Save pipeline state to file"
+        inputs:
+          - name: state
+            type: object
+            required: true
+            description: "State to save"
+          - name: path
+            type: string
+            required: false
+            description: "Save path"
+        outputs:
+          - name: saved_path
+            type: string
+            description: "Path where saved"
+
+      - name: load_state
+        description: "Load pipeline state from file"
+        inputs:
+          - name: path
+            type: string
+            required: true
+            description: "State file path"
+        outputs:
+          - name: state
+            type: object
+            description: "Loaded state"
+
+      - name: get_current_step
+        description: "Get current pipeline step"
+        inputs:
+          - name: state
+            type: object
+            required: true
+            description: "Pipeline state"
+        outputs:
+          - name: current_step
+            type: integer
+            description: "Current step number"
+          - name: step_name
+            type: string
+            description: "Step name"
+
+      - name: update_step
+        description: "Update current step in state"
+        inputs:
+          - name: state
+            type: object
+            required: true
+            description: "Pipeline state"
+          - name: step
+            type: integer
+            required: true
+            description: "New step number"
+        outputs:
+          - name: updated_state
+            type: object
+            description: "Updated state"
+    dependencies: []
+
+  - agent_name: changelog_writer
+    description: "Write revision changelogs"
+    file: "agents/prompts/changelog_writer.md"
+    skills:
+      - name: create_changelog_entry
+        description: "Create changelog entry for revision"
+        inputs:
+          - name: changes
+            type: array
+            required: true
+            description: "List of changes"
+          - name: version
+            type: string
+            required: true
+            description: "Version number"
+        outputs:
+          - name: entry
+            type: object
+            description: "Changelog entry"
+
+      - name: append_to_changelog
+        description: "Append entry to changelog file"
+        inputs:
+          - name: entry
+            type: object
+            required: true
+            description: "Entry to append"
+          - name: changelog_path
+            type: string
+            required: true
+            description: "Changelog file path"
+        outputs:
+          - name: updated
+            type: boolean
+            description: "Whether update succeeded"
+
+      - name: generate_summary
+        description: "Generate changelog summary"
+        inputs:
+          - name: changelog
+            type: object
+            required: true
+            description: "Full changelog"
+        outputs:
+          - name: summary
+            type: string
+            description: "Changelog summary"
+    dependencies: []
+
+# =============================================================================
+# SKILL EXECUTION RULES
+# =============================================================================
+execution_rules:
+  sequential_dependency: "Steps MUST run in order. Each agent's output is the next agent's input."
+  schema_validation: "Every agent input/output MUST validate against its schema before proceeding."
+  quality_gates:
+    - "Step 8 QA must score >= 90/100 to proceed"
+    - "Step 9 visual quota must show PASS"
+    - "Step 10 must have Visual: Yes/No on every slide"
+  error_handling:
+    - "On validation failure: Return to previous agent with error context"
+    - "On schema mismatch: Halt and report"
+    - "On resource missing: Halt and report"
+  state_persistence: "Pipeline state is saved after each agent completes to pipeline_state.json"
+
+# =============================================================================
+# AGENT COUNT SUMMARY
+# =============================================================================
+summary:
+  total_agents: 50
+  by_category:
+    preparation: 5
+    blueprint: 10
+    visual_generation: 14
+    powerpoint: 8
+    qa: 8
+    utility: 5
+  agents_list:
+    preparation:
+      - anchor_uploader
+      - lecture_mapper
+      - content_sorter
+      - outline_generator
+      - standards_loader
+    blueprint:
+      - blueprint_generator
+      - line_enforcer
+      - formatting_reviser
+      - quality_reviewer
+      - visual_identifier
+      - visual_integrator
+      - blueprint_organizer
+      - constraint_validator
+      - presenter_notes_writer
+      - tip_generator
+    visual_generation:
+      - table_generator
+      - table_layout_selector
+      - flowchart_generator
+      - flowchart_layout_selector
+      - decision_tree_generator
+      - decision_tree_layout_selector
+      - timeline_generator
+      - timeline_layout_selector
+      - hierarchy_generator
+      - hierarchy_layout_selector
+      - spectrum_generator
+      - spectrum_layout_selector
+      - key_diff_generator
+      - key_diff_layout_selector
+    powerpoint:
+      - pptx_populator
+      - slide_assembler
+      - shape_renderer
+      - text_formatter
+      - color_applier
+      - position_calculator
+      - connector_drawer
+      - final_validator
+    qa:
+      - line_limit_checker
+      - char_limit_checker
+      - visual_quota_checker
+      - brand_compliance_checker
+      - pedagogy_checker
+      - consistency_checker
+      - score_calculator
+      - error_reporter
+    utility:
+      - glossary_lookup
+      - timing_estimator
+      - section_counter
+      - state_manager
+      - changelog_writer

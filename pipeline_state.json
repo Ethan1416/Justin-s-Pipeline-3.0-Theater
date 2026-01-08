@@ -1,0 +1,20 @@
+{
+  "pipeline_info": {
+    "domain": "",
+    "created": "",
+    "last_updated": ""
+  },
+  "sections": {},
+  "global_steps": {
+    "step1_anchor_upload": "pending",
+    "step2_lecture_mapping": "pending",
+    "step3_official_sorting": "pending",
+    "step4_outline_generation": "pending",
+    "step5_presentation_standards": "reference_document"
+  },
+  "notes": [
+    "Update section status after each step completes",
+    "Valid statuses: pending, in_progress, completed, failed, skipped",
+    "Set domain and created date when starting new production run"
+  ]
+}

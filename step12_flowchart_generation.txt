@@ -1,0 +1,748 @@
+# STEP 12: FLOWCHART GENERATION
+## PowerPoint Flowchart Visual Aid Specifications
+## NCLEX Lecture Pipeline
+
+---
+
+## PURPOSE
+
+This document specifies how to generate flowchart visual aids for NCLEX lecture slides. Flowcharts visualize sequential processes, procedures, and step-by-step pathways where order matters.
+
+---
+
+## SECTION 1: IDENTIFICATION CONDITIONS
+
+### When to Use a Flowchart
+
+A slide should use a flowchart when the blueprint content contains:
+
+1. **Sequential Steps**: Content describing a process with ordered stages
+   - Keywords: "first... then... next... finally", "step 1, step 2", "sequence of"
+   - Example: "Assessment process: intake → testing → scoring → interpretation → report"
+
+2. **Procedural Content**: How-to processes or protocols
+   - Keywords: "procedure", "protocol", "process", "method", "approach"
+   - Example: "Systematic desensitization procedure"
+
+3. **Pathways with Single Direction**: Linear progressions without branching decisions
+   - Keywords: "leads to", "results in", "progresses to", "followed by"
+   - Example: "Stress response pathway: stressor → appraisal → physiological response → coping"
+
+4. **Causal Chains**: Cause-effect sequences
+   - Keywords: "causes", "triggers", "produces", "activates"
+   - Example: "HPA axis activation sequence"
+
+### When NOT to Use a Flowchart
+
+- If content requires YES/NO decisions → Use Decision Tree
+- If content is cyclical/repeating → Use Cycle Diagram
+- If content compares categories → Use Table or Key Differentiators
+- If content shows parallel processes → Use Hierarchy Diagram
+
+---
+
+## SECTION 2: COLOR SCHEME
+
+### Flowchart Color Palette (Teal/Green Theme)
+
+```
+PRIMARY COLORS:
+- Step Header Background: RGB(0, 102, 102) - Dark Teal #006666
+- Step Header Text: RGB(255, 255, 255) - White
+- Step Body Background: RGB(224, 242, 241) - Light Teal #E0F2F1
+- Step Body Text: RGB(0, 0, 0) - Black
+
+ACCENT COLORS:
+- Start Node: RGB(46, 125, 50) - Green #2E7D32
+- End Node: RGB(0, 77, 64) - Dark Green #004D40
+- Connector Lines: RGB(0, 102, 102) - Dark Teal #006666
+- Arrow Heads: RGB(0, 102, 102) - Dark Teal #006666
+
+HIGHLIGHT COLORS (for emphasis):
+- Critical Step: RGB(255, 152, 0) - Orange #FF9800
+- Warning Step: RGB(211, 47, 47) - Red #D32F2F
+```
+
+---
+
+## SECTION 3: LAYOUT SPECIFICATIONS
+
+### Layout A: Linear Horizontal (3-4 steps)
+```
+[START] → [Step 1] → [Step 2] → [Step 3] → [END]
+
+Dimensions:
+- Step box width: 2.0 inches
+- Step box height: 1.2 inches
+- Horizontal spacing: 0.5 inches
+- Arrow length: 0.5 inches
+- Total width: ~11.5 inches (fits slide)
+```
+
+### Layout B: Linear Vertical (4-6 steps)
+```
+[START]
+   ↓
+[Step 1]
+   ↓
+[Step 2]
+   ↓
+[Step 3]
+   ↓
+[Step 4]
+   ↓
+[END]
+
+Dimensions:
+- Step box width: 4.0 inches
+- Step box height: 0.8 inches
+- Vertical spacing: 0.3 inches
+- Centered horizontally on slide
+```
+
+### Layout C: Horizontal with Substeps (3-4 main + substeps)
+```
+[START] → [Step 1] → [Step 2] → [Step 3] → [END]
+              ↓           ↓
+          [1a][1b]    [2a][2b]
+
+Dimensions:
+- Main step box: 2.0 x 1.0 inches
+- Substep box: 0.9 x 0.6 inches
+- Substep positioned below parent
+```
+
+### Layout D: Snake/Zigzag (5-7 steps)
+```
+[START] → [Step 1] → [Step 2] → [Step 3]
+                                    ↓
+         [END] ← [Step 6] ← [Step 5] ← [Step 4]
+
+Dimensions:
+- Step box: 1.8 x 0.9 inches
+- Two rows, alternating direction
+- Fits more steps in limited space
+```
+
+### Layout E: Branching Linear (4-6 steps with optional paths)
+```
+                    ┌→ [Option A] ─┐
+[START] → [Step 1] →│              │→ [Step 3] → [END]
+                    └→ [Option B] ─┘
+
+Dimensions:
+- Main step box: 1.8 x 1.0 inches
+- Branch boxes: 1.5 x 0.8 inches
+- Parallel branches converge
+```
+
+---
+
+## SECTION 4: FONT SPECIFICATIONS
+
+### Text Hierarchy
+
+```
+STEP HEADER (inside step box - top portion):
+- Font: Aptos
+- Size: 20pt (scale to 18pt minimum if needed)
+- Color: White on dark background
+- Style: Bold
+- Alignment: Center
+
+STEP BODY (inside step box - bottom portion):
+- Font: Aptos
+- Size: 18pt minimum
+- Color: Black on light background
+- Style: Regular
+- Alignment: Center
+
+START/END NODES:
+- Font: Aptos
+- Size: 18pt
+- Color: White
+- Style: Bold
+- Text: "START" or "END" (or contextual label)
+
+CONNECTOR LABELS (if needed):
+- Font: Aptos
+- Size: 18pt
+- Color: Dark Teal #006666
+- Style: Italic
+```
+
+---
+
+## SECTION 5: CHARACTER LIMITS
+
+### Per-Element Limits
+
+```
+STEP HEADER:
+- Characters per line: 20
+- Maximum lines: 1
+
+STEP BODY:
+- Characters per line: 25
+- Maximum lines: 2
+
+START/END NODE:
+- Characters: 12 max
+
+CONNECTOR LABEL:
+- Characters: 15 max
+```
+
+### Adaptive Sizing Rules
+
+```python
+def get_adaptive_flowchart_font(step_count, text_length):
+    """Determine font size based on step count and text length."""
+
+    base_size = 20
+
+    # Scale down for more steps
+    if step_count >= 6:
+        base_size = 18
+    elif step_count >= 5:
+        base_size = 19
+
+    # Never go below 18pt
+    return max(base_size, 18)
+```
+
+---
+
+## SECTION 6: CONTENT REVISION INSTRUCTIONS
+
+### How to Revise Blueprint Content for Flowcharts
+
+1. **Extract Sequential Steps**
+   - Identify the ordered stages in the content
+   - Each step should represent one distinct action or stage
+   - Limit to 3-7 steps (use Layout D for more)
+
+2. **Write Step Headers**
+   - Use action verbs or stage names
+   - Keep to 1-3 words
+   - Examples: "Intake", "Assess", "Diagnose", "Treat", "Evaluate"
+
+3. **Write Step Bodies**
+   - Brief description of what happens at this stage
+   - 1-2 short sentences max
+   - Focus on the essential action or outcome
+
+4. **Determine Start/End Labels**
+   - Start: What initiates the process (e.g., "Patient Presents", "Stimulus Occurs")
+   - End: What concludes the process (e.g., "Treatment Complete", "Response")
+
+5. **Add Connector Labels (if needed)**
+   - Only if the transition needs clarification
+   - Examples: "if successful", "triggers", "leads to"
+
+### Example Revision
+
+**Original Blueprint Content:**
+"The systematic desensitization process involves first teaching relaxation techniques to the client, then creating an anxiety hierarchy from least to most feared situations, followed by gradual exposure to each level while maintaining relaxation, and finally achieving the ability to remain calm in previously feared situations."
+
+**Revised for Flowchart:**
+
+```
+START: "Client with Phobia"
+
+Step 1:
+- Header: "Relaxation Training"
+- Body: "Teach progressive muscle relaxation and breathing techniques"
+
+Step 2:
+- Header: "Build Hierarchy"
+- Body: "Create ranked list from least to most anxiety-provoking"
+
+Step 3:
+- Header: "Gradual Exposure"
+- Body: "Pair relaxation with each hierarchy level"
+
+Step 4:
+- Header: "Mastery"
+- Body: "Client maintains calm at all levels"
+
+END: "Phobia Resolved"
+
+Layout Selection: Layout B (Linear Vertical) - 4 main steps, clear progression
+```
+
+---
+
+## SECTION 7: POPULATION SPECIFICATIONS
+
+### Python Implementation Structure
+
+```python
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RgbColor
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import PP_ALIGN
+
+# Color constants
+TEAL_DARK = RgbColor(0, 102, 102)
+TEAL_LIGHT = RgbColor(224, 242, 241)
+GREEN_START = RgbColor(46, 125, 50)
+GREEN_END = RgbColor(0, 77, 64)
+WHITE = RgbColor(255, 255, 255)
+BLACK = RgbColor(0, 0, 0)
+
+def create_flowchart_slide(prs, slide_data):
+    """
+    Create a flowchart slide from structured data.
+
+    slide_data = {
+        'title': 'Slide Title',
+        'layout': 'A',  # A, B, C, D, or E
+        'start_label': 'START',
+        'end_label': 'END',
+        'steps': [
+            {'header': 'Step 1', 'body': 'Description'},
+            {'header': 'Step 2', 'body': 'Description'},
+            ...
+        ],
+        'substeps': {  # Optional, for Layout C
+            0: [{'text': '1a'}, {'text': '1b'}],
+            1: [{'text': '2a'}]
+        }
+    }
+    """
+    # Get blank slide layout
+    slide_layout = prs.slide_layouts[6]  # Blank
+    slide = prs.slides.add_slide(slide_layout)
+
+    # Add title
+    add_title(slide, slide_data['title'])
+
+    # Create flowchart based on layout
+    layout = slide_data.get('layout', 'A')
+
+    if layout == 'A':
+        create_horizontal_linear(slide, slide_data)
+    elif layout == 'B':
+        create_vertical_linear(slide, slide_data)
+    elif layout == 'C':
+        create_horizontal_with_substeps(slide, slide_data)
+    elif layout == 'D':
+        create_snake_layout(slide, slide_data)
+    elif layout == 'E':
+        create_branching_linear(slide, slide_data)
+
+    return slide
+
+def add_step_box(slide, left, top, width, height, header, body):
+    """Add a single step box with header and body."""
+
+    # Header portion (top third)
+    header_height = height * 0.35
+    header_shape = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        left, top, width, header_height
+    )
+    header_shape.fill.solid()
+    header_shape.fill.fore_color.rgb = TEAL_DARK
+
+    # Set header text
+    tf = header_shape.text_frame
+    tf.paragraphs[0].text = header
+    tf.paragraphs[0].font.size = Pt(20)
+    tf.paragraphs[0].font.bold = True
+    tf.paragraphs[0].font.color.rgb = WHITE
+    tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Body portion (bottom two-thirds)
+    body_top = top + header_height
+    body_height = height - header_height
+    body_shape = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        left, body_top, width, body_height
+    )
+    body_shape.fill.solid()
+    body_shape.fill.fore_color.rgb = TEAL_LIGHT
+
+    # Set body text
+    tf = body_shape.text_frame
+    tf.paragraphs[0].text = body
+    tf.paragraphs[0].font.size = Pt(18)
+    tf.paragraphs[0].font.color.rgb = BLACK
+    tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+def add_start_end_node(slide, left, top, width, height, text, is_start=True):
+    """Add START or END oval node."""
+
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.OVAL,
+        left, top, width, height
+    )
+
+    color = GREEN_START if is_start else GREEN_END
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = color
+
+    tf = shape.text_frame
+    tf.paragraphs[0].text = text
+    tf.paragraphs[0].font.size = Pt(18)
+    tf.paragraphs[0].font.bold = True
+    tf.paragraphs[0].font.color.rgb = WHITE
+    tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+def add_arrow_connector(slide, start_x, start_y, end_x, end_y):
+    """Add arrow connector between shapes."""
+
+    connector = slide.shapes.add_connector(
+        MSO_CONNECTOR.STRAIGHT,
+        start_x, start_y, end_x, end_y
+    )
+    connector.line.color.rgb = TEAL_DARK
+    connector.line.width = Pt(2)
+    # Add arrowhead
+    connector.line.end_arrow_type = MSO_ARROW_TYPE.TRIANGLE
+```
+
+### Layout-Specific Implementations
+
+```python
+def create_horizontal_linear(slide, data):
+    """Layout A: Linear Horizontal (3-4 steps)"""
+
+    steps = data['steps']
+    step_count = len(steps)
+
+    # Calculate dimensions
+    total_width = Inches(11.5)
+    start_node_width = Inches(1.0)
+    step_width = Inches(2.0)
+    spacing = Inches(0.4)
+    arrow_space = Inches(0.3)
+
+    # Calculate starting position
+    content_width = (start_node_width * 2 +
+                    step_width * step_count +
+                    spacing * (step_count + 1))
+    start_left = (Inches(13.33) - content_width) / 2
+
+    top = Inches(2.5)
+    node_height = Inches(0.8)
+    step_height = Inches(1.2)
+
+    current_left = start_left
+
+    # Add START node
+    add_start_end_node(slide, current_left, top,
+                       start_node_width, node_height,
+                       data.get('start_label', 'START'), True)
+    current_left += start_node_width + arrow_space
+
+    # Add arrow after START
+    # ... add connector ...
+    current_left += arrow_space
+
+    # Add each step
+    for i, step in enumerate(steps):
+        add_step_box(slide, current_left, top - Inches(0.2),
+                    step_width, step_height,
+                    step['header'], step['body'])
+        current_left += step_width + arrow_space
+
+        # Add arrow after step
+        # ... add connector ...
+        current_left += arrow_space
+
+    # Add END node
+    add_start_end_node(slide, current_left, top,
+                       start_node_width, node_height,
+                       data.get('end_label', 'END'), False)
+
+def create_vertical_linear(slide, data):
+    """Layout B: Linear Vertical (4-6 steps)"""
+
+    steps = data['steps']
+    step_count = len(steps)
+
+    # Calculate dimensions
+    step_width = Inches(4.0)
+    step_height = Inches(0.8)
+    node_height = Inches(0.6)
+    spacing = Inches(0.3)
+
+    # Center horizontally
+    center_left = (Inches(13.33) - step_width) / 2
+
+    # Start from top
+    current_top = Inches(1.5)
+
+    # Add START node (centered, narrower)
+    node_width = Inches(1.5)
+    node_left = (Inches(13.33) - node_width) / 2
+    add_start_end_node(slide, node_left, current_top,
+                       node_width, node_height,
+                       data.get('start_label', 'START'), True)
+    current_top += node_height + spacing
+
+    # Add each step with arrows
+    for step in steps:
+        # Add down arrow
+        # ... add connector ...
+        current_top += Inches(0.2)
+
+        add_step_box(slide, center_left, current_top,
+                    step_width, step_height,
+                    step['header'], step['body'])
+        current_top += step_height + spacing
+
+    # Add END node
+    add_start_end_node(slide, node_left, current_top,
+                       node_width, node_height,
+                       data.get('end_label', 'END'), False)
+```
+
+---
+
+## SECTION 8: NCLEX CONTENT EXAMPLES
+
+### Example 1: HPA Axis Activation (Fundamentals of Nursing)
+
+```
+Title: "HPA Axis Stress Response Pathway"
+Layout: B (Vertical Linear)
+
+START: "Stressor Detected"
+
+Steps:
+1. Header: "Hypothalamus"
+   Body: "Releases CRH (corticotropin-releasing hormone)"
+
+2. Header: "Pituitary Gland"
+   Body: "Releases ACTH into bloodstream"
+
+3. Header: "Adrenal Cortex"
+   Body: "Releases cortisol"
+
+4. Header: "Target Tissues"
+   Body: "Metabolic changes, immune suppression"
+
+5. Header: "Negative Feedback"
+   Body: "Cortisol inhibits hypothalamus and pituitary"
+
+END: "Homeostasis Restored"
+```
+
+### Example 2: Classical Conditioning Procedure (Learning)
+
+```
+Title: "Classical Conditioning Process"
+Layout: A (Horizontal Linear)
+
+START: "Before Conditioning"
+
+Steps:
+1. Header: "Acquisition"
+   Body: "Pair CS with US repeatedly"
+
+2. Header: "Learning"
+   Body: "CR develops to CS"
+
+3. Header: "Generalization"
+   Body: "CR extends to similar stimuli"
+
+END: "Conditioned Response"
+```
+
+### Example 3: Diagnostic Interview Process (Clinical)
+
+```
+Title: "Clinical Interview Sequence"
+Layout: D (Snake/Zigzag)
+
+START: "Client Referral"
+
+Steps:
+1. Header: "Rapport Building"
+   Body: "Establish therapeutic alliance"
+
+2. Header: "Presenting Problem"
+   Body: "Explore chief complaint"
+
+3. Header: "History Taking"
+   Body: "Gather relevant background"
+
+4. Header: "Mental Status Exam"
+   Body: "Assess current functioning"
+
+5. Header: "Diagnostic Formulation"
+   Body: "Integrate findings"
+
+6. Header: "Treatment Planning"
+   Body: "Develop intervention strategy"
+
+END: "Begin Treatment"
+```
+
+---
+
+## SECTION 9: VALIDATION CHECKLIST
+
+### Before Population
+
+- [ ] Step count matches selected layout (A: 3-4, B: 4-6, C: 3-4+subs, D: 5-7, E: 4-6)
+- [ ] Each step has both header and body text
+- [ ] All text within character limits
+- [ ] Start and end labels defined
+- [ ] Process is truly sequential (not cyclical or branching with decisions)
+
+### After Population
+
+- [ ] All step boxes visible and not overlapping
+- [ ] All text readable (minimum 18pt font)
+- [ ] Arrow connectors properly aligned
+- [ ] START node at beginning, END node at end
+- [ ] Colors match specification (teal theme)
+- [ ] Title is present and visible
+
+### Content Validation
+
+- [ ] Steps are in correct sequential order
+- [ ] Each step represents a distinct stage
+- [ ] Process flow is logical and complete
+- [ ] No missing steps in the sequence
+- [ ] Labels are clear and unambiguous
+
+---
+
+## SECTION 10: COMMON ISSUES AND FIXES
+
+### Issue 1: Too Many Steps for Layout
+
+**Problem:** Content has 8+ steps, exceeds layout capacity
+
+**Solution:**
+- Combine related steps into single boxes
+- Use substeps (Layout C) for detail
+- Split into two sequential flowcharts on separate slides
+
+### Issue 2: Steps Overlap or Extend Off Slide
+
+**Problem:** Calculated positions cause overlap
+
+**Solution:**
+```python
+def validate_positions(steps, slide_width=Inches(13.33)):
+    total_width = calculate_total_width(steps)
+    if total_width > slide_width - Inches(0.5):
+        # Scale down box widths
+        scale_factor = (slide_width - Inches(0.5)) / total_width
+        return apply_scale(steps, scale_factor)
+    return steps
+```
+
+### Issue 3: Text Truncated in Boxes
+
+**Problem:** Text cut off despite being within character limits
+
+**Solution:**
+- Ensure text frame word_wrap is True
+- Set text frame auto_size appropriately
+- Reduce font size to minimum 18pt if needed
+
+### Issue 4: Arrows Not Connecting Properly
+
+**Problem:** Connectors misaligned or floating
+
+**Solution:**
+- Calculate connector start/end from shape centers
+- Account for shape dimensions when setting endpoints
+- Use shape anchors when available
+
+### Issue 5: Wrong Layout Selected
+
+**Problem:** Flowchart doesn't fit content structure
+
+**Identification:**
+- Horizontal layout with vertical content orientation
+- Too many/few boxes for layout
+
+**Solution:**
+- Re-evaluate content and select appropriate layout
+- Refer to Section 1 for layout selection guidance
+
+---
+
+## SECTION 11: INTEGRATION WITH PIPELINE
+
+### Blueprint Identification Markers
+
+When generating blueprints in Step 6, mark slides for flowchart treatment:
+
+```
+[VISUAL: FLOWCHART]
+Process: [name of process]
+Steps: [number of steps]
+Layout Recommendation: [A/B/C/D/E]
+```
+
+### Pipeline Config Entry
+
+Add to pipeline_config.json:
+
+```json
+"flowchart_settings": {
+  "reference_doc": "step12_flowchart_generation.txt",
+  "template": "visual aid and graphic organizer template.pptx",
+  "font_name": "Aptos",
+  "min_font_size_pt": 18,
+  "max_steps": 7,
+  "colors": {
+    "step_header_rgb": [0, 102, 102],
+    "step_body_rgb": [224, 242, 241],
+    "start_node_rgb": [46, 125, 50],
+    "end_node_rgb": [0, 77, 64],
+    "connector_rgb": [0, 102, 102],
+    "text_header_rgb": [255, 255, 255],
+    "text_body_rgb": [0, 0, 0]
+  },
+  "layouts": {
+    "A": "Linear Horizontal (3-4 steps)",
+    "B": "Linear Vertical (4-6 steps)",
+    "C": "Horizontal with Substeps (3-4 main + substeps)",
+    "D": "Snake/Zigzag (5-7 steps)",
+    "E": "Branching Linear (4-6 steps with optional paths)"
+  }
+}
+```
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population  ← FLOWCHART GENERATION HERE
+    ↓
+[PRODUCTION COMPLETE]
+```

@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "assemble_output.schema.json",
+  "title": "Slide Assembler Output Schema",
+  "description": "Schema for slide_assembler agent output - assembled slide data ready for PPTX generation",
+  "type": "object",
+  "required": ["metadata", "assembled_slides", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "slide_assembler"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "assembled_slides": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/assembled_slide"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides_with_visuals": {
+          "type": "integer"
+        },
+        "slides_text_only": {
+          "type": "integer"
+        },
+        "visual_types_used": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "assembly_status": {
+          "type": "string",
+          "enum": ["complete", "partial", "failed"]
+        }
+      }
+    },
+    "output_file": {
+      "type": "string",
+      "description": "Path to assembled output file"
+    }
+  },
+  "definitions": {
+    "assembled_slide": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "layout"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "layout": {
+          "type": "string"
+        },
+        "content": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "placeholder_id": { "type": "string" }
+              }
+            },
+            "body": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "placeholder_id": { "type": "string" }
+              }
+            },
+            "tip": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "placeholder_id": { "type": "string" }
+              }
+            },
+            "presenter_notes": {
+              "type": "string"
+            }
+          }
+        },
+        "visual": {
+          "type": "object",
+          "properties": {
+            "visual_id": { "type": "string" },
+            "visual_type": { "type": "string" },
+            "position": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" },
+                "width": { "type": "number" },
+                "height": { "type": "number" }
+              }
+            },
+            "render_data": { "type": "object" }
+          }
+        },
+        "assembly_notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,157 @@
+# constraints.yaml
+# Canonical source for all pipeline constraints
+# All agents and skills should reference this file
+
+version: "1.0"
+last_updated: "2026-01-08"
+
+# =============================================================================
+# TEXT LIMITS
+# =============================================================================
+
+text_limits:
+  # Header/Title Constraints
+  header:
+    chars_per_line: 36
+    max_lines: 1
+    total_max_chars: 36  # Single line only
+    revision_required: true  # NEVER truncate - always revise to fit
+
+  # Body Constraints
+  body:
+    # chars_per_line: REMOVED - PowerPoint handles word wrapping
+    max_lines: 12  # Increased - single TextBox with wrapping
+    word_wrap: true  # Text flows naturally within TextBox
+    truncation: false  # NEVER truncate body content
+
+  # Performance Tip Constraints
+  performance_tip:
+    chars_per_line: 66
+    max_lines: 2
+    total_max_chars: 132  # CANONICAL VALUE
+
+  # Presenter Notes Constraints
+  presenter_notes:
+    max_words: 450
+    max_duration_seconds: 180
+    # NO per-line character limit (intentional)
+    # Notes are for speaker, not display
+
+# =============================================================================
+# VISUAL QUOTAS
+# =============================================================================
+
+visual_quotas:
+  # By section slide count
+  by_slide_count:
+    "12-15":
+      minimum: 2
+      target_min: 3
+      target_max: 4
+      maximum: 6
+    "16-20":
+      minimum: 3
+      target_min: 4
+      target_max: 5
+      maximum: 8
+    "21-25":
+      minimum: 3
+      target_min: 5
+      target_max: 6
+      maximum: 10
+    "26-35":
+      minimum: 4
+      target_min: 6
+      target_max: 8
+      maximum: 14
+
+  # Maximum percentage of slides that can be visuals
+  max_percentage: 0.40  # 40%
+
+  # Visual types allowed
+  types:
+    - TABLE
+    - FLOWCHART
+    - DECISION_TREE
+    - TIMELINE
+    - HIERARCHY
+    - SPECTRUM
+    - KEY_DIFFERENTIATORS
+
+# =============================================================================
+# MARKER REQUIREMENTS
+# =============================================================================
+
+markers:
+  pause:
+    min_per_slide: 2
+    format: "[PAUSE]"
+    alternate_formats:
+      - "[PAUSE - X seconds]"
+
+  emphasis:
+    min_per_content_slide: 1
+    min_per_scenario_slide: 0  # Optional
+    min_per_answer_slide: 1
+    format: "[EMPHASIS: term]"
+
+  performance_callout:
+    required: false  # Recommended but not required
+    patterns:
+      - "In performance"
+      - "Performance tip"
+      - "On stage"
+
+# =============================================================================
+# QUALITY GATE THRESHOLDS
+# =============================================================================
+
+quality_gates:
+  step_8_qa:
+    pass_threshold: 90
+    warn_threshold: 80
+    max_retry_iterations: 3
+
+  visual_quota:
+    fail_if_below_minimum: true
+    warn_if_below_target: true
+
+# =============================================================================
+# SLIDE REQUIREMENTS
+# =============================================================================
+
+slide_requirements:
+  # Per section
+  section:
+    min_slides: 12
+    max_slides: 35
+    required_types:
+      - "Section Intro"  # First slide
+      - "Scenario"       # Practical application
+      - "Discussion"     # Scenario solution/analysis
+
+  # Scenario structure (practical application slides)
+  scenario:
+    stem_min_sentences: 2
+    stem_max_sentences: 4
+    required_options: ["A", "B", "C", "D"]
+    option_format: "letter + parenthesis"  # A) not A. or A:
+
+  # Discussion structure (scenario analysis)
+  discussion:
+    required_sections:
+      - "Best Approach"
+      - "Rationale"
+      - "Alternative Analysis"
+    min_rationale_sentences: 2
+    max_rationale_sentences: 3
+
+# =============================================================================
+# ANCHOR COVERAGE
+# =============================================================================
+
+anchor_coverage:
+  required_rate: 1.0  # 100% coverage required
+  max_anchors_per_slide: 3
+  min_anchors_per_slide: 1
+  allow_anchor_repetition: true  # Same anchor on multiple slides OK

@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "visual_id_input.schema.json",
+  "title": "Step 9 Visual Identification Input Schema",
+  "description": "Schema for visual_identifier agent input - QA-passed blueprint for visual aid identification",
+  "type": "object",
+  "required": ["metadata", "blueprint", "qa_results"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "section_number", "section_name", "domain", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 9: Visual Aid Identification"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_files": {
+          "type": "object",
+          "properties": {
+            "step7_revised": {
+              "type": "string",
+              "description": "Path to Step 7 revised blueprint"
+            },
+            "step8_qa_report": {
+              "type": "string",
+              "description": "Path to Step 8 QA report"
+            }
+          }
+        }
+      }
+    },
+    "blueprint": {
+      "$ref": "#/definitions/blueprint_content"
+    },
+    "qa_results": {
+      "type": "object",
+      "required": ["overall_score", "status"],
+      "properties": {
+        "overall_score": {
+          "type": "integer",
+          "minimum": 90,
+          "maximum": 100,
+          "description": "QA score must be 90+ to proceed to Step 9"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS"]
+        },
+        "anchor_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "formatting_compliance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "visual_quotas": {
+      "type": "object",
+      "description": "Required visual counts based on section size",
+      "properties": {
+        "slide_count": {
+          "type": "integer"
+        },
+        "minimum_visuals": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Minimum 2-4 visuals depending on section size"
+        },
+        "target_visuals": {
+          "type": "integer",
+          "description": "Target 3-8 visuals depending on section size"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "total_slides": {
+          "type": "integer",
+          "minimum": 12,
+          "maximum": 35
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_for_analysis"
+          }
+        }
+      }
+    },
+    "slide_for_analysis": {
+      "type": "object",
+      "required": ["slide_number", "title", "body"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"],
+          "description": "Fixed slides (intro, vignette, answer) should not be converted to visuals"
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "presenter_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

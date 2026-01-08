@@ -1,0 +1,515 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "qa_output.schema.json",
+  "title": "Step 8 Quality Assurance Output Schema",
+  "description": "Schema for quality_reviewer agent output - comprehensive QA report with scoring",
+  "type": "object",
+  "required": ["metadata", "category_results", "overall_score", "readiness_assessment"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date", "source_files", "output_files"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 8: Quality Assurance"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_files": {
+          "type": "object",
+          "properties": {
+            "revised_blueprint": { "type": "string" },
+            "changelog": { "type": "string" },
+            "step4_output": { "type": "string" }
+          }
+        },
+        "output_files": {
+          "type": "object",
+          "properties": {
+            "qa_report": { "type": "string" },
+            "validation_score": { "type": "string" }
+          }
+        }
+      }
+    },
+    "category_results": {
+      "type": "object",
+      "required": [
+        "anchor_coverage",
+        "character_limits",
+        "nclex_tip_presence",
+        "fixed_slides",
+        "presenter_notes",
+        "delivery_modes",
+        "structural_integrity"
+      ],
+      "properties": {
+        "anchor_coverage": {
+          "$ref": "#/definitions/anchor_coverage_result"
+        },
+        "character_limits": {
+          "$ref": "#/definitions/character_limits_result"
+        },
+        "nclex_tip_presence": {
+          "$ref": "#/definitions/tip_presence_result"
+        },
+        "fixed_slides": {
+          "$ref": "#/definitions/fixed_slides_result"
+        },
+        "presenter_notes": {
+          "$ref": "#/definitions/presenter_notes_result"
+        },
+        "delivery_modes": {
+          "$ref": "#/definitions/delivery_modes_result"
+        },
+        "structural_integrity": {
+          "$ref": "#/definitions/structural_result"
+        }
+      }
+    },
+    "overall_score": {
+      "type": "object",
+      "required": ["score", "status", "passing_threshold"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "NEEDS_REVISION", "FAIL"]
+        },
+        "passing_threshold": {
+          "type": "integer",
+          "default": 90
+        },
+        "category_breakdown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "category": { "type": "string" },
+              "score": { "type": "number" },
+              "weight": { "type": "number" },
+              "weighted_score": { "type": "number" }
+            }
+          }
+        },
+        "automatic_fail_triggered": {
+          "type": "boolean"
+        },
+        "automatic_fail_reasons": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "issues": {
+      "type": "object",
+      "properties": {
+        "critical": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/issue"
+          },
+          "description": "Must fix before production"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/issue"
+          },
+          "description": "Recommended fixes"
+        }
+      }
+    },
+    "readiness_assessment": {
+      "type": "object",
+      "required": ["ready_for_next_step", "next_step"],
+      "properties": {
+        "ready_for_next_step": {
+          "type": "boolean"
+        },
+        "next_step": {
+          "type": "string",
+          "enum": ["Step 9: Visual Aid Identification", "Revision Required", "Return to Step 6"]
+        },
+        "required_actions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Specific actions needed if not ready"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "anchor_coverage_result": {
+      "type": "object",
+      "required": ["score", "status", "anchors"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.25
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_summary": { "type": "string" },
+              "covered": { "type": "boolean" },
+              "slide_numbers": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+        "frontload_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_summary": { "type": "string" },
+              "expected_position": { "type": "string" },
+              "actual_position": { "type": "string" },
+              "status": { "type": "string", "enum": ["CORRECT", "INCORRECT"] }
+            }
+          }
+        },
+        "xref_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_summary": { "type": "string" },
+              "callback_script_present": { "type": "boolean" },
+              "status": { "type": "string", "enum": ["CORRECT", "MISSING"] }
+            }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "character_limits_result": {
+      "type": "object",
+      "required": ["score", "status", "slide_verification"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.20
+        },
+        "slide_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slide_number": { "type": "integer" },
+              "header_status": {
+                "type": "object",
+                "properties": {
+                  "compliant": { "type": "boolean" },
+                  "chars": { "type": "string" }
+                }
+              },
+              "body_status": {
+                "type": "object",
+                "properties": {
+                  "compliant": { "type": "boolean" },
+                  "lines": { "type": "integer" }
+                }
+              },
+              "tip_status": {
+                "type": "object",
+                "properties": {
+                  "compliant": { "type": "boolean" },
+                  "lines": { "type": "integer" }
+                }
+              },
+              "notes_status": {
+                "type": "object",
+                "properties": {
+                  "compliant": { "type": "boolean" },
+                  "seconds": { "type": "integer" }
+                }
+              },
+              "overall_status": {
+                "type": "string",
+                "enum": ["PASS", "FAIL"]
+              }
+            }
+          }
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slide_number": { "type": "integer" },
+              "element": { "type": "string" },
+              "limit": { "type": "string" },
+              "actual": { "type": "string" },
+              "overage": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "tip_presence_result": {
+      "type": "object",
+      "required": ["score", "status", "slide_verification"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.10
+        },
+        "slide_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slide_number": { "type": "integer" },
+              "slide_type": { "type": "string" },
+              "tip_required": { "type": "boolean" },
+              "tip_present": { "type": "boolean" },
+              "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+            }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "fixed_slides_result": {
+      "type": "object",
+      "required": ["score", "status"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.15
+        },
+        "section_intro": {
+          "type": "object",
+          "properties": {
+            "present": { "type": "boolean" },
+            "slide_number": { "type": "integer" },
+            "title_present": { "type": "boolean" },
+            "quote_present": { "type": "boolean" },
+            "notes_present": { "type": "boolean" },
+            "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+          }
+        },
+        "vignette": {
+          "type": "object",
+          "properties": {
+            "present": { "type": "boolean" },
+            "slide_number": { "type": "integer" },
+            "stem_sentences": { "type": "integer" },
+            "options_count": { "type": "integer" },
+            "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+          }
+        },
+        "answer": {
+          "type": "object",
+          "properties": {
+            "present": { "type": "boolean" },
+            "slide_number": { "type": "integer" },
+            "correct_answer_identified": { "type": "boolean" },
+            "rationale_provided": { "type": "boolean" },
+            "distractor_analysis": { "type": "boolean" },
+            "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "presenter_notes_result": {
+      "type": "object",
+      "required": ["score", "status", "slide_verification"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.15
+        },
+        "slide_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slide_number": { "type": "integer" },
+              "notes_present": { "type": "boolean" },
+              "complete_sentences": { "type": "boolean" },
+              "pause_markers": { "type": "boolean" },
+              "emphasis_markers": { "type": "boolean" },
+              "duration_seconds": { "type": "integer" },
+              "status": { "type": "string", "enum": ["PASS", "WARN", "FAIL"] }
+            }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "delivery_modes_result": {
+      "type": "object",
+      "required": ["score", "status", "subsection_verification"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.10
+        },
+        "subsection_verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "subsection_name": { "type": "string" },
+              "anchor_count": { "type": "integer" },
+              "expected_mode": { "type": "string" },
+              "actual_mode": { "type": "string" },
+              "components_present": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "status": { "type": "string", "enum": ["PASS", "FAIL"] }
+            }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "structural_result": {
+      "type": "object",
+      "required": ["score", "status"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weight": {
+          "type": "number",
+          "default": 0.05
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "sequential_numbering": { "type": "boolean" },
+            "split_slides_labeled": { "type": "boolean" },
+            "subsection_boundaries_clear": { "type": "boolean" },
+            "logical_flow": { "type": "boolean" },
+            "no_orphaned_content": { "type": "boolean" }
+          }
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["category", "description"],
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

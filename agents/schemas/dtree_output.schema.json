@@ -1,0 +1,271 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "dtree_output.schema.json",
+  "title": "Decision Tree Generator Output Schema",
+  "description": "Output schema for the decision_tree_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_spec", "validation", "presenter_notes"],
+  "properties": {
+    "visual_spec": {
+      "type": "object",
+      "required": ["type", "layout", "title", "data"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "DECISION_TREE"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E", "F"],
+          "description": "Selected layout: A=1-2-4, B=1-2, C=1-3, D=Asymmetric, E=1-2-6, F=1-2-4-8"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Decision tree title"
+        },
+        "data": {
+          "type": "object",
+          "required": ["level1", "outcomes"],
+          "properties": {
+            "level1": {
+              "type": "object",
+              "required": ["header", "question", "paths"],
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "question": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 12
+                  }
+                }
+              }
+            },
+            "level2a": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "question": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 12
+                  }
+                }
+              }
+            },
+            "level2b": {
+              "type": "object",
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "question": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 12
+                  }
+                }
+              }
+            },
+            "level2c": {
+              "type": "object",
+              "description": "Optional third Level 2 node for Layout C",
+              "properties": {
+                "header": {
+                  "type": "string",
+                  "maxLength": 20
+                },
+                "question": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 12
+                  }
+                }
+              }
+            },
+            "outcomes": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "required": ["name", "color", "parent"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "header_label": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "default": "DIAGNOSIS"
+                  },
+                  "color": {
+                    "type": "string",
+                    "enum": ["green", "red", "blue", "purple"]
+                  },
+                  "parent": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "node_count": {
+              "type": "integer",
+              "maximum": 15,
+              "description": "Total node count (max 15)"
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_valid", "checks"],
+      "properties": {
+        "is_valid": {
+          "type": "boolean",
+          "description": "Overall validation status"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "node_count_valid": {
+              "type": "boolean",
+              "description": "Total nodes <= 15"
+            },
+            "decision_header_limits": {
+              "type": "boolean",
+              "description": "All decision headers within 20 char limit"
+            },
+            "decision_body_limits": {
+              "type": "boolean",
+              "description": "All decision bodies within 50 char limit"
+            },
+            "outcome_name_limits": {
+              "type": "boolean",
+              "description": "All outcome names within 40 char limit"
+            },
+            "path_label_limits": {
+              "type": "boolean",
+              "description": "All path labels within 12 char limit"
+            },
+            "all_paths_connected": {
+              "type": "boolean",
+              "description": "All paths lead to valid outcomes"
+            },
+            "layout_compatible": {
+              "type": "boolean",
+              "description": "Node structure compatible with selected layout"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Presenter notes walking through decision tree logic"
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 150,
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 180
+        }
+      }
+    },
+    "rendering_metadata": {
+      "type": "object",
+      "properties": {
+        "font_sizes": {
+          "type": "object",
+          "properties": {
+            "decision_header": { "type": "integer" },
+            "decision_body": { "type": "integer" },
+            "outcome_header": { "type": "integer" },
+            "outcome_body": { "type": "integer" },
+            "path_label": { "type": "integer" }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "decision_header_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(0, 51, 102) - Dark Navy"
+            },
+            "decision_body_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(240, 244, 248) - Light Gray-Blue"
+            },
+            "outcome_green_rgb": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "outcome_red_rgb": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "outcome_blue_rgb": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "outcome_purple_rgb": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

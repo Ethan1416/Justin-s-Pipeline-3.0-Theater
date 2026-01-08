@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "check_input.schema.json",
+  "title": "Limit Checker Input Schema",
+  "description": "Schema for line_limit_checker and char_limit_checker agent inputs - validates text element limits",
+  "type": "object",
+  "required": ["metadata", "content", "check_type"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "enum": ["line_limit_checker", "char_limit_checker"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "check_type": {
+      "type": "string",
+      "enum": ["line_count", "char_count"],
+      "description": "Type of limit check to perform"
+    },
+    "content": {
+      "type": "object",
+      "required": ["elements"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/text_element"
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 32 },
+            "max_lines": { "type": "integer", "default": 2 }
+          }
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 66 },
+            "max_lines": { "type": "integer", "default": 8 }
+          }
+        },
+        "tip": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 66 },
+            "max_lines": { "type": "integer", "default": 2 }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "text_element": {
+      "type": "object",
+      "required": ["slide_number", "element_type", "text"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "element_type": {
+          "type": "string",
+          "enum": ["header", "body", "tip"]
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

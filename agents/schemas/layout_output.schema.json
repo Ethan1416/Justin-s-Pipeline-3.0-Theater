@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "layout_output.schema.json",
+  "title": "Layout Selector Output Schema",
+  "description": "Generic output schema for all layout selector agents (table_layout_selector, flowchart_layout_selector, etc.) in the NCLEX pipeline",
+  "type": "object",
+  "required": ["selected_layout", "rationale", "layout_specs"],
+  "properties": {
+    "selected_layout": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "F"],
+      "description": "Selected layout identifier"
+    },
+    "rationale": {
+      "type": "object",
+      "required": ["primary_reason", "factors_considered"],
+      "properties": {
+        "primary_reason": {
+          "type": "string",
+          "description": "Main reason for layout selection"
+        },
+        "factors_considered": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "factor": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              },
+              "impact": {
+                "type": "string",
+                "enum": ["high", "medium", "low"]
+              }
+            }
+          }
+        },
+        "alternatives_rejected": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "layout": {
+                "type": "string",
+                "enum": ["A", "B", "C", "D", "E", "F"]
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout_specs": {
+      "type": "object",
+      "required": ["layout_name", "description"],
+      "properties": {
+        "layout_name": {
+          "type": "string",
+          "description": "Human-readable layout name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Layout description"
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "min_elements": {
+              "type": "integer"
+            },
+            "max_elements": {
+              "type": "integer"
+            },
+            "optimal_range": {
+              "type": "string"
+            }
+          }
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "total_width_inches": {
+              "type": "number"
+            },
+            "total_height_inches": {
+              "type": "number"
+            },
+            "element_dimensions": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "width_inches": { "type": "number" },
+                  "height_inches": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "font_recommendations": {
+          "type": "object",
+          "properties": {
+            "header_size": {
+              "type": "integer",
+              "minimum": 18
+            },
+            "body_size": {
+              "type": "integer",
+              "minimum": 18
+            },
+            "label_size": {
+              "type": "integer",
+              "minimum": 18
+            }
+          }
+        },
+        "orientation": {
+          "type": "string",
+          "enum": ["horizontal", "vertical", "grid", "radial"]
+        }
+      }
+    },
+    "layout_descriptions": {
+      "type": "object",
+      "description": "Available layouts for this visual type",
+      "properties": {
+        "A": { "type": "string" },
+        "B": { "type": "string" },
+        "C": { "type": "string" },
+        "D": { "type": "string" },
+        "E": { "type": "string" },
+        "F": { "type": "string" }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Warnings about potential layout issues"
+    },
+    "adaptations_needed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "string"
+          },
+          "adaptation": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Content adaptations needed for selected layout"
+    }
+  }
+}

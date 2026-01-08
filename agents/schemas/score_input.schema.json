@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "score_input.schema.json",
+  "title": "Score Calculator Input Schema",
+  "description": "Schema for score_calculator agent input - calculates overall QA scores from multiple checks",
+  "type": "object",
+  "required": ["metadata", "check_results"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "score_calculator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "check_results": {
+      "type": "object",
+      "properties": {
+        "constraint_validation": {
+          "$ref": "#/definitions/check_result"
+        },
+        "brand_compliance": {
+          "$ref": "#/definitions/check_result"
+        },
+        "pedagogy_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "consistency_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "visual_quota": {
+          "$ref": "#/definitions/check_result"
+        },
+        "anchor_coverage": {
+          "$ref": "#/definitions/check_result"
+        }
+      }
+    },
+    "scoring_weights": {
+      "type": "object",
+      "properties": {
+        "constraint_validation": { "type": "number", "default": 0.25 },
+        "brand_compliance": { "type": "number", "default": 0.15 },
+        "pedagogy_check": { "type": "number", "default": 0.20 },
+        "consistency_check": { "type": "number", "default": 0.10 },
+        "visual_quota": { "type": "number", "default": 0.10 },
+        "anchor_coverage": { "type": "number", "default": 0.20 }
+      },
+      "description": "Weights for each check type (should sum to 1.0)"
+    },
+    "passing_threshold": {
+      "type": "integer",
+      "default": 90,
+      "description": "Minimum score to pass QA"
+    }
+  },
+  "definitions": {
+    "check_result": {
+      "type": "object",
+      "required": ["status", "score"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "issue_count": {
+          "type": "integer"
+        },
+        "source_file": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

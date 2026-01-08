@@ -1,0 +1,617 @@
+# STEP 6: BLUEPRINT GENERATION
+## Slide-by-Slide Content Specification
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step generates a complete slide-by-slide blueprint for ONE section at a time. The blueprint specifies exact content for each slide including header, body, NCLEX tip, and presenter notes.
+
+Run this step once per section from Step 4 output.
+
+---
+
+## INPUT
+
+**Required:**
+1. Step 4 output file (`step4_output_[domain]_[date].txt`)
+2. Step 5 Presentation Standards (reference document)
+3. Section to generate (specify which section from Step 4)
+
+**From Step 4, extract for the target section:**
+- Section name
+- Subsection names and anchor assignments
+- Anchor summaries
+- Frontload flags
+- Cross-reference flags
+- Prerequisite sections (for connection references)
+
+---
+
+## OUTPUT
+
+**Primary Output:** `step6_blueprint_[domain]_[section]_[date].txt`
+
+Contains slide-by-slide specifications with:
+- Slide numbers (absolute within section)
+- Slide type designation
+- Header text
+- Body text
+- NCLEX tip text (where applicable)
+- Presenter notes (verbatim monologue)
+
+---
+
+## DOMAIN ADAPTATION
+
+Before generating:
+
+1. **Extract domain name** from Step 4 output
+2. **Note domain conventions** for terminology and examples
+3. **Adapt vignette style** to domain-appropriate scenarios
+4. **Match applied relevance** to domain context
+
+---
+
+## BLUEPRINT GENERATION PROCESS
+
+### Step 1: Analyze Section Structure
+
+From Step 4, identify:
+- Number of subsections
+- Anchors per subsection
+- Delivery mode for each subsection (per Step 5 standards)
+- Total estimated content slides
+- Fixed slides needed (3: intro, vignette, answer)
+
+### Step 2: Determine Slide Sequence
+
+Map out slide sequence:
+
+```
+Slide 1: Section Intro (fixed)
+Slides 2-N: Subsection 1 content (mode-based)
+Slides N+1-M: Subsection 2 content (mode-based)
+[Continue for all subsections...]
+Slide X: Vignette (fixed)
+Slide X+1: Answer (fixed)
+```
+
+### Step 3: Apply Delivery Modes
+
+For each subsection, apply the appropriate mode from Step 5:
+
+**Foundational Mode (first subsection):**
+- Overview slide(s)
+- Scaffolding slides
+- Bridge slide
+
+**Full Mode (5+ anchors):**
+- Connection slide
+- Core content slides
+- Synthesis slide
+
+**Minor Mode (3-4 anchors):**
+- Connection (brief, may combine with first content slide)
+- Core content slides
+
+**One-and-Done Mode (1-2 anchors):**
+- Single presentation unit (1-2 slides)
+
+### Step 4: Generate Each Slide
+
+For each slide, produce:
+1. Slide number
+2. Slide type
+3. Header text
+4. Body text
+5. NCLEX tip (if applicable)
+6. Presenter notes
+
+### Step 5: Light Validation
+
+At end of blueprint, list:
+- All anchors covered (by summary)
+- Any anchors from Step 4 not addressed (should be none)
+
+---
+
+## SLIDE SPECIFICATIONS
+
+### Slide Elements
+
+| Element | Content Requirements |
+|---------|---------------------|
+| **Slide Number** | Sequential within section (Slide 1, Slide 2, etc.) |
+| **Slide Type** | Section Intro / Content / Vignette / Answer |
+| **Header** | Slide title (will be formatted in Step 7) |
+| **Body** | Main content (will be formatted in Step 7) |
+| **NCLEX Tip** | Testing insight (omit for Intro/Vignette/Answer slides) |
+| **Presenter Notes** | Verbatim monologue |
+
+---
+
+### Section Intro Slide
+
+```
+===========================================
+SLIDE 1: SECTION INTRO
+===========================================
+Type: Section Intro
+
+HEADER:
+[Section Title from Step 4]
+
+BODY:
+"[Poetic or provocative quote that relates to section content
+and primes the audience for what they will learn]"
+
+— [Attribution if applicable, or "Anonymous"]
+
+NCLEX TIP:
+[None - omit for intro slides]
+
+PRESENTER NOTES:
+Welcome to [Section Name]. [PAUSE]
+
+In this section, we'll explore [brief overview of section scope].
+[Connection to prior section if applicable: "Building on what we
+learned about X, we now turn to..."]
+
+[Preview of subsections]: We'll begin by [first subsection focus],
+then move to [second subsection focus], and conclude with
+[final subsection focus].
+
+[Provocative hook or question to engage audience]
+
+Let's begin with [transition to first content].
+===========================================
+```
+
+---
+
+### Content Slide Template
+
+```
+===========================================
+SLIDE [#]: [DESCRIPTIVE TITLE]
+===========================================
+Type: Content
+Subsection: [Subsection Name]
+Anchors Covered: [List anchor summaries covered on this slide]
+
+HEADER:
+[Clear, descriptive title - 1-2 lines max]
+
+BODY:
+[Main content organized appropriately for content type]
+
+[Use bullet points, numbered lists, or prose based on content]
+[Target 3-8 lines of content]
+[Mixed format acceptable based on what serves the content]
+
+NCLEX TIP:
+[1-2 line insight about how NCLEX tests this content,
+common question patterns, or key discrimination point]
+
+PRESENTER NOTES:
+[Opening statement for this slide]
+
+[Full explanation of each concept on the slide - verbatim script]
+
+[EMPHASIS: key terms] where vocal stress is needed
+
+[PAUSE] where deliberate pauses aid comprehension
+
+[Connection to prior or upcoming content]
+
+[Applied relevance or significance]
+
+[NCLEX pattern callout if applicable: "NCLEX often tests this by..."]
+
+[Transition to next slide]
+
+[Target: 130-150 words per minute of intended delivery]
+[Maximum: 180 seconds / ~450 words]
+===========================================
+```
+
+---
+
+### Vignette Slide Template
+
+```
+===========================================
+SLIDE [#]: VIGNETTE
+===========================================
+Type: Vignette
+
+HEADER:
+[Section Name] - Clinical Application
+[Or domain-appropriate title: "Ethical Scenario", "Research Design", etc.]
+
+BODY:
+[2-4 sentence NCLEX-style vignette stem]
+
+[Presents realistic scenario requiring integration of section concepts]
+
+A) [Plausible option]
+B) [Plausible option]
+C) [Plausible option]
+D) [Plausible option]
+
+NCLEX TIP:
+[None - omit for vignette slides]
+
+PRESENTER NOTES:
+Let's apply what we've learned. [PAUSE]
+
+[Read vignette aloud - verbatim]
+
+Take a moment to consider this scenario. Think about which
+concepts from this section apply here. [PAUSE - 30-60 seconds]
+
+[Do NOT reveal answer - that comes on the next slide]
+
+When you're ready, let's look at the answer together.
+===========================================
+```
+
+---
+
+### Answer Slide Template
+
+```
+===========================================
+SLIDE [#]: ANSWER
+===========================================
+Type: Answer
+
+HEADER:
+Answer: [Correct Letter]
+
+BODY:
+Correct Answer: [Letter]) [Full text of correct option]
+
+Rationale:
+[2-3 sentences explaining why this is correct, connecting
+to specific anchor concepts from the section]
+
+Why not the others:
+• A) [If not correct: Brief explanation of why this is wrong]
+• B) [If not correct: Brief explanation of why this is wrong]
+• C) [If not correct: Brief explanation of why this is wrong]
+• D) [If not correct: Brief explanation of why this is wrong]
+
+NCLEX TIP:
+[None - omit for answer slides]
+
+PRESENTER NOTES:
+The correct answer is [EMPHASIS: Letter]. [PAUSE]
+
+[Full explanation of why this answer is correct - connect to
+anchor concepts taught in this section]
+
+Let's look at why the other options don't work:
+
+[Walk through each distractor with brief rationale]
+
+[NCLEX pattern insight if applicable: "This question format is
+common on NCLEX because..."]
+
+[Connection to broader section themes]
+
+[Transition to next section or session wrap-up]
+===========================================
+```
+
+---
+
+## CONTENT GENERATION GUIDELINES
+
+### Header Text
+
+- Clear, descriptive titles
+- Should convey slide topic at a glance
+- 1-2 lines maximum
+- Avoid jargon in titles (use in body)
+
+### Body Text
+
+**Format based on content type:**
+
+| Content Type | Recommended Format |
+|--------------|-------------------|
+| Definitions/concepts | Bullet points |
+| Processes/sequences | Numbered list |
+| Comparisons | Side-by-side or table format |
+| Single complex idea | Prose paragraph |
+| Multiple related points | Bullet points |
+
+**Guidelines:**
+- Target 3-8 lines (max 8)
+- Mixed format acceptable
+- Prioritize clarity over density
+- One main idea per slide when possible
+
+**⚠️ CRITICAL CONSTRAINT - BODY LINE LIMIT:**
+- **MAXIMUM 8 non-empty lines** in BODY section per slide
+- Count ALL non-empty lines: bullet points, sub-bullets, and text lines
+- Blank lines don't count toward limit
+- If content exceeds 8 lines:
+  - Combine related sub-bullets into single lines
+  - Move detailed explanations to PRESENTER NOTES
+  - Split complex content across multiple slides
+  - Use more concise phrasing
+- Violating this limit will cause PowerPoint generation failures
+
+### NCLEX Tip Text
+
+- Present on all content slides
+- Omit for Section Intro, Vignette, and Answer slides
+- 1-2 lines maximum
+- Focus on testing patterns, common confusions, or key discriminations
+
+**Good NCLEX Tips:**
+- "NCLEX often asks about X in the context of Y"
+- "Don't confuse X with Y—look for [distinguishing feature]"
+- "This concept frequently appears as a distractor when testing Z"
+- "Key discrimination: X involves [feature], while Y involves [feature]"
+
+### Presenter Notes
+
+Follow Step 5 standards:
+- Verbatim monologue (complete sentences)
+- 130-150 words per minute
+- Maximum 180 seconds per slide
+- Include `[PAUSE]` and `[EMPHASIS]` markers
+- Include NCLEX pattern callouts
+- Include transitions
+
+---
+
+## SUBSECTION MODE IMPLEMENTATION
+
+### Foundational Mode Slides
+
+**Overview Slide(s):**
+- Present organizing framework for section
+- Big-picture context
+- Why this content matters
+
+**Scaffolding Slides:**
+- Build prerequisite concepts systematically
+- Foundational vocabulary
+- Core relationships
+
+**Bridge Slide:**
+- Connect foundation to upcoming subsections
+- Preview section arc
+- Transition statement
+
+### Full Mode Slides
+
+**Connection Slide:**
+- Explicit reference to foundational subsection
+- "Building on [concept from foundation]..."
+- Link to prior knowledge
+
+**Core Slides:**
+- Cover assigned anchors thoroughly
+- Active learning integration
+- NCLEX tips on each
+
+**Synthesis Slide:**
+- Pull concepts together
+- Show relationships between anchors
+- Applied relevance
+
+### Minor Mode Slides
+
+**Connection (brief):**
+- May be integrated into first content slide
+- 1-2 sentences linking to foundation
+
+**Core Slides:**
+- Efficient anchor coverage
+- NCLEX tips on each
+
+### One-and-Done Slides
+
+- Self-contained 1-2 slides
+- Micro-connection to section theme
+- Brief but complete treatment
+
+---
+
+## ANCHOR COVERAGE
+
+### Referencing Anchors
+
+- Reference anchors by summary (not number)
+- Each anchor should be clearly covered on one or more slides
+- Complex anchors may span multiple slides
+- Simple anchors may share slides
+
+### Frontload Handling
+
+For anchors flagged `[FRONTLOAD]` in Step 3/4:
+- Position early in subsection
+- These establish concepts needed for later anchors
+- Presenter notes should emphasize foundational nature
+
+### Cross-Reference Handling
+
+For anchors flagged `[XREF]` in Step 3/4:
+- Full teaching in primary section
+- Brief callback script in presenter notes for reference section
+- Use "Recall that..." or "As we covered..." phrasing
+
+---
+
+## VIGNETTE CONSTRUCTION
+
+### Domain-Appropriate Scenarios
+
+| Domain | Vignette Style |
+|--------|---------------|
+| Biological | Patient presentation with symptoms/findings |
+| Clinical | Diagnostic scenario or case presentation |
+| Treatment | Intervention decision or technique application |
+| Developmental | Age-appropriate behavior or milestone question |
+| Ethics | Professional dilemma or decision scenario |
+| Research | Study design or interpretation question |
+| Social/Cultural | Contextual factors or group dynamics scenario |
+
+### Vignette Requirements
+
+- 2-4 sentence stem (NCLEX standard)
+- Requires integration of section concepts
+- One clearly correct answer
+- Three plausible distractors based on common misconceptions
+- Distractor analysis prepared for answer slide
+
+---
+
+## OUTPUT FORMAT
+
+### Blueprint Header
+
+```
+========================================
+STEP 6: BLUEPRINT
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Section Number: [X of Y]
+Date: [Date]
+
+Source: step4_output_[domain]_[date].txt
+
+SECTION OVERVIEW:
+- Subsections: [count]
+- Total Anchors: [count]
+- Estimated Content Slides: [count]
+- Fixed Slides: 3 (intro, vignette, answer)
+- Total Slides: [count]
+
+SUBSECTION DELIVERY MODES:
+1. [Subsection Name]: [Mode] ([X] anchors)
+2. [Subsection Name]: [Mode] ([X] anchors)
+...
+
+========================================
+BEGIN SLIDE-BY-SLIDE BLUEPRINT
+========================================
+```
+
+### Blueprint Body
+
+[All slides in sequence using templates above]
+
+### Blueprint Footer
+
+```
+========================================
+END SLIDE-BY-SLIDE BLUEPRINT
+========================================
+
+VALIDATION: ANCHORS COVERED
+
+The following anchors from Step 4 were covered in this blueprint:
+
+Subsection 1: [Subsection Name]
+✓ [Anchor summary 1] - Slide(s) [#]
+✓ [Anchor summary 2] - Slide(s) [#]
+...
+
+Subsection 2: [Subsection Name]
+✓ [Anchor summary 1] - Slide(s) [#]
+...
+
+[Continue for all subsections]
+
+---
+
+COVERAGE STATUS:
+- Total anchors in section: [X]
+- Anchors covered: [X]
+- Anchors missing: [None / List any]
+
+========================================
+READY FOR STEP 7: FORMATTING REVISION
+========================================
+
+Proceed to Step 7 to apply text/font limitations and
+validate character counts.
+```
+
+---
+
+## SAVE INSTRUCTION
+
+After generating blueprint, save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `blueprints/`
+
+**Full Path:** `[Domain]_Production_[Date]/blueprints/step6_blueprint_[domain]_[section]_[date].txt`
+
+**Examples:**
+- `Fundamentals_of_Nursing_Production_2024-01-15/blueprints/step6_blueprint_fundamentals_of_nursing_motor_systems_2024-01-15.txt`
+- `Ethics_Legal_Production_2024-01-15/blueprints/step6_blueprint_ethics_confidentiality_2024-01-15.txt`
+- `Treatment_Intervention_Production_2024-01-15/blueprints/step6_blueprint_treatment_cbt_techniques_2024-01-15.txt`
+
+---
+
+## EXECUTION CHECKLIST
+
+Before submitting blueprint:
+
+- [ ] All subsections addressed
+- [ ] Delivery modes correctly applied
+- [ ] Section intro slide includes provocative quote
+- [ ] All content slides have NCLEX tips
+- [ ] Vignette is NCLEX-style (2-4 sentences, 4 options)
+- [ ] Answer slide includes distractor analysis
+- [ ] Presenter notes are verbatim monologues
+- [ ] Presenter notes include [PAUSE] and [EMPHASIS]
+- [ ] Presenter notes max 180 seconds per slide
+- [ ] **ALL BODY sections have ≤ 8 non-empty lines (CRITICAL)**
+- [ ] Anchor coverage validation completed
+- [ ] All anchors from Step 4 accounted for
+
+---
+
+## NEXT STEP
+
+After generating blueprint, proceed to:
+
+**Step 7: Formatting Revision**
+- Apply character limits
+- Validate text fits templates
+- Split slides if necessary
+- Generate changelog
+
+---
+
+## ⛔ CRITICAL WARNING ⛔
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  DO NOT SKIP TO STEP 12 (PowerPoint Generation) FROM HERE!                   ║
+║                                                                               ║
+║  Steps 7, 8, 9, and 10 are MANDATORY before PowerPoint generation.           ║
+║                                                                               ║
+║  Required sequence: Step 6 → Step 7 → Step 8 → Step 9 → Step 10 → Step 12    ║
+║                                                                               ║
+║  Skipping these steps will result in:                                         ║
+║  • No graphic organizers in PowerPoints                                       ║
+║  • Text exceeding slide constraints (8-line max violated)                     ║
+║  • Failed QA validation                                                       ║
+║                                                                               ║
+║  See: PIPELINE_EXECUTION_ORDER.md for complete checklist                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```

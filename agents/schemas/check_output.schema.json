@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "check_output.schema.json",
+  "title": "Limit Checker Output Schema",
+  "description": "Schema for line_limit_checker and char_limit_checker agent outputs - limit validation results",
+  "type": "object",
+  "required": ["metadata", "results", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "check_type", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "enum": ["line_limit_checker", "char_limit_checker"]
+        },
+        "check_type": {
+          "type": "string",
+          "enum": ["line_count", "char_count"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "required": ["overall_status", "elements"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/element_result"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_elements": {
+          "type": "integer"
+        },
+        "passing": {
+          "type": "integer"
+        },
+        "failing": {
+          "type": "integer"
+        },
+        "violation_breakdown": {
+          "type": "object",
+          "properties": {
+            "header_violations": { "type": "integer" },
+            "body_violations": { "type": "integer" },
+            "tip_violations": { "type": "integer" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "element_result": {
+      "type": "object",
+      "required": ["slide_number", "element_type", "status"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "element_type": {
+          "type": "string",
+          "enum": ["header", "body", "tip"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "actual_value": {
+          "type": "integer",
+          "description": "Actual line count or max char count"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "excess": {
+          "type": "integer"
+        },
+        "line_details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line_number": { "type": "integer" },
+              "char_count": { "type": "integer" },
+              "exceeds_limit": { "type": "boolean" }
+            }
+          },
+          "description": "For char checks, details per line"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hierarchy_input.schema.json",
+  "title": "Hierarchy Generator Input Schema",
+  "description": "Input schema for the hierarchy_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["slide_context", "hierarchy_data"],
+  "properties": {
+    "slide_context": {
+      "type": "object",
+      "required": ["slide_number", "section_name", "title"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Slide number within the section"
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the section this slide belongs to"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Section number"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Slide title"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+          "description": "NCLEX content domain"
+        }
+      }
+    },
+    "hierarchy_data": {
+      "type": "object",
+      "required": ["hierarchy_type", "root"],
+      "properties": {
+        "hierarchy_type": {
+          "type": "string",
+          "enum": ["classification", "organization", "part_whole", "conceptual", "theoretical_model"],
+          "description": "Type of hierarchy being visualized"
+        },
+        "hierarchy_name": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Name of the hierarchy"
+        },
+        "root": {
+          "$ref": "#/definitions/hierarchy_node",
+          "description": "Root node of the hierarchy"
+        },
+        "max_depth": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 4,
+          "default": 3,
+          "description": "Maximum depth of hierarchy (2-4 levels)"
+        }
+      }
+    },
+    "layout_preference": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "AUTO"],
+      "default": "AUTO",
+      "description": "Preferred layout: A=Top-Down Tree (1-2-4), B=Top-Down Tree (1-3-6), C=Organizational Chart (mixed), D=Inverted Pyramid, E=Side-by-Side Hierarchies, AUTO=auto-select"
+    }
+  },
+  "definitions": {
+    "hierarchy_node": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Node text (25 chars for L1, 22 for L2, 18 for L3+)"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Optional description"
+        },
+        "children": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/definitions/hierarchy_node"
+          },
+          "description": "Child nodes"
+        }
+      }
+    }
+  }
+}

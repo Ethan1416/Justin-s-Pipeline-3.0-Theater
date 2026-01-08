@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "final_input.schema.json",
+  "title": "Final Validator Input Schema",
+  "description": "Schema for final_validator agent input - final validation before PPTX generation",
+  "type": "object",
+  "required": ["metadata", "assembled_content"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "final_validator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "assembled_content": {
+      "type": "object",
+      "required": ["source_file", "slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_for_validation"
+          }
+        },
+        "visuals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "visual_id": { "type": "string" },
+              "visual_type": { "type": "string" },
+              "slide_number": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "validation_config": {
+      "type": "object",
+      "properties": {
+        "check_constraints": {
+          "type": "boolean",
+          "default": true
+        },
+        "check_anchors": {
+          "type": "boolean",
+          "default": true
+        },
+        "check_visuals": {
+          "type": "boolean",
+          "default": true
+        },
+        "check_presenter_notes": {
+          "type": "boolean",
+          "default": true
+        },
+        "check_completeness": {
+          "type": "boolean",
+          "default": true
+        },
+        "strict_mode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Fail on any warning"
+        }
+      }
+    },
+    "reference_data": {
+      "type": "object",
+      "properties": {
+        "original_anchors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_number": { "type": "integer" },
+              "anchor_summary": { "type": "string" }
+            }
+          }
+        },
+        "qa_report": {
+          "type": "string",
+          "description": "Path to Step 8 QA report"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_for_validation": {
+      "type": "object",
+      "required": ["slide_number", "slide_type"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "has_visual": {
+          "type": "boolean"
+        },
+        "visual_id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

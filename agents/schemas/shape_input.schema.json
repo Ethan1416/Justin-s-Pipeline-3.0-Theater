@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "shape_input.schema.json",
+  "title": "Shape Renderer Input Schema",
+  "description": "Schema for shape_renderer agent input - renders shapes and visual elements for PowerPoint",
+  "type": "object",
+  "required": ["metadata", "shapes"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "shape_renderer"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "shapes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/shape_spec"
+      }
+    },
+    "canvas": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "description": "Canvas width in inches"
+        },
+        "height": {
+          "type": "number",
+          "description": "Canvas height in inches"
+        },
+        "origin_x": {
+          "type": "number",
+          "description": "X offset from slide edge"
+        },
+        "origin_y": {
+          "type": "number",
+          "description": "Y offset from slide edge"
+        }
+      }
+    },
+    "style_defaults": {
+      "type": "object",
+      "properties": {
+        "fill_color": { "type": "string" },
+        "line_color": { "type": "string" },
+        "line_width": { "type": "number" },
+        "font_family": { "type": "string" },
+        "font_size": { "type": "integer" }
+      }
+    }
+  },
+  "definitions": {
+    "shape_spec": {
+      "type": "object",
+      "required": ["shape_id", "shape_type", "position"],
+      "properties": {
+        "shape_id": {
+          "type": "string"
+        },
+        "shape_type": {
+          "type": "string",
+          "enum": ["rectangle", "rounded_rectangle", "oval", "diamond", "arrow", "line", "connector", "chevron", "hexagon", "text_box"]
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "width": { "type": "number" },
+            "height": { "type": "number" }
+          }
+        },
+        "style": {
+          "type": "object",
+          "properties": {
+            "fill_color": { "type": "string" },
+            "fill_transparency": { "type": "number" },
+            "line_color": { "type": "string" },
+            "line_width": { "type": "number" },
+            "line_style": {
+              "type": "string",
+              "enum": ["solid", "dashed", "dotted"]
+            },
+            "shadow": { "type": "boolean" },
+            "corner_radius": { "type": "number" }
+          }
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": { "type": "string" },
+            "font_family": { "type": "string" },
+            "font_size": { "type": "integer" },
+            "font_color": { "type": "string" },
+            "bold": { "type": "boolean" },
+            "alignment": {
+              "type": "string",
+              "enum": ["left", "center", "right"]
+            },
+            "vertical_alignment": {
+              "type": "string",
+              "enum": ["top", "middle", "bottom"]
+            }
+          }
+        },
+        "rotation": {
+          "type": "number",
+          "description": "Rotation in degrees"
+        },
+        "z_order": {
+          "type": "integer",
+          "description": "Stack order (higher = front)"
+        }
+      }
+    }
+  }
+}

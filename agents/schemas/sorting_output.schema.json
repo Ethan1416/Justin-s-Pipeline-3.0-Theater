@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sorting_output.schema.json",
+  "title": "Step 3 Sorting Output Schema",
+  "description": "Schema for content_sorter agent output - anchors sorted into 6 NCLEX domains",
+  "type": "object",
+  "required": ["metadata", "domain_summary", "sorted_anchors", "flagged_items", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "total_anchors", "total_domains"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 3: Official Sorting"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total_domains": {
+          "type": "integer",
+          "const": 6
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Step 2 output file reference"
+        }
+      }
+    },
+    "domain_summary": {
+      "type": "object",
+      "required": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+      "properties": {
+        "fundamentals": { "$ref": "#/definitions/domain_stats" },
+        "pharmacology": { "$ref": "#/definitions/domain_stats" },
+        "medical_surgical": { "$ref": "#/definitions/domain_stats" },
+        "ob_maternity": { "$ref": "#/definitions/domain_stats" },
+        "pediatric": { "$ref": "#/definitions/domain_stats" },
+        "mental_health": { "$ref": "#/definitions/domain_stats" }
+      }
+    },
+    "sorted_anchors": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/sorted_anchor" }
+    },
+    "flagged_items": {
+      "type": "object",
+      "properties": {
+        "frontload": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/frontload_item" }
+        },
+        "ambiguous": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ambiguous_item" }
+        },
+        "xref": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/xref_item" }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checks"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "all_anchors_assigned": { "type": "boolean" },
+            "no_duplicates": { "type": "boolean" },
+            "no_unassigned": { "type": "boolean" },
+            "ambiguous_resolved": { "type": "boolean" },
+            "domain_thresholds_met": { "type": "boolean" }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "domain_stats": {
+      "type": "object",
+      "required": ["anchor_count", "status"],
+      "properties": {
+        "anchor_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_slides": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["OK", "UNDER_THRESHOLD", "OVER_THRESHOLD", "REVIEW"]
+        },
+        "frontload_count": {
+          "type": "integer"
+        },
+        "xref_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "sorted_anchor": {
+      "type": "object",
+      "required": ["anchor_number", "domain", "rule_applied"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "anchor_text": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "rule_applied": {
+          "type": "string",
+          "pattern": "^(P[1-3]|S[1-6]|T[1-8])$",
+          "description": "Which rule determined the assignment (P1-P3, S1-S6, T1-T8)"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["FRONTLOAD", "AMBIGUOUS", "XREF"]
+          }
+        },
+        "xref_domains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+          },
+          "description": "Cross-reference domains if XREF flag is set"
+        }
+      }
+    },
+    "frontload_item": {
+      "type": "object",
+      "required": ["anchor_number", "domain", "rationale"],
+      "properties": {
+        "anchor_number": { "type": "integer" },
+        "domain": { "type": "string" },
+        "rationale": {
+          "type": "string",
+          "description": "Why this anchor must be taught first in its domain"
+        }
+      }
+    },
+    "ambiguous_item": {
+      "type": "object",
+      "required": ["anchor_number", "candidate_domains", "final_domain", "rationale"],
+      "properties": {
+        "anchor_number": { "type": "integer" },
+        "anchor_text": { "type": "string" },
+        "candidate_domains": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "properties": {
+              "domain": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "final_domain": { "type": "string" },
+        "rationale": {
+          "type": "string",
+          "description": "Detailed explanation of final placement decision"
+        }
+      }
+    },
+    "xref_item": {
+      "type": "object",
+      "required": ["anchor_number", "primary_domain", "xref_domain", "purpose"],
+      "properties": {
+        "anchor_number": { "type": "integer" },
+        "primary_domain": { "type": "string" },
+        "xref_domain": { "type": "string" },
+        "purpose": {
+          "type": "string",
+          "description": "Why the cross-reference is valuable"
+        }
+      }
+    }
+  }
+}

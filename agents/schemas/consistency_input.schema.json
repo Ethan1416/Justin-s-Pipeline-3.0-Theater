@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "consistency_input.schema.json",
+  "title": "Consistency Checker Input Schema",
+  "description": "Schema for consistency_checker agent input - validates terminology and formatting consistency",
+  "type": "object",
+  "required": ["metadata", "content"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "consistency_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_content"
+          }
+        }
+      }
+    },
+    "consistency_rules": {
+      "type": "object",
+      "properties": {
+        "terminology_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "concept": { "type": "string" },
+              "preferred_term": { "type": "string" },
+              "alternates": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "description": "Groups of terms that should be used consistently"
+        },
+        "abbreviation_rules": {
+          "type": "object",
+          "properties": {
+            "define_on_first_use": { "type": "boolean", "default": true },
+            "approved_abbreviations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "abbrev": { "type": "string" },
+                  "full_form": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "formatting_rules": {
+          "type": "object",
+          "properties": {
+            "bullet_consistency": { "type": "boolean", "default": true },
+            "capitalization_consistency": { "type": "boolean", "default": true },
+            "number_format_consistency": { "type": "boolean", "default": true }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_content": {
+      "type": "object",
+      "properties": {
+        "slide_number": { "type": "integer" },
+        "header": { "type": "string" },
+        "body": { "type": "string" },
+        "tip": { "type": "string" },
+        "presenter_notes": { "type": "string" }
+      }
+    }
+  }
+}

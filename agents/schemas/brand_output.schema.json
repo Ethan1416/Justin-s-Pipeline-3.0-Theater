@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "brand_output.schema.json",
+  "title": "Brand Compliance Checker Output Schema",
+  "description": "Schema for brand_compliance_checker agent output - brand compliance validation results",
+  "type": "object",
+  "required": ["metadata", "results", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "brand_compliance_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "required": ["overall_status", "compliance_score"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "compliance_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "terminology_compliance": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "voice_tone_compliance": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "formatting_compliance": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides_checked": {
+          "type": "integer"
+        },
+        "slides_compliant": {
+          "type": "integer"
+        },
+        "slides_non_compliant": {
+          "type": "integer"
+        },
+        "issue_counts": {
+          "type": "object",
+          "properties": {
+            "prohibited_terms_used": { "type": "integer" },
+            "incorrect_terms_used": { "type": "integer" },
+            "voice_tone_issues": { "type": "integer" },
+            "formatting_issues": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/brand_issue"
+      }
+    }
+  },
+  "definitions": {
+    "brand_issue": {
+      "type": "object",
+      "required": ["slide_number", "issue_type", "description"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "element": {
+          "type": "string",
+          "enum": ["header", "body", "tip", "presenter_notes"]
+        },
+        "issue_type": {
+          "type": "string",
+          "enum": ["prohibited_term", "incorrect_term", "voice_tone", "formatting"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "found_text": {
+          "type": "string"
+        },
+        "suggested_replacement": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

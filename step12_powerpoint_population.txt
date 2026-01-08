@@ -1,0 +1,2130 @@
+# STEP 12: POWERPOINT POPULATION
+## Template-Based Slide Generation with Visual Integration
+## Domain-Agnostic Version
+
+---
+
+## ⛔ PRE-FLIGHT CHECK - MUST COMPLETE BEFORE PROCEEDING ⛔
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  STOP! Verify the following before running Step 12:                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+### Required Folder Verification
+
+- [ ] `integrated/` folder EXISTS in production folder
+- [ ] `integrated/` folder contains `step10_integrated_blueprint_*.txt` files
+- [ ] Files are from **Step 10** (NOT Step 6 blueprints)
+
+### Required File Content Verification
+
+- [ ] Each integrated blueprint has `Visual: Yes - [Type]` or `Visual: No` on EVERY slide
+- [ ] Step 8 QA reports exist and show score ≥90/100 for each section
+- [ ] Step 9 visual specs exist and show QUOTA STATUS: PASS for each section
+
+### ❌ INVALID INPUTS - DO NOT USE:
+
+| Wrong Input | Problem |
+|-------------|---------|
+| `blueprints/step6_blueprint_*.txt` | Missing Steps 7-10, no visuals, text limits not enforced |
+| `revisions/step7_revised_*.txt` | Missing Steps 9-10, no visual markers |
+| Any file without `Visual: Yes/No` markers | Visual integration not complete |
+
+### ✅ VALID INPUT:
+
+```
+integrated/step10_integrated_blueprint_[domain]_[section]_[date].txt
+```
+
+**If pre-flight check fails:** Go back and complete Steps 7-10 for all sections.
+**See:** `PIPELINE_EXECUTION_ORDER.md` for complete pipeline sequence.
+
+---
+
+## PURPOSE
+
+This step populates PowerPoint presentations from integrated blueprints (Step 10 output) by:
+1. Duplicating the master template for each section
+2. Populating content slides using the template's single layout
+3. Generating custom slides for visual aids (tables, diagrams, graphic organizers)
+4. Organizing outputs in a structured folder hierarchy
+
+**CRITICAL: The master template must NEVER be modified. Always work with duplicates.**
+
+---
+
+## INPUT
+
+**Required:**
+1. Production folder from Step 11 containing:
+   - All `step10_integrated_blueprint_[domain]_[section]_[date].txt` files in `integrated/` subfolder
+   - `master_index.txt`
+   - `diagrams/` subfolder (for Python-generated visuals)
+
+2. Master PowerPoint template:
+   - Location: `templates/visual_organizer.pptx`
+   - **DO NOT MODIFY THE ORIGINAL TEMPLATE**
+
+3. Domain name from Step 4 output
+
+---
+
+## OUTPUT
+
+**Production Folder Structure:**
+```
+C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\
+├── integrated/              # Source blueprints (from Step 10)
+├── diagrams/               # Python-generated visual aids
+├── powerpoints/            # Final PowerPoint files
+│   ├── [Section_1_Name].pptx
+│   ├── [Section_2_Name].pptx
+│   ├── [Section_3_Name].pptx
+│   └── ... (one per section)
+└── logs/
+    └── population_log.txt
+```
+
+**Population Log:**
+- `[Domain]_Production_[Date]/logs/population_log.txt`
+
+---
+
+## TEMPLATE STRUCTURE
+
+The master template (`templates/visual_organizer.pptx`) contains a single slide layout with these shapes:
+
+| Shape Name | Purpose | Placeholder Text | Position |
+|------------|---------|------------------|----------|
+| TextBox 2 | Title/Header | "title" | Top (0.07", -0.06") |
+| TextBox 19 | Body/Text | "text" | Center (0.78", 1.45") |
+| TextBox 18 | NCLEX Tip | "tip" | Bottom (0.07", 6.63") |
+| TextBox 5 | Tier Indicator | "TIER 1" | Top-right corner |
+| TextBox 17 | Section Label | "NCLEX APPLICATION" | Bottom bar |
+| TextBox 14 | Copyright | "PrepJet..." | Footer |
+
+**Template Specifications:**
+- Slide dimensions: 13.33" x 7.50" (widescreen 16:9)
+- 40 slides per template file
+- Layout name: "Blank"
+- All slides use identical structure
+
+---
+
+## POPULATION RULES
+
+### Rule 1: Template Duplication
+
+For each section in the lecture:
+1. **Copy** the master template file (`templates/visual_organizer.pptx`)
+2. **Rename** the copy to match the section name
+3. **Place** in: `lectures/[Domain]/[Section_Name].pptx`
+4. **NEVER modify the original template**
+
+**Naming Convention:**
+- Replace spaces with underscores
+- Remove special characters
+- Preserve capitalization
+- Example: "CBT Foundations" → `CBT_Foundations.pptx`
+
+---
+
+### Rule 2: Content Slide Population
+
+For slides with `Visual: No` in the blueprint:
+
+1. **Locate shapes by exact name:**
+   - Title: `TextBox 2`
+   - Body: `TextBox 19`
+   - Tip: `TextBox 18`
+
+2. **Populate content:**
+   - Clear existing placeholder text
+   - Insert blueprint content
+   - Preserve original shape formatting (font, size, color, position)
+
+3. **Handle NCLEX Tip:**
+   - If blueprint has tip content AND slide type is "Content" → populate TextBox 18
+   - If blueprint shows "None" OR slide type is Intro/Vignette/Answer/Visual → clear TextBox 18
+
+4. **Add presenter notes:**
+   - Access slide.notes_slide.notes_text_frame
+   - Insert full PRESENTER NOTES from blueprint verbatim
+
+---
+
+### Rule 3: Visual Slide Generation
+
+For slides with `Visual: Yes` in the blueprint:
+
+**DO NOT use the standard template layout for visual slides.** Instead, Claude generates custom slide layouts:
+
+1. **Create a blank slide** appropriate for the visual type
+2. **Add header** at top (match template header style: Aptos, ~28pt, bold)
+3. **Generate the visual content:**
+   - Tables: Create native PowerPoint table (20pt Aptos font)
+   - Decision Trees: Create native PowerPoint shapes (see step12_decision_tree_generation.txt)
+   - Diagrams: Insert Python-generated image from `diagrams/` folder
+4. **Add presenter notes** (visual slides still require verbatim monologue)
+5. **NO NCLEX tip** on visual slides
+6. **Add minimal footer** (copyright only if desired)
+
+**Visual Slide Layout Dimensions:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│ [HEADER - 0.5" from top, full width]                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│                                                             │
+│                    [VISUAL CONTENT]                         │
+│              (Table or Diagram - centered)                  │
+│               Max: 11.5" wide x 5" tall                     │
+│                                                             │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│ [Optional footer - copyright]                               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Rule 4: Slide Count Management
+
+The template contains 40 slides. The script must:
+
+1. **If blueprint has fewer slides than template:**
+   - Delete excess slides from the end
+   - Keep only the number of content slides needed
+
+2. **If blueprint has more slides than template:**
+   - Duplicate existing template slides to create more
+   - Apply same population logic
+
+3. **Visual slides are generated separately and appended**
+   - They do not use template slides
+   - They are added after content slide population
+
+4. **Final slide count must match blueprint total**
+
+---
+
+### Rule 5: Slide Type Handling
+
+| Slide Type | Uses Template? | NCLEX Tip | Special Handling |
+|------------|----------------|----------|------------------|
+| Section Intro | Yes | Clear | Populate quote in body |
+| Content | Yes | Populate | Full population |
+| Visual | No (generate) | None | Custom layout, no tip |
+| Vignette | Yes | Clear | Format as NCLEX question |
+| Answer | Yes | Clear | Show rationale |
+
+---
+
+## PYTHON SCRIPT: STEP 12
+
+Save this script as `step12_powerpoint_population.py`:
+
+```python
+"""
+Step 12: PowerPoint Population
+Template-based slide generation with visual integration
+
+Requirements:
+- python-pptx (pip install python-pptx)
+- Pillow (pip install Pillow)
+"""
+
+import os
+import re
+import json
+import shutil
+from pathlib import Path
+from datetime import datetime
+from pptx import Presentation
+from pptx.util import Pt, Inches, Emu
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+from pptx.enum.shapes import MSO_SHAPE, MSO_SHAPE_TYPE
+from pptx.enum.dml import MSO_FILL_TYPE
+
+# ============================================
+# CONFIGURATION - LOADED FROM pipeline_config.json
+# ============================================
+
+def load_config():
+    """Load configuration from pipeline_config.json"""
+    # Look for config in same directory as script, or in pipeline folder
+    script_dir = Path(__file__).parent
+    config_path = script_dir / "pipeline_config.json"
+
+    if not config_path.exists():
+        # Fallback: check common locations
+        fallback_paths = [
+            Path(r"pipeline_config.json"),
+        ]
+        for path in fallback_paths:
+            if path.exists():
+                config_path = path
+                break
+
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f"Config file not found. Please ensure pipeline_config.json exists.\n"
+            f"Searched: {config_path}"
+        )
+
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = json.load(f)
+
+    # Validate required fields
+    required_paths = ['pipeline_folder', 'template_file', 'production_folder']
+    for field in required_paths:
+        if not config.get('paths', {}).get(field):
+            if field == 'production_folder':
+                raise ValueError(
+                    f"Missing '{field}' in pipeline_config.json.\n"
+                    f"Please set paths.production_folder to your production folder path.\n"
+                    f"Example: C:\\Users\\mcdan\\Desktop\\Medical_Surgical_Nursing_Production_2024-12-22"
+                )
+
+    return config
+
+# Load configuration
+CONFIG = load_config()
+
+# Extract paths from config
+PIPELINE_FOLDER = Path(CONFIG['paths']['pipeline_folder'])
+TEMPLATE_PATH = PIPELINE_FOLDER / CONFIG['paths']['template_file']
+PRODUCTION_FOLDER = CONFIG['paths']['production_folder']
+DOMAIN_NAME = CONFIG['domain'].get('display_name') or CONFIG['domain'].get('name') or "Unknown_Domain"
+
+# Shape name mappings (from template requirements in config)
+shape_mappings = CONFIG.get('template_requirements', {}).get('shape_mappings', {})
+SHAPE_TITLE = next((k for k, v in shape_mappings.items() if v == 'title'), "TextBox 2")
+SHAPE_BODY = next((k for k, v in shape_mappings.items() if v == 'body'), "TextBox 19")
+SHAPE_TIP = next((k for k, v in shape_mappings.items() if v == 'tip'), "TextBox 18")
+
+# Font settings from config (with defaults)
+FONT_SETTINGS = CONFIG.get('template_requirements', {}).get('font_settings', {})
+
+# Table settings from config
+TABLE_SETTINGS = CONFIG.get('template_requirements', {}).get('table_settings', {})
+TABLE_TEMPLATE_PATH = PIPELINE_FOLDER / CONFIG['paths'].get('table_template_file', 'templates/content_master.pptx')
+
+# Visual settings
+DIAGRAM_MAX_WIDTH = Inches(11)
+DIAGRAM_MAX_HEIGHT = Inches(5)
+TABLE_FONT_SIZE = Pt(TABLE_SETTINGS.get('font_size_pt', 20))
+HEADER_FONT_SIZE = Pt(28)
+
+# ============================================
+# HELPER FUNCTIONS
+# ============================================
+
+def sanitize_filename(name):
+    """Convert section name to valid filename."""
+    name = name.replace(" ", "_")
+    name = re.sub(r'[^\w\-_]', '', name)
+    return name
+
+def find_shape_by_name(slide, shape_name):
+    """Find a shape by its exact name."""
+    for shape in slide.shapes:
+        if shape.name == shape_name:
+            return shape
+    return None
+
+def clear_shape_text(shape):
+    """Clear all text from a shape while preserving the shape."""
+    if shape and shape.has_text_frame:
+        for paragraph in shape.text_frame.paragraphs:
+            paragraph.clear()
+        if shape.text_frame.paragraphs:
+            shape.text_frame.paragraphs[0].text = ""
+
+def set_shape_text(shape, text, shape_name=None):
+    """Set text in a shape, applying font settings from config."""
+    if not shape or not shape.has_text_frame:
+        return False
+
+    # Get font settings from config, or use shape-specific defaults
+    font_config = FONT_SETTINGS.get(shape_name, {}) if shape_name else {}
+    font_name = font_config.get('font_name', 'Aptos')
+    font_size = Pt(font_config.get('font_size_pt', 20))
+    font_bold = font_config.get('bold', False)
+
+    # Shape-specific default colors: title=white, body/tip=black
+    if shape_name == SHAPE_TITLE:
+        default_color = [255, 255, 255]  # White for title
+    else:
+        default_color = [0, 0, 0]  # Black for body and tip
+    font_color_rgb = font_config.get('font_color_rgb', default_color)
+
+    # Clear existing text
+    shape.text_frame.clear()
+
+    # Add text with configured formatting
+    p = shape.text_frame.paragraphs[0]
+    run = p.add_run()
+    run.text = text
+    run.font.name = font_name
+    run.font.size = font_size
+    run.font.bold = font_bold
+    run.font.color.rgb = RGBColor(font_color_rgb[0], font_color_rgb[1], font_color_rgb[2])
+
+    return True
+
+# ============================================
+# BLUEPRINT PARSING
+# ============================================
+
+def parse_blueprint(filepath):
+    """Parse a Step 10 integrated blueprint into slide data."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    slides = []
+
+    # Extract section name from header
+    section_match = re.search(r'Section:\s*(.+)', content)
+    section_name = section_match.group(1).strip() if section_match else "Unknown_Section"
+
+    # Split by slide markers
+    slide_pattern = r'={40,}\s*SLIDE\s+(\d+[AB]?):\s*(.+?)\s*={40,}'
+    slide_blocks = re.split(slide_pattern, content)
+
+    i = 1
+    while i < len(slide_blocks) - 2:
+        slide_num = slide_blocks[i].strip()
+        slide_title = slide_blocks[i + 1].strip()
+        slide_content = slide_blocks[i + 2] if i + 2 < len(slide_blocks) else ""
+
+        slide_data = parse_slide_content(slide_num, slide_title, slide_content)
+        slides.append(slide_data)
+
+        i += 3
+
+    return section_name, slides
+
+def parse_slide_content(num, title, content):
+    """Parse individual slide content."""
+    slide = {
+        'number': num,
+        'title': title,
+        'type': 'Content',
+        'visual': False,
+        'visual_type': None,
+        'header': title,
+        'body': '',
+        'tip': '',
+        'notes': '',
+        'table_data': None,
+        'visual_spec': None
+    }
+
+    # Extract type
+    type_match = re.search(r'Type:\s*(.+)', content)
+    if type_match:
+        slide['type'] = type_match.group(1).strip()
+
+    # Extract visual info
+    visual_match = re.search(r'Visual:\s*(.+)', content)
+    if visual_match:
+        visual_text = visual_match.group(1).strip()
+        if visual_text.lower().startswith('yes'):
+            slide['visual'] = True
+            type_parts = visual_text.split('-')
+            if len(type_parts) > 1:
+                slide['visual_type'] = type_parts[1].strip().lower()
+
+    # Extract header
+    header_match = re.search(r'HEADER:\s*\n(.*?)(?=\n\s*\n|\nBODY:)', content, re.DOTALL)
+    if header_match:
+        slide['header'] = header_match.group(1).strip()
+
+    # Extract body
+    body_match = re.search(r'BODY:\s*\n(.*?)(?=\nVISUAL SPECIFICATION:|\nNCLEX TIP:|\nPRESENTER NOTES:)', content, re.DOTALL)
+    if body_match:
+        slide['body'] = body_match.group(1).strip()
+
+    # Extract visual specification
+    visual_spec_match = re.search(r'VISUAL SPECIFICATION:\s*\n(.*?)(?=\nNCLEX TIP:|\nPRESENTER NOTES:)', content, re.DOTALL)
+    if visual_spec_match:
+        slide['visual_spec'] = visual_spec_match.group(1).strip()
+        if slide['visual_type'] == 'table':
+            slide['table_data'] = parse_table_spec(slide['visual_spec'])
+
+    # Extract NCLEX tip
+    tip_match = re.search(r'NCLEX TIP:\s*\n(.*?)(?=\nPRESENTER NOTES:)', content, re.DOTALL)
+    if tip_match:
+        tip_text = tip_match.group(1).strip()
+        if tip_text.lower() not in ['none', 'n/a', '[none]', '[n/a]', '']:
+            slide['tip'] = tip_text
+
+    # Extract presenter notes
+    notes_match = re.search(r'PRESENTER NOTES:\s*\n(.*?)(?=\n={40,}|$)', content, re.DOTALL)
+    if notes_match:
+        slide['notes'] = notes_match.group(1).strip()
+
+    return slide
+
+def parse_table_spec(spec_text):
+    """Parse markdown table from visual specification."""
+    lines = spec_text.strip().split('\n')
+    table_lines = [l for l in lines if '|' in l and not l.strip().startswith('|---') and not l.strip() == '|']
+
+    if not table_lines:
+        return None
+
+    table_data = []
+    for line in table_lines:
+        cells = [c.strip() for c in line.split('|') if c.strip()]
+        if cells:
+            table_data.append(cells)
+
+    return table_data if table_data else None
+
+# ============================================
+# VISUAL SLIDE GENERATION
+# ============================================
+
+def create_table_slide_from_template(prs, slide_data):
+    """Create a table slide using the table template for proper styling."""
+
+    # Check if table template exists
+    if not TABLE_TEMPLATE_PATH.exists():
+        print(f"  Warning: Table template not found at {TABLE_TEMPLATE_PATH}")
+        print(f"  Falling back to blank slide approach")
+        return None
+
+    # Open table template to get its structure
+    table_template = Presentation(str(TABLE_TEMPLATE_PATH))
+
+    # Get the slide layout from the table template
+    if table_template.slides:
+        source_slide = table_template.slides[0]
+        source_layout = source_slide.slide_layout
+    else:
+        print(f"  Warning: Table template has no slides")
+        return None
+
+    # Try to find a matching layout in our presentation, or use blank
+    blank_layout = None
+    for layout in prs.slide_layouts:
+        if layout.name == "Blank":
+            blank_layout = layout
+            break
+    if not blank_layout:
+        blank_layout = prs.slide_layouts[-1]
+
+    # Create new slide
+    slide = prs.slides.add_slide(blank_layout)
+
+    # Copy ALL shapes from table template (rectangles, text boxes, etc.)
+    # Process in order to maintain z-order (background shapes first)
+    for shape in source_slide.shapes:
+        # Skip the main content placeholders - we'll add our own content
+        if shape.name in [SHAPE_TITLE, SHAPE_BODY, SHAPE_TIP]:
+            continue
+
+        try:
+            # Handle auto shapes (rectangles, rounded rectangles, etc.)
+            if shape.shape_type == MSO_SHAPE_TYPE.AUTO_SHAPE:
+                # Get the auto shape type
+                auto_shape_type = shape.auto_shape_type
+
+                # Create the shape
+                new_shape = slide.shapes.add_shape(
+                    auto_shape_type,
+                    shape.left, shape.top, shape.width, shape.height
+                )
+
+                # Copy fill properties
+                if shape.fill.type == MSO_FILL_TYPE.SOLID:
+                    new_shape.fill.solid()
+                    if shape.fill.fore_color and shape.fill.fore_color.rgb:
+                        new_shape.fill.fore_color.rgb = shape.fill.fore_color.rgb
+
+                # Copy line properties (remove outline if original has none)
+                try:
+                    if shape.line.fill.type == MSO_FILL_TYPE.BACKGROUND:
+                        new_shape.line.fill.background()
+                    elif shape.line.color and shape.line.color.rgb:
+                        new_shape.line.color.rgb = shape.line.color.rgb
+                except:
+                    # Remove outline by default
+                    new_shape.line.fill.background()
+
+            # Handle text boxes
+            elif shape.has_text_frame:
+                new_box = slide.shapes.add_textbox(
+                    shape.left, shape.top, shape.width, shape.height
+                )
+                new_frame = new_box.text_frame
+
+                # Copy text and formatting
+                for para_idx, para in enumerate(shape.text_frame.paragraphs):
+                    if para_idx == 0:
+                        new_para = new_frame.paragraphs[0]
+                    else:
+                        new_para = new_frame.add_paragraph()
+
+                    new_para.text = para.text
+                    if para.font.size:
+                        new_para.font.size = para.font.size
+                    if para.font.name:
+                        new_para.font.name = para.font.name
+                    if para.font.bold is not None:
+                        new_para.font.bold = para.font.bold
+                    try:
+                        if para.font.color and para.font.color.rgb:
+                            new_para.font.color.rgb = para.font.color.rgb
+                    except:
+                        pass
+
+        except Exception as e:
+            # Skip shapes that can't be copied
+            print(f"  Warning: Could not copy shape {shape.name}: {e}")
+            pass
+
+    # Now add the title (matching table template title style)
+    title_shape = find_shape_by_name(slide, SHAPE_TITLE)
+
+    if not title_shape:
+        # Create title text box if not found
+        title_config = FONT_SETTINGS.get(SHAPE_TITLE, {})
+        header_left = Inches(0.07)
+        header_top = Inches(-0.06)
+        header_width = Inches(12)
+        header_height = Inches(1.0)
+
+        title_shape = slide.shapes.add_textbox(header_left, header_top, header_width, header_height)
+
+    # Set title text with config formatting
+    if title_shape and slide_data['header']:
+        set_shape_text(title_shape, slide_data['header'], SHAPE_TITLE)
+
+    # Add the table
+    if slide_data.get('table_data'):
+        create_table_on_slide(slide, slide_data['table_data'])
+
+    # Add presenter notes
+    if slide_data['notes']:
+        notes_slide = slide.notes_slide
+        notes_slide.notes_text_frame.text = slide_data['notes']
+
+    return slide
+
+
+def create_visual_slide(prs, slide_data, diagrams_folder, section_num, slide_idx):
+    """Create a custom slide for visual content."""
+
+    visual_type = slide_data.get('visual_type', '')
+
+    # For table slides, use the table template
+    if visual_type == 'table' and slide_data.get('table_data'):
+        table_slide = create_table_slide_from_template(prs, slide_data)
+        if table_slide:
+            return table_slide
+        # Fall through to default approach if table template method fails
+
+    # Get blank layout for non-table visuals (or fallback)
+    blank_layout = None
+    for layout in prs.slide_layouts:
+        if layout.name == "Blank":
+            blank_layout = layout
+            break
+    if not blank_layout:
+        blank_layout = prs.slide_layouts[-1]
+
+    slide = prs.slides.add_slide(blank_layout)
+
+    # Add header text box (matching template style)
+    header_left = Inches(0.5)
+    header_top = Inches(0.3)
+    header_width = Inches(12)
+    header_height = Inches(0.8)
+
+    header_box = slide.shapes.add_textbox(header_left, header_top, header_width, header_height)
+    header_frame = header_box.text_frame
+    header_para = header_frame.paragraphs[0]
+    header_para.text = slide_data['header']
+    header_para.font.size = HEADER_FONT_SIZE
+    header_para.font.bold = True
+    header_para.font.name = "Aptos"
+
+    # Add visual content based on type
+    if visual_type == 'table' and slide_data.get('table_data'):
+        # Fallback if table template method failed
+        create_table_on_slide(slide, slide_data['table_data'])
+    elif visual_type == 'decision_tree' and slide_data.get('decision_tree_data'):
+        # Decision trees use dedicated generator
+        # See step12_decision_tree_generation.txt for full implementation
+        create_decision_tree_on_slide(slide, slide_data['decision_tree_data'])
+    else:
+        # Look for diagram image
+        diagram_pattern = f"section_{section_num}_slide_{slide_idx + 1}_*.png"
+        diagram_files = list(Path(diagrams_folder).glob(diagram_pattern))
+
+        if diagram_files:
+            insert_diagram_on_slide(slide, str(diagram_files[0]))
+
+    # Add presenter notes (required for all slides including visuals)
+    if slide_data['notes']:
+        notes_slide = slide.notes_slide
+        notes_slide.notes_text_frame.text = slide_data['notes']
+
+    return slide
+
+def create_table_on_slide(slide, table_data):
+    """Create a native PowerPoint table using config settings."""
+    if not table_data or len(table_data) < 1:
+        return None
+
+    rows = len(table_data)
+    cols = len(table_data[0]) if table_data else 0
+
+    if cols == 0:
+        return None
+
+    # Table position from config (anchored to bottom, above copyright)
+    table_pos = TABLE_SETTINGS.get('position', {})
+    left = Inches(table_pos.get('left_inches', 0.5))
+    width = Inches(table_pos.get('width_inches', 12.3))
+    height = Inches(table_pos.get('height_inches', 3.2))
+    bottom = table_pos.get('bottom_inches', 6.5)
+    top = Inches(bottom - table_pos.get('height_inches', 3.2))
+
+    table_shape = slide.shapes.add_table(rows, cols, left, top, width, height)
+    table = table_shape.table
+
+    # Get formatting from config
+    font_name = TABLE_SETTINGS.get('font_name', 'Aptos')
+    font_size = Pt(TABLE_SETTINGS.get('font_size_pt', 20))
+    font_color = TABLE_SETTINGS.get('font_color_rgb', [0, 0, 0])
+    header_color = TABLE_SETTINGS.get('header_font_color_rgb', [255, 255, 255])
+    header_bg = TABLE_SETTINGS.get('header_background_rgb', [0, 51, 102])
+    header_bold = TABLE_SETTINGS.get('header_bold', True)
+
+    # Populate and format cells
+    for row_idx, row_data in enumerate(table_data):
+        for col_idx, cell_text in enumerate(row_data):
+            if col_idx < len(table.columns):
+                cell = table.cell(row_idx, col_idx)
+                cell.text = str(cell_text)
+
+                for paragraph in cell.text_frame.paragraphs:
+                    paragraph.font.size = font_size
+                    paragraph.font.name = font_name
+
+                    if row_idx == 0:
+                        # Header row formatting
+                        paragraph.font.bold = header_bold
+                        paragraph.font.color.rgb = RGBColor(header_color[0], header_color[1], header_color[2])
+                        cell.fill.solid()
+                        cell.fill.fore_color.rgb = RGBColor(header_bg[0], header_bg[1], header_bg[2])
+                    else:
+                        # Data row formatting
+                        paragraph.font.color.rgb = RGBColor(font_color[0], font_color[1], font_color[2])
+
+    return table
+
+def insert_diagram_on_slide(slide, image_path):
+    """Insert a diagram image onto the slide."""
+    try:
+        from PIL import Image
+
+        if not Path(image_path).exists():
+            return None
+
+        with Image.open(image_path) as img:
+            img_width_px, img_height_px = img.size
+
+        # Convert pixels to EMUs (914400 EMUs per inch, assuming 96 DPI)
+        img_width_emu = Emu(img_width_px * 914400 / 96)
+        img_height_emu = Emu(img_height_px * 914400 / 96)
+
+        # Scale to fit within max dimensions
+        scale_w = DIAGRAM_MAX_WIDTH / img_width_emu if img_width_emu > DIAGRAM_MAX_WIDTH else 1
+        scale_h = DIAGRAM_MAX_HEIGHT / img_height_emu if img_height_emu > DIAGRAM_MAX_HEIGHT else 1
+        scale = min(scale_w, scale_h, 1.0)
+
+        final_width = int(img_width_emu * scale)
+        final_height = int(img_height_emu * scale)
+
+        # Center horizontally
+        slide_width = Inches(13.33)
+        left = int((slide_width - final_width) / 2)
+        top = Inches(1.5)
+
+        picture = slide.shapes.add_picture(image_path, left, top, final_width, final_height)
+        return picture
+
+    except Exception as e:
+        print(f"  Warning: Could not insert diagram: {e}")
+        return None
+
+
+def create_decision_tree_on_slide(slide, tree_data):
+    """
+    Create a decision tree using native PowerPoint shapes.
+
+    IMPORTANT: For full implementation details, see:
+    step12_decision_tree_generation.txt
+
+    This function uses the decision tree generator module which includes:
+    - Multiple layout variations (A, B, C, D, E)
+    - Professional rectangular panels with two-tone styling
+    - Arrow connectors between nodes
+    - Color-coded path labels
+    - 18pt minimum font size enforcement
+
+    Template: Always uses 'templates/visual_organizer.pptx'
+
+    tree_data structure:
+    {
+        'layout': 'A' | 'B' | 'C' | 'D' | 'E' | 'AUTO',
+        'level1': {'header': str, 'question': str, 'paths': list},
+        'level2a': {'header': str, 'question': str, 'paths': list},  # optional
+        'level2b': {'header': str, 'question': str, 'paths': list},  # optional
+        'outcomes': [{'name': str, 'color': str}, ...]
+    }
+    """
+    from pptx.enum.shapes import MSO_CONNECTOR
+    from pptx.oxml.ns import qn
+    from lxml import etree
+
+    # Color palette (fixed - do not modify)
+    COLORS = {
+        'decision_header': RGBColor(0, 51, 102),
+        'decision_body': RGBColor(240, 244, 248),
+        'outcome_green': RGBColor(0, 102, 68),
+        'outcome_red': RGBColor(153, 0, 0),
+        'outcome_blue': RGBColor(0, 71, 133),
+        'outcome_purple': RGBColor(75, 0, 110),
+        'connector': RGBColor(100, 100, 100),
+        'white': RGBColor(255, 255, 255),
+        'dark_text': RGBColor(33, 37, 41),
+    }
+
+    MIN_FONT = 18  # Minimum font size in points
+
+    def get_outcome_color(color_name):
+        color_map = {
+            'green': COLORS['outcome_green'],
+            'red': COLORS['outcome_red'],
+            'blue': COLORS['outcome_blue'],
+            'purple': COLORS['outcome_purple'],
+        }
+        return color_map.get(color_name.lower(), COLORS['outcome_blue'])
+
+    def add_decision_panel(left, top, width, height, header_text, body_text):
+        header_height = Inches(0.45)
+        body_height = height - header_height
+
+        # Header bar
+        header = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, header_height)
+        header.fill.solid()
+        header.fill.fore_color.rgb = COLORS['decision_header']
+        header.line.fill.background()
+
+        tf = header.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        run = p.add_run()
+        run.text = header_text
+        run.font.name = "Aptos"
+        run.font.size = Pt(MIN_FONT)
+        run.font.bold = True
+        run.font.color.rgb = COLORS['white']
+
+        # Body area
+        body = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top + header_height, width, body_height)
+        body.fill.solid()
+        body.fill.fore_color.rgb = COLORS['decision_body']
+        body.line.color.rgb = COLORS['decision_header']
+        body.line.width = Pt(2)
+
+        tf = body.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        run = p.add_run()
+        run.text = body_text
+        run.font.name = "Aptos"
+        run.font.size = Pt(22)
+        run.font.bold = True
+        run.font.color.rgb = COLORS['dark_text']
+
+        return header, body
+
+    def add_outcome_panel(left, top, width, height, header_text, body_text, color_name):
+        color = get_outcome_color(color_name)
+        header_height = Inches(0.35)
+        body_height = height - header_height
+
+        # Header bar
+        header = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, header_height)
+        header.fill.solid()
+        header.fill.fore_color.rgb = color
+        header.line.fill.background()
+
+        tf = header.text_frame
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        run = p.add_run()
+        run.text = header_text
+        run.font.name = "Aptos"
+        run.font.size = Pt(MIN_FONT)
+        run.font.bold = True
+        run.font.color.rgb = COLORS['white']
+
+        # Body area
+        body = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top + header_height, width, body_height)
+        body.fill.solid()
+        body.fill.fore_color.rgb = COLORS['white']
+        body.line.color.rgb = color
+        body.line.width = Pt(2.5)
+
+        tf = body.text_frame
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        run = p.add_run()
+        run.text = body_text
+        run.font.name = "Aptos"
+        run.font.size = Pt(20)
+        run.font.bold = True
+        run.font.color.rgb = color
+
+        return header, body
+
+    def add_connector(start_x, start_y, end_x, end_y):
+        connector = slide.shapes.add_connector(
+            MSO_CONNECTOR.STRAIGHT,
+            Inches(start_x), Inches(start_y),
+            Inches(end_x), Inches(end_y)
+        )
+        connector.line.color.rgb = COLORS['connector']
+        connector.line.width = Pt(2.5)
+
+        ln = connector._element.spPr.ln
+        tailEnd = etree.SubElement(ln, qn('a:tailEnd'))
+        tailEnd.set('type', 'triangle')
+        tailEnd.set('w', 'med')
+        tailEnd.set('len', 'med')
+        return connector
+
+    def add_path_label(left, top, text, color_name):
+        color = get_outcome_color(color_name)
+        width, height = Inches(1.5), Inches(0.4)
+
+        label = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+        label.adjustments[0] = 0.5
+        label.fill.solid()
+        label.fill.fore_color.rgb = color
+        label.line.fill.background()
+
+        tf = label.text_frame
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        run = p.add_run()
+        run.text = text
+        run.font.name = "Aptos"
+        run.font.size = Pt(MIN_FONT)
+        run.font.bold = True
+        run.font.color.rgb = COLORS['white']
+        return label
+
+    # Determine layout based on outcome count
+    outcomes = tree_data.get('outcomes', [])
+    layout = tree_data.get('layout', 'AUTO')
+
+    if layout == 'AUTO':
+        if len(outcomes) <= 2:
+            layout = 'B'
+        elif len(outcomes) == 3:
+            layout = 'C'
+        else:
+            layout = 'A'
+
+    # Generate based on layout
+    # See step12_decision_tree_generation.txt for full layout implementations
+    if layout == 'A':
+        # Layout A: 1 → 2 → 4 (Three-level binary)
+        # Coordinates
+        L1_X, L1_Y, L1_W, L1_H = 4.4, 0.85, 4.5, 1.3
+        L2_Y, L2_W, L2_H = 2.9, 4.5, 1.2
+        L2_LEFT_X, L2_RIGHT_X = 1.0, 7.8
+        L3_Y, L3_W, L3_H = 5.0, 2.9, 1.0
+        L3_POSITIONS = [0.2, 3.4, 6.6, 9.9]
+
+        l1 = tree_data.get('level1', {})
+        add_decision_panel(Inches(L1_X), Inches(L1_Y), Inches(L1_W), Inches(L1_H),
+                          l1.get('header', 'DECISION'), l1.get('question', '?'))
+
+        l2a = tree_data.get('level2a', {})
+        add_decision_panel(Inches(L2_LEFT_X), Inches(L2_Y), Inches(L2_W), Inches(L2_H),
+                          l2a.get('header', 'CHECK'), l2a.get('question', '?'))
+
+        l2b = tree_data.get('level2b', {})
+        add_decision_panel(Inches(L2_RIGHT_X), Inches(L2_Y), Inches(L2_W), Inches(L2_H),
+                          l2b.get('header', 'CHECK'), l2b.get('question', '?'))
+
+        for i, outcome in enumerate(outcomes[:4]):
+            add_outcome_panel(Inches(L3_POSITIONS[i]), Inches(L3_Y), Inches(L3_W), Inches(L3_H),
+                             "DIAGNOSIS", outcome.get('name', ''), outcome.get('color', 'blue'))
+
+        # Connectors
+        add_connector(L1_X + 0.8, L1_Y + L1_H, L2_LEFT_X + L2_W/2, L2_Y)
+        add_connector(L1_X + L1_W - 0.8, L1_Y + L1_H, L2_RIGHT_X + L2_W/2, L2_Y)
+        add_connector(L2_LEFT_X + L2_W*0.3, L2_Y + L2_H, L3_POSITIONS[0] + L3_W/2, L3_Y)
+        add_connector(L2_LEFT_X + L2_W*0.7, L2_Y + L2_H, L3_POSITIONS[1] + L3_W/2, L3_Y)
+        add_connector(L2_RIGHT_X + L2_W*0.3, L2_Y + L2_H, L3_POSITIONS[2] + L3_W/2, L3_Y)
+        add_connector(L2_RIGHT_X + L2_W*0.7, L2_Y + L2_H, L3_POSITIONS[3] + L3_W/2, L3_Y)
+
+        # Path labels
+        l1_paths = l1.get('paths', ['Left', 'Right'])
+        add_path_label(Inches(2.6), Inches(2.35), l1_paths[0], 'red')
+        add_path_label(Inches(9.3), Inches(2.35), l1_paths[1], 'green')
+
+        l2a_paths = l2a.get('paths', ['YES', 'NO'])
+        l2b_paths = l2b.get('paths', ['A', 'B'])
+        add_path_label(Inches(0.9), Inches(4.5), l2a_paths[0], outcomes[0].get('color', 'green'))
+        add_path_label(Inches(4.3), Inches(4.5), l2a_paths[1], outcomes[1].get('color', 'red'))
+        add_path_label(Inches(7.2), Inches(4.5), l2b_paths[0], outcomes[2].get('color', 'blue'))
+        add_path_label(Inches(10.6), Inches(4.5), l2b_paths[1], outcomes[3].get('color', 'purple'))
+
+    elif layout == 'B':
+        # Layout B: 1 → 2 (Two-level binary)
+        L1_X, L1_Y, L1_W, L1_H = 4.4, 1.2, 4.5, 1.5
+        L2_Y, L2_W, L2_H = 4.0, 4.0, 1.3
+        L2_LEFT_X, L2_RIGHT_X = 1.5, 7.5
+
+        l1 = tree_data.get('level1', {})
+        add_decision_panel(Inches(L1_X), Inches(L1_Y), Inches(L1_W), Inches(L1_H),
+                          l1.get('header', 'DECISION'), l1.get('question', '?'))
+
+        for i, outcome in enumerate(outcomes[:2]):
+            x = L2_LEFT_X if i == 0 else L2_RIGHT_X
+            add_outcome_panel(Inches(x), Inches(L2_Y), Inches(L2_W), Inches(L2_H),
+                             "DIAGNOSIS", outcome.get('name', ''), outcome.get('color', 'blue'))
+
+        add_connector(L1_X + 0.8, L1_Y + L1_H, L2_LEFT_X + L2_W/2, L2_Y)
+        add_connector(L1_X + L1_W - 0.8, L1_Y + L1_H, L2_RIGHT_X + L2_W/2, L2_Y)
+
+        paths = l1.get('paths', ['YES', 'NO'])
+        add_path_label(Inches(2.5), Inches(3.3), paths[0], outcomes[0].get('color', 'green'))
+        add_path_label(Inches(8.5), Inches(3.3), paths[1], outcomes[1].get('color', 'red'))
+
+    elif layout == 'C':
+        # Layout C: 1 → 3 (Two-level triple)
+        L1_X, L1_Y, L1_W, L1_H = 4.4, 1.2, 4.5, 1.5
+        L2_Y, L2_W, L2_H = 4.0, 3.5, 1.3
+        L2_POSITIONS = [0.8, 4.9, 9.0]
+
+        l1 = tree_data.get('level1', {})
+        add_decision_panel(Inches(L1_X), Inches(L1_Y), Inches(L1_W), Inches(L1_H),
+                          l1.get('header', 'DECISION'), l1.get('question', '?'))
+
+        for i, outcome in enumerate(outcomes[:3]):
+            add_outcome_panel(Inches(L2_POSITIONS[i]), Inches(L2_Y), Inches(L2_W), Inches(L2_H),
+                             "DIAGNOSIS", outcome.get('name', ''), outcome.get('color', 'blue'))
+
+        add_connector(L1_X + L1_W*0.25, L1_Y + L1_H, L2_POSITIONS[0] + L2_W/2, L2_Y)
+        add_connector(L1_X + L1_W*0.5, L1_Y + L1_H, L2_POSITIONS[1] + L2_W/2, L2_Y)
+        add_connector(L1_X + L1_W*0.75, L1_Y + L1_H, L2_POSITIONS[2] + L2_W/2, L2_Y)
+
+        paths = l1.get('paths', ['A', 'B', 'C'])
+        for i, path in enumerate(paths[:3]):
+            add_path_label(Inches(1.5 + i*4.1), Inches(3.3), path, outcomes[i].get('color', 'blue'))
+
+    return slide
+
+
+# ============================================
+# MAIN POPULATION LOGIC
+# ============================================
+
+def populate_section(template_path, blueprint_path, output_path, diagrams_folder, section_num, log_entries):
+    """Populate a single section PowerPoint from blueprint."""
+
+    # Parse blueprint
+    section_name, slides_data = parse_blueprint(blueprint_path)
+
+    if not slides_data:
+        log_entries.append(f"  ERROR: No slides parsed from blueprint")
+        return False, section_name
+
+    log_entries.append(f"  Section: {section_name}")
+    log_entries.append(f"  Total slides in blueprint: {len(slides_data)}")
+
+    # Separate content slides from visual slides
+    content_slides = [(idx, s) for idx, s in enumerate(slides_data) if not s['visual']]
+    visual_slides = [(idx, s) for idx, s in enumerate(slides_data) if s['visual']]
+
+    log_entries.append(f"  Content slides (using template): {len(content_slides)}")
+    log_entries.append(f"  Visual slides (custom generated): {len(visual_slides)}")
+
+    # Copy template to output location (NEVER modify original)
+    shutil.copy2(template_path, output_path)
+
+    # Open the copied presentation
+    prs = Presentation(output_path)
+    template_slide_count = len(prs.slides)
+
+    # Adjust slide count to match content slides
+    while len(prs.slides) < len(content_slides):
+        slide_layout = prs.slides[0].slide_layout
+        prs.slides.add_slide(slide_layout)
+
+    while len(prs.slides) > len(content_slides):
+        rId = prs.slides._sldIdLst[-1].rId
+        prs.part.drop_rel(rId)
+        del prs.slides._sldIdLst[-1]
+
+    # Populate content slides using template
+    for content_idx, (orig_idx, slide_data) in enumerate(content_slides):
+        slide = prs.slides[content_idx]
+
+        # Find shapes by exact name
+        title_shape = find_shape_by_name(slide, SHAPE_TITLE)
+        body_shape = find_shape_by_name(slide, SHAPE_BODY)
+        tip_shape = find_shape_by_name(slide, SHAPE_TIP)
+
+        # Populate title/header (36pt white bold from config)
+        if title_shape and slide_data['header']:
+            set_shape_text(title_shape, slide_data['header'], SHAPE_TITLE)
+
+        # Populate body (20pt white from config)
+        if body_shape and slide_data['body']:
+            set_shape_text(body_shape, slide_data['body'], SHAPE_BODY)
+
+        # Handle NCLEX tip based on slide type (18pt white from config)
+        if tip_shape:
+            if slide_data['tip'] and slide_data['type'] == 'Content':
+                set_shape_text(tip_shape, slide_data['tip'], SHAPE_TIP)
+            else:
+                # Clear tip for non-content slides
+                clear_shape_text(tip_shape)
+
+        # Add presenter notes
+        if slide_data['notes']:
+            notes_slide = slide.notes_slide
+            notes_slide.notes_text_frame.text = slide_data['notes']
+
+        log_entries.append(f"    Slide {content_idx + 1}: {slide_data['type']} - {slide_data['header'][:35]}...")
+
+    # Generate visual slides (custom, not using template)
+    for orig_idx, slide_data in visual_slides:
+        create_visual_slide(prs, slide_data, diagrams_folder, section_num, orig_idx)
+        log_entries.append(f"    Visual slide: {slide_data.get('visual_type', 'unknown')} - {slide_data['header'][:35]}...")
+
+    # Save presentation
+    prs.save(output_path)
+    log_entries.append(f"  Final slide count: {len(prs.slides)}")
+    log_entries.append(f"  Saved: {output_path}")
+
+    return True, section_name
+
+def main():
+    """Main execution function."""
+    log_entries = []
+    log_entries.append("=" * 60)
+    log_entries.append("STEP 12: POWERPOINT POPULATION LOG")
+    log_entries.append("=" * 60)
+    log_entries.append(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    log_entries.append(f"Template: {TEMPLATE_PATH}")
+    log_entries.append(f"Domain: {DOMAIN_NAME}")
+    log_entries.append("")
+
+    # Validate paths
+    if not Path(TEMPLATE_PATH).exists():
+        print(f"ERROR: Template not found: {TEMPLATE_PATH}")
+        return
+
+    production_path = Path(PRODUCTION_FOLDER)
+    if not production_path.exists():
+        print(f"ERROR: Production folder not found: {PRODUCTION_FOLDER}")
+        return
+
+    # Use integrated/ subfolder for blueprints (Step 10 outputs)
+    integrated_folder = production_path / "integrated"
+    diagrams_folder = production_path / "diagrams"
+
+    # Output to production folder's powerpoints/ subfolder
+    powerpoints_folder = production_path / "powerpoints"
+    logs_folder = production_path / "logs"
+
+    powerpoints_folder.mkdir(parents=True, exist_ok=True)
+    logs_folder.mkdir(parents=True, exist_ok=True)
+
+    log_entries.append(f"Output folder: {powerpoints_folder}")
+    log_entries.append("")
+
+    # Find all integrated blueprint files (from Step 10)
+    blueprint_files = sorted(integrated_folder.glob("step10_integrated_blueprint_*.txt"))
+
+    if not blueprint_files:
+        log_entries.append("ERROR: No integrated blueprint files found in integrated/ subfolder")
+        print("ERROR: No blueprint files found in integrated folder")
+        return
+
+    log_entries.append(f"Found {len(blueprint_files)} blueprint files")
+    log_entries.append("")
+
+    success_count = 0
+    error_count = 0
+
+    # Process each section
+    for section_num, blueprint_file in enumerate(blueprint_files, 1):
+        log_entries.append("-" * 60)
+        log_entries.append(f"PROCESSING SECTION {section_num}")
+        log_entries.append("-" * 60)
+        log_entries.append(f"  Blueprint: {blueprint_file.name}")
+
+        try:
+            # Parse to get section name for output filename
+            section_name, _ = parse_blueprint(str(blueprint_file))
+            safe_name = sanitize_filename(section_name)
+            output_path = powerpoints_folder / f"{safe_name}.pptx"
+
+            success, _ = populate_section(
+                TEMPLATE_PATH,
+                str(blueprint_file),
+                str(output_path),
+                str(diagrams_folder),
+                section_num,
+                log_entries
+            )
+
+            if success:
+                success_count += 1
+            else:
+                error_count += 1
+
+        except Exception as e:
+            log_entries.append(f"  ERROR: {str(e)}")
+            error_count += 1
+
+        log_entries.append("")
+
+    # Summary
+    log_entries.append("=" * 60)
+    log_entries.append("SUMMARY")
+    log_entries.append("=" * 60)
+    log_entries.append(f"Sections processed: {len(blueprint_files)}")
+    log_entries.append(f"Successful: {success_count}")
+    log_entries.append(f"Errors: {error_count}")
+    log_entries.append("")
+
+    if error_count == 0:
+        log_entries.append("STATUS: ALL SECTIONS POPULATED SUCCESSFULLY")
+    else:
+        log_entries.append("STATUS: COMPLETED WITH ERRORS - Review log")
+
+    log_entries.append("=" * 60)
+
+    # Write log file to logs/ subfolder
+    log_path = logs_folder / "population_log.txt"
+    with open(log_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(log_entries))
+
+    print(f"\nPopulation complete!")
+    print(f"PowerPoints: {powerpoints_folder}")
+    print(f"Log: {log_path}")
+    print(f"Successful: {success_count}, Errors: {error_count}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## USAGE INSTRUCTIONS
+
+### 1. Configure pipeline_config.json
+
+Edit `pipeline_config.json` in the pipeline folder:
+
+```json
+{
+  "domain": {
+    "name": "Medical_Surgical_Nursing",
+    "display_name": "Medical-Surgical Nursing",
+    "date": "2024-12-22"
+  },
+  "paths": {
+    "pipeline_folder": "C:\\Users\\mcdan\\OneDrive\\Desktop\\repairing the pipeline",
+    "template_file": "templates/visual_organizer.pptx",
+    "production_folder": "C:\\Users\\mcdan\\Desktop\\Medical_Surgical_Nursing_Production_2024-12-22"
+  }
+}
+```
+
+**Required fields:**
+- `domain.name`: Domain identifier (used in filenames)
+- `paths.production_folder`: Full path to your production folder from Step 11
+
+### 2. Ensure Prerequisites
+
+Before running:
+- [ ] `pipeline_config.json` configured with correct paths
+- [ ] Step 11 production folder exists with `integrated/` subfolder
+- [ ] Integrated blueprint files present (`step10_integrated_blueprint_*.txt`)
+- [ ] Diagram images generated in `diagrams/` folder (if visual slides exist)
+- [ ] Master template exists at: `[pipeline_folder]/templates/visual_organizer.pptx`
+
+### 3. Run the Script
+
+```bash
+python step12_powerpoint_population.py
+```
+
+### 4. Verify Output
+
+Check the production folder:
+```
+[Domain]_Production_[Date]/
+├── integrated/              # Source blueprints
+├── diagrams/               # Visual aid images
+├── powerpoints/            # Final PowerPoint files
+│   ├── Multicultural_Foundations.pptx
+│   ├── CBT_Foundations.pptx
+│   └── ... (one per section)
+└── logs/
+    └── population_log.txt
+```
+
+---
+
+## VALIDATION CHECKLIST
+
+### Before Running:
+
+- [ ] `pipeline_config.json` exists and is properly configured
+- [ ] Master template exists in pipeline folder and is valid
+- [ ] Template has shapes: TextBox 2, TextBox 19, TextBox 18
+- [ ] All integrated blueprints in production folder's `integrated/` subfolder
+- [ ] Diagram images in production folder's `diagrams/` subfolder (if needed)
+- [ ] `paths.production_folder` in config points to valid production folder
+
+### After Running:
+
+- [ ] `powerpoints/` subfolder created in production folder
+- [ ] One PowerPoint per section with correct filename
+- [ ] Content slides populated with header, body, tip
+- [ ] Visual slides generated with custom layout
+- [ ] NCLEX tips cleared on non-content slides
+- [ ] Presenter notes added to ALL slides
+- [ ] Population log in `logs/` folder shows no errors
+- [ ] **Original template is unmodified**
+
+---
+
+## TEMPLATE CONFORMITY REQUIREMENTS
+
+### Visual Aid Template Specifications
+
+All slides using the **"templates/visual_organizer.pptx"** must conform to these exact specifications:
+
+**File Location:** `templates/visual_organizer.pptx`
+
+**Template Elements to Copy:**
+1. **Background Rectangles** (5 shapes):
+   - Rectangle 1: Dark header bar (RGB 26, 26, 26) at (0.00", 0.00") 13.33"×0.65"
+   - Rounded Rectangle 4: Red accent (RGB 220, 38, 38) at (11.49", 0.13") 1.59"×0.39"
+   - Rectangle 6: Light gray content area (RGB 245, 245, 245) at (0.00", 0.65") 13.33"×6.61"
+   - Rectangle 7: White content box (RGB 255, 255, 255) at (0.54", 0.72") 12.26"×6.52"
+   - Rectangle 13: Footer bar (RGB 245, 245, 245) at (-0.02", 7.26") 13.33"×0.24"
+
+2. **TIER 1 Indicator** (TextBox 5):
+   - Position: (11.49", 0.07")
+   - Size: 1.59"×0.50"
+   - Text: "TIER 1"
+   - Must be copied with exact positioning
+
+3. **Footer Text** (TextBox 14 - optional for some slide types):
+   - Position: (0.56", 7.23")
+   - Size: 12.26"×0.27"
+
+**Slides Using This Template:**
+- All Key Differentiator slides (key_differentiators visual type)
+- All Vignette slides (Vignette type)
+- All Answer slides (Answer type)
+
+**Title Requirements for Visual Aid Template:**
+- **Position**: (0.07", -0.06") - matches template TextBox 2
+- **Size**: 11.42"×0.71"
+- **Font**: Aptos, 36pt, Bold
+- **Color**: WHITE (RGB 255, 255, 255) - critical for visibility on dark background
+- **Max Length**: 28 characters (truncate if longer)
+- **Alignment**: Left
+
+---
+
+## PRE-COMPLETION VERIFICATION CHECKLIST
+
+**⚠️ CRITICAL: Do NOT mark Step 12 as complete until ALL items verified ⚠️**
+
+Claude has **full permission to troubleshoot autonomously** using the instructions below. Continue troubleshooting until all checks pass.
+
+### Phase 1: Generation Verification
+
+After script execution, verify:
+
+- [ ] Script ran with `Successful: [N], Errors: 0` (no errors)
+- [ ] One `.pptx` file generated per section in `powerpoints/` folder
+- [ ] `population_log.txt` shows all sections processed
+- [ ] No "ERROR" or "Warning" messages in log about missing files
+
+**If Phase 1 fails:** Check file paths, template existence, blueprint files in `integrated/` folder.
+
+---
+
+### Phase 2: Template Conformity Verification
+
+**For ALL slides using visual aid template** (Key Differentiators, Vignettes, Answers):
+
+#### 2.1 Title Verification
+
+Open one PowerPoint from each section type and check slides using visual aid template:
+
+- [ ] **Title text is WHITE** (not black) - visible on dark header bar
+- [ ] **Title position matches template**: left edge at 0.07", top at -0.06"
+- [ ] **Title max length**: 28 characters or less (truncated if longer)
+- [ ] **Font**: Aptos 36pt Bold
+- [ ] **No title text cutoff** - all text visible within header bar
+
+**✗ FAIL INDICATORS:**
+- Title text is black/invisible on dark background
+- Title appears below dark header bar instead of inside it
+- Title text extends beyond header bar width
+- Title font is different size or style
+
+**→ If fails:** Use Troubleshooting Section A (Title Issues)
+
+---
+
+#### 2.2 TIER 1 Indicator Verification
+
+- [ ] **TIER 1 box appears** in top right corner of slide
+- [ ] **Position exact**: left at 11.49", top at 0.07"
+- [ ] **Contains text**: "TIER 1" (6 characters, no leading newlines)
+- [ ] **Text formatting**:
+  - Font size: 20pt
+  - Alignment: CENTER
+  - Vertical anchor: MIDDLE
+  - Text fully contained within dark header bar (not bleeding outside)
+- [ ] **Rounded rectangle background** (red accent color)
+- [ ] **All template slides have it** (content, tables, key differentiators, vignettes, answers)
+
+**✗ FAIL INDICATORS:**
+- TIER 1 missing completely
+- TIER 1 in wrong position (not top right corner)
+- TIER 1 position varies between slides (should be exactly 11.49", 0.07" on all)
+- Only some slides have TIER 1
+- Text has leading newline ("\nTIER 1" instead of "TIER 1")
+- Text is not centered or not middle-aligned
+- Font size is not 20pt
+- Text bleeds outside the dark header bar
+
+**→ If fails:** Use Troubleshooting Section B (TIER 1 Issues)
+
+---
+
+#### 2.3 Background Template Verification
+
+- [ ] **Dark header bar present** (RGB 26, 26, 26) at top
+- [ ] **White content area** with light gray border
+- [ ] **Red rounded rectangle** (accent) visible in top right
+- [ ] **Footer bar** at bottom
+- [ ] **All rectangles from template** copied correctly
+
+**✗ FAIL INDICATORS:**
+- Missing dark header bar
+- Slide has plain white background throughout
+- Template elements missing or misaligned
+- Inconsistent backgrounds between slides
+
+**→ If fails:** Use Troubleshooting Section C (Background Issues)
+
+---
+
+### Phase 3: Content Verification
+
+#### 3.1 Key Differentiator Slides
+
+For slides with visual_type = "key_differentiators":
+
+- [ ] **NOT empty** - contains visible content
+- [ ] **Two concept boxes** displayed (colored headers + feature lists)
+- [ ] **Yellow key differences box** at bottom
+- [ ] **Uses visual aid template** background
+- [ ] **All text visible** and properly colored
+
+**✗ FAIL INDICATORS:**
+- Slide shows only header, no visual content
+- Looking for PNG diagram files instead of generating content
+- Slide is blank below header
+
+**→ If fails:** Use Troubleshooting Section D (Key Differentiator Issues)
+
+---
+
+#### 3.2 Vignette/Answer Slides
+
+- [ ] **Title visible** (white text on dark background)
+- [ ] **Body text visible** (black text on white background)
+- [ ] **Footer text visible** (copyright)
+- [ ] **Uses visual aid template** background
+- [ ] **TIER 1 indicator present**
+
+**✗ FAIL INDICATORS:**
+- Body text white on white (invisible)
+- Using wrong template (regular template instead of visual aid)
+- Missing TIER 1 or template background
+
+**→ If fails:** Use Troubleshooting Section E (Vignette/Answer Issues)
+
+---
+
+#### 3.3 Font Size Verification (Visual Aid Template Slides)
+
+For all slides using visual aid template (key differentiators, vignettes, answers, tables):
+
+- [ ] **All non-title text is minimum 18pt**:
+  - Key differentiator concept text: 18pt
+  - Key differences text in yellow box: 18pt
+  - Vignette/Answer body text: 18pt
+  - Vignette/Answer footer text: 18pt
+  - Table content text: 18pt minimum
+  - Content slide footer text: 18pt
+- [ ] **TIER 1 text**: 20pt
+- [ ] **Title text**: 36pt
+
+**✗ FAIL INDICATORS:**
+- Key differentiator text at 16pt (should be 18pt)
+- Vignette/Answer footer at 12pt (should be 18pt)
+- Template footer at 10pt still present (should be filtered or updated to 18pt)
+- Any body text below 18pt on visual aid template slides
+
+**→ If fails:** Use Troubleshooting Section F (Font Size Issues)
+
+---
+
+### Phase 4: Final Validation
+
+- [ ] **All sections regenerated** if any fixes applied
+- [ ] **File lock errors resolved** (all PowerPoints closed during regeneration)
+- [ ] **Spot check 3 random sections** - all verifications pass
+- [ ] **Population log** shows "STATUS: ALL SECTIONS POPULATED SUCCESSFULLY"
+
+**Only after ALL checks pass:** Mark Step 12 as COMPLETE
+
+---
+
+## TROUBLESHOOTING GUIDE
+
+### Section A: Title Issues on Visual Aid Template Slides
+
+**Problem**: Title text is black/invisible, positioned wrong, or cut off
+
+**Root Cause Analysis:**
+1. Title text color set to black (RGB 0,0,0) instead of white (RGB 255,255,255)
+2. Title position doesn't match template (should be 0.07", -0.06")
+3. Title too long (exceeds 28 character limit)
+
+**Solution Steps:**
+
+1. **Locate the title creation code** in key differentiator and vignette/answer slide functions
+   - Search for: `create_key_differentiator_slide` function
+   - Search for: `create_vignette_answer_slide` function
+
+2. **Fix title color** - Change to WHITE:
+   ```python
+   title_para.font.color.rgb = RGBColor(255, 255, 255)  # WHITE text
+   # NOT: RGBColor(0, 0, 0)  # This is BLACK
+   ```
+
+3. **Fix title position** - Match template exactly:
+   ```python
+   title_box = slide.shapes.add_textbox(Inches(0.07), Inches(-0.06), Inches(11.42), Inches(0.71))
+   # NOT: Inches(0.06), Inches(-0.05) or other values
+   ```
+
+4. **Add title truncation** - Limit to 28 characters:
+   ```python
+   title_text = slide_data['header']
+   if len(title_text) > 28:
+       title_text = title_text[:28]
+   ```
+
+5. **Verify font settings**:
+   ```python
+   title_para.font.size = Pt(36)
+   title_para.font.bold = True
+   title_para.font.name = "Aptos"
+   ```
+
+6. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### Section B: TIER 1 Indicator Issues
+
+**Problem**: TIER 1 missing, wrong position, or text bleeding outside header bar
+
+**Root Cause Analysis:**
+1. Script only copying AUTO_SHAPE types, not TEXT_BOX shapes
+2. Copying ALL textboxes instead of filtering to just TIER 1
+3. Position not preserved from template (should be exactly 11.49", 0.07")
+4. Text formatting not preserved (leading newlines, wrong alignment, missing font size)
+5. Copying from paragraph-level properties instead of run-level properties
+
+**Solution Steps:**
+
+1. **Add textbox copying logic** to template shape copying section in THREE functions:
+   - `create_key_differentiator_slide()`
+   - `create_vignette_answer_slide()`
+   - `create_table_slide_from_template()`
+
+2. **Proper TIER 1 copying code** (copy run-level formatting, not paragraph-level):
+   ```python
+   for shape in template_slide.shapes:
+       if shape.shape_type == MSO_SHAPE_TYPE.AUTO_SHAPE:
+           # Copy rectangle shapes (existing code)
+           ...
+       elif hasattr(shape, 'text_frame') and hasattr(shape, 'text'):
+           # Only copy the TIER 1 textbox (top right corner)
+           left_inches = shape.left / 914400  # Convert EMU to inches
+           top_inches = shape.top / 914400
+
+           # TIER 1 is at left ~11.49 inches, top ~0.07 inches
+           is_tier = left_inches > 11.0 and top_inches < 1.0
+
+           # Skip template footer (top > 6.5 inches)
+           is_footer = top_inches > 6.5
+
+           if is_tier and not is_footer:
+               new_textbox = slide.shapes.add_textbox(
+                   shape.left,  # Preserve exact position
+                   shape.top,
+                   shape.width,
+                   shape.height
+               )
+               # Copy text_frame properties (CRITICAL!)
+               if shape.text_frame.vertical_anchor:
+                   new_textbox.text_frame.vertical_anchor = shape.text_frame.vertical_anchor
+
+               # Copy text and formatting from RUNS (not paragraphs)
+               for para_idx, para in enumerate(shape.text_frame.paragraphs):
+                   if para_idx == 0:
+                       new_para = new_textbox.text_frame.paragraphs[0]
+                   else:
+                       new_para = new_textbox.text_frame.add_paragraph()
+
+                   # Copy paragraph-level properties
+                   if para.alignment:
+                       new_para.alignment = para.alignment
+
+                   # Copy runs with formatting (CRITICAL!)
+                   for run_idx, run in enumerate(para.runs):
+                       if run_idx == 0:
+                           new_run = new_para.runs[0] if new_para.runs else new_para.add_run()
+                       else:
+                           new_run = new_para.add_run()
+
+                       new_run.text = run.text  # Copy from run.text, not para.text
+                       if run.font.size:
+                           new_run.font.size = run.font.size  # Copy from run.font, not para.font
+                       if run.font.bold is not None:
+                           new_run.font.bold = run.font.bold
+                       if run.font.name:
+                           new_run.font.name = run.font.name
+                       try:
+                           if run.font.color and run.font.color.rgb:
+                               new_run.font.color.rgb = run.font.color.rgb
+                       except:
+                           pass
+   ```
+
+3. **Verify filtering logic** - Must only copy TIER 1, not all textboxes:
+   - Title textbox (left ~0.07") should NOT be copied (custom per slide)
+   - Body textbox (left ~0.57") should NOT be copied (custom per slide)
+   - Footer textbox (top > 6.5") should NOT be copied (filtered out)
+   - TIER 1 textbox (left ~11.49") SHOULD be copied with full formatting
+
+4. **Verify template TIER 1 positioning**:
+   - All three templates should have TIER 1 at exactly (11.49", 0.07")
+   - Check: templates/visual_organizer.pptx
+   - Check: templates/visual_organizer.pptx
+   - Check: templates/content_master.pptx
+
+5. **Verify TIER 1 formatting in generated slides**:
+   - Text: "TIER 1" (no leading newline)
+   - Font size: 20pt
+   - Alignment: CENTER
+   - Vertical anchor: MIDDLE
+   - Position: (11.49", 0.07")
+
+6. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### Section C: Background Template Issues
+
+**Problem**: Missing dark header bar, white background, or template elements
+
+**Root Cause Analysis:**
+1. Not copying shapes from visual aid template at all
+2. Using wrong template file path
+3. Creating blank slides without template elements
+
+**Solution Steps:**
+
+1. **Verify template path** is correct:
+   ```python
+   visual_aid_path = PIPELINE_FOLDER / "templates/visual_organizer.pptx"
+   ```
+
+2. **Add template loading and shape copying**:
+   ```python
+   # Load visual aid template
+   visual_template = Presentation(str(visual_aid_path))
+   template_slide = visual_template.slides[0]
+
+   # Create blank slide
+   slide = prs.slides.add_slide(blank_layout)
+
+   # Copy all background shapes FIRST (before adding content)
+   for shape in template_slide.shapes:
+       if shape.shape_type == MSO_SHAPE_TYPE.AUTO_SHAPE:
+           new_shape = slide.shapes.add_shape(
+               shape.auto_shape_type,
+               shape.left,
+               shape.top,
+               shape.width,
+               shape.height
+           )
+           if shape.fill.type == MSO_FILL_TYPE.SOLID:
+               new_shape.fill.solid()
+               new_shape.fill.fore_color.rgb = shape.fill.fore_color.rgb
+   ```
+
+3. **Verify shape copying happens BEFORE content addition**:
+   - Template shapes must be added first (z-order: background first)
+   - Then add title, body, concept boxes, etc.
+
+4. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### Section D: Key Differentiator Issues
+
+**Problem**: Slides are empty, only showing header
+
+**Root Cause Analysis:**
+1. Script looking for PNG diagram files instead of generating visual content
+2. Missing `parse_key_differentiator_spec()` function
+3. Missing `create_key_differentiator_slide()` function
+4. Not calling key differentiator generation for this visual type
+
+**Solution Steps:**
+
+1. **Add parsing function** to extract key differentiator data from blueprint:
+   ```python
+   def parse_key_differentiator_spec(spec_text):
+       """Parse key differentiator specification from visual spec."""
+       if not spec_text:
+           return None
+
+       kd_data = {
+           'layout': None,
+           'concepts': [],
+           'key_differences': [],
+           'colors': {}
+       }
+
+       # Extract layout
+       layout_match = re.search(r'Layout:\s*([A-Z])\s*\((.+?)\)', spec_text)
+       if layout_match:
+           kd_data['layout'] = layout_match.group(1)
+
+       # Extract concepts (Concept 1, Concept 2, etc.)
+       concept_pattern = r'-\s*Concept\s*(\d+):\s*"(.+?)"\s*\n\s*-\s*Features:\s*"(.+?)"'
+       for match in re.finditer(concept_pattern, spec_text):
+           concept_num = int(match.group(1))
+           concept_name = match.group(2)
+           features = match.group(3).split('", "')
+           features = [f.strip('"') for f in features]
+           kd_data['concepts'].append({
+               'number': concept_num,
+               'name': concept_name,
+               'features': features
+           })
+
+       # Extract key differences
+       kd_pattern = r'-\s*KD\d+:\s*"(.+?)"'
+       kd_data['key_differences'] = re.findall(kd_pattern, spec_text)
+
+       # Extract colors
+       color_pattern = r'-\s*Concept\s*(\d+)\s*(header|light):\s*RGB\((\d+),\s*(\d+),\s*(\d+)\)'
+       for match in re.finditer(color_pattern, spec_text):
+           concept_num = int(match.group(1))
+           color_type = match.group(2)
+           rgb = (int(match.group(3)), int(match.group(4)), int(match.group(5)))
+
+           if concept_num not in kd_data['colors']:
+               kd_data['colors'][concept_num] = {}
+           kd_data['colors'][concept_num][color_type] = rgb
+
+       return kd_data if kd_data['concepts'] else None
+   ```
+
+2. **Call parsing in `parse_slide_content()`**:
+   ```python
+   # After parsing table data, add:
+   if slide['visual_type'] == 'key_differentiators' and slide['visual_spec']:
+       slide['key_differentiator_data'] = parse_key_differentiator_spec(slide['visual_spec'])
+   ```
+
+3. **Add generation function** `create_key_differentiator_slide()`:
+   - Load visual aid template
+   - Copy background shapes
+   - Create two concept boxes (colored headers + feature lists)
+   - Add yellow key differences box at bottom
+   - Use visual aid template background
+
+4. **Call in `create_visual_slide()`**:
+   ```python
+   # After Vignette/Answer check, before table check:
+   if visual_type == 'key_differentiators' and slide_data.get('key_differentiator_data'):
+       kd_slide = create_key_differentiator_slide(prs, slide_data, slide_data['key_differentiator_data'])
+       if kd_slide:
+           return kd_slide
+   ```
+
+5. **Add to slide dictionary** in `parse_slide_content()`:
+   ```python
+   slide = {
+       # ... existing fields ...
+       'key_differentiator_data': None,  # Add this field
+   }
+   ```
+
+6. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### Section E: Vignette/Answer Issues
+
+**Problem**: Text invisible, wrong template, missing TIER 1
+
+**Root Cause Analysis:**
+1. Text color set to white on white background (body/footer)
+2. Not using visual aid template
+3. Not copying TIER 1 indicator
+
+**Solution Steps:**
+
+1. **Create dedicated function** `create_vignette_answer_slide()`:
+   ```python
+   def create_vignette_answer_slide(prs, slide_data):
+       """Create a Vignette or Answer slide using visual aid template."""
+       # Load visual aid template
+       visual_aid_path = PIPELINE_FOLDER / "templates/visual_organizer.pptx"
+       visual_template = Presentation(str(visual_aid_path))
+       template_slide = visual_template.slides[0]
+
+       # Create blank slide
+       slide = prs.slides.add_slide(blank_layout)
+
+       # Copy background shapes and TIER 1 (see Section B for details)
+
+       # Add title (WHITE text on dark background)
+       title_text = slide_data['header']
+       if len(title_text) > 28:
+           title_text = title_text[:28]
+
+       title_box = slide.shapes.add_textbox(Inches(0.07), Inches(-0.06), Inches(11.42), Inches(0.71))
+       title_para = title_box.text_frame.paragraphs[0]
+       title_para.text = title_text
+       title_para.font.color.rgb = RGBColor(255, 255, 255)  # WHITE
+
+       # Add body (BLACK text on white background)
+       body_box = slide.shapes.add_textbox(Inches(0.52), Inches(0.73), Inches(11.2), Inches(5.5))
+       body_para = body_box.text_frame.paragraphs[0]
+       body_para.text = slide_data['body']
+       body_para.font.color.rgb = RGBColor(0, 0, 0)  # BLACK
+
+       # Add footer (BLACK text)
+       footer_box = slide.shapes.add_textbox(Inches(0.52), Inches(6.6), Inches(11.2), Inches(0.3))
+       footer_para = footer_box.text_frame.paragraphs[0]
+       footer_para.text = "© 2025 - Educational Use Only"
+       footer_para.font.color.rgb = RGBColor(0, 0, 0)  # BLACK
+
+       return slide
+   ```
+
+2. **Call in `create_visual_slide()`**:
+   ```python
+   # At the very start of create_visual_slide:
+   if slide_data.get('type') in ['Vignette', 'Answer']:
+       vignette_slide = create_vignette_answer_slide(prs, slide_data)
+       if vignette_slide:
+           return vignette_slide
+   ```
+
+3. **Update slide categorization** to treat Vignette/Answer as visual:
+   ```python
+   # In populate_section():
+   content_slides = [(idx, s) for idx, s in enumerate(slides_data)
+                     if not s['visual'] and s['type'] not in ['Vignette', 'Answer']]
+   visual_slides = [(idx, s) for idx, s in enumerate(slides_data)
+                    if s['visual'] or s['type'] in ['Vignette', 'Answer']]
+   ```
+
+4. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### Section F: Font Size Issues (18pt Minimum)
+
+**Problem**: Text on visual aid template slides below 18pt minimum
+
+**Root Cause Analysis:**
+1. Key differentiator "key differences" text hardcoded at 16pt instead of 18pt
+2. Vignette/Answer footer text hardcoded at 12pt instead of 18pt
+3. Template footer at 10pt being copied to slides
+4. Content slide footer inherited from template at 10pt
+
+**Solution Steps:**
+
+1. **Fix key differentiator font size** in `create_key_differentiator_slide()`:
+   ```python
+   # Find the line setting key differences text font size
+   p.font.size = Pt(18)  # Change from Pt(16) to Pt(18)
+   ```
+   **Location**: Around line 571
+
+2. **Fix vignette/answer footer font size** in `create_vignette_answer_slide()`:
+   ```python
+   # Find the footer creation line
+   footer_para.font.size = Pt(18)  # Change from Pt(12) to Pt(18)
+   ```
+   **Location**: Around line 835
+
+3. **Filter out template footer** during template shape copying:
+   ```python
+   # In TIER 1 copying section, add footer filtering:
+   is_footer = top_inches > 6.5  # Footer is below 6.5 inches
+
+   if is_tier and not is_footer:  # Skip footer textbox
+       # Copy TIER 1 only
+   ```
+   **Applies to**: `create_key_differentiator_slide()` and `create_vignette_answer_slide()`
+
+4. **Update content slide footers** in `populate_section()` after content slides are populated:
+   ```python
+   # After populating content slides, update footer font sizes
+   for shape in slide.shapes:
+       if hasattr(shape, 'text_frame'):
+           left_inches = shape.left / 914400
+           top_inches = shape.top / 914400
+
+           # Footer is at left ~0.54", top ~6.14"
+           is_footer = left_inches < 1.0 and top_inches > 6.0
+
+           if is_footer and shape.text_frame.paragraphs:
+               for para in shape.text_frame.paragraphs:
+                   for run in para.runs:
+                       if run.font.size and run.font.size < Pt(18):
+                           run.font.size = Pt(18)
+   ```
+   **Location**: Around line 1103-1116
+
+5. **Verify all font sizes** after regeneration:
+   - Key differentiator text: 18pt minimum
+   - Vignette/Answer footer: 18pt
+   - Content slide footer: 18pt
+   - Table content: 18pt minimum
+   - TIER 1 text: 20pt
+   - Title text: 36pt
+
+6. **Use verification script** to check all slides:
+   ```python
+   # Create verify_font_sizes.py to scan all PowerPoints
+   # Check that all non-title text on visual aid template slides >= 18pt
+   ```
+
+7. **Regenerate all PowerPoints** after fixing code
+
+---
+
+### General Troubleshooting Steps
+
+1. **File Lock Errors**:
+   - Problem: `[WinError 32] The process cannot access the file`
+   - Solution: Close ALL PowerPoint files, wait 5 seconds, regenerate
+   - Check: Run `tasklist | findstr POWERPNT` to verify PowerPoint closed
+
+2. **Inspection Commands** (use these to debug template issues):
+   ```python
+   # Inspect template shapes
+   from pptx import Presentation
+   prs = Presentation(r'templates/visual_organizer.pptx')
+   slide = prs.slides[0]
+   for s in slide.shapes:
+       if hasattr(s, 'left'):
+           print(f'{s.name}: Type={s.shape_type}, Left={s.left/914400:.2f}in, Top={s.top/914400:.2f}in')
+   ```
+
+3. **Regeneration After Fixes**:
+   - ALWAYS regenerate ALL sections after code fixes
+   - Check population log for "Successful: [N], Errors: 0"
+   - Verify fixes in multiple sections (not just one)
+
+4. **Testing Individual Sections**:
+   - If one section keeps failing, close that PowerPoint file
+   - Check if blueprint file is corrupted
+   - Try regenerating just that section first
+
+---
+
+## AUTONOMOUS TROUBLESHOOTING PERMISSION
+
+**Claude has FULL PERMISSION to:**
+
+1. ✅ **Inspect template files** using python-pptx inspection commands
+2. ✅ **Read and analyze** Python script code for issues
+3. ✅ **Edit step12_powerpoint_population.py** to fix template conformity issues
+4. ✅ **Regenerate PowerPoints** multiple times until all checks pass
+5. ✅ **Use all troubleshooting sections** above without asking permission
+6. ✅ **Continue troubleshooting** until Phase 4 verification passes completely
+7. ✅ **Test fixes incrementally** - fix one issue, regenerate, verify, repeat
+
+**Claude should NOT mark Step 12 complete until:**
+- All Phase 1-4 verifications pass
+- No errors in population log
+- Spot checks of 3+ sections confirm all requirements met
+- User confirms visual inspection of slides
+
+**Troubleshooting Workflow:**
+1. Run script → Check Phase 1
+2. If Phase 1 fails → Fix file/path issues → Regenerate
+3. If Phase 1 passes → Open PowerPoints → Check Phase 2
+4. If Phase 2 fails → Apply relevant troubleshooting section → Regenerate → Recheck
+5. Repeat until Phase 2 passes
+6. Check Phase 3 → Fix if needed → Regenerate → Recheck
+7. Final Phase 4 validation
+8. Only then → Mark complete
+
+---
+
+## TROUBLESHOOTING
+
+### "Shape not found" errors
+
+If title, body, or tip not populating:
+1. Verify shape names match exactly: `TextBox 2`, `TextBox 19`, `TextBox 18`
+2. Confirm template hasn't been modified
+3. Run this analysis script:
+
+```python
+from pptx import Presentation
+prs = Presentation(r"path\to\templates/visual_organizer.pptx")
+for shape in prs.slides[0].shapes:
+    if shape.has_text_frame:
+        print(f"{shape.name}: '{shape.text_frame.text[:30]}'")
+```
+
+### Visual slides not generating
+
+1. Check `diagrams/` folder contains PNG files
+2. Verify naming: `section_[#]_slide_[#]_[type].png`
+3. For tables: ensure TABLE CONTENT in blueprint has valid markdown
+
+### Formatting lost after population
+
+1. Check `font_settings` in `pipeline_config.json` has correct values
+2. Verify `set_shape_text()` is called with the shape_name parameter
+3. Ensure font "Aptos" is installed on system
+4. Font settings: TextBox 2 (title) = 36pt white bold, TextBox 19 (body) = 20pt white, TextBox 18 (tip) = 18pt white
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population  ← YOU ARE HERE
+    ↓
+[Font Formatting - deferred]
+    ↓
+[PRODUCTION COMPLETE]
+```
+
+---
+
+## OUTPUT STRUCTURE EXAMPLE
+
+**Pipeline Folder (templates and step files):**
+```
+repairing the pipeline/
+├── step1_anchor_upload.txt
+├── step2_lecture_mapping.txt
+├── ... (all step files)
+├── step12_powerpoint_population.txt
+├── pipeline_config.json
+├── pipeline_validator.py
+├── pipeline_state_manager.py
+└── templates/visual_organizer.pptx  ← MASTER TEMPLATE (never modified)
+```
+
+**Production Folder (all outputs - separate from pipeline):**
+```
+C:\Users\mcdan\Desktop\Medical_Surgical_Nursing_Production_2024-12-20\
+├── mapping/              # Step 2 outputs
+├── sorting/              # Step 3 outputs
+├── outlines/             # Step 4 outputs
+├── blueprints/           # Step 6 blueprints
+├── revisions/            # Step 7 revised blueprints
+├── qa_reports/           # Step 8 QA reports
+├── visual_specs/         # Step 9 visual specifications
+├── integrated/           # Step 10 integrated blueprints
+├── diagrams/             # Python-generated visual aids
+├── powerpoints/          # Final PowerPoint files
+│   ├── Multicultural_Foundations.pptx
+│   ├── Racial_Identity_Development.pptx
+│   ├── Humanistic_Experiential.pptx
+│   ├── CBT_Foundations.pptx
+│   └── MI_and_Change.pptx
+├── logs/
+│   └── population_log.txt
+└── master_index.txt
+```

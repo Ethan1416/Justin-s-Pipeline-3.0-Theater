@@ -1,0 +1,655 @@
+# STEP 9: VISUAL AID IDENTIFICATION & DESIGN
+## Candidate Selection and Visual Specification
+## Domain-Agnostic Version - EXPANDED TRIGGERS
+## Updated: 2025-12-25 - Enhanced Pattern Recognition
+
+---
+
+## PURPOSE
+
+This step analyzes QA-passed blueprints to identify slides that would benefit from visual aids, then generates detailed specifications for 7 types of graphic organizers. Visual aids enhance learning by presenting complex information in accessible formats.
+
+**Supported Visual Types (7 total, in revised priority order):**
+1. **Tables** - Comparisons, organized data, mechanism summaries (MOST VERSATILE - HIGHEST PRIORITY)
+2. **Key Differentiators** - Discrimination between similar concepts (HIGH PRIORITY)
+3. **Flowcharts** - Sequential processes, mechanisms, protocols
+4. **Decision Trees** - Diagnostic decisions, classification systems, algorithms
+5. **Hierarchy Diagrams** - Classifications, taxonomies, anatomical structures
+6. **Timelines** - Chronological events, developmental stages, historical progression
+7. **Spectrums** - Continuums, severity scales, gradients
+
+**Removed from pipeline:** Venn Diagrams, Cycle Diagrams (use TABLE as fallback)
+
+This step runs AFTER Step 8 (QA) passes with a score of 90+.
+
+---
+
+## REVISED PRIORITY RATIONALE
+
+**Why TABLE is now #1:**
+- Most versatile across all disciplines
+- Handles comparisons, mechanisms, profiles, risk factors, criteria
+- Reliable PowerPoint rendering
+- Works as fallback for nearly any organized content
+- Dominant pattern in physiological, pharmacological, and clinical content
+
+**Why KEY_DIFFERENTIATORS is #2:**
+- Critical for discrimination learning across all disciplines
+- High pedagogical value for retention and application
+- Common in clinical, diagnostic, and treatment contexts
+
+**Why FLOWCHART elevated to #3:**
+- Essential for mechanism understanding (physiology, pharmacology)
+- Treatment protocols and procedures
+- Process sequences (physiological responses, drug actions)
+- More common than originally assessed in technical disciplines
+
+**Remaining order (4-7):**
+- DECISION_TREE: Specialized diagnostic/treatment algorithms
+- HIERARCHY: Classification structures, anatomical organization
+- TIMELINE: Developmental/historical content (discipline-dependent)
+- SPECTRUM: Continuum content (least common, most specialized)
+
+---
+
+## MANDATORY MINIMUM VISUAL REQUIREMENT
+
+**CRITICAL: Every section MUST have at least 2-3 graphic organizers.**
+
+This is NOT optional. Visual aids are essential for learning - they help students discriminate between similar concepts, organize complex information, and retain high-yield content.
+
+### Minimum Quotas
+
+| Section Size | Minimum Visuals | Target Visuals |
+|--------------|-----------------|----------------|
+| 12-15 slides | 2 | 3-4 |
+| 16-20 slides | 3 | 4-5 |
+| 21-25 slides | 3 | 5-6 |
+| 26-35 slides | 4 | 6-8 |
+
+### Proactive Visual Identification Triggers
+
+Even if a slide doesn't meet formal conditions, consider visuals for:
+- Any slide with 4+ bullet points → TABLE
+- Any slide comparing 2+ items on any dimension → TABLE or KEY_DIFFERENTIATORS
+- Any slide listing criteria, symptoms, features, or properties → TABLE
+- Any slide with a process or mechanism (even implicit) → FLOWCHART or TABLE
+- Any slide with classification criteria → DECISION_TREE or TABLE
+- Any slide describing similar items with key differences → KEY_DIFFERENTIATORS
+
+---
+
+## EXPANDED CANDIDATE IDENTIFICATION CONDITIONS
+
+Use the following conditions to identify slides that warrant visual aids. A slide is a STRONG CANDIDATE if it meets 2+ conditions. A slide is a POSSIBLE CANDIDATE if it meets 1 condition.
+
+**IMPORTANT: Auto-Detection Priority Order**
+When multiple visual types could apply, use this priority:
+1. TABLE - for organized data, comparisons, mechanisms, profiles (HIGHEST PRIORITY)
+2. KEY_DIFFERENTIATORS - for discrimination/differential content (HIGH PRIORITY)
+3. FLOWCHART - for sequential processes, mechanisms, protocols
+4. DECISION_TREE - for branching diagnostic/classification logic
+5. HIERARCHY - for classification/taxonomy/anatomical structures
+6. TIMELINE - for chronological/developmental sequences
+7. SPECTRUM - for continuums/severity scales
+
+---
+
+### Condition 1: Comparison Content → TABLE (EXPANDED)
+
+**Trigger Keywords:**
+- Core comparison: "compare," "contrast," "versus," "vs.," "differences between," "similarities," "distinguish"
+- Structural comparison: "more/less than," "greater/lesser," "higher/lower," "faster/slower"
+- Drug/treatment comparison: "alternative to," "first-line vs.," "preferred over"
+- Mechanism comparison: "whereas," "while," "in contrast to," "unlike," "differently from"
+- Profile comparison: "characterized by... characterized by," "presents with... presents with"
+
+**Content Patterns:**
+- 2+ items compared on multiple dimensions
+- Side-by-side feature lists
+- Pros/cons analysis
+- Drug class comparisons (mechanism, side effects, indications, contraindications)
+- Disorder profiles (symptoms, causes, risk factors, treatments)
+- Technique comparisons (advantages, limitations, applications)
+- Structure-function mappings (brain regions, neurotransmitters, pathways)
+- Neuroimaging technique comparisons (what each shows, when to use)
+- Risk factor matrices (populations, conditions, severity)
+
+**Domain-Agnostic Examples:**
+- Drug mechanism comparisons (SSRIs vs. SNRIs vs. TCAs vs. MAOIs)
+- Disorder differentials (aphasia types, seizure types, stroke types)
+- Brain structure functions (thalamus vs. hypothalamus vs. hippocampus)
+- Treatment modality comparisons (medications, therapies, procedures)
+- Assessment method comparisons (CT vs. MRI vs. fMRI vs. PET)
+- Neurotransmitter profiles (function, location, associated disorders)
+- Anatomical region effects (damage symptoms by location)
+
+**Preferred Visual:** TABLE (Comparison layout)
+
+**New Sub-Patterns for TABLE:**
+- "X causes Y while Z causes W" → TABLE comparing causes
+- "Method A shows... Method B shows..." → TABLE of methodologies
+- "Drug X blocks... Drug Y enhances..." → TABLE of mechanisms
+- "Condition A: symptoms... Condition B: symptoms..." → TABLE of profiles
+- "Structure X: function... Structure Y: function..." → TABLE of structure-function
+- "Technique A is used when... Technique B is used when..." → TABLE of applications
+
+---
+
+### Condition 2: Sequential Process/Mechanism Content → FLOWCHART (EXPANDED)
+
+**Trigger Keywords:**
+- Sequence indicators: "first... then... next," "step 1... step 2," "followed by," "subsequently," "after," "before"
+- Process language: "procedure," "protocol," "process," "sequence," "pathway," "cascade," "progression"
+- Causation chains: "leads to," "results in," "triggers," "initiates," "activates," "causes," "produces"
+- Mechanism language: "mechanism of action," "how X works," "X acts by," "operates by"
+- Response sequences: "response to," "reaction involves," "occurs when"
+
+**Content Patterns:**
+- Linear sequence of actions or events
+- Steps that must occur in specific order
+- No branching/decision points (if branching present, use DECISION_TREE)
+- Physiological mechanisms (neurotransmitter action, drug mechanisms)
+- Treatment protocols and procedures
+- Assessment/diagnostic procedures
+- Medication titration sequences
+- Clinical interview steps
+- Physiological responses (stress response, fight-or-flight, homeostasis)
+- Drug metabolism pathways
+- Signal transduction cascades
+- Symptom progression sequences
+
+**Domain-Agnostic Examples:**
+- Neurotransmitter action mechanism (release → binding → reuptake → degradation)
+- Drug mechanism of action (administration → absorption → distribution → metabolism → excretion)
+- Stress response pathway (stressor → hypothalamus → pituitary → adrenal → cortisol release)
+- Treatment protocol (assessment → diagnosis → intervention → monitoring → adjustment)
+- Diagnostic workup sequence (screening → initial assessment → specialized testing → diagnosis)
+- Physiological process (sensory input → processing → integration → motor output)
+- Memory formation (encoding → consolidation → storage → retrieval)
+- Homeostatic regulation (deviation detected → signal sent → response initiated → equilibrium restored)
+
+**Preferred Visual:** FLOWCHART
+
+**Note:** If content has YES/NO decision points or branching logic, use DECISION_TREE instead.
+
+**New Sub-Patterns for FLOWCHART:**
+- "X is mediated by Y which regulates Z" → FLOWCHART showing regulatory cascade
+- "When X occurs, Y responds by..." → FLOWCHART of response mechanism
+- "The pathway includes..." → FLOWCHART of sequential pathway
+- "Treatment requires first... then... finally..." → FLOWCHART of protocol
+- "The process involves..." → FLOWCHART of step-by-step process
+- "X acts by blocking Y, which prevents Z" → FLOWCHART of mechanism
+
+---
+
+### Condition 3: Decision/Branching Content → DECISION_TREE (EXPANDED)
+
+**Trigger Keywords:**
+- Decision logic: "if... then," "based on," "depending on," "when... use," "in cases of"
+- Differentiation: "differentiate between," "distinguish," "rule out," "diagnose as"
+- Selection criteria: "choose X when," "indicated for," "contraindicated when," "preferred if"
+- Classification: "classify as," "categorize by," "determined by," "assess for"
+- Algorithm language: "first assess," "next evaluate," "then consider," "algorithm," "decision rule"
+- Diagnostic criteria: "diagnostic criteria," "meets criteria for," "fulfills requirements"
+
+**Content Patterns:**
+- Binary yes/no decision points
+- Classification based on specific criteria
+- Differential diagnosis logic
+- Treatment selection algorithms
+- Rule-out processes
+- Risk stratification based on factors
+- Drug selection based on patient characteristics
+- Diagnostic workup with branching paths
+- Assessment interpretation (test result → diagnosis)
+- Triage decisions
+- Intervention escalation paths
+
+**Domain-Agnostic Examples:**
+- Diagnostic decision trees (symptoms → criteria assessment → diagnosis)
+- Treatment selection algorithms (patient factors → contraindications → optimal choice)
+- Medication selection (condition + comorbidities + contraindications → drug choice)
+- Risk assessment (factors present → risk level → intervention intensity)
+- Classification systems (characteristics → category assignment)
+- Assessment interpretation (test results → severity level → action plan)
+- Differential diagnosis (symptom pattern → key distinguishing features → final diagnosis)
+- Drug dosing algorithms (age + weight + renal function → dose)
+
+**Preferred Visual:** DECISION_TREE
+
+**Reference:** See specialized section below for detailed identification rules.
+
+**New Sub-Patterns for DECISION_TREE:**
+- "X is diagnosed when... otherwise consider Y" → DECISION_TREE with diagnostic branches
+- "First-line treatment is X, but if contraindicated use Y" → DECISION_TREE for selection
+- "Risk is high when... moderate when... low when..." → DECISION_TREE for stratification
+- "Choose X if criterion met, otherwise Y" → DECISION_TREE for algorithm
+- "If symptom A present, check for B; if yes, diagnose C" → DECISION_TREE for workup
+
+---
+
+### Condition 4: Chronological/Temporal Content → TIMELINE (EXPANDED)
+
+**Trigger Keywords:**
+- Time references: "in [year/decade]," "during [period]," "by [age]," "at [stage]"
+- Historical language: "historically," "evolution of," "development of," "progression," "over time"
+- Sequence over time: "early... later... eventually," "initially... subsequently"
+- Developmental markers: "stage 1... stage 2," "phase," "milestone," "maturation"
+- Age-related: "at age X," "by adolescence," "in childhood," "during adulthood," "in older adults"
+- Recovery patterns: "first... then return," "remote memories before recent," "shrinking retrograde"
+
+**Content Patterns:**
+- Events ordered by time/date/age
+- Historical developments in a field
+- Developmental milestones by age
+- Age-based progressions
+- Theory evolution over time
+- Career progression of key figures
+- Disease progression stages
+- Recovery pattern sequences
+- Treatment response timeline
+- Symptom onset and progression
+
+**Domain-Agnostic Examples:**
+- History of neuroscience theories (behaviorism → cognitivism → neuroscience)
+- Developmental milestones (motor development by age)
+- Disease progression timeline (symptom onset → progression stages → endpoints)
+- Recovery patterns after injury (acute → subacute → chronic → recovery)
+- Drug development history (discovery → trials → approval → refinement)
+- Theoretical model evolution (Freud → Jung → modern approaches)
+- Memory recovery pattern (remote memories first → recent memories later)
+- Treatment response timeline (immediate effects → delayed effects → long-term effects)
+
+**Preferred Visual:** TIMELINE
+
+**New Sub-Patterns for TIMELINE:**
+- "Remote memories return before recent ones" → TIMELINE showing recovery pattern
+- "Symptoms begin with X, progress to Y, culminate in Z" → TIMELINE of progression
+- "Early theories proposed... later research showed... current understanding..." → TIMELINE of evolution
+- "At age 2... by age 5... in adolescence..." → TIMELINE of developmental milestones
+- "Initial phase involves... subsequent phase includes..." → TIMELINE of stages
+
+---
+
+### Condition 5: Hierarchical/Categorical Content → HIERARCHY (EXPANDED)
+
+**Trigger Keywords:**
+- Classification: "types of," "categories," "classified as," "classes," "groups"
+- Hierarchy indicators: "consists of," "subdivided into," "organized under," "branches into," "contains"
+- Structural organization: "taxonomy," "system of," "levels of," "organized by," "structured as"
+- Anatomical organization: "components of," "regions within," "parts of," "divisions of"
+- Nested relationships: "within X are Y and Z," "X includes subcategories," "broader/narrower"
+
+**Content Patterns:**
+- Nested categories (3+ levels required; 2 levels → use TABLE)
+- Parent-child relationships
+- Classification from broad to specific
+- Organizational structures
+- Anatomical hierarchies (brain regions, nervous system divisions)
+- Drug classification trees (by class, mechanism, generation)
+- Disorder categorization (DSM/ICD structures)
+- Neural pathway organization
+- Cognitive system taxonomy
+- Memory system structure
+
+**Domain-Agnostic Examples:**
+- Nervous system organization (CNS/PNS → subdivisions → specific structures)
+- Brain region hierarchy (cerebrum → lobes → specific regions → subregions)
+- Drug classification (therapeutic class → mechanism class → specific drugs)
+- Memory systems (declarative/nondeclarative → subtypes → specific types)
+- Disorder classification (major category → subcategories → specific disorders)
+- Neural pathway organization (sensory pathways → specific pathways → relay stations)
+- Neurotransmitter classification (by function → by structure → specific transmitters)
+- Symptom taxonomy (broad categories → specific symptom clusters → individual symptoms)
+
+**Preferred Visual:** HIERARCHY DIAGRAM
+
+**Note:** For 2 levels or fewer, use TABLE instead.
+
+**New Sub-Patterns for HIERARCHY:**
+- "The limbic system includes X, Y, and Z, each with subcomponents..." → HIERARCHY of anatomy
+- "Disorders are classified into broad categories, each subdivided..." → HIERARCHY of taxonomy
+- "Drugs can be organized by class, then mechanism, then generation" → HIERARCHY of classification
+- "The nervous system consists of... which further divides into..." → HIERARCHY of structure
+- "Memory types include... which contain subtypes..." → HIERARCHY of cognitive systems
+
+---
+
+### Condition 6: Continuum/Gradient Content → SPECTRUM (EXPANDED)
+
+**Trigger Keywords:**
+- Continuum language: "ranges from," "spectrum," "continuum," "gradient," "scale from"
+- Severity markers: "mild to severe," "low to high," "minimal to extreme," "slight to profound"
+- Degree indicators: "degree of," "extent of," "level of," "intensity of," "magnitude of"
+- Bipolar dimensions: "from X to Y," "between X and Y," "opposing poles"
+- Progressive language: "progressive," "graduated," "incremental," "increasing," "decreasing"
+
+**Content Patterns:**
+- Severity dimensions (mild → moderate → severe)
+- Bipolar dimensions (introversion ← neutral → extraversion)
+- Continuous variables (not discrete categories)
+- Progressive intensity scales
+- Dose-response relationships
+- Consciousness states (alert → drowsy → stupor → coma)
+- Symptom severity scales
+- Risk level continuums
+- Functional impairment scales
+
+**Domain-Agnostic Examples:**
+- Disorder severity levels (mild → moderate → severe depression)
+- Consciousness continuum (full alertness → various impairment stages → coma)
+- Stress response intensity (minimal arousal → moderate stress → severe distress)
+- Cognitive impairment spectrum (normal → MCI → dementia stages)
+- Personality trait dimensions (trait low ← average → trait high)
+- Drug dose-response curve (subtherapeutic → therapeutic → toxic)
+- Functional capacity scale (independent → assisted → fully dependent)
+- Pain intensity scale (no pain → mild → moderate → severe)
+
+**Preferred Visual:** SPECTRUM
+
+**New Sub-Patterns for SPECTRUM:**
+- "Severity ranges from mild (X) to severe (Y)" → SPECTRUM showing gradient
+- "Symptoms vary from minimal to profound" → SPECTRUM of intensity
+- "Risk exists on a continuum from low to high" → SPECTRUM of risk levels
+- "The disorder spans a spectrum" → SPECTRUM showing range
+- "Impairment can be slight, moderate, or severe" → SPECTRUM with segments
+
+---
+
+### Condition 7: Discrimination/Differential Content → KEY_DIFFERENTIATORS (EXPANDED)
+
+**Trigger Keywords:**
+- Discrimination language: "differentiate," "distinguish," "key difference," "critical distinction," "versus," "vs."
+- Differential diagnosis: "differential diagnosis," "rule in/out," "discriminating factor," "distinguishing feature"
+- Confusion indicators: "commonly confused," "often mistaken for," "similar but distinct," "overlapping features"
+- Contrast markers: "in contrast," "however," "whereas," "unlike," "different from," "distinct from"
+- Critical features: "key criterion," "essential difference," "primary distinction," "main difference"
+
+**Content Patterns:**
+- Similar concepts that need discrimination
+- High-yield distinctions critical for understanding
+- "Trap" topics with overlapping features
+- Critical diagnostic differences
+- Drug class distinctions (similar mechanisms, different effects)
+- Disorder discriminations (similar presentations, different etiologies)
+- Syndrome differentials (shared symptoms, key distinguishing features)
+- Aphasia type distinctions (speech/comprehension patterns)
+- Neuroimaging method differentials (structural vs. functional)
+- Similar anatomical structures with different functions
+
+**Domain-Agnostic Examples:**
+- Aphasia types (Broca's vs. Wernicke's vs. Conduction: key = fluency + comprehension pattern)
+- Drug classes (SSRIs vs. SNRIs: key = norepinephrine reuptake)
+- Seizure types (Generalized vs. Partial: key = consciousness + motor involvement)
+- Stroke types (Ischemic vs. Hemorrhagic: key = blockage vs. rupture)
+- Memory systems (Declarative vs. Nondeclarative: key = conscious vs. unconscious)
+- Brain structure pairs (Broca's vs. Wernicke's: key = production vs. comprehension)
+- Antipsychotic classes (Conventional vs. Atypical: key = side effect profile)
+- Imaging techniques (Structural vs. Functional: key = anatomy vs. activity)
+- Hormone disorders (Hypothyroid vs. Hyperthyroid: key = symptom direction)
+
+**Preferred Visual:** KEY_DIFFERENTIATORS
+
+**Note:** This is HIGH PRIORITY for discrimination content (but TABLE is still #1 overall).
+
+**New Sub-Patterns for KEY_DIFFERENTIATORS:**
+- "X and Y are similar but differ in..." → KEY_DIFFERENTIATORS highlighting distinction
+- "The critical difference between X and Y is..." → KEY_DIFFERENTIATORS with key feature
+- "These conditions overlap but X has... while Y has..." → KEY_DIFFERENTIATORS showing overlap + distinction
+- "Commonly confused: X involves... whereas Y involves..." → KEY_DIFFERENTIATORS for clarity
+- "Both X and Y present with A and B, but only X has C" → KEY_DIFFERENTIATORS for differential
+
+---
+
+### Condition 8: Criteria Lists → TABLE (EXPANDED)
+
+**Trigger Keywords:**
+- Criteria language: "criteria include," "must have," "required for," "necessary conditions," "diagnostic criteria"
+- Requirement indicators: "essential features," "core symptoms," "necessary for," "fulfills criteria"
+- Checklist patterns: "includes," "consists of," "characterized by [list]," "presents with [list]"
+- Inclusion/exclusion: "inclusion criteria," "exclusion criteria," "contraindications," "indications"
+- Assessment criteria: "evaluated for," "screened by," "assessed using," "determined by presence of"
+
+**Content Patterns:**
+- Diagnostic criteria sets
+- Treatment inclusion/exclusion criteria
+- Requirements or standards for classification
+- Symptom checklists
+- Risk factor lists
+- Side effect profiles
+- Contraindication lists
+- Indication lists for treatments
+- Assessment validity requirements
+- Safety monitoring criteria
+
+**Domain-Agnostic Examples:**
+- Diagnostic criteria (disorder requires A, B, and C)
+- Drug contraindications (do not use if patient has X, Y, or Z)
+- Treatment indications (use when patient presents with A, B, or C)
+- Risk factors (increased risk with X, Y, Z present)
+- Side effect profiles (common: A, B; rare: C, D; severe: E)
+- Monitoring requirements (check A weekly, B monthly, C as needed)
+- Assessment criteria (valid assessment requires X, Y, and Z)
+- Disorder features (characterized by symptoms A, B, C, D)
+
+**Preferred Visual:** TABLE (Criteria layout)
+
+**New Sub-Patterns for TABLE:**
+- "X is characterized by symptoms A, B, C, and D" → TABLE listing criteria
+- "Treatment requires monitoring for..." → TABLE of monitoring parameters
+- "Contraindications include..." → TABLE of contraindications with explanations
+- "Risk factors are X, Y, and Z" → TABLE showing factors and impact
+- "Side effects: common... rare... severe..." → TABLE organized by frequency
+
+---
+
+### Condition 9: High-Density Information → TABLE or DIAGRAM (EXPANDED)
+
+**Trigger:** Slide contains 5+ distinct pieces of information, OR multiple related items requiring spatial organization
+
+**Content Patterns:**
+- Multiple items needing organization
+- Complex content requiring structured layout
+- Dense factual material best presented in grid format
+- Multiple drug profiles (name, mechanism, indications, side effects, contraindications)
+- Multiple symptom presentations organized by category
+- Multiple therapeutic techniques with applications
+- Multiple research findings organized by theme
+- Structure-function mappings (multiple structures, each with functions)
+- Neurotransmitter profiles (multiple transmitters with locations, functions, disorders)
+- Treatment comparison matrices (multiple treatments across multiple dimensions)
+
+**Domain-Agnostic Examples:**
+- Drug comparison table (4 drugs × 5 characteristics = 20 data points)
+- Brain structure functions (8 structures, each with 3-4 functions)
+- Neurotransmitter profiles (6 transmitters with location, function, associated disorders)
+- Disorder symptom profiles (3 disorders, each with 4-6 symptoms)
+- Treatment modality grid (3 treatments across efficacy, side effects, contraindications, cost)
+- Assessment tool comparison (5 tools with purpose, reliability, validity, administration time)
+
+**Preferred Visual:** TABLE (if can be structured in rows/columns) or appropriate DIAGRAM (if spatial relationships matter)
+
+**New Sub-Patterns for TABLE:**
+- "Multiple structures each perform different functions" → TABLE mapping structure to function
+- "Several drugs have different mechanisms and effects" → TABLE organizing drug information
+- "Various techniques are used for different purposes" → TABLE of techniques and applications
+- "Multiple factors influence outcome" → TABLE showing factors and effects
+- "Several conditions present with overlapping but distinct symptoms" → TABLE comparing presentations
+
+---
+
+## VISUAL TYPE SELECTION DECISION TREE (7 TYPES - REVISED)
+
+```
+START: Analyze slide content
+│
+├─► (PRIORITY 1) Can content be organized in rows and columns?
+│   ├─► YES → Does it compare multiple items or organize complex information?
+│   │         ├─► YES → Use TABLE
+│   │         └─► NO → Continue ↓
+│   └─► NO ↓
+│
+├─► (PRIORITY 2) Does content teach discrimination between similar concepts?
+│   ├─► YES → Is it differential diagnosis or "commonly confused" content?
+│   │         ├─► YES → Use KEY_DIFFERENTIATORS
+│   │         └─► NO → Continue ↓
+│   └─► NO ↓
+│
+├─► (PRIORITY 3) Does content describe a sequential process or mechanism?
+│   ├─► YES → Is it linear (no branching)?
+│   │         ├─► YES → ≤7 steps?
+│   │         │         ├─► YES → Use FLOWCHART
+│   │         │         └─► NO → Use TABLE or split slides
+│   │         └─► NO → Consider DECISION_TREE
+│   └─► NO ↓
+│
+├─► (PRIORITY 4) Does content have branching decision logic?
+│   ├─► YES → Does it have if/then, yes/no decision points?
+│   │         ├─► YES → ≤15 nodes?
+│   │         │         ├─► YES → Use DECISION_TREE
+│   │         │         └─► NO → Use TABLE (too complex)
+│   │         └─► NO → Use TABLE
+│   └─► NO ↓
+│
+├─► (PRIORITY 5) Does content show nested categories or classification?
+│   ├─► YES → Is it 3+ levels deep?
+│   │         ├─► YES → ≤15 nodes total?
+│   │         │         ├─► YES → Use HIERARCHY DIAGRAM
+│   │         │         └─► NO → Use TABLE
+│   │         └─► NO → Use TABLE (simpler)
+│   └─► NO ↓
+│
+├─► (PRIORITY 6) Does content describe chronological events or development?
+│   ├─► YES → Has dates, ages, or time periods?
+│   │         ├─► YES → ≤8 events?
+│   │         │         ├─► YES → Use TIMELINE
+│   │         │         └─► NO → Use TABLE or split
+│   │         └─► NO → Consider FLOWCHART
+│   └─► NO ↓
+│
+├─► (PRIORITY 7) Does content describe a continuum or spectrum?
+│   ├─► YES → Is it a severity scale or bipolar dimension?
+│   │         ├─► YES → ≤6 segments?
+│   │         │         ├─► YES → Use SPECTRUM
+│   │         │         └─► NO → Use TABLE
+│   │         └─► NO → Use TABLE
+│   └─► NO ↓
+│
+├─► Does content list criteria or requirements?
+│   ├─► YES → Use TABLE (Criteria layout)
+│   └─► NO ↓
+│
+├─► Is content high-density (5+ items)?
+│   ├─► YES → Use TABLE (Organized layout)
+│   └─► NO ↓
+│
+└─► NO VISUAL RECOMMENDED - Use standard content slide
+```
+
+### Quick Reference: Visual Type by Content Pattern (UPDATED)
+
+| Content Pattern | Primary Visual | Fallback |
+|-----------------|---------------|----------|
+| Organized data in grid format | TABLE | - |
+| Comparing A vs. B vs. C | TABLE | - |
+| Drug/treatment profiles | TABLE | - |
+| Structure-function mapping | TABLE | - |
+| "Differentiate X from Y" | KEY_DIFFERENTIATORS | TABLE |
+| "X causes Y by mechanism..." | FLOWCHART | TABLE |
+| "First... then... next..." | FLOWCHART | TABLE |
+| "If X, then Y" decision logic | DECISION_TREE | TABLE |
+| "Types of" / "Categories of" (3+ levels) | HIERARCHY | TABLE |
+| Dates, ages, historical events | TIMELINE | TABLE |
+| "Ranges from X to Y" / "Spectrum" | SPECTRUM | TABLE |
+| Criteria lists / Checklists | TABLE | - |
+
+---
+
+## DOMAIN-AGNOSTIC LANGUAGE UPDATES
+
+All references to "NCLEX" have been replaced with general pedagogical language:
+
+**OLD (NCLEX-specific):**
+- "NCLEX exam preparation"
+- "NCLEX-testable content"
+- "NCLEX often tests this by..."
+- "High-yield NCLEX distinctions"
+
+**NEW (Domain-agnostic):**
+- "Effective learning and retention"
+- "Critical content for mastery"
+- "Commonly assessed in evaluations"
+- "High-yield distinctions for application"
+
+---
+
+## VALIDATION CHECKLIST
+
+Before completing Step 9:
+
+### MANDATORY MINIMUM CHECK
+- [ ] Section has at least 2 visuals (REQUIRED)
+- [ ] Section meets quota for size (see Minimum Quotas table)
+- [ ] If below minimum, actively sought additional opportunities
+
+### Candidate Identification
+- [ ] All slides reviewed for visual potential
+- [ ] Auto-detection conditions applied (all 9 expanded conditions)
+- [ ] **Revised priority order followed** (TABLE first, then KEY_DIFFERENTIATORS)
+- [ ] Strong vs. possible candidates distinguished
+- [ ] Proactive triggers applied (4+ bullets → TABLE, mechanisms → FLOWCHART, etc.)
+
+### Visual Type Selection
+- [ ] TABLE used for organized data, comparisons, mechanisms (HIGHEST PRIORITY)
+- [ ] KEY_DIFFERENTIATORS used for discrimination content (HIGH PRIORITY)
+- [ ] FLOWCHART used for sequential processes and mechanisms
+- [ ] DECISION_TREE used for branching logic
+- [ ] HIERARCHY used for 3+ level classification
+- [ ] TIMELINE used for chronological content
+- [ ] SPECTRUM used for continuums
+- [ ] Fallback to TABLE when limits exceeded
+
+### Specifications
+- [ ] All visuals fully specified
+- [ ] Slide titles ≤28 characters
+- [ ] 18pt minimum font noted
+- [ ] Character limits respected per visual type
+- [ ] Node/stage/step limits respected
+
+---
+
+## SUMMARY OF CHANGES (2025-12-25)
+
+### Priority Order Changes
+- **TABLE elevated to #1** (was #2) - Most versatile across disciplines
+- **KEY_DIFFERENTIATORS moved to #2** (was #1) - Still high priority but discipline-dependent
+- **FLOWCHART elevated to #3** (was #4) - Essential for mechanisms and protocols
+- Other types reordered by frequency and pedagogical value
+
+### Expanded Trigger Keywords
+- **Condition 1 (TABLE):** Added mechanism comparison, drug profiles, risk matrices, structure-function
+- **Condition 2 (FLOWCHART):** Added physiological mechanisms, drug actions, regulatory cascades
+- **Condition 3 (DECISION_TREE):** Added treatment algorithms, risk stratification, drug selection
+- **Condition 4 (TIMELINE):** Added recovery patterns, symptom progression, treatment response
+- **Condition 5 (HIERARCHY):** Added anatomical structures, neural pathways, cognitive systems
+- **Condition 6 (SPECTRUM):** Added dose-response, functional capacity, cognitive impairment
+- **Condition 7 (KEY_DIFFERENTIATORS):** Added drug class distinctions, imaging differentials, syndrome comparisons
+- **Condition 8 (TABLE):** Added monitoring criteria, side effect profiles, contraindications
+- **Condition 9 (TABLE):** Added structure-function maps, neurotransmitter profiles, treatment matrices
+
+### New Sub-Patterns Identified
+- 25+ new content patterns based on physiological/pharmacological anchor analysis
+- Specific patterns for drug mechanisms, brain structures, disorders, treatments
+- Enhanced pattern recognition for mechanisms, profiles, and comparisons
+
+### Domain-Agnostic Language
+- Removed all NCLEX-specific references
+- Replaced with general pedagogical terminology
+- Applicable to any technical or scientific discipline
+
+---
+
+**Last Updated:** 2025-12-25
+**Version:** 2.0 - Expanded Triggers & Revised Priority
+**Based On:** Analysis of 174 fundamentals of nursing and pharmacology anchor points

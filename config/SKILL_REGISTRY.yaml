@@ -1,0 +1,480 @@
+# SKILL_REGISTRY.yaml
+# Central registry of all skills available in the NCLEX pipeline
+# Version: 1.0
+
+---
+
+# =============================================================================
+# GENERATION SKILLS
+# =============================================================================
+
+generation:
+  # Core content generation
+  slide_builder:
+    path: skills/generation/slide_builder.py
+    purpose: Build slide structure from outline
+    used_by: [blueprint_generator]
+
+  content_expander:
+    path: skills/generation/content_expander.py
+    purpose: Expand anchor content to slide format
+    used_by: [blueprint_generator]
+
+  presenter_notes_generator:
+    path: skills/generation/presenter_notes_generator.py
+    purpose: Generate presenter notes for each slide
+    used_by: [blueprint_generator, presenter_notes_writer]
+
+  outline_builder:
+    path: skills/generation/outline_builder.py
+    purpose: Build section outline structure
+    used_by: [outline_generator]
+
+  # Phase analysis (Step 2)
+  phase_analyzer:
+    path: skills/generation/phase_analyzer.py
+    purpose: Execute 5-Phase content analysis
+    used_by: [lecture_mapper]
+
+  cluster_detector:
+    path: skills/generation/cluster_detector.py
+    purpose: Identify related anchor clusters
+    used_by: [lecture_mapper]
+
+  dependency_mapper:
+    path: skills/generation/dependency_mapper.py
+    purpose: Map prerequisite relationships
+    used_by: [lecture_mapper]
+
+  # Domain classification (Step 3)
+  domain_classifier:
+    path: skills/generation/domain_classifier.py
+    purpose: Classify content into NCLEX domains
+    used_by: [content_sorter]
+
+  priority_ranker:
+    path: skills/generation/priority_ranker.py
+    purpose: Rank content by exam relevance
+    used_by: [content_sorter]
+
+  # Visual generation
+  visual_pattern_matcher:
+    path: skills/generation/visual_pattern_matcher.py
+    purpose: Match content to visual types
+    used_by: [visual_identifier]
+
+  layout_selector:
+    path: skills/generation/layout_selector.py
+    purpose: Select optimal layout variant
+    used_by: [visual_identifier, "*_layout_selector"]
+
+  visual_merger:
+    path: skills/generation/visual_merger.py
+    purpose: Merge visual specs into blueprint
+    used_by: [visual_integrator]
+
+  content_analyzer:
+    path: skills/generation/content_analyzer.py
+    purpose: Analyze content for layout requirements
+    used_by: ["*_layout_selector"]
+
+  layout_matcher:
+    path: skills/generation/layout_matcher.py
+    purpose: Match content to optimal layout
+    used_by: ["*_layout_selector"]
+
+  # Visual type builders
+  table_builder:
+    path: skills/generation/table_builder.py
+    purpose: Build table structure with headers and rows
+    used_by: [table_generator]
+
+  table_cell_formatter:
+    path: skills/generation/table_cell_formatter.py
+    purpose: Format cell content within char limits
+    used_by: [table_generator]
+
+  flowchart_builder:
+    path: skills/generation/flowchart_builder.py
+    purpose: Build flowchart step structure
+    used_by: [flowchart_generator]
+
+  step_formatter:
+    path: skills/generation/step_formatter.py
+    purpose: Format step headers and bodies
+    used_by: [flowchart_generator]
+
+  dtree_builder:
+    path: skills/generation/dtree_builder.py
+    purpose: Build decision tree node structure
+    used_by: [decision_tree_generator]
+
+  outcome_formatter:
+    path: skills/generation/outcome_formatter.py
+    purpose: Format outcome nodes
+    used_by: [decision_tree_generator]
+
+  timeline_builder:
+    path: skills/generation/timeline_builder.py
+    purpose: Build timeline event structure
+    used_by: [timeline_generator]
+
+  event_formatter:
+    path: skills/generation/event_formatter.py
+    purpose: Format event cards
+    used_by: [timeline_generator]
+
+  hierarchy_builder:
+    path: skills/generation/hierarchy_builder.py
+    purpose: Build hierarchy node tree
+    used_by: [hierarchy_generator]
+
+  level_formatter:
+    path: skills/generation/level_formatter.py
+    purpose: Format nodes by level
+    used_by: [hierarchy_generator]
+
+  spectrum_builder:
+    path: skills/generation/spectrum_builder.py
+    purpose: Build spectrum segments
+    used_by: [spectrum_generator]
+
+  gradient_selector:
+    path: skills/generation/gradient_selector.py
+    purpose: Select appropriate gradient type
+    used_by: [spectrum_generator]
+
+  keydiff_builder:
+    path: skills/generation/keydiff_builder.py
+    purpose: Build concept comparison structure
+    used_by: [key_diff_generator]
+
+  differentiator_formatter:
+    path: skills/generation/differentiator_formatter.py
+    purpose: Format key differentiator emphasis
+    used_by: [key_diff_generator]
+
+  # PowerPoint generation
+  step12_powerpoint_population:
+    path: skills/generation/step12_powerpoint_population.py
+    purpose: Main PowerPoint population logic
+    used_by: [pptx_populator]
+    status: implemented
+
+  pptx_slide_builder:
+    path: skills/generation/pptx_slide_builder.py
+    purpose: Build individual slides
+    used_by: [slide_assembler]
+
+  content_placer:
+    path: skills/generation/content_placer.py
+    purpose: Place content in slide regions
+    used_by: [slide_assembler]
+
+  visual_inserter:
+    path: skills/generation/visual_inserter.py
+    purpose: Insert visual graphics into slides
+    used_by: [slide_assembler]
+
+  # Renderers
+  renderers:
+    table_renderer:
+      path: skills/generation/renderers/table_renderer.py
+      purpose: Render table shapes
+      used_by: [shape_renderer]
+
+    flowchart_renderer:
+      path: skills/generation/renderers/flowchart_renderer.py
+      purpose: Render flowchart shapes
+      used_by: [shape_renderer]
+
+    dtree_renderer:
+      path: skills/generation/renderers/dtree_renderer.py
+      purpose: Render decision tree shapes
+      used_by: [shape_renderer]
+
+    timeline_renderer:
+      path: skills/generation/renderers/timeline_renderer.py
+      purpose: Render timeline shapes
+      used_by: [shape_renderer]
+
+    hierarchy_renderer:
+      path: skills/generation/renderers/hierarchy_renderer.py
+      purpose: Render hierarchy shapes
+      used_by: [shape_renderer]
+
+    spectrum_renderer:
+      path: skills/generation/renderers/spectrum_renderer.py
+      purpose: Render spectrum shapes
+      used_by: [shape_renderer]
+
+    keydiff_renderer:
+      path: skills/generation/renderers/keydiff_renderer.py
+      purpose: Render key differentiator shapes
+      used_by: [shape_renderer]
+
+  sequence_optimizer:
+    path: skills/generation/sequence_optimizer.py
+    purpose: Optimize slide sequence
+    used_by: [blueprint_organizer]
+
+# =============================================================================
+# VALIDATION SKILLS
+# =============================================================================
+
+validation:
+  # Core validators
+  pipeline_validator:
+    path: skills/validation/pipeline_validator.py
+    purpose: Full constraint validation
+    used_by: [quality_reviewer, lecture_pipeline]
+    status: implemented
+
+  blueprint_line_validator:
+    path: skills/validation/blueprint_line_validator.py
+    purpose: Validate and enforce line limits
+    used_by: [line_enforcer]
+    status: implemented
+
+  anchor_validator:
+    path: skills/validation/anchor_validator.py
+    purpose: Validate anchor structure and content
+    used_by: [anchor_uploader]
+
+  standards_validator:
+    path: skills/validation/standards_validator.py
+    purpose: Validate standards completeness
+    used_by: [standards_loader]
+
+  # Scoring and reporting
+  score_calculator:
+    path: skills/validation/score_calculator.py
+    purpose: Calculate QA score (0-100)
+    used_by: [quality_reviewer, score_calculator]
+
+  error_reporter:
+    path: skills/validation/error_reporter.py
+    purpose: Generate detailed error reports
+    used_by: [quality_reviewer, error_reporter]
+
+  # Visual validators
+  visual_quota_tracker:
+    path: skills/validation/visual_quota_tracker.py
+    purpose: Track visual quota compliance
+    used_by: [visual_identifier, visual_quota_checker]
+
+  table_validator:
+    path: skills/validation/table_validator.py
+    purpose: Validate table against constraints
+    used_by: [table_generator]
+
+  flowchart_validator:
+    path: skills/validation/flowchart_validator.py
+    purpose: Validate flowchart constraints
+    used_by: [flowchart_generator]
+
+  dtree_validator:
+    path: skills/validation/dtree_validator.py
+    purpose: Validate tree depth and node count
+    used_by: [decision_tree_generator]
+
+  timeline_validator:
+    path: skills/validation/timeline_validator.py
+    purpose: Validate timeline constraints
+    used_by: [timeline_generator]
+
+  hierarchy_validator:
+    path: skills/validation/hierarchy_validator.py
+    purpose: Validate levels and node count
+    used_by: [hierarchy_generator]
+
+  spectrum_validator:
+    path: skills/validation/spectrum_validator.py
+    purpose: Validate segment count
+    used_by: [spectrum_generator]
+
+  keydiff_validator:
+    path: skills/validation/keydiff_validator.py
+    purpose: Validate concept/feature counts
+    used_by: [key_diff_generator]
+
+  # Structure validators
+  structure_validator:
+    path: skills/validation/structure_validator.py
+    purpose: Validate final blueprint structure
+    used_by: [blueprint_organizer]
+
+  pptx_validator:
+    path: skills/validation/pptx_validator.py
+    purpose: Validate PowerPoint file integrity
+    used_by: [final_validator]
+
+  content_checker:
+    path: skills/validation/content_checker.py
+    purpose: Verify all content is present
+    used_by: [final_validator]
+
+  visual_checker:
+    path: skills/validation/visual_checker.py
+    purpose: Verify all visuals rendered correctly
+    used_by: [final_validator]
+
+# =============================================================================
+# UTILITY SKILLS
+# =============================================================================
+
+utilities:
+  # State management
+  pipeline_state_manager:
+    path: skills/utilities/pipeline_state_manager.py
+    purpose: Persist state between orchestrator phases
+    used_by: [lecture_pipeline, state_manager]
+    status: implemented
+
+  # File parsing
+  file_parser:
+    path: skills/utilities/file_parser.py
+    purpose: Parse .docx anchor documents
+    used_by: [anchor_uploader]
+
+  yaml_parser:
+    path: skills/utilities/yaml_parser.py
+    purpose: Parse YAML config files
+    used_by: [standards_loader]
+
+  template_loader:
+    path: skills/utilities/template_loader.py
+    purpose: Load PowerPoint templates
+    used_by: [pptx_populator]
+
+  # Text processing
+  text_splitter:
+    path: skills/utilities/text_splitter.py
+    purpose: Split overlong lines intelligently
+    used_by: [line_enforcer]
+
+  char_counter:
+    path: skills/utilities/char_counter.py
+    purpose: Count characters per line
+    used_by: [formatting_reviser, char_limit_checker]
+
+  line_wrapper:
+    path: skills/utilities/line_wrapper.py
+    purpose: Wrap text to character limits
+    used_by: [formatting_reviser]
+
+  bullet_formatter:
+    path: skills/utilities/bullet_formatter.py
+    purpose: Format bullet points consistently
+    used_by: [formatting_reviser]
+
+  # Calculation
+  section_calculator:
+    path: skills/utilities/section_calculator.py
+    purpose: Calculate section count (total_anchors / 15-20)
+    used_by: [outline_generator, section_counter]
+
+  # Visual utilities
+  marker_inserter:
+    path: skills/utilities/marker_inserter.py
+    purpose: Insert Visual Yes/No markers
+    used_by: [visual_integrator]
+
+  shape_mapper:
+    path: skills/utilities/shape_mapper.py
+    purpose: Map content to template shapes
+    used_by: [pptx_populator]
+
+  # PowerPoint utilities
+  font_applier:
+    path: skills/utilities/font_applier.py
+    purpose: Apply font settings
+    used_by: [text_formatter]
+
+  text_fitter:
+    path: skills/utilities/text_fitter.py
+    purpose: Fit text within shape bounds
+    used_by: [text_formatter]
+
+  bullet_renderer:
+    path: skills/utilities/bullet_renderer.py
+    purpose: Render bullet point formatting
+    used_by: [text_formatter]
+
+  theme_loader:
+    path: skills/utilities/theme_loader.py
+    purpose: Load domain color themes
+    used_by: [color_applier]
+
+  rgb_converter:
+    path: skills/utilities/rgb_converter.py
+    purpose: Convert RGB to PowerPoint colors
+    used_by: [color_applier]
+
+  gradient_generator:
+    path: skills/utilities/gradient_generator.py
+    purpose: Generate gradient fills
+    used_by: [color_applier]
+
+  layout_calculator:
+    path: skills/utilities/layout_calculator.py
+    purpose: Calculate layout positions
+    used_by: [position_calculator]
+
+  bounds_checker:
+    path: skills/utilities/bounds_checker.py
+    purpose: Check shape bounds
+    used_by: [position_calculator]
+
+  spacing_optimizer:
+    path: skills/utilities/spacing_optimizer.py
+    purpose: Optimize spacing between elements
+    used_by: [position_calculator]
+
+  arrow_renderer:
+    path: skills/utilities/arrow_renderer.py
+    purpose: Render arrows and connectors
+    used_by: [connector_drawer]
+
+  path_calculator:
+    path: skills/utilities/path_calculator.py
+    purpose: Calculate connector paths
+    used_by: [connector_drawer]
+
+  elbow_connector:
+    path: skills/utilities/elbow_connector.py
+    purpose: Create elbow connectors
+    used_by: [connector_drawer]
+
+# =============================================================================
+# SKILL STATUS TRACKING
+# =============================================================================
+
+status_summary:
+  implemented:
+    - pipeline_validator
+    - blueprint_line_validator
+    - pipeline_state_manager
+    - step12_powerpoint_population
+
+  planned:
+    - All other skills in this registry
+
+  notes: |
+    Skills marked as 'implemented' have Python files in the skills/ directory.
+    All other skills are planned for future implementation.
+    When implementing a skill, update its status to 'implemented'.
+
+# =============================================================================
+# REGISTRY METADATA
+# =============================================================================
+
+metadata:
+  version: "1.0"
+  created: "2026-01-04"
+  last_updated: "2026-01-04"
+  total_skills: 72
+  categories:
+    generation: 35
+    validation: 17
+    utilities: 20

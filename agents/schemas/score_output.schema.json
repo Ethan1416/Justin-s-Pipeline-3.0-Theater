@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "score_output.schema.json",
+  "title": "Score Calculator Output Schema",
+  "description": "Schema for score_calculator agent output - calculated QA scores",
+  "type": "object",
+  "required": ["metadata", "scores", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "score_calculator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "required": ["overall_score", "overall_status"],
+      "properties": {
+        "overall_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "weighted_scores": {
+          "type": "object",
+          "properties": {
+            "constraint_validation": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            },
+            "brand_compliance": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            },
+            "pedagogy_check": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            },
+            "consistency_check": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            },
+            "visual_quota": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            },
+            "anchor_coverage": {
+              "type": "object",
+              "properties": {
+                "raw_score": { "type": "integer" },
+                "weight": { "type": "number" },
+                "weighted_score": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "passing_threshold": {
+          "type": "integer"
+        },
+        "margin": {
+          "type": "integer",
+          "description": "Points above or below threshold"
+        },
+        "checks_passed": {
+          "type": "integer"
+        },
+        "checks_failed": {
+          "type": "integer"
+        },
+        "lowest_scoring_area": {
+          "type": "string"
+        },
+        "highest_scoring_area": {
+          "type": "string"
+        }
+      }
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": ["proceed", "revise", "major_revision"],
+      "description": "Recommended action based on score"
+    }
+  }
+}

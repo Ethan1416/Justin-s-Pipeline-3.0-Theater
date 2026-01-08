@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "anchor_input.schema.json",
+  "title": "Step 1 Anchor Upload Input Schema",
+  "description": "Schema for anchor point content summaries document uploaded in Step 1. Accepts either raw document path or pre-parsed anchors.",
+  "type": "object",
+  "oneOf": [
+    {
+      "required": ["anchor_document"],
+      "properties": {
+        "anchor_document": {
+          "type": "string",
+          "minLength": 1,
+          "description": "File path or raw content of anchor point summaries document"
+        },
+        "domain_hint": {
+          "type": "string",
+          "description": "Optional hint for expected NCLEX domain if known",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        }
+      }
+    },
+    {
+      "required": ["domain_name", "anchors"],
+      "properties": {
+        "domain_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The NCLEX domain name (e.g., 'Fundamentals of Nursing', 'Pharmacology')"
+        },
+        "anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/anchor_point"
+          },
+          "description": "Numbered anchor points - each is a discrete testable concept"
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "anchor_point": {
+      "type": "object",
+      "required": ["anchor_number", "content"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequential anchor number (1, 2, 3...)"
+        },
+        "content": {
+          "type": "string",
+          "minLength": 10,
+          "description": "One testable concept - the anchor point content summary"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "anchor_document": "/path/to/pharmacology_anchors.txt",
+      "domain_hint": "pharmacology"
+    },
+    {
+      "domain_name": "Fundamentals of Nursing",
+      "anchors": [
+        {
+          "anchor_number": 1,
+          "content": "Vital signs assessment includes temperature, pulse, respirations, blood pressure, and oxygen saturation"
+        },
+        {
+          "anchor_number": 2,
+          "content": "The nursing process follows ADPIE: Assessment, Diagnosis, Planning, Implementation, Evaluation"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,580 @@
+# STEP 4: OUTLINE GENERATION
+## Final Structure with Sessions, Sections, and Slide Counts
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step produces the final lecture outline by:
+- Distributing sorted sections across Session 1 and Session 2
+- Creating subsections within each section
+- Calculating slide counts
+- Validating all constraints
+
+This is the deliverable outline used for lecture development.
+
+---
+
+## INPUT
+
+**Required from Step 3:**
+- Sorted anchor list (each anchor assigned to a section)
+- Section totals and estimated slides
+- Frontload anchors identified
+- Cross-references documented
+
+**Required from Step 2:**
+- Arc planning iterations (for session distribution guidance)
+- Relationship mapping (for prerequisite validation)
+
+**Reference Files:**
+- `step2_output_[domain]_[date].txt`
+- `step3_output_[domain]_[date].txt`
+
+---
+
+## HARD CONSTRAINTS
+
+### Session Structure
+- **2 sessions** total
+- **150 minutes** per session (2.5 hours)
+- **72-90 slides per session** (hard limits—never below 72, never above 90)
+- **144-180 slides total** across both sessions
+
+### Section Limits
+- **Minimum 10 slides** per section
+- **Maximum 35 slides** per section
+- **3 fixed slides per section:** 1 intro slide, 1 question slide, 1 answer slide
+
+### Section Count
+- **Flexible per session** - determined by anchor distribution
+- Each session includes a **10-minute break** (1 break slide)
+- Anchor count determines section allocation, not a fixed number
+
+---
+
+## SLIDE CALCULATION
+
+### Anchor-to-Slide Formula
+
+```
+Content Slides = Anchor Count × Complexity Multiplier
+Section Total = Content Slides + 3 (fixed slides)
+```
+
+**Complexity Multipliers:**
+- **Simple anchors** (definitions, single concepts): × 1.0
+- **Moderate anchors** (mechanisms, relationships, processes): × 1.15
+- **Complex anchors** (differentials, multi-part, integrative): × 1.3
+
+**Default:** Use × 1.15 unless section content is clearly simple or complex.
+
+### Example Calculation
+
+```
+Section: [Example Section]
+Anchors: 22
+Complexity: Moderate
+Content Slides: 22 × 1.15 = 25.3 → 25 slides
+Section Total: 25 + 3 = 28 slides
+```
+
+---
+
+## SESSION DISTRIBUTION PROCESS
+
+### Step 1: Review Arc Iterations from Step 2
+
+Examine the arc planning iterations generated in Step 2, Phase 5. Consider:
+- Which iterations had strongest prerequisite integrity?
+- Which had best session balance?
+- Which had most logical learning flow?
+
+### Step 2: Apply Distribution Logic
+
+**Prerequisite Rule:** Foundational sections must precede dependent sections.
+
+**Balance Rule:** Aim for roughly equal slide counts per session (within 72-90 range).
+
+**Frontloading Rule:** Sessions should not be front-heavy with all foundations—distribute scaffolding where possible.
+
+**Culmination Rule:** If a Culmination section exists, it goes at the end of Session 2.
+
+### Step 3: Validate Against Constraints
+
+After initial distribution:
+- Check each session: 72-90 slides?
+- Check each section: 12-35 slides?
+- Prerequisites in correct order?
+
+**If constraints violated:**
+- Move sections between sessions (respecting prerequisites)
+- Adjust subsection groupings
+- In extreme cases, split or merge sections
+
+---
+
+## SUBSECTION CREATION
+
+### Purpose of Subsections
+
+Subsections organize anchors within a section into coherent teaching units.
+
+### Subsection Guidelines
+
+1. **Group by conceptual similarity** - Anchors about the same sub-topic together
+2. **Respect frontloading** - Foundational subsections come first within section
+3. **3-8 anchors per subsection** typical (flexible based on content)
+4. **Name subsections descriptively** - Should convey what's taught
+
+### Subsection Sequencing Within Section
+
+Adapt to domain, but general pattern:
+
+1. **Foundational/definitional content** first
+2. **Core concepts/mechanisms/processes** next
+3. **Applications/clinical relevance/examples** then
+4. **Integration/synthesis/complex cases** last (if applicable)
+
+**Domain-Specific Subsection Patterns:**
+
+| Domain | Typical Subsection Flow |
+|--------|------------------------|
+| Biological | Structure → Function → Dysfunction → Clinical relevance |
+| Clinical | Definition → Criteria → Presentation → Differential |
+| Treatment | Theory → Technique → Application → Evidence |
+| Developmental | Description → Milestones → Variations → Assessment |
+| Ethics | Principle → Standards → Application → Dilemmas |
+| Research | Concept → Design → Analysis → Interpretation |
+
+---
+
+## OUTPUT FORMAT
+
+### Header
+
+```
+========================================
+STEP 4: OUTLINE - FINAL
+========================================
+Domain: [Domain Name]
+Total Anchors: [X]
+Total Sections: [X]
+Total Estimated Slides: [X]
+Date: [Date]
+```
+
+---
+
+### Session 1
+
+```
+========================================
+SESSION 1 (150 minutes)
+========================================
+Estimated Slides: [XX] (target: 72-90)
+Sections: [X]
+Anchors: [X]
+
+---
+
+### SECTION 1: [SECTION NAME]
+**Anchor Count:** [XX]
+**Estimated Slides:** [XX]
+**Prerequisites:** [None / List any required prior sections]
+
+#### Subsections:
+
+**1.1 [Subsection Name]** ([X] anchors)
+Anchors: #[list anchor numbers]
+Focus: [1-line description of what this subsection covers]
+
+**1.2 [Subsection Name]** ([X] anchors)
+Anchors: #[list anchor numbers]
+Focus: [description]
+
+**1.3 [Subsection Name]** ([X] anchors)
+Anchors: #[list anchor numbers]
+Focus: [description]
+
+[Continue subsections as needed...]
+
+**Frontload Anchors in This Section:** #[list any frontload-flagged anchors]
+**Cross-References to Other Sections:** [list any XREF flags]
+
+---
+
+### SECTION 2: [SECTION NAME]
+**Anchor Count:** [XX]
+**Estimated Slides:** [XX]
+**Prerequisites:** [Section 1 / None / etc.]
+
+#### Subsections:
+
+**2.1 [Subsection Name]** ([X] anchors)
+Anchors: #[list]
+Focus: [description]
+
+**2.2 [Subsection Name]** ([X] anchors)
+Anchors: #[list]
+Focus: [description]
+
+[Continue subsections...]
+
+**Frontload Anchors in This Section:** [list]
+**Cross-References to Other Sections:** [list]
+
+---
+
+[Continue for all Session 1 sections...]
+
+---
+
+### --- SESSION 1 BREAK (10 minutes) ---
+**Slide Count:** 1
+**Placement:** After Section [X] (approximately 75 minutes into session)
+
+---
+
+### SESSION 1 SUMMARY
+
+| Section | Anchors | Slides | Subsections |
+|---------|---------|--------|-------------|
+| [Name] | [X] | [X] | [X] |
+| [Name] | [X] | [X] | [X] |
+...
+| Break | - | 1 | - |
+| **TOTAL** | **[X]** | **[X]** | |
+
+**Constraint Check:**
+- Slides: [X] (target: 72-90) [PASS/FAIL]
+- All sections 12-35 slides: [PASS/FAIL]
+- Prerequisites respected: [PASS/FAIL]
+```
+
+---
+
+### Session 2
+
+```
+========================================
+SESSION 2 (150 minutes)
+========================================
+Estimated Slides: [XX] (target: 72-90)
+Sections: [X]
+Anchors: [X]
+
+---
+
+### SECTION 1: [SECTION NAME]
+**Anchor Count:** [XX]
+**Estimated Slides:** [XX]
+**Prerequisites:** [List sections from Session 1 and/or earlier in Session 2]
+
+#### Subsections:
+
+**1.1 [Subsection Name]** ([X] anchors)
+Anchors: #[list]
+Focus: [description]
+
+[Continue subsections...]
+
+**Frontload Anchors in This Section:** [list]
+**Cross-References to Other Sections:** [list]
+
+---
+
+[Continue for all Session 2 sections...]
+
+---
+
+### --- SESSION 2 BREAK (10 minutes) ---
+**Slide Count:** 1
+**Placement:** After Section [X] (approximately 75 minutes into session)
+
+---
+
+### SECTION [LAST]: CULMINATION (if applicable)
+**Anchor Count:** [XX]
+**Estimated Slides:** [XX]
+**Prerequisites:** [Multiple prior sections - this integrates knowledge]
+
+#### Subsections:
+
+**[X].1 [Subsection Name]** ([X] anchors)
+Anchors: #[list]
+Focus: [Integrative content description]
+
+[Continue subsections...]
+
+**Integration Notes:** This section synthesizes content from [list sections], requiring students to apply knowledge across multiple areas.
+
+---
+
+### SESSION 2 SUMMARY
+
+| Section | Anchors | Slides | Subsections |
+|---------|---------|--------|-------------|
+| [Name] | [X] | [X] | [X] |
+...
+| Culmination | [X] | [X] | [X] |
+| Break | - | 1 | - |
+| **TOTAL** | **[X]** | **[X]** | |
+
+**Constraint Check:**
+- Slides: [X] (target: 72-90) [PASS/FAIL]
+- All sections 12-35 slides: [PASS/FAIL]
+- Prerequisites respected: [PASS/FAIL]
+- Culmination at end: [PASS/FAIL/N/A]
+```
+
+---
+
+### Grand Summary
+
+```
+========================================
+OUTLINE GRAND SUMMARY
+========================================
+
+## Overall Statistics
+
+| Metric | Session 1 | Session 2 | Total |
+|--------|-----------|-----------|-------|
+| Sections | [X] | [X] | [X] |
+| Anchors | [X] | [X] | [X] |
+| Slides | [X] | [X] | [X] |
+| Subsections | [X] | [X] | [X] |
+
+---
+
+## Section Flow (Full Lecture)
+
+**IMPORTANT: Section count is VARIABLE (4-12 sections) based on anchor count.**
+
+Example with 8 sections:
+```
+SESSION 1:
+[Section 1] → [Section 2] → [Section 3] → BREAK → [Section 4]
+
+SESSION 2:
+[Section 5] → [Section 6] → BREAK → [Section 7] → [Culmination]
+```
+
+Example with 5 sections:
+```
+SESSION 1:
+[Section 1] → [Section 2] → BREAK → [Section 3]
+
+SESSION 2:
+[Section 4] → BREAK → [Section 5/Culmination]
+```
+
+Example with 10 sections:
+```
+SESSION 1:
+[Section 1] → [Section 2] → [Section 3] → BREAK → [Section 4] → [Section 5]
+
+SESSION 2:
+[Section 6] → [Section 7] → BREAK → [Section 8] → [Section 9] → [Culmination]
+```
+
+**Adapt to actual section count derived from anchor count formula.**
+
+---
+
+## Prerequisite Chain
+
+```
+[Foundational Section A] ──┬──→ [Dependent Section C] ──→ [Applied Section]
+                           │                                      │
+[Foundational Section B] ──┘                                      ↓
+                                                           [Integration]
+                                                                  │
+                                                                  ↓
+                                                           [Culmination]
+```
+
+(Adapt diagram to actual section relationships)
+
+---
+
+## Constraint Validation
+
+| Constraint | Requirement | Actual | Status |
+|------------|-------------|--------|--------|
+| Session 1 slides | 72-90 | [X] | [PASS/FAIL] |
+| Session 2 slides | 72-90 | [X] | [PASS/FAIL] |
+| Total slides | 144-180 | [X] | [PASS/FAIL] |
+| Min slides/section | 12 (if ≤4 sections) or 10 (if 5+ sections) | [lowest] | [PASS/FAIL] |
+| Section count | 4-12 (based on anchor count) | [X] | [PASS/FAIL] |
+| Max slides/section | 35 | [highest] | [PASS/FAIL] |
+| All anchors assigned | [Total] | [Assigned] | [PASS/FAIL] |
+| No duplicate anchors | 0 | [count] | [PASS/FAIL] |
+| Prerequisites respected | Yes | [Yes/No] | [PASS/FAIL] |
+
+---
+
+## Flagged Content Summary
+
+**Frontload Anchors by Section:**
+| Section | Frontload Anchors |
+|---------|-------------------|
+| [Name] | #[X], #[Y] |
+...
+
+**Cross-References:**
+| From Section | To Section | Anchors | Purpose |
+|--------------|------------|---------|---------|
+| [Name] | [Name] | #[X] | [Why referenced] |
+...
+
+---
+
+## Notes for Blueprint Development (Step 5+)
+
+- [Any special sequencing notes for slide-by-slide development]
+- [Subsections requiring comparison content]
+- [Subsections with differential/discriminative content]
+- [High-complexity subsections needing extra attention]
+```
+
+---
+
+### Handoff Block
+
+```
+========================================
+===OUTLINE COMPLETE===
+========================================
+
+This outline is ready for:
+- Blueprint development (slide-by-slide planning)
+- Lecture script writing
+- Presentation development
+
+Key deliverables from this outline:
+- [X] sections across 2 sessions
+- [X] subsections with anchor assignments
+- [X] total slides estimated
+- All constraints validated
+
+Output saved to: step4_output_[domain]_[date].txt
+```
+
+---
+
+## VALIDATION CHECKLIST
+
+Before finalizing, verify all constraints:
+
+### Slide Constraints
+- [ ] Session 1: 72-90 slides
+- [ ] Session 2: 72-90 slides
+- [ ] Total: 144-180 slides
+- [ ] Each section: 10-35 slides (12 min if ≤4 sections, 10 min if 5+ sections)
+
+### Section Count
+- [ ] Total sections: 4-12 (calculated from anchor count ÷ 15-20)
+- [ ] Section count appropriate for content volume
+
+### Content Constraints
+- [ ] Every anchor assigned to exactly one section
+- [ ] Every anchor appears in exactly one subsection
+- [ ] No orphaned anchors
+- [ ] No duplicate anchor assignments
+
+### Structural Constraints
+- [ ] Prerequisites respected (foundations before dependents)
+- [ ] Culmination section at end of Session 2 (if applicable)
+- [ ] Break placement logical (~75 min into each session)
+- [ ] Frontload anchors positioned early in their sections
+
+### Subsection Constraints
+- [ ] Each section has 2+ subsections
+- [ ] Subsections are named descriptively
+- [ ] Anchor numbers listed for each subsection
+- [ ] Subsection sequencing follows foundation → application flow
+
+---
+
+## ADJUSTMENT PROCEDURES
+
+### If Session Exceeds 90 Slides:
+
+1. **Option A:** Move a section to the other session (if prerequisites allow)
+2. **Option B:** Split a large section into two smaller sections
+3. **Option C:** Reassess complexity multipliers (were they too high?)
+
+### If Session Falls Below 72 Slides:
+
+1. **Option A:** Move a section from the other session (if prerequisites allow)
+2. **Option B:** Expand subsection coverage
+3. **Option C:** Reassess complexity multipliers (were they too low?)
+
+### If Section Exceeds 35 Slides:
+
+1. Split into two sections with distinct themes
+2. Ensure prerequisites still work after split
+
+### If Section Falls Below 12 Slides:
+
+1. Merge with conceptually related section
+2. Or route content to Misc section
+
+---
+
+## SAVE INSTRUCTION
+
+After generating Step 4 output, save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `outlines/`
+
+**Full Path:** `[Domain]_Production_[Date]/outlines/step4_output_[domain]_[date].txt`
+
+**Examples:**
+- `Fundamentals_of_Nursing_Production_2024-01-15/outlines/step4_output_fundamentals_of_nursing_2024-01-15.txt`
+- `Treatment_Intervention_Production_2024-01-15/outlines/step4_output_treatment_intervention_2024-01-15.txt`
+
+This saved file serves as:
+1. The final outline deliverable
+2. Input for blueprint/slide development
+3. Reference for lecture delivery
+4. Documentation for future revisions
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation  ← YOU ARE HERE
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population
+    ↓
+[Font Formatting - deferred]
+    ↓
+[PRODUCTION COMPLETE]
+```

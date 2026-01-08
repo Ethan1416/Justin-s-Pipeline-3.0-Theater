@@ -1,0 +1,581 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "standards_output.schema.json",
+  "title": "Step 5 Presentation Standards Output Schema",
+  "description": "Schema for standards_applier agent output - outline with delivery modes, timing, presenter notes requirements, and active learning integration",
+  "type": "object",
+  "required": ["metadata", "sessions", "delivery_summary", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "domain", "exam_context"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 5: Presentation Standards"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "exam_context": {
+          "type": "string",
+          "enum": ["NCLEX", "NCLEX"],
+          "default": "NCLEX"
+        },
+        "total_sections": {
+          "type": "integer"
+        },
+        "total_subsections": {
+          "type": "integer"
+        },
+        "output_file": {
+          "type": "string"
+        }
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/definitions/session_with_standards"
+      }
+    },
+    "delivery_summary": {
+      "type": "object",
+      "required": ["mode_distribution", "fixed_slides_total", "timing_guidance"],
+      "properties": {
+        "mode_distribution": {
+          "type": "object",
+          "properties": {
+            "foundational": {
+              "type": "integer",
+              "description": "Count of subsections using Foundational mode"
+            },
+            "full": {
+              "type": "integer",
+              "description": "Count of subsections using Full mode"
+            },
+            "minor": {
+              "type": "integer",
+              "description": "Count of subsections using Minor mode"
+            },
+            "one_and_done": {
+              "type": "integer",
+              "description": "Count of subsections using One-and-Done mode"
+            }
+          }
+        },
+        "fixed_slides_total": {
+          "type": "object",
+          "properties": {
+            "intro_slides": {
+              "type": "integer",
+              "description": "Total section intro slides (1 per section)"
+            },
+            "vignette_slides": {
+              "type": "integer",
+              "description": "Total vignette slides (1 per section)"
+            },
+            "answer_slides": {
+              "type": "integer",
+              "description": "Total answer slides (1 per section)"
+            },
+            "break_slides": {
+              "type": "integer",
+              "const": 2,
+              "description": "One break slide per session"
+            },
+            "total_fixed": {
+              "type": "integer"
+            }
+          }
+        },
+        "timing_guidance": {
+          "type": "object",
+          "properties": {
+            "target_words_per_minute": {
+              "type": "integer",
+              "minimum": 130,
+              "maximum": 150
+            },
+            "max_presenter_notes_words": {
+              "type": "integer",
+              "const": 450
+            },
+            "max_slide_duration_seconds": {
+              "type": "integer",
+              "const": 180
+            }
+          }
+        },
+        "active_learning_points": {
+          "type": "integer",
+          "description": "Total retrieval practice opportunities across lecture"
+        },
+        "exam_pattern_callouts": {
+          "type": "integer",
+          "description": "Total NCLEX/NCLEX pattern callouts in presenter notes"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checklist"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checklist": {
+          "type": "object",
+          "properties": {
+            "all_subsections_have_delivery_mode": {
+              "type": "boolean"
+            },
+            "all_sections_have_fixed_slides": {
+              "type": "boolean"
+            },
+            "first_subsections_use_foundational_mode": {
+              "type": "boolean"
+            },
+            "misc_section_exceptions_applied": {
+              "type": "boolean"
+            },
+            "culmination_section_exceptions_applied": {
+              "type": "boolean"
+            },
+            "xref_callbacks_documented": {
+              "type": "boolean"
+            },
+            "active_learning_integrated": {
+              "type": "boolean"
+            }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "session_with_standards": {
+      "type": "object",
+      "required": ["session_number", "sections"],
+      "properties": {
+        "session_number": {
+          "type": "integer",
+          "enum": [1, 2]
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section_with_standards"
+          }
+        },
+        "break": {
+          "type": "object",
+          "properties": {
+            "placement": {
+              "type": "string"
+            },
+            "slide_spec": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "default": "Break Time"
+                },
+                "duration_minutes": {
+                  "type": "integer",
+                  "const": 10
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "section_with_standards": {
+      "type": "object",
+      "required": ["section_number", "section_name", "fixed_slides", "subsections"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "is_misc": {
+          "type": "boolean",
+          "default": false
+        },
+        "is_culmination": {
+          "type": "boolean",
+          "default": false
+        },
+        "fixed_slides": {
+          "$ref": "#/definitions/fixed_slides_spec"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection_with_standards"
+          }
+        },
+        "xref_callbacks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/xref_callback"
+          },
+          "description": "Cross-reference callbacks to document in presenter notes"
+        }
+      }
+    },
+    "fixed_slides_spec": {
+      "type": "object",
+      "required": ["intro", "vignette", "answer"],
+      "properties": {
+        "intro": {
+          "type": "object",
+          "required": ["position", "content_spec"],
+          "properties": {
+            "position": {
+              "type": "string",
+              "const": "first"
+            },
+            "content_spec": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Section title for header"
+                },
+                "quote_required": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "quote_type": {
+                  "type": "string",
+                  "const": "poetic_provocative"
+                }
+              }
+            },
+            "presenter_notes_spec": {
+              "type": "object",
+              "properties": {
+                "include_welcome": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "include_preview": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "include_prior_connection": {
+                  "type": "boolean",
+                  "description": "True if not first section"
+                }
+              }
+            }
+          }
+        },
+        "vignette": {
+          "type": "object",
+          "required": ["position", "content_spec"],
+          "properties": {
+            "position": {
+              "type": "string",
+              "const": "near_end"
+            },
+            "content_spec": {
+              "type": "object",
+              "properties": {
+                "format": {
+                  "type": "string",
+                  "const": "exam_style_vignette"
+                },
+                "stem_sentences": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "const": 2
+                    },
+                    "max": {
+                      "type": "integer",
+                      "const": 4
+                    }
+                  }
+                },
+                "answer_options": {
+                  "type": "integer",
+                  "const": 4
+                },
+                "requires_integration": {
+                  "type": "boolean",
+                  "const": true
+                }
+              }
+            },
+            "presenter_notes_spec": {
+              "type": "object",
+              "properties": {
+                "read_aloud": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "think_time_seconds": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "const": 30
+                    },
+                    "max": {
+                      "type": "integer",
+                      "const": 60
+                    }
+                  }
+                },
+                "reveal_answer_on_slide": {
+                  "type": "boolean",
+                  "const": false
+                }
+              }
+            }
+          }
+        },
+        "answer": {
+          "type": "object",
+          "required": ["position", "content_spec"],
+          "properties": {
+            "position": {
+              "type": "string",
+              "const": "after_vignette"
+            },
+            "content_spec": {
+              "type": "object",
+              "properties": {
+                "correct_answer_identified": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "rationale_required": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "distractor_analysis_required": {
+                  "type": "boolean",
+                  "const": true
+                }
+              }
+            },
+            "presenter_notes_spec": {
+              "type": "object",
+              "properties": {
+                "reveal_and_explain": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "walk_through_distractors": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "connect_to_anchors": {
+                  "type": "boolean",
+                  "const": true
+                },
+                "identify_exam_patterns": {
+                  "type": "boolean",
+                  "const": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "subsection_with_standards": {
+      "type": "object",
+      "required": ["subsection_id", "subsection_name", "delivery_mode", "anchor_delivery"],
+      "properties": {
+        "subsection_id": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "subsection_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "moderate", "complex"]
+        },
+        "delivery_mode": {
+          "$ref": "#/definitions/delivery_mode"
+        },
+        "anchor_delivery": {
+          "type": "object",
+          "required": ["primary_teaching", "reference_callbacks"],
+          "properties": {
+            "primary_teaching": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "description": "Anchors taught fully in this subsection"
+            },
+            "reference_callbacks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "anchor_number": {
+                    "type": "integer"
+                  },
+                  "callback_phrase": {
+                    "type": "string",
+                    "enum": ["Recall that...", "As we covered..."]
+                  },
+                  "original_section": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "active_learning": {
+          "type": "object",
+          "properties": {
+            "retrieval_practice_type": {
+              "type": "string",
+              "enum": ["exam_style_question", "case_application", "concept_check"]
+            },
+            "processing_time_seconds": {
+              "type": "integer",
+              "minimum": 30
+            }
+          }
+        },
+        "presenter_notes_requirements": {
+          "$ref": "#/definitions/presenter_notes_requirements"
+        }
+      }
+    },
+    "delivery_mode": {
+      "type": "object",
+      "required": ["mode", "structure"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["foundational", "full", "minor", "one_and_done"]
+        },
+        "structure": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "component": {
+                "type": "string",
+                "enum": ["overview", "scaffolding", "bridge", "connection", "core", "synthesis"]
+              },
+              "duration_minutes": {
+                "type": "string",
+                "description": "Timing guidance (e.g., '3-5 min', '1-2 min', 'variable')"
+              },
+              "purpose": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "selection_rationale": {
+          "type": "string",
+          "description": "Why this mode was selected"
+        }
+      }
+    },
+    "presenter_notes_requirements": {
+      "type": "object",
+      "properties": {
+        "verbatim_monologue": {
+          "type": "boolean",
+          "const": true
+        },
+        "word_count_guidance": {
+          "type": "object",
+          "properties": {
+            "per_minute": {
+              "type": "string",
+              "const": "130-150"
+            },
+            "maximum": {
+              "type": "integer",
+              "const": 450
+            }
+          }
+        },
+        "required_markers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["[PAUSE]", "[EMPHASIS]"]
+          }
+        },
+        "required_elements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["opening_statement", "concept_explanation", "applied_relevance", "connections", "closing_transition"]
+          }
+        },
+        "exam_pattern_callouts": {
+          "type": "boolean",
+          "description": "Include NCLEX/NCLEX testing pattern callouts where applicable"
+        },
+        "study_strategy_mentions": {
+          "type": "boolean",
+          "description": "Include brief study strategy guidance"
+        },
+        "active_learning_word_reduction": {
+          "type": "string",
+          "const": "20%",
+          "description": "Reduce word count by 20% for slides with active learning"
+        }
+      }
+    },
+    "xref_callback": {
+      "type": "object",
+      "required": ["anchor_number", "primary_section", "callback_script"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "primary_section": {
+          "type": "string",
+          "description": "Section where anchor is fully taught"
+        },
+        "callback_script": {
+          "type": "string",
+          "description": "Script for brief callback (1-2 sentences max)"
+        },
+        "connection_purpose": {
+          "type": "string",
+          "description": "Why the cross-reference is valuable"
+        }
+      }
+    }
+  }
+}

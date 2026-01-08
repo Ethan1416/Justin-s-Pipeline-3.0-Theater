@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "format_input.schema.json",
+  "title": "Step 7 Formatting Revision Input Schema",
+  "description": "Schema for formatting_reviser agent input - applies character and line limits to blueprints",
+  "type": "object",
+  "required": ["metadata", "blueprint", "constraints"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date", "source_file"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 7: Formatting Revision"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Step 6 blueprint file reference (or Step 6.5 if line enforcement was run)"
+        }
+      }
+    },
+    "blueprint": {
+      "$ref": "#/definitions/blueprint_input"
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["header", "body", "nclex_tip", "presenter_notes"],
+      "properties": {
+        "header": {
+          "type": "object",
+          "required": ["max_chars_per_line", "max_lines", "font_size"],
+          "properties": {
+            "max_chars_per_line": {
+              "type": "integer",
+              "default": 32
+            },
+            "max_lines": {
+              "type": "integer",
+              "default": 2
+            },
+            "font_size": {
+              "type": "string",
+              "default": "30pt"
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "required": ["max_chars_per_line", "max_lines", "font_size"],
+          "properties": {
+            "max_chars_per_line": {
+              "type": "integer",
+              "default": 66
+            },
+            "max_lines": {
+              "type": "integer",
+              "default": 8
+            },
+            "font_size": {
+              "type": "string",
+              "default": "20pt"
+            }
+          }
+        },
+        "nclex_tip": {
+          "type": "object",
+          "required": ["max_chars_per_line", "max_lines", "font_size"],
+          "properties": {
+            "max_chars_per_line": {
+              "type": "integer",
+              "default": 66
+            },
+            "max_lines": {
+              "type": "integer",
+              "default": 2
+            },
+            "font_size": {
+              "type": "string",
+              "default": "20pt"
+            }
+          }
+        },
+        "presenter_notes": {
+          "type": "object",
+          "required": ["max_seconds", "max_words"],
+          "properties": {
+            "max_seconds": {
+              "type": "integer",
+              "default": 180
+            },
+            "max_words": {
+              "type": "integer",
+              "default": 450
+            },
+            "words_per_minute": {
+              "type": "integer",
+              "default": 150
+            }
+          }
+        }
+      }
+    },
+    "revision_options": {
+      "type": "object",
+      "properties": {
+        "allow_slide_splits": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to split slides when content cannot be condensed"
+        },
+        "preserve_anchors": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ensure all anchor concepts are preserved"
+        },
+        "prioritize_nclex_content": {
+          "type": "boolean",
+          "default": true,
+          "description": "Prioritize NCLEX-testable information when condensing"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_input": {
+      "type": "object",
+      "required": ["section_number", "section_name", "slides"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide"
+          }
+        }
+      }
+    },
+    "slide": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body", "presenter_notes"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "nclex_tip": {
+          "type": "string",
+          "description": "Present on content slides only"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

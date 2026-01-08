@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pipeline_state.schema.json",
+  "title": "Pipeline State Schema",
+  "description": "Schema for tracking pipeline execution state",
+  "type": "object",
+  "required": ["run_id", "domain", "status", "started_at", "steps"],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "failed", "paused"]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_step": {
+      "type": "string"
+    },
+    "current_section": {
+      "type": "integer"
+    },
+    "total_sections": {
+      "type": "integer"
+    },
+    "steps": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/step_state"
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/section_state"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/error_record"
+      }
+    },
+    "metrics": {
+      "$ref": "#/definitions/run_metrics"
+    }
+  },
+  "definitions": {
+    "step_state": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "failed", "skipped"]
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration_seconds": {
+          "type": "number"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "retry_count": {
+          "type": "integer",
+          "default": 0
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "section_state": {
+      "type": "object",
+      "required": ["section_number", "section_name", "status"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "failed"]
+        },
+        "slide_count": {
+          "type": "integer"
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "qa_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "visual_quota_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "PENDING"]
+        },
+        "steps_completed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "current_step": {
+          "type": "string"
+        }
+      }
+    },
+    "error_record": {
+      "type": "object",
+      "required": ["timestamp", "step", "message"],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "step": {
+          "type": "string"
+        },
+        "section": {
+          "type": "integer"
+        },
+        "agent": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["warning", "error", "critical"]
+        },
+        "resolved": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "run_metrics": {
+      "type": "object",
+      "properties": {
+        "total_slides_generated": {
+          "type": "integer"
+        },
+        "total_visuals_generated": {
+          "type": "integer"
+        },
+        "total_powerpoints": {
+          "type": "integer"
+        },
+        "average_qa_score": {
+          "type": "number"
+        },
+        "total_duration_seconds": {
+          "type": "number"
+        },
+        "agent_invocations": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

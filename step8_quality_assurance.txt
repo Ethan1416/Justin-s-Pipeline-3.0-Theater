@@ -1,0 +1,611 @@
+# STEP 8: QUALITY ASSURANCE
+## Validation and Compliance Verification
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step performs comprehensive quality assurance on the revised blueprint from Step 7. It validates that all requirements are met, generates a validation score, and produces a detailed QA report.
+
+---
+
+## INPUT
+
+**Required:**
+1. Step 7 revised blueprint (`step7_revised_[domain]_[section]_[date].txt`)
+2. Step 7 changelog (`step7_changelog_[domain]_[section]_[date].txt`)
+3. Step 4 output (for anchor verification)
+4. Step 5 presentation standards (for compliance verification)
+
+---
+
+## OUTPUT
+
+**Primary Output:** `step8_qa_report_[domain]_[section]_[date].txt`
+- Comprehensive validation report
+- Issue flags with slide numbers
+- Pass/fail status for each criterion
+
+**Secondary Output:** `step8_validation_score_[domain]_[section]_[date].txt`
+- Summary validation score
+- Category breakdowns
+- Overall readiness assessment
+
+---
+
+## VALIDATION CATEGORIES
+
+### Category 1: Anchor Coverage
+
+Verify every anchor assigned to this section in Step 4 is taught in the blueprint.
+
+**Checks:**
+- [ ] All anchors from Step 4 appear in blueprint
+- [ ] Each anchor is covered with appropriate depth
+- [ ] Frontload anchors appear early in their subsections
+- [ ] Cross-reference anchors have callback scripts
+
+**Scoring:**
+- 100%: All anchors covered
+- Deduct 10 points per missing anchor
+- Deduct 5 points per mispositioned frontload anchor
+
+---
+
+### Category 2: Character Limit Compliance
+
+Verify all text elements meet template constraints.
+
+**Checks:**
+- [ ] Headers: ≤32 characters/line, ≤2 lines
+- [ ] Body: ≤66 characters/line, ≤8 lines
+- [ ] NCLEX Tips: ≤66 characters/line, ≤2 lines
+- [ ] Presenter Notes: ≤180 seconds (~450 words)
+
+**Scoring:**
+- 100%: All elements compliant
+- Deduct 5 points per element exceeding limits
+- Flag slide number for each violation
+
+---
+
+### Category 3: NCLEX Tip Presence
+
+Verify NCLEX tips are present where required and absent where not.
+
+**Checks:**
+- [ ] All content slides have NCLEX tips
+- [ ] Section intro slides do NOT have NCLEX tips
+- [ ] Vignette slides do NOT have NCLEX tips
+- [ ] Answer slides do NOT have NCLEX tips
+- [ ] Tips are relevant to slide content
+
+**Scoring:**
+- 100%: All correct
+- Deduct 5 points per missing required tip
+- Deduct 2 points per inappropriate tip presence
+
+---
+
+### Category 4: Fixed Slide Compliance
+
+Verify the three fixed slides per section are present and properly formatted.
+
+**Checks:**
+- [ ] Section intro slide present (first slide)
+- [ ] Section intro has title and provocative quote
+- [ ] Vignette slide present (near section end)
+- [ ] Vignette has 2-4 sentence stem + 4 options
+- [ ] Answer slide present (after vignette)
+- [ ] Answer slide has rationale + distractor analysis
+
+**Scoring:**
+- 100%: All fixed slides present and complete
+- Deduct 15 points per missing fixed slide
+- Deduct 5 points per incomplete fixed slide
+
+---
+
+### Category 5: Presenter Notes Quality
+
+Verify presenter notes meet Step 5 standards.
+
+**Checks:**
+- [ ] All slides have presenter notes
+- [ ] Notes are verbatim monologues (complete sentences)
+- [ ] Notes include [PAUSE] markers where appropriate
+- [ ] Notes include [EMPHASIS] markers for key terms
+- [ ] Notes include transitions between slides
+- [ ] Notes consistent with revised slide content
+- [ ] NCLEX pattern callouts included where applicable
+
+**Scoring:**
+- 100%: All standards met
+- Deduct 3 points per slide missing notes
+- Deduct 2 points per slide with incomplete notes
+- Deduct 1 point per missing required marker
+
+---
+
+### Category 6: Delivery Mode Compliance
+
+Verify subsections follow correct delivery modes per Step 5.
+
+**Checks:**
+- [ ] First subsection uses Foundational mode
+- [ ] Subsections with 5+ anchors use Full mode
+- [ ] Subsections with 3-4 anchors use Minor mode
+- [ ] Subsections with 1-2 anchors use One-and-Done mode
+- [ ] Mode components present (Connection, Core, Synthesis, etc.)
+
+**Scoring:**
+- 100%: All modes correctly applied
+- Deduct 5 points per incorrect mode
+- Deduct 3 points per missing mode component
+
+---
+
+### Category 7: Structural Integrity
+
+Verify overall blueprint structure is sound.
+
+**Checks:**
+- [ ] Slides numbered sequentially
+- [ ] Split slides labeled correctly (A, B)
+- [ ] Subsection boundaries clear
+- [ ] Logical flow maintained
+- [ ] No orphaned or disconnected content
+
+**Scoring:**
+- 100%: Structure sound
+- Deduct 3 points per numbering error
+- Deduct 5 points per structural issue
+
+---
+
+## QA PROCESS
+
+### Step 1: Load Reference Documents
+
+Pull information from:
+- Step 4 output: Section anchor list
+- Step 5 standards: Compliance requirements
+- Step 7 revised blueprint: Content to validate
+- Step 7 changelog: Previous issues/resolutions
+
+### Step 2: Anchor Verification
+
+For each anchor in Step 4 section assignment:
+1. Search Step 7 blueprint for anchor coverage
+2. Note slide number(s) where covered
+3. Flag any missing anchors
+4. Verify frontload positioning
+5. Verify cross-reference handling
+
+### Step 3: Character Limit Verification
+
+For each slide in Step 7 blueprint:
+1. Count characters per line in header
+2. Count lines in header
+3. Count characters per line in body
+4. Count lines in body
+5. Count characters per line in NCLEX tip
+6. Count lines in NCLEX tip
+7. Estimate presenter notes duration
+8. Flag any violations
+
+### Step 4: NCLEX Tip Verification
+
+For each slide:
+1. Identify slide type (Content/Intro/Vignette/Answer)
+2. Check NCLEX tip presence/absence appropriateness
+3. If present, verify relevance to content
+4. Flag issues
+
+### Step 5: Fixed Slide Verification
+
+1. Locate section intro slide (should be Slide 1)
+2. Verify intro components (title, quote, notes)
+3. Locate vignette slide (near section end)
+4. Verify vignette components (stem, 4 options)
+5. Locate answer slide (after vignette)
+6. Verify answer components (rationale, distractors)
+7. Flag any missing or incomplete fixed slides
+
+### Step 6: Presenter Notes Verification
+
+For each slide:
+1. Confirm notes present
+2. Check for complete sentences (not bullets)
+3. Search for [PAUSE] markers
+4. Search for [EMPHASIS] markers
+5. Verify transitions included
+6. Estimate word count/duration
+7. Flag issues
+
+### Step 7: Delivery Mode Verification
+
+For each subsection:
+1. Count anchors assigned
+2. Determine expected mode
+3. Verify mode components present in slides
+4. Flag mismatches
+
+### Step 8: Structural Verification
+
+1. Check slide numbering sequence
+2. Verify split slide labeling
+3. Confirm subsection organization
+4. Check logical flow
+5. Identify any orphaned content
+
+### Step 9: Calculate Scores
+
+Calculate score for each category and overall score.
+
+### Step 10: Generate Reports
+
+Produce QA report and validation score files.
+
+---
+
+## OUTPUT FORMAT
+
+### QA Report Format
+
+```
+========================================
+STEP 8: QUALITY ASSURANCE REPORT
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+Source Files:
+- step7_revised_[domain]_[section]_[date].txt
+- step7_changelog_[domain]_[section]_[date].txt
+- step4_output_[domain]_[date].txt
+
+========================================
+CATEGORY 1: ANCHOR COVERAGE
+========================================
+Score: [X]/100
+
+ANCHOR VERIFICATION:
+
+| Anchor Summary | Covered? | Slide(s) | Notes |
+|----------------|----------|----------|-------|
+| [Anchor 1 summary] | ✓ | 3, 4 | |
+| [Anchor 2 summary] | ✓ | 5 | Frontload - positioned correctly |
+| [Anchor 3 summary] | ✗ | - | MISSING |
+...
+
+FRONTLOAD ANCHORS:
+| Anchor | Expected Position | Actual Position | Status |
+|--------|-------------------|-----------------|--------|
+| [Summary] | Early in subsection | Slide 3 | ✓ Correct |
+...
+
+CROSS-REFERENCE ANCHORS:
+| Anchor | Primary Coverage | Callback Script | Status |
+|--------|------------------|-----------------|--------|
+| [Summary] | Slide 7 | Present in notes | ✓ Correct |
+...
+
+ISSUES:
+- [List any anchor coverage issues]
+
+========================================
+CATEGORY 2: CHARACTER LIMIT COMPLIANCE
+========================================
+Score: [X]/100
+
+SLIDE-BY-SLIDE VERIFICATION:
+
+| Slide | Header | Body | NCLEX Tip | Notes | Status |
+|-------|--------|------|----------|-------|--------|
+| 1 | ✓ 28 chars | ✓ 5 lines | N/A | ✓ 120 sec | PASS |
+| 2 | ✓ 31 chars | ✗ 9 lines | ✓ 2 lines | ✓ 150 sec | FAIL |
+...
+
+VIOLATIONS:
+| Slide | Element | Limit | Actual | Overage |
+|-------|---------|-------|--------|---------|
+| 2 | Body | 8 lines | 9 lines | +1 line |
+...
+
+========================================
+CATEGORY 3: NCLEX TIP PRESENCE
+========================================
+Score: [X]/100
+
+| Slide | Type | Tip Required? | Tip Present? | Status |
+|-------|------|---------------|--------------|--------|
+| 1 | Intro | No | No | ✓ PASS |
+| 2 | Content | Yes | Yes | ✓ PASS |
+| 3 | Content | Yes | No | ✗ FAIL |
+...
+
+ISSUES:
+- Slide 3: Missing required NCLEX tip
+
+========================================
+CATEGORY 4: FIXED SLIDE COMPLIANCE
+========================================
+Score: [X]/100
+
+SECTION INTRO (Slide 1):
+- Title present: [Yes/No]
+- Provocative quote present: [Yes/No]
+- Presenter notes present: [Yes/No]
+- Status: [PASS/FAIL]
+
+VIGNETTE (Slide [#]):
+- 2-4 sentence stem: [Yes/No]
+- 4 answer options: [Yes/No]
+- Status: [PASS/FAIL]
+
+ANSWER (Slide [#]):
+- Correct answer identified: [Yes/No]
+- Rationale provided: [Yes/No]
+- Distractor analysis: [Yes/No]
+- Status: [PASS/FAIL]
+
+ISSUES:
+- [List any fixed slide issues]
+
+========================================
+CATEGORY 5: PRESENTER NOTES QUALITY
+========================================
+Score: [X]/100
+
+| Slide | Notes Present | Complete Sentences | [PAUSE] | [EMPHASIS] | Duration | Status |
+|-------|---------------|-------------------|---------|------------|----------|--------|
+| 1 | ✓ | ✓ | ✓ | ✓ | 90 sec | PASS |
+| 2 | ✓ | ✓ | ✗ | ✓ | 145 sec | WARN |
+...
+
+ISSUES:
+- Slide 2: Missing [PAUSE] markers
+
+========================================
+CATEGORY 6: DELIVERY MODE COMPLIANCE
+========================================
+Score: [X]/100
+
+| Subsection | Anchors | Expected Mode | Actual Mode | Components | Status |
+|------------|---------|---------------|-------------|------------|--------|
+| [Name 1] | 8 | Foundational | Foundational | O/S/B ✓ | PASS |
+| [Name 2] | 6 | Full | Full | C/C/S ✓ | PASS |
+| [Name 3] | 3 | Minor | Minor | C/C ✓ | PASS |
+...
+
+Legend: O=Overview, S=Scaffolding, B=Bridge, C=Connection, C=Core, S=Synthesis
+
+ISSUES:
+- [List any mode compliance issues]
+
+========================================
+CATEGORY 7: STRUCTURAL INTEGRITY
+========================================
+Score: [X]/100
+
+SLIDE NUMBERING:
+- Sequential: [Yes/No]
+- Split slides labeled correctly: [Yes/No/N/A]
+- Total slides: [X]
+
+SUBSECTION ORGANIZATION:
+- Boundaries clear: [Yes/No]
+- Logical flow: [Yes/No]
+
+ORPHANED CONTENT:
+- None found / [List any]
+
+ISSUES:
+- [List any structural issues]
+
+========================================
+OVERALL SUMMARY
+========================================
+
+| Category | Score | Status |
+|----------|-------|--------|
+| 1. Anchor Coverage | [X]/100 | [PASS/FAIL] |
+| 2. Character Limits | [X]/100 | [PASS/FAIL] |
+| 3. NCLEX Tip Presence | [X]/100 | [PASS/FAIL] |
+| 4. Fixed Slides | [X]/100 | [PASS/FAIL] |
+| 5. Presenter Notes | [X]/100 | [PASS/FAIL] |
+| 6. Delivery Modes | [X]/100 | [PASS/FAIL] |
+| 7. Structural Integrity | [X]/100 | [PASS/FAIL] |
+| **OVERALL** | **[X]/100** | **[PASS/FAIL]** |
+
+PASSING THRESHOLD: 90/100
+
+CRITICAL ISSUES (must fix before use):
+1. [List any critical issues]
+2. ...
+
+WARNINGS (recommended fixes):
+1. [List any warnings]
+2. ...
+
+========================================
+QA REPORT COMPLETE
+========================================
+```
+
+---
+
+### Validation Score Format
+
+```
+========================================
+STEP 8: VALIDATION SCORE
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+========================================
+SCORE SUMMARY
+========================================
+
+OVERALL SCORE: [X]/100
+STATUS: [PASS/FAIL/NEEDS REVISION]
+
+Passing Threshold: 90/100
+
+CATEGORY BREAKDOWN:
+| Category | Score | Weight | Weighted |
+|----------|-------|--------|----------|
+| Anchor Coverage | [X] | 25% | [X] |
+| Character Limits | [X] | 20% | [X] |
+| NCLEX Tip Presence | [X] | 10% | [X] |
+| Fixed Slides | [X] | 15% | [X] |
+| Presenter Notes | [X] | 15% | [X] |
+| Delivery Modes | [X] | 10% | [X] |
+| Structural Integrity | [X] | 5% | [X] |
+| **TOTAL** | | 100% | **[X]** |
+
+========================================
+READINESS ASSESSMENT
+========================================
+
+[If PASS:]
+✓ READY FOR STEP 9
+
+This section blueprint has passed quality assurance and is
+ready for visual aid identification.
+
+Proceed to Step 9: Visual Aid Identification & Design.
+
+[If FAIL:]
+✗ REQUIRES REVISION
+
+This section blueprint requires fixes before production use.
+
+REQUIRED ACTIONS:
+1. [Specific action item]
+2. [Specific action item]
+...
+
+After fixes, re-run Step 8 QA.
+
+========================================
+VALIDATION COMPLETE
+========================================
+```
+
+---
+
+## SCORING WEIGHTS
+
+| Category | Weight | Rationale |
+|----------|--------|-----------|
+| Anchor Coverage | 25% | Core purpose - must teach all content |
+| Character Limits | 20% | Template compliance essential |
+| Fixed Slides | 15% | Section structure requirements |
+| Presenter Notes | 15% | Delivery quality |
+| NCLEX Tip Presence | 10% | Testing guidance |
+| Delivery Modes | 10% | Pedagogical structure |
+| Structural Integrity | 5% | Organization |
+
+**Overall Score Calculation:**
+```
+Overall = (Cat1 × 0.25) + (Cat2 × 0.20) + (Cat3 × 0.10) +
+          (Cat4 × 0.15) + (Cat5 × 0.15) + (Cat6 × 0.10) + (Cat7 × 0.05)
+```
+
+---
+
+## PASS/FAIL CRITERIA
+
+| Overall Score | Status |
+|---------------|--------|
+| 90-100 | PASS - Ready for production |
+| 80-89 | NEEDS REVISION - Minor fixes required |
+| Below 80 | FAIL - Significant revision required |
+
+### Automatic Fail Conditions
+
+Regardless of score, the following trigger automatic FAIL:
+- Any anchor completely missing
+- Missing fixed slide (intro, vignette, or answer)
+- More than 3 character limit violations
+- No presenter notes on any slide
+
+---
+
+## SAVE INSTRUCTIONS
+
+Save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `qa_reports/`
+
+**QA Report:**
+`[Domain]_Production_[Date]/qa_reports/step8_qa_report_[domain]_[section]_[date].txt`
+
+**Validation Score:**
+`[Domain]_Production_[Date]/qa_reports/step8_validation_score_[domain]_[section]_[date].txt`
+
+**Examples:**
+- `Pediatric_Nursing_Production_2024-01-15/qa_reports/step8_qa_report_developmental_infant_cognition_2024-01-15.txt`
+- `Pediatric_Nursing_Production_2024-01-15/qa_reports/step8_validation_score_developmental_infant_cognition_2024-01-15.txt`
+
+---
+
+## POST-QA WORKFLOW
+
+### If PASS (≥90):
+Blueprint is ready for PowerPoint population.
+
+### If NEEDS REVISION (80-89):
+1. Review flagged issues in QA report
+2. Make targeted fixes to Step 7 output
+3. Re-run Step 8 QA
+4. Repeat until PASS
+
+### If FAIL (<80):
+1. Review all issues in QA report
+2. May need to return to Step 6 for regeneration
+3. Apply fixes through Step 7
+4. Re-run Step 8 QA
+5. Repeat until PASS
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance  ← YOU ARE HERE
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population
+    ↓
+[Font Formatting - deferred]
+    ↓
+[PRODUCTION COMPLETE]
+```

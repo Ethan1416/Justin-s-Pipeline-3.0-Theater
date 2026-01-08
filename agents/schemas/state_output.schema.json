@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "state_output.schema.json",
+  "title": "State Manager Output Schema",
+  "description": "Schema for state_manager agent output - pipeline state operation results",
+  "type": "object",
+  "required": ["metadata", "result"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "operation_type", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "state_manager"
+        },
+        "pipeline_id": {
+          "type": "string"
+        },
+        "operation_type": {
+          "type": "string",
+          "enum": ["read", "write", "update", "checkpoint", "rollback"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": ["success"],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "state_file": {
+          "type": "string"
+        }
+      }
+    },
+    "current_state": {
+      "type": "object",
+      "description": "Current pipeline state after operation",
+      "properties": {
+        "pipeline_id": {
+          "type": "string"
+        },
+        "current_step": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": { "type": "string" },
+              "timestamp": { "type": "string" },
+              "output_file": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "checkpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": { "type": "string" },
+              "timestamp": { "type": "string" },
+              "checkpoint_file": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "details": { "type": "string" }
+        }
+      },
+      "description": "History of state operations"
+    }
+  }
+}

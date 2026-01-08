@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "changelog_output.schema.json",
+  "title": "Changelog Writer Output Schema",
+  "description": "Schema for changelog_writer agent output - formatted revision changelog",
+  "type": "object",
+  "required": ["metadata", "changelog", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "changelog_writer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "revision_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "changelog": {
+      "type": "object",
+      "required": ["title", "entries"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/changelog_entry"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_changes": {
+          "type": "integer"
+        },
+        "changes_by_type": {
+          "type": "object",
+          "properties": {
+            "add": { "type": "integer" },
+            "modify": { "type": "integer" },
+            "delete": { "type": "integer" },
+            "reorder": { "type": "integer" },
+            "split": { "type": "integer" },
+            "merge": { "type": "integer" },
+            "fix": { "type": "integer" }
+          }
+        },
+        "slides_affected": {
+          "type": "integer"
+        },
+        "elements_affected": {
+          "type": "integer"
+        }
+      }
+    },
+    "output_file": {
+      "type": "string",
+      "description": "Path where changelog was saved"
+    }
+  },
+  "definitions": {
+    "changelog_entry": {
+      "type": "object",
+      "required": ["id", "change_type", "description"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "change_type": {
+          "type": "string",
+          "enum": ["add", "modify", "delete", "reorder", "split", "merge", "fix"]
+        },
+        "location_string": {
+          "type": "string",
+          "description": "Human-readable location (e.g., 'Slide 5, Header')"
+        },
+        "description": {
+          "type": "string"
+        },
+        "before_value": {
+          "type": "string"
+        },
+        "after_value": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "timeline_input.schema.json",
+  "title": "Timeline Generator Input Schema",
+  "description": "Input schema for the timeline_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["slide_context", "timeline_data"],
+  "properties": {
+    "slide_context": {
+      "type": "object",
+      "required": ["slide_number", "section_name", "title"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Slide number within the section"
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the section this slide belongs to"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Section number"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Slide title"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+          "description": "NCLEX content domain"
+        }
+      }
+    },
+    "timeline_data": {
+      "type": "object",
+      "required": ["timeline_type", "events"],
+      "properties": {
+        "timeline_type": {
+          "type": "string",
+          "enum": ["chronological", "developmental", "disease_progression", "treatment_phases", "historical"],
+          "description": "Type of timeline content"
+        },
+        "timeline_name": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Name of the timeline"
+        },
+        "start_label": {
+          "type": "string",
+          "maxLength": 15,
+          "description": "Optional label for timeline start"
+        },
+        "end_label": {
+          "type": "string",
+          "maxLength": 15,
+          "description": "Optional label for timeline end"
+        },
+        "events": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 8,
+          "description": "Events/stages on the timeline",
+          "items": {
+            "type": "object",
+            "required": ["header", "date"],
+            "properties": {
+              "header": {
+                "type": "string",
+                "maxLength": 22,
+                "description": "Event/stage name"
+              },
+              "date": {
+                "type": "string",
+                "maxLength": 15,
+                "description": "Date, age range, or phase label"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 56,
+                "description": "Event description (28 chars/line, 2 lines max)"
+              },
+              "features": {
+                "type": "array",
+                "maxItems": 4,
+                "items": {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                "description": "Feature bullets for developmental stages (Layout D)"
+              }
+            }
+          }
+        },
+        "eras": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["name", "date_range"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 20
+              },
+              "date_range": {
+                "type": "string",
+                "maxLength": 15
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Era blocks for Layout C"
+        }
+      }
+    },
+    "layout_preference": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "AUTO"],
+      "default": "AUTO",
+      "description": "Preferred layout: A=Horizontal Timeline (3-5), B=Vertical Timeline (4-7), C=Horizontal Era Blocks (3-4), D=Developmental Stages (4-6), E=Milestone Timeline (5-8), AUTO=auto-select"
+    }
+  }
+}

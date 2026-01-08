@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "position_output.schema.json",
+  "title": "Position Calculator Output Schema",
+  "description": "Schema for position_calculator agent output - calculated positions for visual elements",
+  "type": "object",
+  "required": ["metadata", "positioned_elements", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "position_calculator"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "positioned_elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/positioned_element"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_elements": {
+          "type": "integer"
+        },
+        "bounding_box": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "width": { "type": "number" },
+            "height": { "type": "number" }
+          }
+        },
+        "layout_used": {
+          "type": "string"
+        },
+        "elements_resized": {
+          "type": "integer"
+        },
+        "overflow_warning": {
+          "type": "boolean"
+        }
+      }
+    },
+    "connection_points": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/connection_point"
+      },
+      "description": "Calculated connection points for connectors"
+    }
+  },
+  "definitions": {
+    "positioned_element": {
+      "type": "object",
+      "required": ["element_id", "position"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": {
+              "type": "number",
+              "description": "X position in inches"
+            },
+            "y": {
+              "type": "number",
+              "description": "Y position in inches"
+            },
+            "width": {
+              "type": "number",
+              "description": "Width in inches"
+            },
+            "height": {
+              "type": "number",
+              "description": "Height in inches"
+            }
+          }
+        },
+        "position_emu": {
+          "type": "object",
+          "properties": {
+            "left": { "type": "integer" },
+            "top": { "type": "integer" },
+            "width": { "type": "integer" },
+            "height": { "type": "integer" }
+          },
+          "description": "Position in EMUs for python-pptx"
+        },
+        "anchor_points": {
+          "type": "object",
+          "properties": {
+            "top": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+            "bottom": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+            "left": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+            "right": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+            "center": { "type": "object", "properties": { "x": { "type": "number" }, "y": { "type": "number" } } }
+          }
+        },
+        "was_resized": {
+          "type": "boolean"
+        }
+      }
+    },
+    "connection_point": {
+      "type": "object",
+      "properties": {
+        "from_element": { "type": "string" },
+        "to_element": { "type": "string" },
+        "from_anchor": {
+          "type": "string",
+          "enum": ["top", "bottom", "left", "right", "center"]
+        },
+        "to_anchor": {
+          "type": "string",
+          "enum": ["top", "bottom", "left", "right", "center"]
+        },
+        "start_point": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+        },
+        "end_point": {
+          "type": "object",
+          "properties": { "x": { "type": "number" }, "y": { "type": "number" } }
+        }
+      }
+    }
+  }
+}

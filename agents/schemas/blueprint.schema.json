@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "blueprint.schema.json",
+  "title": "Blueprint Schema",
+  "description": "Schema for slide blueprints in the NCLEX pipeline",
+  "type": "object",
+  "required": ["metadata", "slides"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["section_number", "section_name", "domain", "date", "version"],
+      "properties": {
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "version": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "qa_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 35,
+      "items": {
+        "$ref": "#/definitions/slide"
+      }
+    }
+  },
+  "definitions": {
+    "slide": {
+      "type": "object",
+      "required": ["slide_number", "title", "body", "visual", "presenter_notes"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "$ref": "#/definitions/title_content"
+        },
+        "body": {
+          "$ref": "#/definitions/body_content"
+        },
+        "tip": {
+          "$ref": "#/definitions/tip_content"
+        },
+        "visual": {
+          "$ref": "#/definitions/visual_marker"
+        },
+        "presenter_notes": {
+          "$ref": "#/definitions/presenter_notes"
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "title_content": {
+      "type": "object",
+      "required": ["text", "line_count", "chars_per_line"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "line_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "chars_per_line": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "maximum": 32
+          }
+        }
+      }
+    },
+    "body_content": {
+      "type": "object",
+      "required": ["text", "line_count", "chars_per_line"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "line_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "chars_per_line": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "maximum": 66
+          }
+        },
+        "bullet_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tip_content": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 132
+        },
+        "line_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "chars_per_line": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "maximum": 66
+          }
+        }
+      }
+    },
+    "visual_marker": {
+      "type": "object",
+      "required": ["has_visual"],
+      "properties": {
+        "has_visual": {
+          "type": "boolean"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["TABLE", "FLOWCHART", "DECISION_TREE", "TIMELINE", "HIERARCHY", "SPECTRUM", "KEY_DIFFERENTIATORS", null]
+        },
+        "visual_spec": {
+          "$ref": "#/definitions/visual_spec"
+        }
+      }
+    },
+    "visual_spec": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E"]
+        },
+        "title": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "word_count": {
+          "type": "integer",
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "maximum": 180
+        }
+      }
+    }
+  }
+}

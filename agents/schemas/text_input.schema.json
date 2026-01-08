@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "text_input.schema.json",
+  "title": "Text Formatter Input Schema",
+  "description": "Schema for text_formatter agent input - formats text content for PowerPoint placeholders",
+  "type": "object",
+  "required": ["metadata", "text_elements"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "text_formatter"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "text_elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/text_element"
+      }
+    },
+    "formatting_rules": {
+      "type": "object",
+      "properties": {
+        "default_font": {
+          "type": "string",
+          "default": "Calibri"
+        },
+        "header_font_size": {
+          "type": "integer",
+          "default": 28
+        },
+        "body_font_size": {
+          "type": "integer",
+          "default": 18
+        },
+        "tip_font_size": {
+          "type": "integer",
+          "default": 14
+        },
+        "bullet_character": {
+          "type": "string",
+          "default": "\u2022"
+        },
+        "preserve_line_breaks": {
+          "type": "boolean",
+          "default": true
+        },
+        "apply_emphasis": {
+          "type": "boolean",
+          "default": true,
+          "description": "Convert **text** to bold, etc."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "text_element": {
+      "type": "object",
+      "required": ["element_id", "element_type", "raw_text"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "element_type": {
+          "type": "string",
+          "enum": ["header", "body", "tip", "presenter_notes", "visual_label"]
+        },
+        "raw_text": {
+          "type": "string"
+        },
+        "placeholder_type": {
+          "type": "string",
+          "description": "PPTX placeholder type"
+        }
+      }
+    }
+  }
+}

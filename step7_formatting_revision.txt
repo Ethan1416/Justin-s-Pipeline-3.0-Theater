@@ -1,0 +1,498 @@
+# STEP 7: FORMATTING REVISION
+## Text and Character Limit Compliance
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step takes the Step 6 blueprint and revises content to fit PowerPoint template character limits. It ensures all text elements comply with formatting constraints while maintaining instructional integrity.
+
+---
+
+## INPUT
+
+**Required:**
+1. Step 6 blueprint file (`step6_blueprint_[domain]_[section]_[date].txt`)
+2. This formatting revision prompt
+
+---
+
+## OUTPUT
+
+**Primary Output:** `step7_revised_[domain]_[section]_[date].txt`
+- Complete revised blueprint with all text fitting character limits
+
+**Secondary Output:** `step7_changelog_[domain]_[section]_[date].txt`
+- Log of all changes made
+- Flags for slides requiring heavy revision
+- Slide numbers and specific modifications
+
+---
+
+## CHARACTER LIMITS
+
+### Template Constraints
+
+| Element | Max Characters/Line | Max Lines | Font Size |
+|---------|--------------------:|----------:|-----------|
+| Header | 32 | 2 | 30pt white |
+| Body | 66 | 8 | 20pt black |
+| NCLEX Tip | 66 | 2 | 20pt black |
+
+### Presenter Notes Constraint
+
+| Element | Constraint |
+|---------|-----------|
+| Presenter Notes | Maximum 180 seconds spoken (~390-450 words at 130-150 wpm) |
+
+---
+
+## REVISION PRINCIPLES
+
+### Core Philosophy
+
+**Keep the lesson intact.** When content exceeds limits:
+1. Present information differently, not less completely
+2. Maintain instructional coherence
+3. Preserve key concepts and relationships
+4. Ensure learning objectives remain achievable
+
+### Priority Order
+
+When condensing content, prioritize in this order:
+1. **Preserve:** Core concept definitions and key relationships
+2. **Condense:** Elaborate explanations and examples
+3. **Restructure:** Reorganize for efficiency without losing meaning
+4. **Split:** Divide across multiple slides if condensing fails
+
+### Splitting Slides
+
+If content cannot fit within limits after condensing:
+- Split into multiple slides
+- Maintain logical flow
+- Update slide numbers sequentially
+- Add transition language in presenter notes
+- Note split in changelog
+
+---
+
+## REVISION PROCESS
+
+### Step 1: Process Full Section
+
+Review the entire section blueprint at once to understand content relationships before revising.
+
+### Step 2: Check Each Slide
+
+For each slide, verify:
+
+**Header:**
+- [ ] Each line ≤ 32 characters
+- [ ] Maximum 2 lines total
+
+**Body:**
+- [ ] Each line ≤ 66 characters
+- [ ] Maximum 8 lines total
+
+**NCLEX Tip:**
+- [ ] Each line ≤ 66 characters
+- [ ] Maximum 2 lines total
+- [ ] Present on content slides only
+
+**Presenter Notes:**
+- [ ] Maximum ~450 words (180 seconds)
+- [ ] Consistent with slide content
+
+### Step 3: Apply Revisions
+
+For each element exceeding limits:
+
+**Headers exceeding limits:**
+- Shorten title while maintaining clarity
+- Use abbreviations if standard in domain
+- Remove articles/prepositions where possible
+- Split across two lines if needed
+
+**Body exceeding limits:**
+- Condense language (remove filler words)
+- Use parallel structure for efficiency
+- Convert prose to bullets if shorter
+- Combine related points
+- If still over: split slide
+
+**NCLEX Tips exceeding limits:**
+- Tighten language
+- Focus on single key insight
+- Remove redundant phrasing
+
+**Presenter Notes exceeding limits:**
+- Identify non-essential elaborations
+- Condense examples
+- Tighten transitions
+- Maintain all key teaching points
+
+### Step 4: Validate Consistency
+
+After revisions:
+- Ensure presenter notes match revised slide content
+- Verify NCLEX tips remain relevant to revised body
+- Confirm learning objectives still achievable
+
+### Step 4.5: Automated Line Count Validation
+
+Run the validation script to confirm all BODY sections comply with 8-line limit:
+
+```bash
+cd "." (repository root)
+python validate_blueprint_line_count.py "C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\blueprints"
+```
+
+**Expected Result:** "✓ ALL BLUEPRINTS VALID"
+
+**If Issues Found:**
+- Review flagged slides
+- Apply condensation using step6_5_enforce_line_limit.txt guidelines
+- Re-run validation until all slides comply
+
+**CRITICAL:** Do not proceed to Step 8 if validation fails.
+
+### Step 5: Generate Changelog
+
+Document all changes made (see Changelog Format below).
+
+---
+
+## REVISION TECHNIQUES
+
+### Header Condensing
+
+| Before | After | Technique |
+|--------|-------|-----------|
+| "The Relationship Between Dopamine and Motor Function" | "Dopamine & Motor Function" | Remove articles, use ampersand |
+| "Understanding How Neurotransmitters Work" | "Neurotransmitter Mechanisms" | Remove gerund, use noun |
+| "Introduction to Assessment Methods" | "Assessment Methods Overview" | Restructure |
+
+### Body Condensing
+
+**Remove filler words:**
+- "It is important to note that" → [delete]
+- "In other words" → [delete]
+- "Essentially" → [delete]
+- "It should be noted that" → [delete]
+
+**Tighten phrasing:**
+- "is characterized by" → "features"
+- "results in the occurrence of" → "causes"
+- "plays an important role in" → "affects"
+- "in order to" → "to"
+
+**Use parallel structure:**
+```
+Before:
+• The first symptom is tremor
+• Patients also experience rigidity
+• Another symptom that occurs is bradykinesia
+
+After:
+• Tremor
+• Rigidity
+• Bradykinesia
+```
+
+**Convert prose to bullets:**
+```
+Before:
+The disorder is characterized by tremor, rigidity, and
+bradykinesia, with tremor being the most visible symptom
+and bradykinesia often being the most disabling.
+
+After:
+Cardinal symptoms:
+• Tremor (most visible)
+• Rigidity
+• Bradykinesia (most disabling)
+```
+
+### NCLEX Tip Condensing
+
+| Before | After |
+|--------|-------|
+| "The NCLEX often tests this concept by presenting a patient scenario and asking you to identify the affected brain region" | "NCLEX tests this via patient scenarios asking for affected brain region" |
+| "Be careful not to confuse this with the similar-sounding condition" | "Don't confuse with [similar condition]—key difference is X" |
+
+### Presenter Notes Condensing
+
+**Identify cuttable content:**
+- Repeated transitions
+- Excessive examples (keep 1-2 best)
+- Redundant explanations
+- Over-elaborated points
+
+**Maintain essential content:**
+- Core concept explanations
+- Key distinctions
+- NCLEX pattern callouts
+- Critical transitions
+
+---
+
+## SLIDE SPLITTING PROTOCOL
+
+When content cannot be condensed to fit:
+
+### When to Split
+
+- Body exceeds 8 lines after condensing
+- Content has natural division point
+- Splitting improves rather than fragments learning
+
+### How to Split
+
+1. **Identify division point** - natural break in content
+2. **Create Slide A** - first portion with transition to B
+3. **Create Slide B** - continuation with connection to A
+4. **Renumber** - update all subsequent slide numbers
+5. **Adjust presenter notes** - add transition language
+
+### Split Slide Template
+
+```
+===========================================
+SLIDE [#]A: [TITLE - Part 1]
+===========================================
+[First portion of content]
+
+PRESENTER NOTES:
+[Content for first portion]
+We'll continue this on the next slide. [PAUSE]
+
+===========================================
+SLIDE [#]B: [TITLE - Part 2]
+===========================================
+[Second portion of content]
+
+PRESENTER NOTES:
+Continuing with [topic]... [connection to previous slide]
+[Content for second portion]
+```
+
+### Document in Changelog
+
+```
+SLIDE SPLIT: Original Slide [#] → Slides [#]A and [#]B
+Reason: Body text exceeded 8 lines
+Division point: [describe where content was split]
+```
+
+---
+
+## OUTPUT FORMAT
+
+### Revised Blueprint Format
+
+Same format as Step 6 blueprint, with:
+- All text within character limits
+- Split slides numbered appropriately
+- Header updated to reflect revision
+
+```
+========================================
+STEP 7: REVISED BLUEPRINT
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+Source: step6_blueprint_[domain]_[section]_[date].txt
+
+REVISION SUMMARY:
+- Slides revised: [count]
+- Slides split: [count]
+- New total slides: [count]
+- Heavy revision flags: [count]
+
+========================================
+BEGIN REVISED SLIDE-BY-SLIDE BLUEPRINT
+========================================
+
+[All slides with revised content, same format as Step 6]
+
+========================================
+END REVISED BLUEPRINT
+========================================
+
+READY FOR STEP 8: QUALITY ASSURANCE
+```
+
+---
+
+### Changelog Format
+
+```
+========================================
+STEP 7: CHANGELOG
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+Source: step6_blueprint_[domain]_[section]_[date].txt
+Output: step7_revised_[domain]_[section]_[date].txt
+
+========================================
+REVISION LOG
+========================================
+
+---
+SLIDE 1: [Slide Title]
+---
+Element: Header
+Issue: Exceeded 32 characters (was 45)
+Change: "[Original text]" → "[Revised text]"
+
+Element: Body
+Issue: None (within limits)
+Change: No change
+
+Element: NCLEX Tip
+Issue: N/A (intro slide)
+Change: N/A
+
+Element: Presenter Notes
+Issue: None (within 180 sec)
+Change: No change
+
+Status: Minor revision
+
+---
+SLIDE 2: [Slide Title]
+---
+Element: Header
+Issue: None
+Change: No change
+
+Element: Body
+Issue: Exceeded 8 lines (was 11)
+Change: Condensed bullet points, combined related items
+Before: [original text]
+After: [revised text]
+
+Element: NCLEX Tip
+Issue: Exceeded 2 lines (was 3)
+Change: Tightened language
+Before: "[original]"
+After: "[revised]"
+
+Element: Presenter Notes
+Issue: Exceeded 180 sec (was ~220 sec)
+Change: Removed redundant example, tightened transitions
+
+Status: Moderate revision
+
+---
+SLIDE 5: [Slide Title]
+---
+Status: HEAVY REVISION FLAG
+
+Element: Body
+Issue: Could not condense below 8 lines
+Change: SPLIT into Slides 5A and 5B
+Division: [Description of split point]
+
+[Details of 5A and 5B]
+
+---
+
+[Continue for all slides...]
+
+========================================
+SUMMARY
+========================================
+
+REVISION STATISTICS:
+| Category | Count |
+|----------|-------|
+| No change needed | [X] |
+| Minor revisions | [X] |
+| Moderate revisions | [X] |
+| Heavy revisions | [X] |
+| Slides split | [X] |
+
+HEAVY REVISION FLAGS:
+| Slide | Issue | Resolution |
+|-------|-------|------------|
+| [#] | [Issue description] | [How resolved] |
+...
+
+SLIDES ADDED (from splits):
+| Original | Split Into |
+|----------|------------|
+| Slide [#] | [#]A, [#]B |
+...
+
+========================================
+CHANGELOG COMPLETE
+========================================
+```
+
+---
+
+## VALIDATION CHECKLIST
+
+Before completing Step 7:
+
+### Automated Validation (REQUIRED)
+- [ ] **Run validate_blueprint_line_count.py script**
+- [ ] **Script returns "✓ ALL BLUEPRINTS VALID"**
+- [ ] **All BODY sections have ≤ 8 non-empty lines**
+
+### Character Limits
+- [ ] All headers ≤ 32 chars/line, ≤ 2 lines
+- [ ] All body text ≤ 66 chars/line, ≤ 8 lines
+- [ ] All NCLEX tips ≤ 66 chars/line, ≤ 2 lines
+- [ ] All presenter notes ≤ 180 seconds
+
+### Content Integrity
+- [ ] All anchor concepts preserved
+- [ ] Learning objectives still achievable
+- [ ] NCLEX tips still relevant to content
+- [ ] Presenter notes consistent with slides
+
+### Documentation
+- [ ] Changelog documents all changes
+- [ ] Heavy revisions flagged
+- [ ] Split slides noted
+- [ ] Both output files generated
+
+---
+
+## SAVE INSTRUCTIONS
+
+Save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `revisions/`
+
+**Revised Blueprint:**
+`[Domain]_Production_[Date]/revisions/step7_revised_[domain]_[section]_[date].txt`
+
+**Changelog:**
+`[Domain]_Production_[Date]/revisions/step7_changelog_[domain]_[section]_[date].txt`
+
+**Examples:**
+- `Medical_Surgical_Nursing_Production_2024-01-15/revisions/step7_revised_clinical_anxiety_disorders_2024-01-15.txt`
+- `Medical_Surgical_Nursing_Production_2024-01-15/revisions/step7_changelog_clinical_anxiety_disorders_2024-01-15.txt`
+
+---
+
+## NEXT STEP
+
+After completing formatting revision, proceed to:
+
+**Step 8: Quality Assurance**
+- Validate all anchors covered
+- Verify NCLEX tips present
+- Confirm character limits met
+- Generate validation score

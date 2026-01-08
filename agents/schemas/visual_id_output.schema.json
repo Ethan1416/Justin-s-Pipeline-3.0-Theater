@@ -1,0 +1,441 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "visual_id_output.schema.json",
+  "title": "Step 9 Visual Identification Output Schema",
+  "description": "Schema for visual_identifier agent output - identified visual candidates with specifications",
+  "type": "object",
+  "required": ["metadata", "summary", "visual_candidates", "visual_specifications", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "section_number", "section_name", "domain", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 9: Visual Aid Identification"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "output_file": {
+          "type": "string",
+          "description": "Path to output file"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_slides", "candidates_identified", "visuals_specified"],
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "candidates_identified": {
+          "type": "integer",
+          "description": "Number of slides identified as visual candidates"
+        },
+        "visuals_specified": {
+          "type": "integer",
+          "description": "Number of visual specifications created"
+        },
+        "visual_type_counts": {
+          "type": "object",
+          "properties": {
+            "TABLE": { "type": "integer" },
+            "KEY_DIFFERENTIATORS": { "type": "integer" },
+            "FLOWCHART": { "type": "integer" },
+            "DECISION_TREE": { "type": "integer" },
+            "HIERARCHY": { "type": "integer" },
+            "TIMELINE": { "type": "integer" },
+            "SPECTRUM": { "type": "integer" }
+          }
+        },
+        "quota_status": {
+          "type": "string",
+          "enum": ["MET", "EXCEEDED", "NOT_MET"],
+          "description": "Whether minimum visual quota was met"
+        }
+      }
+    },
+    "visual_candidates": {
+      "type": "array",
+      "description": "Slides identified as candidates for visual aids",
+      "items": {
+        "$ref": "#/definitions/visual_candidate"
+      }
+    },
+    "visual_specifications": {
+      "type": "array",
+      "description": "Detailed specifications for each visual aid",
+      "items": {
+        "$ref": "#/definitions/visual_specification"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checks"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "minimum_quota_met": {
+              "type": "boolean",
+              "description": "Section has at least 2-4 visuals based on size"
+            },
+            "fixed_slides_protected": {
+              "type": "boolean",
+              "description": "Section intro, vignette, answer slides not converted"
+            },
+            "priority_order_followed": {
+              "type": "boolean",
+              "description": "TABLE > KEY_DIFF > FLOWCHART priority respected"
+            },
+            "complexity_limits_respected": {
+              "type": "boolean",
+              "description": "Node/step limits not exceeded"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "visual_candidate": {
+      "type": "object",
+      "required": ["slide_number", "candidate_strength", "conditions_met", "recommended_type"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_title": {
+          "type": "string"
+        },
+        "candidate_strength": {
+          "type": "string",
+          "enum": ["STRONG", "POSSIBLE"],
+          "description": "STRONG = 2+ conditions met, POSSIBLE = 1 condition met"
+        },
+        "conditions_met": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "COMPARISON_CONTENT",
+              "SEQUENTIAL_PROCESS",
+              "DECISION_BRANCHING",
+              "CHRONOLOGICAL_CONTENT",
+              "HIERARCHICAL_CONTENT",
+              "CONTINUUM_CONTENT",
+              "DISCRIMINATION_CONTENT",
+              "CRITERIA_LIST",
+              "HIGH_DENSITY_INFO"
+            ]
+          }
+        },
+        "trigger_keywords_found": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommended_type": {
+          "type": "string",
+          "enum": ["TABLE", "KEY_DIFFERENTIATORS", "FLOWCHART", "DECISION_TREE", "HIERARCHY", "TIMELINE", "SPECTRUM"]
+        },
+        "integration_option": {
+          "type": "string",
+          "enum": ["A", "B", "C"],
+          "description": "A = replace body, B = new slide, C = reduce body"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "visual_specification": {
+      "type": "object",
+      "required": ["visual_id", "slide_number", "type", "title"],
+      "properties": {
+        "visual_id": {
+          "type": "string",
+          "pattern": "^V[0-9]+$",
+          "description": "Unique identifier for the visual (V1, V2, etc.)"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["TABLE", "KEY_DIFFERENTIATORS", "FLOWCHART", "DECISION_TREE", "HIERARCHY", "TIMELINE", "SPECTRUM"]
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E", "AUTO"]
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "integration_option": {
+          "type": "string",
+          "enum": ["A", "B", "C"]
+        },
+        "data": {
+          "oneOf": [
+            { "$ref": "#/definitions/table_data" },
+            { "$ref": "#/definitions/flowchart_data" },
+            { "$ref": "#/definitions/decision_tree_data" },
+            { "$ref": "#/definitions/timeline_data" },
+            { "$ref": "#/definitions/hierarchy_data" },
+            { "$ref": "#/definitions/spectrum_data" },
+            { "$ref": "#/definitions/key_diff_data" }
+          ]
+        },
+        "rendering": {
+          "type": "string",
+          "enum": ["native_powerpoint", "python_generated"],
+          "description": "Tables use native PowerPoint, others use Python"
+        }
+      }
+    },
+    "table_data": {
+      "type": "object",
+      "required": ["headers", "rows"],
+      "properties": {
+        "headers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "maxLength": 25
+          }
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "flowchart_data": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "steps": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "required": ["step_number", "header"],
+            "properties": {
+              "step_number": { "type": "integer" },
+              "header": { "type": "string", "maxLength": 20 },
+              "body": { "type": "string" },
+              "is_start": { "type": "boolean" },
+              "is_end": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "decision_tree_data": {
+      "type": "object",
+      "required": ["levels", "outcomes"],
+      "properties": {
+        "max_nodes": {
+          "type": "integer",
+          "maximum": 15
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/decision_level"
+          }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/outcome_node"
+          }
+        }
+      }
+    },
+    "decision_level": {
+      "type": "object",
+      "required": ["level", "header", "question", "paths"],
+      "properties": {
+        "level": {
+          "type": "string",
+          "pattern": "^LEVEL [0-9]+[A-Z]?$"
+        },
+        "header": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "question": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parent_path": {
+          "type": "string"
+        }
+      }
+    },
+    "outcome_node": {
+      "type": "object",
+      "required": ["id", "result", "color", "parent"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^O[0-9]+$"
+        },
+        "result": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "enum": ["green", "red", "blue", "purple", "orange"]
+        },
+        "parent": {
+          "type": "string"
+        }
+      }
+    },
+    "timeline_data": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["date", "header"],
+            "properties": {
+              "date": { "type": "string", "maxLength": 15 },
+              "header": { "type": "string", "maxLength": 20 },
+              "body": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "hierarchy_data": {
+      "type": "object",
+      "required": ["root"],
+      "properties": {
+        "max_nodes": {
+          "type": "integer",
+          "maximum": 15
+        },
+        "root": {
+          "$ref": "#/definitions/hierarchy_node"
+        }
+      }
+    },
+    "hierarchy_node": {
+      "type": "object",
+      "required": ["header"],
+      "properties": {
+        "header": { "type": "string", "maxLength": 25 },
+        "body": { "type": "string" },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hierarchy_node"
+          }
+        }
+      }
+    },
+    "spectrum_data": {
+      "type": "object",
+      "required": ["segments", "gradient_type"],
+      "properties": {
+        "gradient_type": {
+          "type": "string",
+          "enum": ["blue", "alert", "bipolar"]
+        },
+        "left_label": { "type": "string" },
+        "right_label": { "type": "string" },
+        "segments": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["label"],
+            "properties": {
+              "label": { "type": "string", "maxLength": 20 },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "key_diff_data": {
+      "type": "object",
+      "required": ["concepts", "key_differentiator"],
+      "properties": {
+        "concepts": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["name", "features"],
+            "properties": {
+              "name": { "type": "string", "maxLength": 25 },
+              "features": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "key_differentiator": {
+          "type": "object",
+          "required": ["title", "description"],
+          "properties": {
+            "title": { "type": "string" },
+            "description": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

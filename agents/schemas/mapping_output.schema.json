@@ -1,0 +1,690 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mapping_output.schema.json",
+  "title": "Step 2 Lecture Mapping Output Schema",
+  "description": "Schema for Step 2 output - 5-phase content analysis for NCLEX lectures",
+  "type": "object",
+  "required": ["metadata", "phase1_content_survey", "phase2_cluster_discovery", "phase3_relationship_mapping", "phase4_section_formation", "phase5_arc_planning", "handoff"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "domain", "total_anchors"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 2: Lecture Mapping"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Reference to Step 1 anchor document"
+        }
+      }
+    },
+    "phase1_content_survey": {
+      "type": "object",
+      "required": ["categories", "key_observations"],
+      "description": "Phase 1: Familiarize with the anchor landscape",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/content_category"
+          }
+        },
+        "key_observations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Notable patterns, heavily represented topics, gaps"
+        }
+      }
+    },
+    "phase2_cluster_discovery": {
+      "type": "object",
+      "required": ["clusters", "multi_fit_anchors", "cluster_size_summary"],
+      "description": "Phase 2: Identify natural groupings of related anchors",
+      "properties": {
+        "clusters": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/cluster"
+          }
+        },
+        "multi_fit_anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/multi_fit_anchor"
+          },
+          "description": "Anchors that could belong to multiple clusters"
+        },
+        "cluster_size_summary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["cluster_name", "count", "status"],
+            "properties": {
+              "cluster_name": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["Normal", "Small - may merge", "Large - may split"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "phase3_relationship_mapping": {
+      "type": "object",
+      "required": ["prerequisite_analysis", "dependency_summary", "frontloading_requirements"],
+      "description": "Phase 3: Understand how clusters depend on each other",
+      "properties": {
+        "prerequisite_analysis": {
+          "type": "string",
+          "description": "Narrative analysis of prerequisite relationships"
+        },
+        "dependency_summary": {
+          "type": "object",
+          "properties": {
+            "foundational_clusters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cluster_name": {
+                    "type": "string"
+                  },
+                  "provides_foundation_for": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "dependent_clusters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cluster_name": {
+                    "type": "string"
+                  },
+                  "requires": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "culminating_clusters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cluster_name": {
+                    "type": "string"
+                  },
+                  "integrates_from": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "frontloading_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["cluster_name", "frontloading_level", "must_come_after"],
+            "properties": {
+              "cluster_name": {
+                "type": "string"
+              },
+              "frontloading_level": {
+                "type": "string",
+                "enum": ["None", "Minimal", "Moderate", "Extensive"]
+              },
+              "must_come_after": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "scaffolding_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "phase4_section_formation": {
+      "type": "object",
+      "required": ["section_count_calculation", "proposed_sections", "section_size_validation"],
+      "description": "Phase 4: Formalize clusters into proposed lecture sections",
+      "properties": {
+        "section_count_calculation": {
+          "type": "object",
+          "required": ["total_anchors", "target_sections", "actual_sections"],
+          "properties": {
+            "total_anchors": {
+              "type": "integer"
+            },
+            "formula": {
+              "type": "string",
+              "description": "e.g., '174 / 17 = ~10 sections'"
+            },
+            "target_sections": {
+              "type": "integer"
+            },
+            "actual_sections": {
+              "type": "integer"
+            },
+            "rationale_for_deviation": {
+              "type": "string"
+            }
+          }
+        },
+        "proposed_sections": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/definitions/proposed_section"
+          }
+        },
+        "special_sections": {
+          "type": "object",
+          "properties": {
+            "misc_section": {
+              "$ref": "#/definitions/special_section"
+            },
+            "culmination_section": {
+              "$ref": "#/definitions/special_section"
+            }
+          }
+        },
+        "section_size_validation": {
+          "type": "object",
+          "required": ["total_anchors_assigned", "unassigned_anchors"],
+          "properties": {
+            "section_details": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "section_name": {
+                    "type": "string"
+                  },
+                  "anchor_count": {
+                    "type": "integer"
+                  },
+                  "estimated_slides": {
+                    "type": "integer"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["OK", "Small", "Large"]
+                  }
+                }
+              }
+            },
+            "total_anchors_assigned": {
+              "type": "integer"
+            },
+            "unassigned_anchors": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "phase5_arc_planning": {
+      "type": "object",
+      "required": ["iterations", "iteration_comparison", "observations", "implications_for_sorting"],
+      "description": "Phase 5: Generate multiple iterations of section sequencing",
+      "properties": {
+        "iterations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/definitions/arc_iteration"
+          }
+        },
+        "iteration_comparison": {
+          "type": "object",
+          "properties": {
+            "criteria_ratings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "iteration_number": {
+                    "type": "integer"
+                  },
+                  "prerequisite_integrity": {
+                    "type": "string",
+                    "enum": ["Strong", "Moderate", "Weak"]
+                  },
+                  "session_balance": {
+                    "type": "string",
+                    "enum": ["Balanced", "Slightly uneven", "Uneven"]
+                  },
+                  "learning_flow": {
+                    "type": "string",
+                    "enum": ["Strong", "Moderate", "Weak"]
+                  },
+                  "culmination_setup": {
+                    "type": "string",
+                    "enum": ["Yes", "No", "N/A"]
+                  },
+                  "logical_coherence": {
+                    "type": "string",
+                    "enum": ["Strong", "Moderate", "Weak"]
+                  },
+                  "frontloading_efficiency": {
+                    "type": "string",
+                    "enum": ["Efficient", "Acceptable", "Front-heavy"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key tradeoffs, common elements, contentious decisions"
+        },
+        "implications_for_sorting": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What iterations reveal about anchor sorting in Step 3"
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "required": ["proposed_sections", "arc_iterations_count"],
+      "description": "Summary for Step 3 handoff",
+      "properties": {
+        "proposed_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "section_anchor_summary": {
+          "type": "string"
+        },
+        "arc_iterations_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "frontloading_summary": {
+          "type": "string"
+        },
+        "multi_fit_anchors_to_resolve": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "content_category": {
+      "type": "object",
+      "required": ["category_name", "unique_items", "subcategories"],
+      "properties": {
+        "category_name": {
+          "type": "string"
+        },
+        "unique_items": {
+          "type": "integer"
+        },
+        "total_mentions": {
+          "type": "integer"
+        },
+        "subcategories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "item_name": {
+                      "type": "string"
+                    },
+                    "anchor_numbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    },
+                    "mention_count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "cluster": {
+      "type": "object",
+      "required": ["cluster_name", "anchor_count", "anchor_numbers", "core_theme"],
+      "properties": {
+        "cluster_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "anchor_numbers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "core_theme": {
+          "type": "string",
+          "description": "1-2 sentence description of what unifies this cluster"
+        },
+        "key_concepts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "multi_fit_anchor": {
+      "type": "object",
+      "required": ["anchor_number", "current_cluster", "could_also_fit", "placement_rationale"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "current_cluster": {
+          "type": "string"
+        },
+        "could_also_fit": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "placement_rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "proposed_section": {
+      "type": "object",
+      "required": ["section_name", "formed_from", "anchor_count", "anchor_numbers", "description", "foundational_status"],
+      "properties": {
+        "section_name": {
+          "type": "string"
+        },
+        "formed_from": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cluster(s) that became this section"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "anchor_numbers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "2-3 sentences describing what this section covers"
+        },
+        "foundational_status": {
+          "type": "string",
+          "enum": ["Foundational", "Dependent", "Culminating"]
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "special_section": {
+      "type": "object",
+      "properties": {
+        "anchor_count": {
+          "type": "integer"
+        },
+        "anchor_numbers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "contents": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "arc_iteration": {
+      "type": "object",
+      "required": ["iteration_number", "label", "session1", "session2", "evaluation"],
+      "properties": {
+        "iteration_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "label": {
+          "type": "string",
+          "description": "Brief label (e.g., 'Foundation-Forward')"
+        },
+        "session1": {
+          "$ref": "#/definitions/session_plan"
+        },
+        "session2": {
+          "$ref": "#/definitions/session_plan"
+        },
+        "evaluation": {
+          "type": "object",
+          "required": ["prerequisite_integrity", "session_balance", "learning_flow", "logical_coherence"],
+          "properties": {
+            "prerequisite_integrity": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Strong", "Moderate", "Weak"]
+                },
+                "explanation": {
+                  "type": "string"
+                }
+              }
+            },
+            "session_balance": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Balanced", "Slightly uneven", "Uneven"]
+                },
+                "session1_slides": {
+                  "type": "integer"
+                },
+                "session2_slides": {
+                  "type": "integer"
+                }
+              }
+            },
+            "learning_flow": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Strong", "Moderate", "Weak"]
+                },
+                "explanation": {
+                  "type": "string"
+                }
+              }
+            },
+            "culmination_setup": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Yes", "No", "N/A"]
+                },
+                "explanation": {
+                  "type": "string"
+                }
+              }
+            },
+            "logical_coherence": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Strong", "Moderate", "Weak"]
+                },
+                "explanation": {
+                  "type": "string"
+                }
+              }
+            },
+            "frontloading_efficiency": {
+              "type": "object",
+              "properties": {
+                "rating": {
+                  "type": "string",
+                  "enum": ["Efficient", "Acceptable", "Front-heavy"]
+                },
+                "explanation": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "weaknesses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "session_plan": {
+      "type": "object",
+      "required": ["sections", "totals"],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["section_name", "anchor_count", "estimated_slides"],
+            "properties": {
+              "section_name": {
+                "type": "string"
+              },
+              "anchor_count": {
+                "type": "integer"
+              },
+              "estimated_slides": {
+                "type": "integer"
+              },
+              "rationale": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "totals": {
+          "type": "object",
+          "properties": {
+            "anchor_count": {
+              "type": "integer"
+            },
+            "estimated_slides": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

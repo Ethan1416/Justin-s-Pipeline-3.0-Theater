@@ -1,0 +1,331 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "outline_input.schema.json",
+  "title": "Step 4 Outline Generation Input Schema",
+  "description": "Schema for outline_generator agent input - takes Step 3 sorting output to generate session/section/subsection structure",
+  "type": "object",
+  "required": ["metadata", "sorting_output", "arc_planning"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "domain"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 4: Outline Generation"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain": {
+          "type": "string",
+          "description": "The domain being outlined (e.g., fundamentals, pharmacology)"
+        },
+        "source_files": {
+          "type": "object",
+          "properties": {
+            "step2_output": {
+              "type": "string",
+              "description": "Reference to Step 2 arc planning output file"
+            },
+            "step3_output": {
+              "type": "string",
+              "description": "Reference to Step 3 sorting output file"
+            }
+          }
+        }
+      }
+    },
+    "sorting_output": {
+      "type": "object",
+      "required": ["total_anchors", "domain_summary", "sorted_anchors", "flagged_items"],
+      "description": "Output from Step 3 content sorting",
+      "properties": {
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "domain_summary": {
+          "type": "object",
+          "description": "Summary statistics by domain from Step 3",
+          "additionalProperties": {
+            "$ref": "#/definitions/domain_stats"
+          }
+        },
+        "sorted_anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/sorted_anchor"
+          }
+        },
+        "flagged_items": {
+          "type": "object",
+          "properties": {
+            "frontload": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/frontload_item"
+              }
+            },
+            "xref": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/xref_item"
+              }
+            }
+          }
+        }
+      }
+    },
+    "arc_planning": {
+      "type": "object",
+      "required": ["iterations", "relationship_map"],
+      "description": "Arc planning data from Step 2 for session distribution guidance",
+      "properties": {
+        "iterations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/arc_iteration"
+          }
+        },
+        "relationship_map": {
+          "type": "object",
+          "description": "Prerequisite and dependency relationships between sections",
+          "properties": {
+            "prerequisites": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/prerequisite_relationship"
+              }
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/dependency_relationship"
+              }
+            }
+          }
+        },
+        "recommended_section_count": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 12,
+          "description": "Recommended section count based on anchor count / 15-20"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Hard constraints for outline generation",
+      "properties": {
+        "sessions": {
+          "type": "integer",
+          "const": 2
+        },
+        "minutes_per_session": {
+          "type": "integer",
+          "const": 150
+        },
+        "slides_per_session": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "integer",
+              "const": 72
+            },
+            "max": {
+              "type": "integer",
+              "const": 90
+            }
+          }
+        },
+        "slides_per_section": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 12
+            },
+            "max": {
+              "type": "integer",
+              "const": 35
+            }
+          }
+        },
+        "fixed_slides_per_section": {
+          "type": "integer",
+          "const": 3,
+          "description": "1 intro + 1 question + 1 answer slide"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "domain_stats": {
+      "type": "object",
+      "required": ["anchor_count"],
+      "properties": {
+        "anchor_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_slides": {
+          "type": "integer"
+        },
+        "frontload_count": {
+          "type": "integer"
+        },
+        "xref_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "sorted_anchor": {
+      "type": "object",
+      "required": ["anchor_number", "domain"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "anchor_text": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["FRONTLOAD", "AMBIGUOUS", "XREF"]
+          }
+        },
+        "xref_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "moderate", "complex"],
+          "description": "Anchor complexity for slide calculation"
+        }
+      }
+    },
+    "frontload_item": {
+      "type": "object",
+      "required": ["anchor_number", "domain", "rationale"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    },
+    "xref_item": {
+      "type": "object",
+      "required": ["anchor_number", "primary_domain", "xref_domain"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "primary_domain": {
+          "type": "string"
+        },
+        "xref_domain": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        }
+      }
+    },
+    "arc_iteration": {
+      "type": "object",
+      "required": ["iteration_number", "session_distribution"],
+      "properties": {
+        "iteration_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "session_distribution": {
+          "type": "object",
+          "properties": {
+            "session_1": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "session_2": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "prerequisite_integrity_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "balance_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "learning_flow_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "prerequisite_relationship": {
+      "type": "object",
+      "required": ["prerequisite_section", "dependent_section"],
+      "properties": {
+        "prerequisite_section": {
+          "type": "string"
+        },
+        "dependent_section": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "string",
+          "enum": ["required", "recommended", "optional"]
+        }
+      }
+    },
+    "dependency_relationship": {
+      "type": "object",
+      "required": ["from_section", "to_section", "relationship_type"],
+      "properties": {
+        "from_section": {
+          "type": "string"
+        },
+        "to_section": {
+          "type": "string"
+        },
+        "relationship_type": {
+          "type": "string",
+          "enum": ["builds_on", "applies", "integrates", "extends"]
+        }
+      }
+    }
+  }
+}

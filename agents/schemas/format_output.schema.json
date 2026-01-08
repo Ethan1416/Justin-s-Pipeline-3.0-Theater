@@ -1,0 +1,300 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "format_output.schema.json",
+  "title": "Step 7 Formatting Revision Output Schema",
+  "description": "Schema for formatting_reviser agent output - revised blueprint with character limits applied",
+  "type": "object",
+  "required": ["metadata", "revised_blueprint", "revision_summary", "changelog", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date", "source_file", "output_file"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 7: Formatting Revision"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        },
+        "changelog_file": {
+          "type": "string"
+        }
+      }
+    },
+    "revised_blueprint": {
+      "$ref": "#/definitions/blueprint_output"
+    },
+    "revision_summary": {
+      "type": "object",
+      "required": ["total_slides", "slides_revised", "slides_split", "heavy_revision_count"],
+      "properties": {
+        "total_slides": {
+          "type": "integer",
+          "description": "Original slide count before revisions"
+        },
+        "new_total_slides": {
+          "type": "integer",
+          "description": "New slide count after any splits"
+        },
+        "slides_revised": {
+          "type": "integer"
+        },
+        "slides_split": {
+          "type": "integer"
+        },
+        "heavy_revision_count": {
+          "type": "integer"
+        },
+        "no_change_needed": {
+          "type": "integer"
+        }
+      }
+    },
+    "changelog": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/changelog_entry"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "all_constraints_met"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "all_constraints_met": {
+          "type": "boolean"
+        },
+        "constraint_checks": {
+          "type": "object",
+          "properties": {
+            "headers_compliant": { "type": "boolean" },
+            "bodies_compliant": { "type": "boolean" },
+            "tips_compliant": { "type": "boolean" },
+            "notes_compliant": { "type": "boolean" }
+          }
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/violation"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_output": {
+      "type": "object",
+      "required": ["section_number", "section_name", "slides"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/revised_slide"
+          }
+        }
+      }
+    },
+    "revised_slide": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body", "presenter_notes", "char_counts"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_label": {
+          "type": "string",
+          "description": "e.g., '5A', '5B' for split slides"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "header": {
+          "$ref": "#/definitions/formatted_text"
+        },
+        "body": {
+          "$ref": "#/definitions/formatted_text"
+        },
+        "nclex_tip": {
+          "$ref": "#/definitions/formatted_text"
+        },
+        "presenter_notes": {
+          "$ref": "#/definitions/presenter_notes_formatted"
+        },
+        "char_counts": {
+          "type": "object",
+          "properties": {
+            "header_chars_per_line": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "body_line_count": { "type": "integer" },
+            "body_chars_per_line": {
+              "type": "array",
+              "items": { "type": "integer" }
+            },
+            "tip_chars_per_line": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "revision_status": {
+          "type": "string",
+          "enum": ["no_change", "minor", "moderate", "heavy", "split"]
+        },
+        "is_split_slide": {
+          "type": "boolean"
+        },
+        "split_from": {
+          "type": "integer",
+          "description": "Original slide number if this is a split slide"
+        }
+      }
+    },
+    "formatted_text": {
+      "type": "object",
+      "required": ["text", "line_count", "chars_per_line"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "line_count": {
+          "type": "integer"
+        },
+        "chars_per_line": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "is_compliant": {
+          "type": "boolean"
+        }
+      }
+    },
+    "presenter_notes_formatted": {
+      "type": "object",
+      "required": ["text", "word_count", "estimated_seconds"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "word_count": {
+          "type": "integer"
+        },
+        "estimated_seconds": {
+          "type": "integer"
+        },
+        "is_compliant": {
+          "type": "boolean"
+        }
+      }
+    },
+    "changelog_entry": {
+      "type": "object",
+      "required": ["slide_number", "status"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["no_change", "minor", "moderate", "heavy", "split"]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/change_detail"
+          }
+        }
+      }
+    },
+    "change_detail": {
+      "type": "object",
+      "required": ["element", "issue", "change"],
+      "properties": {
+        "element": {
+          "type": "string",
+          "enum": ["header", "body", "nclex_tip", "presenter_notes"]
+        },
+        "issue": {
+          "type": "string",
+          "description": "Description of the constraint violation"
+        },
+        "original": {
+          "type": "string"
+        },
+        "revised": {
+          "type": "string"
+        },
+        "change": {
+          "type": "string",
+          "description": "Description of the change made"
+        }
+      }
+    },
+    "violation": {
+      "type": "object",
+      "required": ["slide_number", "element", "limit", "actual"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "element": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "string"
+        },
+        "actual": {
+          "type": "string"
+        },
+        "overage": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

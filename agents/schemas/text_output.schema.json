@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "text_output.schema.json",
+  "title": "Text Formatter Output Schema",
+  "description": "Schema for text_formatter agent output - formatted text ready for PPTX insertion",
+  "type": "object",
+  "required": ["metadata", "formatted_elements", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "text_formatter"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "formatted_elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/formatted_element"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_elements": {
+          "type": "integer"
+        },
+        "elements_with_emphasis": {
+          "type": "integer"
+        },
+        "total_paragraphs": {
+          "type": "integer"
+        },
+        "total_runs": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "formatted_element": {
+      "type": "object",
+      "required": ["element_id", "element_type", "paragraphs"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "element_type": {
+          "type": "string",
+          "enum": ["header", "body", "tip", "presenter_notes", "visual_label"]
+        },
+        "placeholder_type": {
+          "type": "string"
+        },
+        "paragraphs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/paragraph"
+          }
+        }
+      }
+    },
+    "paragraph": {
+      "type": "object",
+      "required": ["runs"],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "default": 0,
+          "description": "Bullet level (0 = no bullet)"
+        },
+        "alignment": {
+          "type": "string",
+          "enum": ["left", "center", "right", "justify"]
+        },
+        "space_before": {
+          "type": "number",
+          "description": "Space before paragraph in points"
+        },
+        "space_after": {
+          "type": "number",
+          "description": "Space after paragraph in points"
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/text_run"
+          }
+        }
+      }
+    },
+    "text_run": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "font_name": {
+          "type": "string"
+        },
+        "font_size_pt": {
+          "type": "integer"
+        },
+        "bold": {
+          "type": "boolean",
+          "default": false
+        },
+        "italic": {
+          "type": "boolean",
+          "default": false
+        },
+        "underline": {
+          "type": "boolean",
+          "default": false
+        },
+        "font_color_rgb": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

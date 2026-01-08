@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "keydiff_input.schema.json",
+  "title": "Key Differentiators Generator Input Schema",
+  "description": "Input schema for the key_diff_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["slide_context", "comparison_data"],
+  "properties": {
+    "slide_context": {
+      "type": "object",
+      "required": ["slide_number", "section_name", "title"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Slide number within the section"
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the section this slide belongs to"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Section number"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Slide title"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+          "description": "NCLEX content domain"
+        }
+      }
+    },
+    "comparison_data": {
+      "type": "object",
+      "required": ["comparison_type", "concepts"],
+      "properties": {
+        "comparison_type": {
+          "type": "string",
+          "enum": ["differential_diagnosis", "commonly_confused", "critical_feature", "side_by_side"],
+          "description": "Type of comparison"
+        },
+        "concepts": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "description": "Concepts being compared",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 44,
+                "description": "Concept name (22 chars/line, 2 lines max)"
+              },
+              "color": {
+                "type": "string",
+                "enum": ["blue", "red", "green"],
+                "description": "Concept color coding"
+              }
+            }
+          }
+        },
+        "features": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "description": "Features to compare across concepts",
+          "items": {
+            "type": "object",
+            "required": ["label", "values"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 18,
+                "description": "Feature name"
+              },
+              "values": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "string",
+                  "maxLength": 50,
+                  "description": "Feature value per concept (25 chars/line, 2 lines)"
+                },
+                "description": "Values for each concept"
+              },
+              "is_key": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether this is a KEY differentiator"
+              }
+            }
+          }
+        },
+        "key_differentiator": {
+          "type": "object",
+          "description": "Primary distinguishing feature",
+          "properties": {
+            "title": {
+              "type": "string",
+              "maxLength": 30,
+              "description": "Name of the key differentiator"
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 70,
+              "description": "Explanation of why this is key (35 chars/line, 2 lines)"
+            }
+          }
+        }
+      }
+    },
+    "layout_preference": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "AUTO"],
+      "default": "AUTO",
+      "description": "Preferred layout: A=Side-by-Side (2 concepts), B=Centered Key Diff, C=Multiple Differentiators, D=Three-Way Discrimination, E=Feature Matrix, AUTO=auto-select"
+    }
+  }
+}

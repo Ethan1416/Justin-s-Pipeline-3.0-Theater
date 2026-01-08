@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "layout_input.schema.json",
+  "title": "Layout Selector Input Schema",
+  "description": "Generic input schema for all layout selector agents (table_layout_selector, flowchart_layout_selector, etc.) in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_type", "content_analysis"],
+  "properties": {
+    "visual_type": {
+      "type": "string",
+      "enum": ["TABLE", "FLOWCHART", "DECISION_TREE", "TIMELINE", "HIERARCHY", "SPECTRUM", "KEY_DIFFERENTIATORS"],
+      "description": "Type of visual being laid out"
+    },
+    "content_analysis": {
+      "type": "object",
+      "required": ["element_count"],
+      "properties": {
+        "element_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of primary elements (rows, steps, nodes, segments, etc.)"
+        },
+        "secondary_element_count": {
+          "type": "integer",
+          "description": "Number of secondary elements (columns, children, features, etc.)"
+        },
+        "max_text_length": {
+          "type": "integer",
+          "description": "Maximum character count in any element"
+        },
+        "avg_text_length": {
+          "type": "number",
+          "description": "Average character count across elements"
+        },
+        "has_nested_content": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether content has nested/hierarchical structure"
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4,
+          "description": "Depth of hierarchy (for trees and hierarchies)"
+        },
+        "branching_pattern": {
+          "type": "string",
+          "enum": ["symmetric", "asymmetric", "linear"],
+          "description": "Branching pattern for trees"
+        }
+      }
+    },
+    "content_characteristics": {
+      "type": "object",
+      "description": "Type-specific content characteristics",
+      "properties": {
+        "table": {
+          "type": "object",
+          "properties": {
+            "column_count": { "type": "integer", "minimum": 2, "maximum": 6 },
+            "row_count": { "type": "integer", "minimum": 2, "maximum": 10 },
+            "is_comparison": { "type": "boolean" },
+            "is_reference": { "type": "boolean" },
+            "has_long_text": { "type": "boolean" }
+          }
+        },
+        "flowchart": {
+          "type": "object",
+          "properties": {
+            "step_count": { "type": "integer", "minimum": 3, "maximum": 7 },
+            "has_substeps": { "type": "boolean" },
+            "has_branches": { "type": "boolean" },
+            "is_complex": { "type": "boolean" }
+          }
+        },
+        "decision_tree": {
+          "type": "object",
+          "properties": {
+            "outcome_count": { "type": "integer", "minimum": 2, "maximum": 8 },
+            "decision_count": { "type": "integer" },
+            "is_binary": { "type": "boolean" },
+            "max_depth": { "type": "integer", "minimum": 2, "maximum": 4 }
+          }
+        },
+        "timeline": {
+          "type": "object",
+          "properties": {
+            "event_count": { "type": "integer", "minimum": 3, "maximum": 8 },
+            "is_developmental": { "type": "boolean" },
+            "has_eras": { "type": "boolean" },
+            "is_milestone_based": { "type": "boolean" }
+          }
+        },
+        "hierarchy": {
+          "type": "object",
+          "properties": {
+            "node_count": { "type": "integer", "maximum": 15 },
+            "level_count": { "type": "integer", "minimum": 2, "maximum": 4 },
+            "is_balanced": { "type": "boolean" },
+            "is_inverted": { "type": "boolean" }
+          }
+        },
+        "spectrum": {
+          "type": "object",
+          "properties": {
+            "segment_count": { "type": "integer", "minimum": 2, "maximum": 6 },
+            "is_bipolar": { "type": "boolean" },
+            "is_dual_axis": { "type": "boolean" },
+            "has_discrete_segments": { "type": "boolean" }
+          }
+        },
+        "key_differentiators": {
+          "type": "object",
+          "properties": {
+            "concept_count": { "type": "integer", "minimum": 2, "maximum": 4 },
+            "feature_count": { "type": "integer", "minimum": 1, "maximum": 6 },
+            "key_diff_count": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "focus_single_diff": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "preferred_orientation": {
+          "type": "string",
+          "enum": ["horizontal", "vertical", "auto"],
+          "default": "auto"
+        },
+        "max_width_inches": {
+          "type": "number",
+          "default": 12.3
+        },
+        "max_height_inches": {
+          "type": "number",
+          "default": 5.0
+        },
+        "min_font_size": {
+          "type": "integer",
+          "default": 18
+        }
+      }
+    }
+  }
+}

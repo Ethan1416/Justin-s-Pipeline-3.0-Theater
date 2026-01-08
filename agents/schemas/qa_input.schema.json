@@ -1,0 +1,292 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "qa_input.schema.json",
+  "title": "Step 8 Quality Assurance Input Schema",
+  "description": "Schema for quality_reviewer agent input - validates revised blueprints against all standards",
+  "type": "object",
+  "required": ["metadata", "revised_blueprint", "reference_data"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 8: Quality Assurance"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "revised_blueprint": {
+      "type": "object",
+      "required": ["source_file", "section_number", "section_name", "slides"],
+      "properties": {
+        "source_file": {
+          "type": "string",
+          "description": "Step 7 revised blueprint file"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_to_validate"
+          }
+        }
+      }
+    },
+    "reference_data": {
+      "type": "object",
+      "required": ["step4_anchors", "step5_standards"],
+      "properties": {
+        "step4_output_file": {
+          "type": "string",
+          "description": "Step 4 output file for anchor verification"
+        },
+        "step4_anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/anchor_reference"
+          },
+          "description": "All anchors assigned to this section in Step 4"
+        },
+        "step5_standards": {
+          "$ref": "#/definitions/presentation_standards"
+        },
+        "step7_changelog_file": {
+          "type": "string"
+        }
+      }
+    },
+    "validation_config": {
+      "type": "object",
+      "properties": {
+        "passing_threshold": {
+          "type": "integer",
+          "default": 90,
+          "description": "Minimum score to pass QA"
+        },
+        "automatic_fail_conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "missing_anchor",
+            "missing_fixed_slide",
+            "more_than_3_char_violations",
+            "slide_without_notes"
+          ]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_to_validate": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body", "presenter_notes"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_label": {
+          "type": "string"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "header": {
+          "$ref": "#/definitions/text_element"
+        },
+        "body": {
+          "$ref": "#/definitions/text_element"
+        },
+        "nclex_tip": {
+          "$ref": "#/definitions/text_element"
+        },
+        "presenter_notes": {
+          "$ref": "#/definitions/notes_element"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "text_element": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "line_count": { "type": "integer" },
+        "chars_per_line": {
+          "type": "array",
+          "items": { "type": "integer" }
+        }
+      }
+    },
+    "notes_element": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "word_count": { "type": "integer" },
+        "estimated_seconds": { "type": "integer" }
+      }
+    },
+    "anchor_reference": {
+      "type": "object",
+      "required": ["anchor_number", "anchor_summary", "subsection"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "anchor_summary": {
+          "type": "string"
+        },
+        "anchor_text": {
+          "type": "string"
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["FRONTLOAD", "XREF"]
+          }
+        }
+      }
+    },
+    "presentation_standards": {
+      "type": "object",
+      "properties": {
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "header_max_chars": { "type": "integer", "default": 32 },
+            "header_max_lines": { "type": "integer", "default": 2 },
+            "body_max_chars": { "type": "integer", "default": 66 },
+            "body_max_lines": { "type": "integer", "default": 8 },
+            "tip_max_chars": { "type": "integer", "default": 66 },
+            "tip_max_lines": { "type": "integer", "default": 2 },
+            "notes_max_seconds": { "type": "integer", "default": 180 }
+          }
+        },
+        "delivery_modes": {
+          "type": "object",
+          "properties": {
+            "foundational": {
+              "type": "object",
+              "properties": {
+                "components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "full": {
+              "type": "object",
+              "properties": {
+                "min_anchors": { "type": "integer" },
+                "components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "minor": {
+              "type": "object",
+              "properties": {
+                "anchor_range": {
+                  "type": "object",
+                  "properties": {
+                    "min": { "type": "integer" },
+                    "max": { "type": "integer" }
+                  }
+                },
+                "components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "one_and_done": {
+              "type": "object",
+              "properties": {
+                "max_anchors": { "type": "integer" },
+                "components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "fixed_slides": {
+          "type": "object",
+          "properties": {
+            "section_intro": {
+              "type": "object",
+              "properties": {
+                "required_components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "vignette": {
+              "type": "object",
+              "properties": {
+                "required_components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "answer": {
+              "type": "object",
+              "properties": {
+                "required_components": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "presenter_notes_requirements": {
+          "type": "object",
+          "properties": {
+            "must_be_verbatim_monologue": { "type": "boolean" },
+            "require_pause_markers": { "type": "boolean" },
+            "require_emphasis_markers": { "type": "boolean" },
+            "require_transitions": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  }
+}

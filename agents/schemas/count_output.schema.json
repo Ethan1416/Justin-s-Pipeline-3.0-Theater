@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "count_output.schema.json",
+  "title": "Section Counter Output Schema",
+  "description": "Schema for section_counter agent output - section and slide counts",
+  "type": "object",
+  "required": ["metadata", "counts", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "section_counter"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["total_sections", "total_slides"],
+      "properties": {
+        "total_sections": {
+          "type": "integer"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "total_subsections": {
+          "type": "integer"
+        },
+        "total_anchors": {
+          "type": "integer"
+        },
+        "total_visuals": {
+          "type": "integer"
+        },
+        "by_section": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section_count"
+          }
+        },
+        "by_slide_type": {
+          "type": "object",
+          "properties": {
+            "section_intro": { "type": "integer" },
+            "content": { "type": "integer" },
+            "vignette": { "type": "integer" },
+            "answer": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "average_slides_per_section": {
+          "type": "number"
+        },
+        "average_subsections_per_section": {
+          "type": "number"
+        },
+        "average_anchors_per_section": {
+          "type": "number"
+        },
+        "visual_percentage": {
+          "type": "number"
+        },
+        "largest_section": {
+          "type": "object",
+          "properties": {
+            "section_name": { "type": "string" },
+            "slide_count": { "type": "integer" }
+          }
+        },
+        "smallest_section": {
+          "type": "object",
+          "properties": {
+            "section_name": { "type": "string" },
+            "slide_count": { "type": "integer" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "section_count": {
+      "type": "object",
+      "required": ["section_name", "slide_count"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "slide_count": {
+          "type": "integer"
+        },
+        "subsection_count": {
+          "type": "integer"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "by_slide_type": {
+          "type": "object",
+          "properties": {
+            "section_intro": { "type": "integer" },
+            "content": { "type": "integer" },
+            "vignette": { "type": "integer" },
+            "answer": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+}

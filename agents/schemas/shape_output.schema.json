@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "shape_output.schema.json",
+  "title": "Shape Renderer Output Schema",
+  "description": "Schema for shape_renderer agent output - rendered shape specifications for PPTX",
+  "type": "object",
+  "required": ["metadata", "rendered_shapes", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "shape_renderer"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "rendered_shapes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/rendered_shape"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_shapes": {
+          "type": "integer"
+        },
+        "shapes_by_type": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "bounding_box": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "width": { "type": "number" },
+            "height": { "type": "number" }
+          }
+        },
+        "render_status": {
+          "type": "string",
+          "enum": ["success", "partial", "failed"]
+        }
+      }
+    },
+    "render_instructions": {
+      "type": "object",
+      "properties": {
+        "render_order": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Order in which shapes should be added"
+        },
+        "groupings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "group_id": { "type": "string" },
+              "shape_ids": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "rendered_shape": {
+      "type": "object",
+      "required": ["shape_id", "pptx_shape_type"],
+      "properties": {
+        "shape_id": {
+          "type": "string"
+        },
+        "pptx_shape_type": {
+          "type": "string",
+          "description": "python-pptx shape type constant"
+        },
+        "position_emu": {
+          "type": "object",
+          "properties": {
+            "left": { "type": "integer" },
+            "top": { "type": "integer" },
+            "width": { "type": "integer" },
+            "height": { "type": "integer" }
+          },
+          "description": "Position in EMUs (English Metric Units)"
+        },
+        "fill": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["solid", "none", "gradient"] },
+            "color_rgb": { "type": "string" }
+          }
+        },
+        "line": {
+          "type": "object",
+          "properties": {
+            "color_rgb": { "type": "string" },
+            "width_pt": { "type": "number" },
+            "dash_style": { "type": "string" }
+          }
+        },
+        "text_frame": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "paragraphs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": { "type": "string" },
+                  "font_name": { "type": "string" },
+                  "font_size_pt": { "type": "integer" },
+                  "font_color_rgb": { "type": "string" },
+                  "bold": { "type": "boolean" },
+                  "alignment": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "rotation_degrees": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

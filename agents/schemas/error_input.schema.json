@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "error_input.schema.json",
+  "title": "Error Reporter Input Schema",
+  "description": "Schema for error_reporter agent input - generates comprehensive error reports",
+  "type": "object",
+  "required": ["metadata", "errors"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "error_reporter"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "pipeline_step": {
+          "type": "string",
+          "description": "Which step generated the errors"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/error_item"
+      }
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "agent_that_failed": {
+          "type": "string"
+        },
+        "previous_successful_step": {
+          "type": "string"
+        }
+      }
+    },
+    "report_format": {
+      "type": "string",
+      "enum": ["detailed", "summary", "actionable"],
+      "default": "actionable"
+    }
+  },
+  "definitions": {
+    "error_item": {
+      "type": "object",
+      "required": ["error_type", "message"],
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "enum": ["validation", "constraint", "schema", "missing_data", "format", "logic", "system"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "error", "warning", "info"]
+        },
+        "message": {
+          "type": "string"
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "slide_number": { "type": "integer" },
+            "element": { "type": "string" },
+            "line_number": { "type": "integer" }
+          }
+        },
+        "code": {
+          "type": "string",
+          "description": "Error code for categorization"
+        },
+        "details": {
+          "type": "object",
+          "description": "Additional error-specific details"
+        }
+      }
+    }
+  }
+}

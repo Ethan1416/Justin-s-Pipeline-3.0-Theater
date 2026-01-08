@@ -1,0 +1,438 @@
+{
+  "_meta": {
+    "name": "Nursing Lecture Template System - Example Data",
+    "version": "2.0",
+    "description": "Sample content for all 20 slide template types",
+    "usage": "python complete_template_system.py --json example_all_slides.json"
+  },
+  
+  "slides": [
+    {
+      "type": "title",
+      "content": {
+        "main_title": "Fundamentals of Patient Assessment",
+        "subtitle": "NURS 301 · Module 1: Clinical Foundations",
+        "instructor": "Dr. Sarah Chen, DNP, RN, CCRN",
+        "date": "Spring 2025",
+        "institution": "College of Nursing"
+      }
+    },
+    
+    {
+      "type": "content",
+      "content": {
+        "title": "Physical Assessment Techniques",
+        "subtitle": "Module 1 · Assessment Basics",
+        "section_tag": "Learning Objectives",
+        "section_title": "Systematic Assessment Approach",
+        "intro_text": "A comprehensive physical assessment is the foundation of quality nursing care. This systematic approach ensures no critical findings are missed.",
+        "bullet_points": [
+          "Inspection: Visual examination of body areas for abnormalities",
+          "Palpation: Using touch to assess texture, temperature, and tenderness",
+          "Percussion: Tapping to assess underlying structures",
+          "Auscultation: Listening with stethoscope for body sounds"
+        ],
+        "key_takeaways": [
+          "Always follow head-to-toe sequence",
+          "Compare bilateral findings",
+          "Document immediately"
+        ],
+        "focus_phrase": "Look, Listen, Feel, Document",
+        "slide_number": "02",
+        "footer_text": "NURS 301 · Physical Assessment"
+      }
+    },
+    
+    {
+      "type": "two_column",
+      "content": {
+        "title": "Normal vs Abnormal Findings",
+        "subtitle": "Module 1 · Clinical Comparison",
+        "left_title": "Normal Findings",
+        "left_points": [
+          "Skin warm, dry, intact",
+          "Respirations 12-20/min, unlabored",
+          "Heart sounds S1/S2, regular rhythm",
+          "Abdomen soft, non-tender",
+          "Pulses strong and equal bilaterally"
+        ],
+        "right_title": "Abnormal Findings",
+        "right_points": [
+          "Skin cool, diaphoretic, lesions",
+          "Respirations >24/min, accessory muscle use",
+          "Murmurs, irregular rhythm, extra sounds",
+          "Abdomen rigid, distended, guarding",
+          "Pulses weak, absent, or unequal"
+        ],
+        "slide_number": "03",
+        "footer_text": "NURS 301 · Physical Assessment"
+      }
+    },
+    
+    {
+      "type": "quote",
+      "content": {
+        "quote": "The good physician treats the disease; the great physician treats the patient who has the disease.",
+        "attribution": "— Sir William Osler, MD",
+        "context": "Father of Modern Medicine, 1849-1919",
+        "slide_number": "04",
+        "footer_text": "NURS 301 · Professional Practice"
+      }
+    },
+    
+    {
+      "type": "process",
+      "content": {
+        "title": "The Nursing Process",
+        "subtitle": "Module 1 · Care Planning Framework",
+        "steps": [
+          {
+            "title": "Assess",
+            "description": "Collect comprehensive patient data through interview, observation, and examination"
+          },
+          {
+            "title": "Diagnose",
+            "description": "Analyze data to identify nursing diagnoses and patient problems"
+          },
+          {
+            "title": "Plan",
+            "description": "Set measurable goals and select evidence-based interventions"
+          },
+          {
+            "title": "Implement",
+            "description": "Execute the care plan with proper documentation"
+          },
+          {
+            "title": "Evaluate",
+            "description": "Assess patient outcomes and modify plan as needed"
+          }
+        ],
+        "slide_number": "05",
+        "footer_text": "NURS 301 · Care Planning"
+      }
+    },
+    
+    {
+      "type": "statistics",
+      "content": {
+        "title": "Nursing Workforce Statistics",
+        "subtitle": "Module 1 · Professional Context",
+        "stats": [
+          {
+            "value": "4.2M",
+            "label": "RNs in the US",
+            "sublabel": "Largest healthcare profession"
+          },
+          {
+            "value": "6%",
+            "label": "Job Growth",
+            "sublabel": "Projected through 2032"
+          },
+          {
+            "value": "89%",
+            "label": "Female Nurses",
+            "sublabel": "Growing male representation"
+          },
+          {
+            "value": "$81K",
+            "label": "Median Salary",
+            "sublabel": "National average 2024"
+          }
+        ],
+        "source": "Bureau of Labor Statistics, Occupational Outlook Handbook 2024",
+        "slide_number": "06",
+        "footer_text": "NURS 301 · Professional Context"
+      }
+    },
+    
+    {
+      "type": "case_study",
+      "content": {
+        "title": "Case Study: Acute Assessment",
+        "subtitle": "Module 1 · Clinical Application",
+        "patient_info": "Mr. Johnson, 72 y/o male\n\nPMH: HTN, Type 2 DM, CHF\nAllergies: Sulfa drugs\nMedications: Lisinopril, Metformin, Lasix\n\nAdmitted: Shortness of breath × 3 days\nCode Status: Full Code",
+        "presentation": "Patient sitting upright, appears anxious. Using accessory muscles to breathe. Oxygen saturation 89% on room air. Bilateral crackles in lung bases. 2+ pitting edema bilateral lower extremities. Weight up 8 lbs from baseline.",
+        "question": "What is your priority nursing assessment?",
+        "considerations": [
+          "Heart failure exacerbation vs pneumonia",
+          "Fluid volume excess - daily weights, I&O",
+          "Respiratory status - continuous SpO2 monitoring",
+          "Medication compliance assessment"
+        ],
+        "slide_number": "07",
+        "footer_text": "NURS 301 · Clinical Application"
+      }
+    },
+    
+    {
+      "type": "summary",
+      "content": {
+        "title": "Module 1 Key Takeaways",
+        "subtitle": "Assessment Fundamentals Summary",
+        "points": [
+          {
+            "title": "Systematic Approach",
+            "description": "Always use a consistent head-to-toe assessment framework to avoid missing critical findings"
+          },
+          {
+            "title": "Four Techniques",
+            "description": "Master inspection, palpation, percussion, and auscultation as your core assessment tools"
+          },
+          {
+            "title": "Critical Thinking",
+            "description": "Analyze findings in context of patient history and presenting symptoms"
+          },
+          {
+            "title": "Documentation",
+            "description": "Accurate, timely documentation protects you and supports continuity of care"
+          }
+        ],
+        "next_topic": "Module 2: Vital Signs and Hemodynamic Monitoring",
+        "slide_number": "08",
+        "footer_text": "NURS 301 · Module Summary"
+      }
+    },
+    
+    {
+      "type": "qa",
+      "content": {
+        "title": "Questions & Discussion",
+        "prompts": [
+          "What assessment findings would prompt you to escalate care?",
+          "How do you prioritize multiple abnormal findings?",
+          "What are common assessment pitfalls for new nurses?"
+        ],
+        "contact": "Dr. Chen: s.chen@nursing.edu | Office Hours: MW 2-4pm",
+        "slide_number": "09",
+        "footer_text": "NURS 301 · Discussion"
+      }
+    },
+    
+    {
+      "type": "image",
+      "content": {
+        "title": "Cardiac Anatomy Reference",
+        "subtitle": "Module 1 · Visual Reference",
+        "caption": "Four-chamber heart diagram showing blood flow pathways and major vessels",
+        "slide_number": "10",
+        "footer_text": "NURS 301 · Anatomy Reference"
+      }
+    },
+    
+    {
+      "type": "decision_tree",
+      "content": {
+        "title": "Respiratory Distress Algorithm",
+        "subtitle": "Module 2 · Clinical Decision Support",
+        "root_question": "Is the patient in acute respiratory distress?",
+        "branches": [
+          {
+            "label": "Yes",
+            "outcome": "Immediate Intervention",
+            "action": "Position upright, apply O2, call for help, prepare for escalation"
+          },
+          {
+            "label": "No",
+            "outcome": "Continue Assessment",
+            "action": "Complete respiratory assessment, monitor SpO2, reassess in 15 minutes"
+          }
+        ],
+        "slide_number": "11",
+        "footer_text": "NURS 301 · Decision Support"
+      }
+    },
+    
+    {
+      "type": "timeline",
+      "content": {
+        "title": "Medication Administration Timeline",
+        "subtitle": "Module 2 · Time-Critical Care",
+        "events": [
+          {
+            "time": "0 min",
+            "title": "Order Received",
+            "description": "Verify order completeness and appropriateness"
+          },
+          {
+            "time": "5 min",
+            "title": "Rights Check",
+            "description": "Confirm 6 rights of medication administration"
+          },
+          {
+            "time": "10 min",
+            "title": "Preparation",
+            "description": "Prepare medication using aseptic technique"
+          },
+          {
+            "time": "15 min",
+            "title": "Administration",
+            "description": "Administer medication, patient education"
+          },
+          {
+            "time": "30 min",
+            "title": "Evaluation",
+            "description": "Assess response, document, monitor for adverse effects"
+          }
+        ],
+        "slide_number": "12",
+        "footer_text": "NURS 301 · Medication Safety"
+      }
+    },
+    
+    {
+      "type": "table",
+      "content": {
+        "title": "Vital Signs Reference",
+        "subtitle": "Module 2 · Normal Parameters",
+        "headers": ["Parameter", "Adult Normal", "Elderly Normal", "Status"],
+        "rows": [
+          ["Heart Rate", "60-100 bpm", "60-100 bpm", "Normal"],
+          ["Blood Pressure", "<120/80 mmHg", "<130/80 mmHg", "Normal"],
+          ["Respiratory Rate", "12-20/min", "12-24/min", "Normal"],
+          ["Temperature", "97.8-99.1°F", "96.4-98.5°F", "Normal"],
+          ["SpO2", ">95%", ">92%", "Normal"],
+          ["Pain Scale", "0/10", "0/10", "Normal"]
+        ],
+        "slide_number": "13",
+        "footer_text": "NURS 301 · Vital Signs"
+      }
+    },
+    
+    {
+      "type": "canvas",
+      "content": {
+        "title": "Concept Mapping Activity",
+        "subtitle": "Module 2 · Interactive Learning",
+        "placeholder_text": "Use this space to create your patient care concept map",
+        "slide_number": "14",
+        "footer_text": "NURS 301 · Active Learning"
+      }
+    },
+    
+    {
+      "type": "checklist",
+      "content": {
+        "title": "Pre-Procedure Checklist",
+        "subtitle": "Module 2 · Safety Protocol",
+        "items": [
+          {"text": "Verify patient identity using two identifiers", "checked": true},
+          {"text": "Confirm informed consent is signed and witnessed", "checked": true},
+          {"text": "Review allergies and update allergy band", "checked": true},
+          {"text": "Verify NPO status as ordered", "checked": false},
+          {"text": "Complete and document pre-procedure vital signs", "checked": false},
+          {"text": "Ensure IV access is patent", "checked": false},
+          {"text": "Remove jewelry and dentures as appropriate", "checked": false},
+          {"text": "Complete Time Out before procedure begins", "checked": false}
+        ],
+        "slide_number": "15",
+        "footer_text": "NURS 301 · Safety Protocols"
+      }
+    },
+    
+    {
+      "type": "matrix",
+      "content": {
+        "title": "Pain Management Options",
+        "subtitle": "Module 2 · Pharmacological Comparison",
+        "row_headers": ["Mild Pain (1-3)", "Moderate Pain (4-6)", "Severe Pain (7-10)", "Neuropathic Pain"],
+        "col_headers": ["Acetaminophen", "NSAIDs", "Opioids"],
+        "data": [
+          ["✓", "✓", "—"],
+          ["✓", "✓", "✓"],
+          ["—", "—", "✓"],
+          ["—", "—", "✓"]
+        ],
+        "slide_number": "16",
+        "footer_text": "NURS 301 · Pain Management"
+      }
+    },
+    
+    {
+      "type": "hierarchy",
+      "content": {
+        "title": "Chain of Command",
+        "subtitle": "Module 2 · Communication Framework",
+        "root": "Chief Nursing Officer",
+        "level1": ["Nurse Manager", "Clinical Educator", "Quality Director"],
+        "level2": [
+          ["Charge Nurse", "Staff RN"],
+          ["Preceptor", "Student"],
+          ["Risk Manager", "Compliance"]
+        ],
+        "slide_number": "17",
+        "footer_text": "NURS 301 · Organization"
+      }
+    },
+    
+    {
+      "type": "definition",
+      "content": {
+        "title": "Key Terminology",
+        "subtitle": "Module 2 · Clinical Vocabulary",
+        "terms": [
+          {
+            "term": "Tachycardia",
+            "definition": "Heart rate greater than 100 beats per minute at rest. May indicate fever, pain, anxiety, dehydration, hypoxia, or cardiac pathology. Requires assessment of underlying cause."
+          },
+          {
+            "term": "Bradycardia",
+            "definition": "Heart rate less than 60 beats per minute. May be normal in athletes or indicate heart block, medication effects, or increased intracranial pressure."
+          },
+          {
+            "term": "Hypoxemia",
+            "definition": "Decreased oxygen level in arterial blood (PaO2 < 80 mmHg). Distinguished from hypoxia, which refers to inadequate oxygen at the tissue level."
+          },
+          {
+            "term": "Orthopnea",
+            "definition": "Difficulty breathing while lying flat, relieved by sitting upright. Classic sign of left-sided heart failure. Documented as number of pillows needed."
+          }
+        ],
+        "slide_number": "18",
+        "footer_text": "NURS 301 · Terminology"
+      }
+    },
+    
+    {
+      "type": "before_after",
+      "content": {
+        "title": "Quality Improvement: Fall Prevention",
+        "subtitle": "Module 2 · Evidence-Based Practice",
+        "before_title": "Before Initiative",
+        "before_points": [
+          "Fall rate: 4.2 per 1,000 patient days",
+          "Inconsistent fall risk assessment",
+          "No standardized prevention protocol",
+          "Limited staff awareness of high-risk patients"
+        ],
+        "after_title": "After Implementation",
+        "after_points": [
+          "Fall rate: 1.8 per 1,000 patient days",
+          "Morse Fall Scale on every admission",
+          "Bundle approach with visual cues",
+          "Hourly rounding with documentation"
+        ],
+        "slide_number": "19",
+        "footer_text": "NURS 301 · Quality Improvement"
+      }
+    },
+    
+    {
+      "type": "alert",
+      "content": {
+        "title": "Critical Safety Alert",
+        "subtitle": "Module 2 · Patient Safety",
+        "alert_type": "danger",
+        "headline": "High-Alert Medication Warning",
+        "message": "Insulin, heparin, and concentrated electrolytes require independent double-check verification before administration. Never bypass this safety step.",
+        "action_items": [
+          "Verify order with second licensed nurse",
+          "Check dose calculation independently",
+          "Confirm patient identity at bedside",
+          "Document both nurses' verification"
+        ],
+        "slide_number": "20",
+        "footer_text": "NURS 301 · Medication Safety"
+      }
+    }
+  ]
+}

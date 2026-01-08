@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "assemble_input.schema.json",
+  "title": "Slide Assembler Input Schema",
+  "description": "Schema for slide_assembler agent input - assembles final slides from blueprints and visuals",
+  "type": "object",
+  "required": ["metadata", "blueprint", "visuals"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "slide_assembler"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "blueprint": {
+      "type": "object",
+      "required": ["source_file", "slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/blueprint_slide"
+          }
+        }
+      }
+    },
+    "visuals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/visual_spec"
+      },
+      "description": "Generated visual specifications to integrate"
+    },
+    "template": {
+      "type": "object",
+      "properties": {
+        "template_file": {
+          "type": "string",
+          "description": "Path to PPTX template"
+        },
+        "slide_master": {
+          "type": "string"
+        },
+        "layouts": {
+          "type": "object",
+          "properties": {
+            "section_intro": { "type": "string" },
+            "content": { "type": "string" },
+            "content_with_visual": { "type": "string" },
+            "vignette": { "type": "string" },
+            "answer": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_slide": {
+      "type": "object",
+      "required": ["slide_number", "slide_type"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "visual_id": {
+          "type": "string",
+          "description": "ID of visual to include on this slide"
+        }
+      }
+    },
+    "visual_spec": {
+      "type": "object",
+      "required": ["visual_id", "visual_type"],
+      "properties": {
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_diff"]
+        },
+        "source_file": {
+          "type": "string"
+        },
+        "render_data": {
+          "type": "object",
+          "description": "Visual-specific rendering data"
+        }
+      }
+    }
+  }
+}

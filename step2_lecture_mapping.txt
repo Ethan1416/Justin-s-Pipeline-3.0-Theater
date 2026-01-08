@@ -1,0 +1,548 @@
+# STEP 2: LECTURE MAPPING
+## 5-Phase Content Analysis for NCLEX Lectures
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step analyzes the uploaded anchor point document through 5 sequential phases to:
+- Learn the content landscape
+- Discover natural groupings
+- Map prerequisite relationships
+- Form provisional sections
+- Generate multiple arc iterations to inform sorting
+
+**This step does NOT sort anchors.** It prepares the AI to make informed sorting decisions in Step 3.
+
+---
+
+## INPUT
+
+The anchor point content summaries document uploaded in Step 1, containing:
+- Domain name
+- Numbered anchor points (testable concepts)
+
+---
+
+## DOMAIN ADAPTATION
+
+This prompt is domain-agnostic. When executing:
+
+1. **Extract the domain name** from the uploaded document
+2. **Identify domain-relevant categories** for the Content Survey (Phase 1)
+3. **Adapt cluster themes** to match the domain's content structure
+4. **Form sections** appropriate to the domain's natural organization
+
+---
+
+## THE 5 PHASES
+
+Execute each phase in sequence. Each phase builds on the previous.
+
+---
+
+## PHASE 1: CONTENT SURVEY
+### Purpose: Familiarize with the anchor landscape
+
+**Task:** Read ALL anchors and create a detailed inventory of what appears in the content.
+
+**Identify and catalog content using domain-appropriate categories:**
+
+First, determine what categories are relevant to this domain. Examples by domain type:
+
+**For Biological/Physiological Domains:**
+- Anatomical structures, neural pathways, body systems
+- Disorders, conditions, syndromes
+- Drugs, pharmacological agents, mechanisms
+- Psychological processes (memory, emotion, perception)
+- Research studies, paradigms, key researchers
+
+**For Clinical/Assessment Domains:**
+- Assessment instruments, tests, measures
+- Diagnostic categories, disorders, syndromes
+- Theoretical orientations, models
+- Populations, demographics, special considerations
+- Psychometric concepts, validity, reliability
+
+**For Treatment/Intervention Domains:**
+- Therapeutic approaches, modalities, techniques
+- Disorders addressed, presenting problems
+- Theoretical foundations, models
+- Evidence base, research support
+- Special populations, adaptations
+
+**For Ethics/Professional Practice Domains:**
+- Ethical principles, codes, standards
+- Legal requirements, statutes, regulations
+- Professional situations, dilemmas
+- Decision-making models, frameworks
+- Populations, contexts, settings
+
+**For Developmental/Social Domains:**
+- Developmental stages, milestones, processes
+- Theories, theorists, models
+- Social phenomena, group processes
+- Cultural factors, diversity considerations
+- Research paradigms, key studies
+
+**Output Format:**
+
+```
+===== PHASE 1: CONTENT SURVEY =====
+Domain: [extracted from document]
+Total Anchors: [count]
+
+CATEGORY 1: [Domain-Relevant Category Name] ([X] unique items, [Y] total mentions)
+
+[Subcategory A]:
+- [Item]: Anchors #[list] ([X] mentions)
+- [Item]: Anchors #[list] ([X] mentions)
+...
+
+[Subcategory B]:
+- [Item]: Anchors #[list] ([X] mentions)
+...
+
+CATEGORY 2: [Domain-Relevant Category Name] ([X] unique items)
+...
+
+[Continue for all relevant categories]
+
+KEY OBSERVATIONS:
+- [Notable patterns, heavily represented topics, gaps]
+- [Any surprising concentrations or absences]
+- [Themes that emerge across categories]
+```
+
+---
+
+## PHASE 2: CLUSTER DISCOVERY
+### Purpose: Identify natural groupings of related anchors
+
+**Task:** Based on the Content Survey, group anchors into provisional clusters.
+
+**Clustering Principles:**
+- Group by conceptual similarity (anchors about the same topic/theme)
+- A cluster should represent a coherent teaching unit
+- Flexible threshold: clusters can have as few as 5 anchors (may merge later)
+- An anchor can only belong to ONE cluster (make best judgment for ambiguous cases)
+
+**Domain-Specific Clustering Guidance:**
+
+Different domains have different natural cluster structures:
+
+| Domain Type | Typical Cluster Patterns |
+|-------------|-------------------------|
+| Biological | By system (motor, sensory, memory), by structure, by process |
+| Clinical | By disorder category, by assessment type, by severity level |
+| Treatment | By modality, by theoretical orientation, by problem type |
+| Developmental | By stage, by domain (cognitive, social, physical), by theorist |
+| Ethics | By principle, by situation type, by stakeholder |
+| Research | By design type, by statistical method, by validity type |
+
+**Output Format:**
+
+```
+===== PHASE 2: CLUSTER DISCOVERY =====
+
+PROVISIONAL CLUSTERS IDENTIFIED: [X]
+
+CLUSTER: [Cluster Name]
+Anchor Count: [X]
+Anchors: #[list all anchor numbers]
+Core Theme: [1-2 sentence description of what unifies this cluster]
+Key Concepts: [main elements that define this cluster]
+
+CLUSTER: [Cluster Name]
+Anchor Count: [X]
+Anchors: #[list all anchor numbers]
+Core Theme: [description]
+Key Concepts: [elements]
+
+[Continue for all clusters...]
+
+---
+
+MULTI-FIT ANCHORS (could belong to multiple clusters):
+- Anchor #[X]: Currently in [Cluster A], could also fit [Cluster B]
+  - Reason for current placement: [brief rationale]
+
+---
+
+CLUSTER SIZE SUMMARY:
+| Cluster | Count | Status |
+|---------|-------|--------|
+| [Name] | [X] | [Normal / Small - may merge / Large - may split] |
+...
+
+SMALL CLUSTERS (<9 anchors) - candidates for merging:
+- [Cluster name] ([X] anchors) - potential merge with [related cluster]
+```
+
+---
+
+## PHASE 3: RELATIONSHIP MAPPING
+### Purpose: Understand how clusters depend on each other
+
+**Task:** Analyze prerequisite relationships between clusters.
+
+**Key Questions to Answer:**
+- Which clusters provide foundational knowledge for others?
+- What must be taught BEFORE other content makes sense?
+- Which clusters are independent vs. dependent?
+- How much frontloading/scaffolding does each cluster require?
+
+**Prerequisite Patterns by Domain Type:**
+
+| Domain Type | Common Prerequisite Patterns |
+|-------------|------------------------------|
+| Biological | Structure → Function → Dysfunction → Treatment |
+| Clinical | Normal development → Psychopathology → Assessment → Diagnosis |
+| Treatment | Theory → Techniques → Applications → Special populations |
+| Developmental | Earlier stages → Later stages; Theory → Application |
+| Ethics | Principles → Standards → Application → Complex dilemmas |
+| Research | Concepts → Designs → Statistics → Interpretation |
+
+**Frontloading Assessment:**
+For each cluster, evaluate:
+- Does this cluster require prior knowledge from other clusters?
+- How much scaffolding is needed before this content is teachable?
+- Would teaching this cluster early create confusion?
+
+**Output Format:**
+
+```
+===== PHASE 3: RELATIONSHIP MAPPING =====
+
+PREREQUISITE ANALYSIS (Narrative)
+
+[Cluster A] serves as a foundational cluster because [explanation]. It provides the prerequisite knowledge needed to understand [Cluster B] and [Cluster C]. Specifically, concepts like [X, Y, Z] from this cluster are referenced in [specific anchors] from dependent clusters.
+
+[Cluster B] depends on [Cluster A] for [specific concepts]. Without understanding [concept from A], anchors like #[X] and #[Y] in Cluster B would be confusing to students. However, Cluster B is independent from [Cluster C] because [explanation].
+
+[Cluster D] requires extensive frontloading. Students must first understand:
+1. [Prerequisite concept 1] - covered in [Cluster]
+2. [Prerequisite concept 2] - covered in [Cluster]
+3. [Prerequisite concept 3] - covered in [Cluster]
+Teaching [Cluster D content] before these foundations would be pedagogically unsound because [specific reason with anchor examples].
+
+[Continue narrative for all significant relationships...]
+
+---
+
+DEPENDENCY SUMMARY:
+
+Foundational Clusters (few/no prerequisites):
+- [Cluster name]: Can be taught early; provides foundation for [list dependent clusters]
+- [Cluster name]: Independent content; minimal prerequisites
+
+Dependent Clusters (require prior content):
+- [Cluster name]: Requires [Cluster A], [Cluster B] first
+- [Cluster name]: Requires [Cluster A], [Cluster C], [Cluster D] first
+
+Culminating Clusters (require most prior content):
+- [Cluster name]: Integrates knowledge from [multiple clusters]; must come late
+
+---
+
+FRONTLOADING REQUIREMENTS:
+
+| Cluster | Frontloading Needed | Must Come After |
+|---------|--------------------|-----------------|
+| [Name] | None/Minimal | (foundational) |
+| [Name] | Moderate | [Cluster A] |
+| [Name] | Extensive | [Clusters A, B, C, D] |
+...
+
+---
+
+SCAFFOLDING NOTES:
+- [Any specific scaffolding sequences that must be respected]
+- [Concepts that absolutely must precede others]
+- [Warning: teaching X before Y would cause confusion because...]
+```
+
+---
+
+## PHASE 4: SECTION FORMATION
+### Purpose: Formalize clusters into proposed lecture sections
+
+**Task:** Convert provisional clusters into formal section proposals.
+
+**Section Formation Rules:**
+
+1. **Target Section Count Formula:**
+   - Total Anchors ÷ 15-20 = Target number of sections
+   - Valid range: 4-12 sections total
+   - Example: 174 anchors ÷ 17.5 = ~10 sections
+   - Example: 120 anchors ÷ 17.5 = ~7 sections
+   - Example: 85 anchors ÷ 17 = ~5 sections
+
+2. **Section Size Guidelines (DYNAMIC MINIMUM):**
+   - If 4 or fewer sections: 12-35 slides per section
+   - If 5 or more sections: 10-35 slides per section
+   - With ~1.15 anchors per slide + 3 fixed slides: ~7-28 anchors per section
+   - Sections with <7 anchors should merge or become Misc
+   - Sections with >30 anchors may need splitting
+
+   **Why dynamic minimum?** More sections mean content is more distributed,
+   so each section can be slightly smaller while maintaining adequate coverage.
+
+3. **Special Cases:**
+   - **Misc Section:** For orphaned anchors without a natural home; abstract/theoretical content that doesn't fit the main narrative
+   - **Culmination Section:** For integrative content requiring knowledge from 3+ prior sections; complex applications that synthesize multiple areas
+
+**Domain-Specific Section Patterns:**
+
+| Domain Type | Typical Section Structure |
+|-------------|--------------------------|
+| Biological | Systems-based (motor, sensory, memory, etc.) + Clinical + Pharmacology |
+| Clinical | By disorder category + Assessment methods + Differential diagnosis |
+| Treatment | By modality/orientation + By problem type + Integration |
+| Developmental | By stage or by domain + Theories + Applications |
+| Ethics | By principle + By situation type + Complex dilemmas |
+| Research | Design types + Statistics + Validity/interpretation |
+
+**Output Format:**
+
+```
+===== PHASE 4: SECTION FORMATION =====
+
+SECTION COUNT CALCULATION:
+- Total anchors: [X]
+- Formula: [X] ÷ 17 = [Y] sections (target)
+- Actual sections formed: [Z]
+- Rationale for deviation (if any): [explanation]
+
+---
+
+PROPOSED SECTIONS:
+
+SECTION: [Section Name]
+Formed From: [Cluster(s) that became this section]
+Anchor Count: [X]
+Anchors: #[list all]
+Description: [2-3 sentences describing what this section covers]
+Foundational Status: [Foundational / Dependent / Culminating]
+Prerequisites: [None / List required prior sections]
+
+SECTION: [Section Name]
+Formed From: [Cluster(s)]
+Anchor Count: [X]
+Anchors: #[list all]
+Description: [description]
+Foundational Status: [status]
+Prerequisites: [list]
+
+[Continue for all sections...]
+
+---
+
+SPECIAL SECTIONS:
+
+MISC SECTION (if applicable):
+Anchor Count: [X]
+Anchors: #[list]
+Contents: [What orphaned/theoretical content is collected here]
+Rationale: [Why these don't fit elsewhere]
+
+CULMINATION SECTION (if applicable):
+Anchor Count: [X]
+Anchors: #[list]
+Contents: [What integrative content is collected here]
+Rationale: [Why these require multi-section prior knowledge]
+Prerequisites: [All sections that must come before]
+
+---
+
+SECTION SIZE VALIDATION:
+| Section | Anchors | Est. Slides | Status |
+|---------|---------|-------------|--------|
+| [Name] | [X] | [X×1.15+3] | [OK / Small / Large] |
+...
+
+Total Anchors Assigned: [X] / [Total] (should be 100%)
+Unassigned Anchors: [None / List any]
+```
+
+---
+
+## PHASE 5: ARC PLANNING
+### Purpose: Generate multiple iterations of section sequencing
+
+**Task:** Create up to 5 different iterations of how sections could be sequenced across Session 1 and Session 2.
+
+**This phase does NOT select a final sequence.** It explores options to inform sorting decisions in Step 3.
+
+**Constraints to Respect:**
+- 2 sessions, 150 minutes each
+- 72-90 slides per session
+- Prerequisite relationships must be honored
+- Culmination content (if any) comes at end of Session 2
+
+**Evaluation Criteria for Each Iteration:**
+
+1. **Prerequisite Integrity** - Does each section have its foundations taught first?
+2. **Session Balance** - Are anchor/slide counts roughly balanced?
+3. **Learning Flow** - Does complexity build progressively?
+4. **Culmination Setup** - Does Session 2 end with integrative content?
+5. **Logical Coherence** - Would a student find this sequence intuitive?
+6. **Frontloading Efficiency** - Is scaffolding distributed appropriately, or front-heavy?
+
+**Anti-Patterns to Avoid (Domain-Specific Examples):**
+
+| Domain | Anti-Pattern | Why It's Problematic |
+|--------|--------------|---------------------|
+| Biological | Treatment before pathology | Can't understand drug mechanisms without knowing what's being treated |
+| Clinical | Differential diagnosis before individual disorders | Can't differentiate what you haven't learned |
+| Treatment | Techniques before theory | Techniques lack context without theoretical grounding |
+| Developmental | Later stages before earlier stages | Development builds sequentially |
+| Ethics | Complex dilemmas before principles | Can't resolve dilemmas without ethical foundation |
+| Research | Statistics before design concepts | Stats meaningless without design context |
+
+**Output Format:**
+
+```
+===== PHASE 5: ARC PLANNING =====
+
+ITERATION 1: [Brief Label - e.g., "Foundation-Forward"]
+
+Session 1:
+1. [Section Name] ([X] anchors, [Y] est. slides) - [1-line rationale]
+2. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+3. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+--- BREAK ---
+4. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+
+Session 1 Totals: [X] anchors, [Y] estimated slides
+
+Session 2:
+1. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+2. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+--- BREAK ---
+3. [Section Name] ([X] anchors, [Y] est. slides) - [rationale]
+
+Session 2 Totals: [X] anchors, [Y] estimated slides
+
+Evaluation:
+- Prerequisite Integrity: [Strong/Moderate/Weak] - [brief explanation]
+- Session Balance: [Balanced/Slightly uneven/Uneven] - [S1: X slides, S2: Y slides]
+- Learning Flow: [Strong/Moderate/Weak] - [explanation]
+- Culmination Setup: [Yes/No/N/A] - [explanation]
+- Logical Coherence: [Strong/Moderate/Weak] - [explanation]
+- Frontloading Efficiency: [Efficient/Acceptable/Front-heavy] - [explanation]
+
+Strengths: [What works well about this iteration]
+Weaknesses: [What could be problematic]
+
+---
+
+ITERATION 2: [Brief Label]
+[Same format as Iteration 1]
+
+---
+
+[Up to 5 iterations total]
+
+---
+
+ITERATION COMPARISON SUMMARY:
+
+| Criterion | Iter 1 | Iter 2 | Iter 3 | Iter 4 | Iter 5 |
+|-----------|--------|--------|--------|--------|--------|
+| Prerequisite Integrity | [S/M/W] | | | | |
+| Session Balance | [B/S/U] | | | | |
+| Learning Flow | [S/M/W] | | | | |
+| Culmination Setup | [Y/N] | | | | |
+| Logical Coherence | [S/M/W] | | | | |
+| Frontloading Efficiency | [E/A/F] | | | | |
+
+OBSERVATIONS:
+- [Key tradeoffs between iterations]
+- [Common elements across all iterations]
+- [Most contentious placement decisions]
+- [Sections with flexible placement vs. fixed placement]
+
+---
+
+IMPLICATIONS FOR SORTING (Step 3):
+- [What these iterations reveal about where anchors should be sorted]
+- [Any sorting decisions that are clear regardless of final arc choice]
+- [Anchors whose placement depends on which iteration is chosen]
+```
+
+---
+
+## STEP 2 COMPLETE OUTPUT
+
+After completing all 5 phases, compile the full output:
+
+```
+========================================
+STEP 2: LECTURE MAPPING - COMPLETE OUTPUT
+========================================
+Domain: [Name]
+Total Anchors: [X]
+Date: [Date]
+
+[Phase 1 Output]
+
+[Phase 2 Output]
+
+[Phase 3 Output]
+
+[Phase 4 Output]
+
+[Phase 5 Output]
+
+========================================
+===HANDOFF TO STEP 3===
+========================================
+
+The following elements are ready for Step 3 (Official Sorting):
+- Proposed Sections: [list]
+- Section anchor assignments (provisional): [summary]
+- Arc iterations: [X] options generated
+- Frontloading requirements: [summary]
+- Multi-fit anchors requiring resolution: [list]
+
+Proceed to Step 3 to finalize anchor sorting using the Primary, Secondary, and Tertiary sorting rules.
+```
+
+---
+
+## SAVE INSTRUCTION
+
+After generating Step 2 output, save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `mapping/`
+
+**Full Path:** `[Domain]_Production_[Date]/mapping/step2_output_[domain]_[date].txt`
+
+**Examples:**
+- `Fundamentals_of_Nursing_Production_2024-01-15/mapping/step2_output_fundamentals_of_nursing_2024-01-15.txt`
+- `Ethics_Legal_Production_2024-01-15/mapping/step2_output_ethics_professional_practice_2024-01-15.txt`
+
+**First-time setup:** Create the production folder and subfolders if they don't exist:
+```
+[Domain]_Production_[Date]/
+├── mapping/        ← Step 2 outputs go here
+├── sorting/
+├── outlines/
+├── blueprints/
+├── revisions/
+├── qa_reports/
+├── visual_specs/
+├── integrated/
+├── diagrams/
+├── powerpoints/
+└── logs/
+```
+
+This saved file serves as:
+1. Input reference for Step 3
+2. Troubleshooting documentation
+3. Audit trail for sorting decisions

@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "glossary_input.schema.json",
+  "title": "Glossary Lookup Input Schema",
+  "description": "Schema for glossary_lookup agent input - terminology lookup and definition retrieval",
+  "type": "object",
+  "required": ["metadata", "query"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "glossary_lookup"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "terms": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Terms to look up"
+        },
+        "context": {
+          "type": "string",
+          "description": "Context for disambiguation"
+        },
+        "include_related": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to include related terms"
+        },
+        "include_abbreviations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to include abbreviation expansions"
+        }
+      }
+    },
+    "glossary_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Paths to glossary files to search"
+    }
+  }
+}

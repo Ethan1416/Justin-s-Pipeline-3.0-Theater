@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "consistency_output.schema.json",
+  "title": "Consistency Checker Output Schema",
+  "description": "Schema for consistency_checker agent output - consistency validation results",
+  "type": "object",
+  "required": ["metadata", "results", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "consistency_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "required": ["overall_status", "consistency_score"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "consistency_score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "terminology_consistency": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "abbreviation_consistency": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "formatting_consistency": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides_checked": {
+          "type": "integer"
+        },
+        "inconsistency_counts": {
+          "type": "object",
+          "properties": {
+            "terminology": { "type": "integer" },
+            "abbreviation": { "type": "integer" },
+            "formatting": { "type": "integer" }
+          }
+        },
+        "terms_analyzed": {
+          "type": "integer"
+        },
+        "abbreviations_found": {
+          "type": "integer"
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/consistency_issue"
+      }
+    }
+  },
+  "definitions": {
+    "consistency_issue": {
+      "type": "object",
+      "required": ["issue_type", "description"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "element": {
+          "type": "string",
+          "enum": ["header", "body", "tip", "presenter_notes"]
+        },
+        "issue_type": {
+          "type": "string",
+          "enum": ["terminology_variation", "undefined_abbreviation", "abbreviation_inconsistency", "formatting_inconsistency"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "found_term": {
+          "type": "string"
+        },
+        "expected_term": {
+          "type": "string"
+        },
+        "first_occurrence_slide": {
+          "type": "integer",
+          "description": "Where the term was first used differently"
+        }
+      }
+    }
+  }
+}

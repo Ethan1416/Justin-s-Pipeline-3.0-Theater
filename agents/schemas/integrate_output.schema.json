@@ -1,0 +1,334 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "integrate_output.schema.json",
+  "title": "Step 10 Visual Integration Output Schema",
+  "description": "Schema for visual_integrator agent output - integrated blueprint with visuals and changelog",
+  "type": "object",
+  "required": ["metadata", "integration_summary", "integrated_blueprint", "changelog", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "section_number", "section_name", "domain", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 10: Visual Integration Revision"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_files": {
+          "type": "object",
+          "properties": {
+            "step7_revised": {
+              "type": "string"
+            },
+            "step9_visual_specs": {
+              "type": "string"
+            }
+          }
+        },
+        "output_file": {
+          "type": "string"
+        }
+      }
+    },
+    "integration_summary": {
+      "type": "object",
+      "required": ["visuals_integrated", "slides_modified", "final_slide_count"],
+      "properties": {
+        "visuals_integrated": {
+          "type": "integer"
+        },
+        "visual_breakdown": {
+          "type": "object",
+          "properties": {
+            "native_powerpoint_tables": {
+              "type": "integer"
+            },
+            "python_generated_diagrams": {
+              "type": "integer"
+            },
+            "decision_trees": {
+              "type": "integer"
+            },
+            "flowcharts": {
+              "type": "integer"
+            },
+            "hierarchies": {
+              "type": "integer"
+            },
+            "timelines": {
+              "type": "integer"
+            },
+            "spectrums": {
+              "type": "integer"
+            },
+            "key_differentiators": {
+              "type": "integer"
+            }
+          }
+        },
+        "slides_modified": {
+          "type": "integer"
+        },
+        "slides_added": {
+          "type": "integer"
+        },
+        "original_slide_count": {
+          "type": "integer"
+        },
+        "final_slide_count": {
+          "type": "integer"
+        },
+        "section_limit_compliance": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        }
+      }
+    },
+    "integrated_blueprint": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 35,
+          "items": {
+            "$ref": "#/definitions/integrated_slide"
+          }
+        }
+      }
+    },
+    "changelog": {
+      "type": "object",
+      "required": ["total_changes", "change_summary", "detailed_changes"],
+      "properties": {
+        "total_changes": {
+          "type": "integer"
+        },
+        "change_summary": {
+          "type": "object",
+          "properties": {
+            "visual_integrations": { "type": "integer" },
+            "pre_visual_transitions": { "type": "integer" },
+            "post_visual_connections": { "type": "integer" },
+            "cross_references_updated": { "type": "integer" },
+            "redundancies_removed": { "type": "integer" },
+            "tips_removed": { "type": "integer" },
+            "new_slides_added": { "type": "integer" }
+          }
+        },
+        "detailed_changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/change_entry"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checks"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "all_visuals_integrated": {
+              "type": "boolean"
+            },
+            "slide_count_compliant": {
+              "type": "boolean"
+            },
+            "character_limits_met": {
+              "type": "boolean"
+            },
+            "presenter_notes_within_limit": {
+              "type": "boolean"
+            },
+            "fixed_slides_protected": {
+              "type": "boolean"
+            },
+            "subsection_modes_preserved": {
+              "type": "boolean"
+            },
+            "anchor_coverage_maintained": {
+              "type": "boolean"
+            }
+          }
+        },
+        "constraint_details": {
+          "type": "object",
+          "properties": {
+            "slide_count_before": { "type": "integer" },
+            "slide_count_after": { "type": "integer" },
+            "headers_checked": { "type": "integer" },
+            "headers_compliant": { "type": "integer" },
+            "bodies_checked": { "type": "integer" },
+            "bodies_compliant": { "type": "integer" },
+            "presenter_notes_checked": { "type": "integer" },
+            "presenter_notes_compliant": { "type": "integer" }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "integrated_slide": {
+      "type": "object",
+      "required": ["slide_number", "title", "body", "visual", "presenter_notes"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "visual", "vignette", "answer"]
+        },
+        "visual": {
+          "type": "object",
+          "required": ["has_visual"],
+          "properties": {
+            "has_visual": {
+              "type": "boolean"
+            },
+            "visual_type": {
+              "type": "string",
+              "enum": ["TABLE", "KEY_DIFFERENTIATORS", "FLOWCHART", "DECISION_TREE", "HIERARCHY", "TIMELINE", "SPECTRUM", null]
+            },
+            "visual_id": {
+              "type": "string",
+              "pattern": "^V[0-9]+$"
+            }
+          }
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "title": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "line_count": { "type": "integer" },
+            "chars_per_line": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "line_count": { "type": "integer" },
+            "chars_per_line": {
+              "type": "array",
+              "items": { "type": "integer" }
+            }
+          }
+        },
+        "visual_specification": {
+          "type": "object",
+          "description": "Full visual spec if slide has visual"
+        },
+        "tip": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "line_count": { "type": "integer" }
+          }
+        },
+        "presenter_notes": {
+          "type": "object",
+          "required": ["text", "word_count"],
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "word_count": {
+              "type": "integer",
+              "maximum": 450
+            },
+            "estimated_duration_seconds": {
+              "type": "integer",
+              "maximum": 180
+            }
+          }
+        },
+        "integration_notes": {
+          "type": "string",
+          "description": "Notes about how this slide was modified for integration"
+        }
+      }
+    },
+    "change_entry": {
+      "type": "object",
+      "required": ["change_number", "slide_number", "change_type", "condition_applied"],
+      "properties": {
+        "change_number": {
+          "type": "integer"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "change_type": {
+          "type": "string",
+          "enum": [
+            "visual_integration",
+            "transition_added",
+            "connection_added",
+            "cross_reference_updated",
+            "redundancy_removed",
+            "tip_removed",
+            "new_slide_added",
+            "presenter_notes_revised"
+          ]
+        },
+        "condition_applied": {
+          "type": "string",
+          "enum": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8"],
+          "description": "R1-R8 from Step 10 revision conditions"
+        },
+        "before": {
+          "type": "string"
+        },
+        "after": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

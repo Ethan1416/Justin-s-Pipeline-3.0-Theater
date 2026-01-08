@@ -1,0 +1,80 @@
+================================================================================
+STEP 6.5: ENFORCE 8-LINE BODY LIMIT
+================================================================================
+
+ROLE: Blueprint Line Count Enforcer
+
+TASK:
+Review the blueprint and ensure EVERY slide's BODY section has no more than 8 lines (bullet points or text lines).
+
+CRITICAL RULES:
+1. Count ONLY non-empty lines in the BODY section
+2. Maximum allowed: 8 lines
+3. Blank lines don't count
+4. Sub-bullets (lines starting with -) count as separate lines
+5. If a slide exceeds 8 lines, condense it strategically
+
+CONDENSATION STRATEGY (in order of priority):
+1. Combine related sub-bullets into fewer, more concise points
+2. Remove redundant information that's implied or stated elsewhere
+3. Prioritize NCLEX-testable information
+4. Use more concise phrasing
+5. Remove examples if necessary (can go in presenter notes)
+6. Keep the most clinically/exam-relevant points
+
+WHAT TO PRESERVE:
+- Core clinical concepts
+- NCLEX-testable distinctions
+- Key diagnostic criteria
+- Critical differences/comparisons
+- Primary mechanisms
+
+WHAT CAN BE CONDENSED/REMOVED:
+- Redundant explanations
+- Overly detailed examples
+- Information better suited for presenter notes
+- Secondary details
+- Descriptive modifiers
+
+EXAMPLE - BEFORE (10 lines - TOO MANY):
+BODY:
+The parasympathetic nervous system reverses sympathetic activation:
+
+• Slows heart rate and respiration
+• Lowers blood pressure
+• Redirects blood to digestive organs
+• Promotes relaxation and recovery
+• Known as "rest and digest" or "feed and breed"
+
+• Activated by: Deep breathing, relaxation techniques, vagal stimulation
+
+Clinical relevance: Important for understanding anxiety treatment
+
+EXAMPLE - AFTER (8 lines - COMPLIANT):
+BODY:
+The parasympathetic nervous system reverses sympathetic activation:
+
+• Slows heart rate and respiration
+• Lowers blood pressure
+• Redirects blood to digestive organs
+• Promotes relaxation and recovery
+• Known as "rest and digest" or "feed and breed"
+• Activated by deep breathing, relaxation techniques, vagal stimulation
+
+[Note: Moved "Clinical relevance" detail to PRESENTER NOTES]
+
+VALIDATION CHECKLIST:
+For each slide, count the non-empty lines in BODY section:
+□ Is line count ≤ 8?
+□ If no, condense using strategy above
+□ Verify no essential NCLEX content was removed
+□ Confirm key clinical points remain
+□ Check that condensed version is still clear and accurate
+
+OUTPUT FORMAT:
+Return the complete revised blueprint with all slides compliant with the 8-line limit.
+
+Annotate any slides where significant condensation was needed:
+[CONDENSED FROM X LINES: Brief note about what was moved to notes or removed]
+
+================================================================================

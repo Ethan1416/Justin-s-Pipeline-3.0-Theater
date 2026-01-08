@@ -1,0 +1,189 @@
+================================================================================
+NCLEX LECTURE DEVELOPMENT PIPELINE - AUTOMATED VERSION
+================================================================================
+
+OVERVIEW
+--------
+This automated pipeline generates complete NCLEX exam preparation lectures from
+anchor point documents. It uses the Claude API for content generation and
+Python for PowerPoint creation.
+
+
+================================================================================
+PREREQUISITES
+================================================================================
+
+1. INSTALL PYTHON PACKAGES
+   Open command prompt and run:
+
+   pip install anthropic python-pptx matplotlib
+
+2. SET UP API KEY
+   Either:
+   - Set environment variable:
+     set ANTHROPIC_API_KEY=your-key-here
+
+   - Or pass via command line:
+     --api-key your-key-here
+
+3. PREPARE YOUR ANCHOR FILE
+   - Text file with numbered anchor points
+   - One testable concept per anchor
+   - Format: 1. [Anchor content]
+
+
+================================================================================
+USAGE
+================================================================================
+
+BASIC COMMAND:
+python run_automated_pipeline.py --anchor-file "path/to/anchors.txt" --domain "Domain_Name"
+
+
+EXAMPLES:
+
+Full pipeline run:
+  python run_automated_pipeline.py -a "C:\anchors\physio_anchors.txt" -d "Fundamentals_of_Nursing"
+
+Dry run (test setup without API calls):
+  python run_automated_pipeline.py -a anchors.txt -d "Clinical" --dry-run
+
+With API key on command line:
+  python run_automated_pipeline.py -a anchors.txt -d "Ethics" --api-key sk-ant-xxxxx
+
+
+USING THE BATCH FILE (EASIEST METHOD):
+1. Edit run_pipeline.bat in the pipeline folder
+2. Set ANCHOR_FILE to your anchor file path
+3. Set DOMAIN to your domain name
+4. Set ANTHROPIC_API_KEY environment variable
+5. Double-click run_pipeline.bat
+
+
+================================================================================
+PIPELINE STEPS
+================================================================================
+
+Step | Description                      | Method
+-----|----------------------------------|------------------
+1    | Anchor Upload                    | Loads file
+2    | Lecture Mapping (5 Phases)       | Claude API
+3    | Official Sorting                 | Claude API
+4    | Outline Generation               | Claude API
+5    | Presentation Standards           | Reference file
+6    | Blueprint Generation             | Claude API (per section)
+7    | Formatting Revision              | Included in Step 6
+8    | Quality Assurance                | Included in Step 6
+9    | Visual Aid Identification        | Claude API
+10   | Visual Integration               | Included in Step 9
+11   | Blueprint Organization           | Automatic
+12   | PowerPoint Population            | Python
+
+
+================================================================================
+OUTPUT STRUCTURE
+================================================================================
+
+[Domain]_Production_[Date]/
+|-- mapping/          Step 2 output
+|-- sorting/          Step 3 output
+|-- outlines/         Step 4 output
+|-- blueprints/       Step 6 blueprints
+|-- revisions/        Step 7 revisions
+|-- qa_reports/       Step 8 QA reports
+|-- visual_specs/     Step 9 visual specifications
+|-- integrated/       Step 10 integrated blueprints
+|-- diagrams/         Generated visual aids (PNG)
+|-- powerpoints/      Final PowerPoint files
++-- logs/             Processing logs
+
+
+================================================================================
+ESTIMATED TIME
+================================================================================
+
+- Small domain (~100 anchors):  15-20 minutes
+- Medium domain (~150 anchors): 25-35 minutes
+- Large domain (~200 anchors):  40-50 minutes
+
+Note: Time depends on API response speed and number of sections.
+
+
+================================================================================
+COMMAND LINE OPTIONS
+================================================================================
+
+--anchor-file, -a    (Required) Path to anchor points file
+--domain, -d         (Required) Domain name (use underscores, no spaces)
+--api-key, -k        Anthropic API key (or set ANTHROPIC_API_KEY env var)
+--skip-to            Skip to specific step number (uses existing outputs)
+--dry-run            Dry run - no API calls, just setup
+
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+API RATE LIMITS
+If you hit rate limits, the script will pause and retry. For large domains,
+consider running during off-peak hours.
+
+MISSING TEMPLATE
+Ensure "visual template.pptx" exists in the pipeline folder.
+
+CHARACTER LIMIT ISSUES
+The pipeline enforces character limits. If slides have truncated content,
+check the blueprint files for the full text.
+
+API KEY NOT FOUND
+Error: "ANTHROPIC_API_KEY not set"
+Solution: Set the environment variable or pass via --api-key
+
+ANCHOR FILE NOT FOUND
+Error: "Anchor file not found"
+Solution: Check the path is correct and file exists
+
+
+================================================================================
+MANUAL INTERVENTION POINTS
+================================================================================
+
+While fully automated, you may want to review:
+1. After Step 4: Check section organization
+2. After Step 6: Review blueprint quality
+3. After Step 12: Final PowerPoint review
+
+
+================================================================================
+BACKUP LOCATION
+================================================================================
+
+The original manual pipeline is backed up at:
+C:\Users\mcdan\OneDrive\Desktop\pipeline_backup_2024-12-20\
+
+
+================================================================================
+FILE LISTING
+================================================================================
+
+Pipeline Folder Contents:
+- run_automated_pipeline.py    Main automation script
+- run_pipeline.bat             Windows launcher (edit and run)
+- pipeline_config.json         Configuration settings
+- pipeline_state.json          State tracking
+- visual template.pptx         PowerPoint template
+- step1-12 txt files           Original step instructions (reference)
+- docs/                        This documentation folder
+
+Docs Folder:
+- automated_pipeline_instructions.txt   This file
+
+
+================================================================================
+SUPPORT
+================================================================================
+
+For issues or questions about Claude Code:
+https://github.com/anthropics/claude-code/issues
+
+================================================================================

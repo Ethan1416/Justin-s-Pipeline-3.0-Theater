@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "keydiff_output.schema.json",
+  "title": "Key Differentiators Generator Output Schema",
+  "description": "Output schema for the key_diff_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_spec", "validation", "presenter_notes"],
+  "properties": {
+    "visual_spec": {
+      "type": "object",
+      "required": ["type", "layout", "title", "data"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "KEY_DIFFERENTIATORS"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E"],
+          "description": "Selected layout: A=Side-by-Side, B=Centered Key Diff, C=Multiple Diffs, D=Three-Way, E=Feature Matrix"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Visual title"
+        },
+        "data": {
+          "type": "object",
+          "required": ["concepts", "key_differentiator"],
+          "properties": {
+            "concepts": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "required": ["name", "color"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 44
+                  },
+                  "color": {
+                    "type": "string",
+                    "enum": ["blue", "red", "green"]
+                  },
+                  "features": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["label", "values"],
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "maxLength": 18
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 50
+                    }
+                  },
+                  "is_key": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "key_differentiator": {
+              "type": "object",
+              "required": ["title"],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "maxLength": 30
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 70
+                },
+                "values": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Key diff value for each concept"
+                }
+              }
+            },
+            "key_differentiators_list": {
+              "type": "array",
+              "description": "For Layout D - multiple key differences between concept pairs",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "concept_pair": {
+                    "type": "string",
+                    "description": "e.g., 'A vs B'"
+                  },
+                  "differentiator": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_valid", "checks"],
+      "properties": {
+        "is_valid": {
+          "type": "boolean",
+          "description": "Overall validation status"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "concept_count_valid": {
+              "type": "boolean",
+              "description": "Concept count within 2-4 range"
+            },
+            "feature_count_valid": {
+              "type": "boolean",
+              "description": "Feature count within 1-6 range"
+            },
+            "concept_name_limits": {
+              "type": "boolean",
+              "description": "All concept names within 44 char limit"
+            },
+            "feature_label_limits": {
+              "type": "boolean",
+              "description": "All feature labels within 18 char limit"
+            },
+            "feature_value_limits": {
+              "type": "boolean",
+              "description": "All feature values within 50 char limit"
+            },
+            "has_key_differentiator": {
+              "type": "boolean",
+              "description": "At least one key differentiator identified"
+            },
+            "key_diff_is_diagnostic": {
+              "type": "boolean",
+              "description": "Key differentiator is truly distinguishing"
+            },
+            "layout_compatible": {
+              "type": "boolean",
+              "description": "Content compatible with selected layout"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Presenter notes explaining the key differences"
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 150,
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 180
+        }
+      }
+    },
+    "rendering_metadata": {
+      "type": "object",
+      "properties": {
+        "font_sizes": {
+          "type": "object",
+          "properties": {
+            "concept_header": { "type": "integer", "default": 24 },
+            "feature_label": { "type": "integer", "default": 18 },
+            "feature_value": { "type": "integer", "default": 18 },
+            "key_differentiator": { "type": "integer", "default": 20 },
+            "vs_separator": { "type": "integer", "default": 28 }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "concept_1_header_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(21, 101, 192) - Blue"
+            },
+            "concept_1_light_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(227, 242, 253) - Light Blue"
+            },
+            "concept_2_header_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(183, 28, 28) - Red"
+            },
+            "concept_2_light_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(255, 235, 238) - Light Red"
+            },
+            "concept_3_header_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(27, 94, 32) - Green"
+            },
+            "concept_3_light_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(232, 245, 233) - Light Green"
+            },
+            "key_diff_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(255, 193, 7) - Amber"
+            },
+            "key_diff_light_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(255, 243, 224) - Light Amber"
+            },
+            "key_diff_border_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(255, 160, 0) - Orange"
+            }
+          }
+        }
+      }
+    }
+  }
+}

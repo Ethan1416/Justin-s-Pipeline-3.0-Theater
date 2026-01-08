@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "glossary_output.schema.json",
+  "title": "Glossary Lookup Output Schema",
+  "description": "Schema for glossary_lookup agent output - terminology definitions and information",
+  "type": "object",
+  "required": ["metadata", "results"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "glossary_lookup"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "properties": {
+        "found_terms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/term_entry"
+          }
+        },
+        "not_found_terms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "queried_term": { "type": "string" },
+              "suggested_terms": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          },
+          "description": "Suggestions for terms not found"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "terms_queried": { "type": "integer" },
+        "terms_found": { "type": "integer" },
+        "terms_not_found": { "type": "integer" }
+      }
+    }
+  },
+  "definitions": {
+    "term_entry": {
+      "type": "object",
+      "required": ["term", "definition"],
+      "properties": {
+        "term": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "abbreviation": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "related_terms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "synonyms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "nclex_relevance": {
+          "type": "string",
+          "description": "How this term relates to NCLEX content"
+        }
+      }
+    }
+  }
+}

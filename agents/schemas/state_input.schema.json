@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "state_input.schema.json",
+  "title": "State Manager Input Schema",
+  "description": "Schema for state_manager agent input - manages pipeline state persistence",
+  "type": "object",
+  "required": ["metadata", "operation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "state_manager"
+        },
+        "pipeline_id": {
+          "type": "string",
+          "description": "Unique identifier for this pipeline run"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["read", "write", "update", "checkpoint", "rollback"],
+          "description": "Type of state operation"
+        },
+        "state_file": {
+          "type": "string",
+          "description": "Path to state file"
+        }
+      }
+    },
+    "state_data": {
+      "type": "object",
+      "description": "State data for write/update operations",
+      "properties": {
+        "current_step": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "completed_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": { "type": "string" },
+              "timestamp": { "type": "string" },
+              "output_file": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Map of artifact names to file paths"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": { "type": "string" },
+              "error": { "type": "string" },
+              "timestamp": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "rollback_target": {
+      "type": "string",
+      "description": "Step to rollback to for rollback operations"
+    }
+  }
+}

@@ -1,0 +1,112 @@
+================================================================================
+QUICK START GUIDE
+Pipeline Part 2: Lecture Enhancement
+================================================================================
+
+⚡ FASTEST WAY TO GET STARTED ⚡
+
+1. SETUP (ONE-TIME)
+-------------------
+   a. Open PowerPoint
+   b. Press Alt+F11
+   c. Import all 6 .vba files:
+      • Step1_SlideAnalysis.vba
+      • Step2_TemplateApplication.vba
+      • Step3_GraphicOrganizers.vba
+      • Step4_QualityControl.vba
+      • Step5_PresenterNotes.vba
+      • Pipeline_Part2_Main.vba
+   d. Close VBA Editor (Alt+Q)
+
+2. RUN PIPELINE (EVERY TIME)
+----------------------------
+   a. Open your PowerPoint lecture
+   b. Press Alt+F8
+   c. Select "Pipeline_Part2_Main"
+   d. Click "Run"
+   e. Wait for completion
+   f. Save your file
+
+3. BATCH PROCESS MULTIPLE FILES
+--------------------------------
+   a. Put all .pptx files in one folder
+   b. Open PowerPoint
+   c. Press Alt+F8
+   d. Select "Pipeline_Part2_Batch"
+   e. Choose folder
+   f. Wait for completion
+   g. Enhanced files in "enhanced_output" folder
+
+================================================================================
+WHAT IT DOES
+================================================================================
+
+✓ Finds slides that need visuals (20-40% per section)
+✓ Converts text to professional graphic organizers
+✓ Applies 3D effects and shadows
+✓ Rewrites presenter notes with engagement techniques
+✓ Ensures all specs met (18pt font, 28 char titles, etc.)
+
+VISUAL TYPES CREATED
+---------------------
+• Tables (comparisons, data)
+• Key Differentiators (X vs. Y)
+• Flowcharts (processes)
+• Decision Trees (if/then logic)
+• Hierarchies (classifications)
+• Timelines (chronological)
+• Spectrums (continuums)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+❌ "Macro security warning"
+   → File → Options → Trust Center → Enable all macros
+
+❌ "No slides identified"
+   → Content doesn't match conditions
+   → Check logs/analysis_log.txt for details
+
+❌ "File not found" (template)
+   → Verify template master.pptx in pipeline folder
+   → Edit TEMPLATE_PATH in Step2_TemplateApplication.vba
+
+❌ Visual doesn't look right
+   → Run QA report (automatically generated)
+   → Check qa_reports/qa_report.txt
+
+================================================================================
+LOGS AND REPORTS
+================================================================================
+
+After running, check these folders:
+
+logs/
+├── analysis_log.txt           [Which slides were selected and why]
+├── template_application_log.txt [Template applied successfully]
+├── graphic_organizers_log.txt [Visuals created]
+├── presenter_notes_log.txt    [Notes rewritten]
+
+qa_reports/
+└── qa_report.txt              [Quality control results]
+
+================================================================================
+KEYBOARD SHORTCUTS
+================================================================================
+
+Alt+F8  → Open Macros dialog
+Alt+F11 → Open VBA Editor
+Ctrl+G  → Debug window (view processing details)
+Alt+Q   → Close VBA Editor
+
+================================================================================
+NEED HELP?
+================================================================================
+
+1. Read full README.txt for detailed instructions
+2. Check logs folder for processing details
+3. Review QA report for specification compliance
+4. Verify all 6 VBA modules are imported
+
+================================================================================

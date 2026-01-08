@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "color_input.schema.json",
+  "title": "Color Applier Input Schema",
+  "description": "Schema for color_applier agent input - applies color schemes to visual elements",
+  "type": "object",
+  "required": ["metadata", "elements"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "color_applier"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_diff"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/element_for_coloring"
+      }
+    },
+    "color_scheme": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "string",
+          "description": "Primary brand color (hex)"
+        },
+        "secondary": {
+          "type": "string",
+          "description": "Secondary brand color (hex)"
+        },
+        "accent": {
+          "type": "string",
+          "description": "Accent color (hex)"
+        },
+        "background": {
+          "type": "string",
+          "description": "Background color (hex)"
+        },
+        "text": {
+          "type": "string",
+          "description": "Default text color (hex)"
+        },
+        "text_light": {
+          "type": "string",
+          "description": "Light text color for dark backgrounds (hex)"
+        },
+        "success": {
+          "type": "string"
+        },
+        "warning": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        },
+        "gradient_palette": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Colors for multi-step visuals"
+        }
+      }
+    },
+    "color_rules": {
+      "type": "object",
+      "properties": {
+        "use_semantic_colors": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use colors based on meaning (yes/no, priority, etc.)"
+        },
+        "high_contrast": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ensure sufficient contrast for readability"
+        },
+        "colorblind_safe": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "element_for_coloring": {
+      "type": "object",
+      "required": ["element_id", "element_type"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "element_type": {
+          "type": "string",
+          "enum": ["shape", "text", "line", "cell", "connector"]
+        },
+        "semantic_role": {
+          "type": "string",
+          "enum": ["primary", "secondary", "highlight", "positive", "negative", "neutral", "header", "body"],
+          "description": "Semantic meaning for color selection"
+        },
+        "current_fill": {
+          "type": "string"
+        },
+        "current_text_color": {
+          "type": "string"
+        },
+        "current_line_color": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

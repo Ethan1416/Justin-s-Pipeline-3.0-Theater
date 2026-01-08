@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "error_output.schema.json",
+  "title": "Error Reporter Output Schema",
+  "description": "Schema for error_reporter agent output - formatted error report",
+  "type": "object",
+  "required": ["metadata", "report", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "error_reporter"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "report_format": {
+          "type": "string",
+          "enum": ["detailed", "summary", "actionable"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "report": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "errors_by_severity": {
+          "type": "object",
+          "properties": {
+            "critical": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/formatted_error" }
+            },
+            "error": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/formatted_error" }
+            },
+            "warning": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/formatted_error" }
+            },
+            "info": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/formatted_error" }
+            }
+          }
+        },
+        "errors_by_type": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/formatted_error" }
+          }
+        },
+        "errors_by_slide": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/formatted_error" }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_errors": {
+          "type": "integer"
+        },
+        "critical_count": {
+          "type": "integer"
+        },
+        "error_count": {
+          "type": "integer"
+        },
+        "warning_count": {
+          "type": "integer"
+        },
+        "info_count": {
+          "type": "integer"
+        },
+        "slides_affected": {
+          "type": "integer"
+        },
+        "blocking_issues": {
+          "type": "boolean",
+          "description": "Whether any errors block pipeline progress"
+        }
+      }
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "priority": { "type": "integer", "minimum": 1 },
+          "action": { "type": "string" },
+          "related_errors": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "description": "Prioritized list of actions to fix errors"
+    }
+  },
+  "definitions": {
+    "formatted_error": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "location_string": {
+          "type": "string"
+        },
+        "suggested_fix": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

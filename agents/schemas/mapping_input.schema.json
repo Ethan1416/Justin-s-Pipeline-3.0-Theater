@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mapping_input.schema.json",
+  "title": "Step 2 Lecture Mapping Input Schema",
+  "description": "Schema for input to Step 2 - the anchor point document from Step 1",
+  "type": "object",
+  "required": ["domain_name", "anchors", "source"],
+  "properties": {
+    "domain_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The domain name extracted from the anchor document"
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/anchor_point"
+      },
+      "description": "The complete list of anchor points to be mapped"
+    },
+    "source": {
+      "type": "object",
+      "required": ["step"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 1: Anchor Upload"
+        },
+        "file": {
+          "type": "string",
+          "description": "Reference to the Step 1 output or original anchor file"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "anchor_point": {
+      "type": "object",
+      "required": ["anchor_number", "content"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "content": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The testable concept for this anchor"
+        }
+      }
+    }
+  }
+}

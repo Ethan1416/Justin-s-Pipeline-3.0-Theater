@@ -1,0 +1,224 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "blueprint_input.schema.json",
+  "title": "Step 6 Blueprint Generation Input Schema",
+  "description": "Schema for blueprint_generator agent input - generates slide-by-slide content specification",
+  "type": "object",
+  "required": ["metadata", "section", "presentation_standards"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "date", "source_file"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 6: Blueprint Generation"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Step 4 output file reference"
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": ["section_number", "section_name", "subsections"],
+      "properties": {
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "total_sections": {
+          "type": "integer",
+          "description": "Total number of sections in this domain"
+        },
+        "prerequisite_sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "section_number": { "type": "integer" },
+              "section_name": { "type": "string" }
+            }
+          },
+          "description": "Previous sections this section depends on for connections"
+        },
+        "subsections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/subsection"
+          }
+        }
+      }
+    },
+    "presentation_standards": {
+      "type": "object",
+      "required": ["delivery_modes", "constraints"],
+      "properties": {
+        "delivery_modes": {
+          "$ref": "#/definitions/delivery_modes"
+        },
+        "constraints": {
+          "$ref": "#/definitions/constraints"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "subsection": {
+      "type": "object",
+      "required": ["subsection_name", "anchors", "delivery_mode"],
+      "properties": {
+        "subsection_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "delivery_mode": {
+          "type": "string",
+          "enum": ["foundational", "full", "minor", "one_and_done"]
+        },
+        "anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/anchor"
+          }
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "required": ["anchor_number", "anchor_summary"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "anchor_summary": {
+          "type": "string"
+        },
+        "anchor_text": {
+          "type": "string"
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["FRONTLOAD", "XREF"]
+          }
+        },
+        "xref_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cross-reference sections if XREF flag is set"
+        }
+      }
+    },
+    "delivery_modes": {
+      "type": "object",
+      "properties": {
+        "foundational": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "components": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "full": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "min_anchors": { "type": "integer" },
+            "components": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "minor": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "anchor_range": {
+              "type": "object",
+              "properties": {
+                "min": { "type": "integer" },
+                "max": { "type": "integer" }
+              }
+            },
+            "components": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "one_and_done": {
+          "type": "object",
+          "properties": {
+            "description": { "type": "string" },
+            "max_anchors": { "type": "integer" },
+            "components": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "header_max_chars_per_line": {
+          "type": "integer",
+          "default": 32
+        },
+        "header_max_lines": {
+          "type": "integer",
+          "default": 2
+        },
+        "body_max_chars_per_line": {
+          "type": "integer",
+          "default": 66
+        },
+        "body_max_lines": {
+          "type": "integer",
+          "default": 8
+        },
+        "tip_max_chars_per_line": {
+          "type": "integer",
+          "default": 66
+        },
+        "tip_max_lines": {
+          "type": "integer",
+          "default": 2
+        },
+        "presenter_notes_max_words": {
+          "type": "integer",
+          "default": 450
+        },
+        "presenter_notes_max_seconds": {
+          "type": "integer",
+          "default": 180
+        }
+      }
+    }
+  }
+}

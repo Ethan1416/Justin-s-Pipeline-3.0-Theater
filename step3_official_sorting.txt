@@ -1,0 +1,603 @@
+# STEP 3: OFFICIAL SORTING
+## Rule-Based Anchor Assignment for NCLEX Lectures
+## Sorts Anchors into 6 NCLEX Domains
+
+---
+
+## PURPOSE
+
+This step officially assigns each anchor point to exactly ONE of the 6 NCLEX domains using a hierarchical rule system (P1-P3 → S1-S6 → T1-T8). Unlike Step 2 (exploratory), this step is decisive—every anchor gets a final placement.
+
+**Agent:** `agents/prompts/content_sorter.md`
+
+---
+
+## THE 6 NCLEX DOMAINS
+
+All anchors MUST be sorted into exactly ONE of these domains:
+
+| ID | Domain Key | Name | Focus Areas |
+|----|------------|------|-------------|
+| 1 | fundamentals | Fundamentals of Nursing | Core concepts, nursing process, basic care, vital signs, documentation |
+| 2 | pharmacology | Pharmacology | Drug classifications, mechanisms, calculations, administration, interactions |
+| 3 | medical_surgical | Medical-Surgical Nursing | Adult health, system disorders, perioperative, chronic conditions |
+| 4 | ob_maternity | OB/Maternity Nursing | Antepartum, intrapartum, postpartum, newborn, complications |
+| 5 | pediatric | Pediatric Nursing | Growth/development, pediatric conditions, immunizations, family-centered care |
+| 6 | mental_health | Mental Health Nursing | Psychiatric disorders, therapeutic communication, crisis intervention |
+
+**Reference:** `config/nclex.yaml` for complete domain definitions and color schemes.
+
+---
+
+## INPUT
+
+**Required from Step 2:**
+- Cluster analysis (from Phase 2)
+- Relationship mapping (from Phase 3)
+- Proposed sections (from Phase 4)
+- Arc planning iterations (from Phase 5)
+- Multi-fit anchors flagged for resolution
+
+**Reference:** Step 2 output file (`step2_output_nclex_[date].txt`)
+
+---
+
+## NCLEX DOMAIN ROUTING TABLE
+
+Use this table for Rule P3. Routes anchors based on content indicators:
+
+| Content Indicator | Routes To | Rationale |
+|-------------------|-----------|-----------|
+| Vital signs, hygiene, mobility, positioning | fundamentals | Core nursing skills |
+| Nursing process (ADPIE), care plans, documentation | fundamentals | Foundation of practice |
+| Infection control, sterile technique, safety | fundamentals | Basic safety competencies |
+| Drug classifications, mechanisms of action | pharmacology | Drug knowledge |
+| Medication calculations, IV therapy, routes | pharmacology | Drug administration |
+| Adverse effects, drug-drug interactions, toxicity | pharmacology | Drug safety |
+| Cardiac, respiratory, GI, renal, neuro disorders | medical_surgical | Adult system disorders |
+| Pre-op, intra-op, post-op care | medical_surgical | Surgical nursing |
+| Cancer, diabetes, chronic disease management | medical_surgical | Adult chronic conditions |
+| Prenatal care, fetal development, high-risk pregnancy | ob_maternity | Antepartum |
+| Labor stages, delivery, C-section, fetal monitoring | ob_maternity | Intrapartum |
+| Breastfeeding, newborn assessment, postpartum recovery | ob_maternity | Postpartum/newborn |
+| Growth milestones, immunization schedules | pediatric | Child development |
+| Childhood diseases, congenital disorders | pediatric | Pediatric conditions |
+| Family-centered care, pediatric assessment, pain management | pediatric | Pediatric nursing |
+| Schizophrenia, bipolar, depression, anxiety disorders | mental_health | Psychiatric disorders |
+| Therapeutic communication, boundaries, milieu therapy | mental_health | Psych nursing skills |
+| Crisis intervention, suicide precautions, restraints | mental_health | Emergency psych |
+
+---
+
+## SORTING RULE HIERARCHY
+
+Apply rules in order. When a rule produces a clear answer, stop and assign. If unclear, proceed to the next level.
+
+---
+
+## PRIMARY RULES (Core Assignment)
+
+### Rule P1: Prerequisite Dependency
+
+**Ask:** "What foundational knowledge must a student have to understand this anchor?"
+
+Route the anchor to the section that provides that foundational knowledge.
+
+**Application:**
+1. Identify the core concepts in the anchor
+2. Determine which section's foundation teaches those concepts
+3. Assign to that section
+
+**NCLEX Examples:**
+
+| Anchor Content | Prerequisite Logic | Routes To |
+|---------------|-------------------|-----------|
+| "Digoxin toxicity signs and when to hold the medication" | Requires cardiac drug knowledge | pharmacology |
+| "Differentiating preeclampsia from eclampsia" | Requires OB complication foundations | ob_maternity |
+| "Age-appropriate pain assessment for toddlers" | Requires developmental milestones | pediatric |
+| "De-escalation techniques for aggressive patients" | Requires therapeutic communication basics | mental_health |
+| "Perioperative care for hip replacement surgery" | Requires surgical nursing foundations | medical_surgical |
+| "Proper body mechanics for patient transfers" | Requires no specialized prerequisites | fundamentals |
+
+---
+
+### Rule P2: Primary Subject Identification
+
+**Ask:** "What is this anchor fundamentally about? What is the ONE thing it wants students to know?"
+
+Identify the core subject, not peripheral mentions.
+
+**NCLEX Decision Framework:**
+
+| If the anchor is fundamentally about... | Route to... |
+|----------------------------------------|-------------|
+| Basic nursing skills, nursing process, documentation | fundamentals |
+| Medications, drug actions, calculations, administration | pharmacology |
+| Adult health conditions, surgical care, system disorders | medical_surgical |
+| Pregnancy, labor, delivery, postpartum, newborns | ob_maternity |
+| Children's health, development, pediatric diseases | pediatric |
+| Mental health conditions, psych nursing, therapeutic communication | mental_health |
+
+---
+
+### Rule P3: NCLEX Domain Routing
+
+**Use the NCLEX Domain Routing Table above.** Match content indicators to route anchors.
+
+**Additional NCLEX Routing Guidance:**
+
+**Cross-Domain Content Resolution:**
+
+| If anchor involves... | Primary Domain | Cross-Reference |
+|----------------------|----------------|-----------------|
+| Pediatric medications | pharmacology | [XREF: pediatric] |
+| Psychiatric medications | pharmacology | [XREF: mental_health] |
+| OB medications (tocolytics, oxytocin) | pharmacology | [XREF: ob_maternity] |
+| Newborn assessment | ob_maternity | [XREF: pediatric] if >28 days |
+| Adolescent mental health | mental_health | [XREF: pediatric] |
+| Geriatric polypharmacy | pharmacology | [XREF: medical_surgical] |
+| Surgical site infection | medical_surgical | [XREF: fundamentals] |
+
+**Priority Question Routing:**
+
+NCLEX frequently tests priority-setting. Route these by the PRIMARY condition:
+
+| Question Type | Route By |
+|---------------|----------|
+| "Which patient first?" | The highest-acuity condition's domain |
+| "Which action first?" | The intervention's primary domain |
+| "Which delegation?" | fundamentals (delegation is core nursing) |
+| "Which finding report?" | The condition's domain |
+
+---
+
+## SECONDARY RULES (Content Type Routing)
+
+Apply when primary rules don't yield a clear single answer.
+
+### Rule S1: Applied/Treatment Content
+
+Any anchor primarily about intervention, treatment, or application routes to the appropriate applied section.
+
+**Indicators:**
+- Treatment protocols
+- Intervention techniques
+- Therapeutic applications
+- Remediation strategies
+
+**Exception:** If the anchor is primarily about a condition and only mentions treatment in passing, route to the condition's section and flag `[XREF: Treatment section]`.
+
+---
+
+### Rule S2: Assessment/Measurement Content
+
+Any anchor primarily about assessment, testing, or measurement routes to the assessment section.
+
+**Indicators:**
+- Specific tests or instruments
+- Psychometric properties
+- Diagnostic criteria application
+- Evaluation methods
+
+---
+
+### Rule S3: Foundational/Theoretical Content
+
+Any anchor involving abstract theory, foundational concepts, or historical frameworks that lacks direct applied connection routes to foundations or Misc.
+
+**Indicators:**
+- Theoretical models without clinical application
+- Historical concepts
+- Abstract frameworks
+- Definitional content without system connection
+
+**Route to:** Foundations section OR Misc section (if truly orphaned)
+
+---
+
+### Rule S4: Research/Evidence Content
+
+Research paradigms and landmark studies route to the section they illuminate.
+
+**Application:**
+1. Identify what the research demonstrates or proves
+2. Route to the section covering that content
+3. The research becomes supporting evidence within that section
+
+---
+
+### Rule S5: Population-Specific Content
+
+Content specific to particular populations (age groups, cultural groups, clinical populations) routes based on primary focus.
+
+| If focus is... | Route to... |
+|----------------|-------------|
+| The population's unique characteristics | Special Populations section |
+| Adaptation of general content for population | The general content's section with [XREF] |
+| Development within that population | Developmental section |
+
+---
+
+### Rule S6: Integrative/Complex Content
+
+Content that inherently requires multiple knowledge bases routes to integration or culmination sections.
+
+**Indicators:**
+- Differential diagnosis
+- Case conceptualization
+- Multi-factor conditions
+- Complex decision-making
+
+---
+
+## TERTIARY RULES (Edge Cases & Tiebreakers)
+
+Apply when an anchor legitimately fits multiple sections after Primary and Secondary rules.
+
+### Rule T1: The "Best Foundation" Tiebreaker
+
+**Ask:** "In which section will students have the best prerequisite foundation to understand this anchor?"
+
+Choose the section where:
+- Required concepts have already been established
+- Related content reinforces understanding
+- The anchor contributes to section coherence
+
+---
+
+### Rule T2: Multi-Domain Content → Culmination
+
+Anchors involving content that spans 3+ sections belong in Culmination.
+
+**Culmination Criteria:**
+- Requires knowledge from 3+ prior sections
+- Involves multiple systems, principles, or domains
+- Represents integrative/synthetic understanding
+
+---
+
+### Rule T3: Conceptual vs. Applied Split
+
+When an anchor covers both a concept AND its application:
+
+| If emphasis is... | Route to... |
+|-------------------|-------------|
+| The concept itself (definition, mechanism, theory) | Foundational section |
+| The application (how it's used, clinical relevance) | Applied section |
+| Both equally | Determine which section benefits more |
+
+---
+
+### Rule T4: Frontload Flag
+
+**Flag an anchor as `[FRONTLOAD]`** if it contains foundational concepts that must be taught before other anchors in the same section.
+
+**Criteria for frontloading:**
+- Defines terminology used in later anchors
+- Establishes frameworks referenced elsewhere
+- Provides foundational knowledge needed for applications
+
+---
+
+### Rule T5: Ambiguity Resolution
+
+**Flag an anchor as `[AMBIGUOUS]`** when it legitimately fits 2-3 sections equally well after all rules.
+
+**Required documentation:**
+- The 2-3 candidate sections
+- Your final placement decision
+- Detailed rationale for the decision
+
+**Resolution Strategy:**
+1. Consider which section would benefit most from this content
+2. Consider where students will have strongest prerequisite foundation
+3. Consider which placement creates best learning flow
+4. Make a decision—do not leave unresolved
+
+---
+
+### Rule T6: Cross-Reference Flag
+
+**Flag an anchor as `[XREF: Section Name]`** when it belongs in one section but should be briefly referenced in another.
+
+**Cross-reference purpose:**
+- Create connections between sections
+- Reinforce prior learning
+- Set up future content
+
+**Important:** Cross-references do NOT duplicate the anchor. The anchor is taught once in its primary section; other sections may reference it briefly.
+
+---
+
+### Rule T7: The "One Mention" Tiebreaker
+
+When an anchor mentions multiple topics but only one is the focus:
+
+**Ask:** "If I could only test students on ONE thing from this anchor, what would it be?"
+
+Route to that topic's section.
+
+---
+
+### Rule T8: Misc Section Threshold
+
+If after sorting, a provisional section has fewer than 9 anchors:
+- Merge with a conceptually related section, OR
+- Route remaining anchors to Misc section
+
+**Misc section accepts:**
+- Orphaned anchors without a natural home
+- Abstract theoretical content
+- Content that disrupts the main narrative arc
+- Standalone concepts
+
+---
+
+## SORTING PROCESS
+
+### Step-by-Step Execution:
+
+1. **Review Step 2 Output**
+   - Confirm proposed sections
+   - Note relationship dependencies
+   - Review arc planning iterations
+
+2. **Create Domain-Specific Routing Table**
+   - Based on sections identified in Step 2
+   - Document in output
+
+3. **Sort Each Anchor**
+   For each anchor (#1 through #N):
+   - Apply Primary Rules (P1-P3)
+   - If clear: Assign and move to next anchor
+   - If unclear: Apply Secondary Rules (S1-S6)
+   - If still unclear: Apply Tertiary Rules (T1-T8)
+   - Assign to exactly one section
+   - Add flags as needed
+
+4. **Document Flags**
+   - `[FRONTLOAD]` - Must be taught early in section
+   - `[AMBIGUOUS]` - Required resolution with rationale
+   - `[XREF: Section]` - Cross-reference needed
+
+5. **Validate Completeness**
+   - Every anchor assigned exactly once
+   - No anchor in multiple sections
+   - No unassigned anchors
+   - All ambiguous cases resolved
+
+---
+
+## OUTPUT FORMAT
+
+### Part 1: Domain-Specific Routing Table
+
+```
+===== DOMAIN-SPECIFIC ROUTING TABLE =====
+Domain: [Domain Name]
+
+| Content Indicator | Routes To | Rationale |
+|-------------------|-----------|-----------|
+| [Content type] | [Section] | [Why] |
+...
+```
+
+---
+
+### Part 2: Grouped List by Section
+
+```
+===== STEP 3: OFFICIAL SORTING - GROUPED LIST =====
+
+### [SECTION NAME]
+**Anchor Count:** [X]
+
+**Anchors:**
+- #1: [First 15-20 words of anchor summary] [FLAGS if any]
+- #6: [Summary] [FRONTLOAD]
+- #13: [Summary]
+- #21: [Summary] [XREF: Other Section]
+...
+
+---
+
+### [NEXT SECTION NAME]
+**Anchor Count:** [X]
+
+**Anchors:**
+- #2: [Summary]
+- #8: [Summary]
+...
+
+---
+
+[Continue for all sections...]
+
+---
+
+### MISC SECTION (if applicable)
+**Anchor Count:** [X]
+
+**Anchors:**
+- #[X]: [Summary] - Routed here because: [brief reason]
+...
+
+---
+
+### CULMINATION SECTION (if applicable)
+**Anchor Count:** [X]
+
+**Anchors:**
+- #[X]: [Summary] - Multi-domain: [list areas involved]
+...
+```
+
+---
+
+### Part 3: Summary Table
+
+```
+===== SORTING SUMMARY TABLE =====
+
+| Anchor # | Section | Flags | Brief Summary (10 words) |
+|----------|---------|-------|--------------------------|
+| 1 | [Section] | | [Brief summary] |
+| 2 | [Section] | | [Brief summary] |
+| 3 | [Section] | FRONTLOAD | [Brief summary] |
+...
+| [N] | [Section] | [Flags] | [Summary] |
+
+---
+
+SECTION TOTALS:
+| Section | Anchor Count | Flagged Anchors |
+|---------|--------------|-----------------|
+| [Name] | [X] | [list any flagged] |
+...
+| **TOTAL** | **[X]** | |
+```
+
+---
+
+### Part 4: Flagged Items Detail
+
+```
+===== FLAGGED ITEMS - DETAILED =====
+
+## FRONTLOAD ANCHORS
+
+| Anchor # | Section | Rationale |
+|----------|---------|-----------|
+| #[X] | [Section] | [Why this must come early] |
+...
+
+---
+
+## AMBIGUOUS ANCHORS - RESOLUTION DETAIL
+
+### Anchor #[X]: "[Full anchor text]"
+
+**Candidate Sections:**
+1. [Section A] - Reason it could fit here
+2. [Section B] - Reason it could fit here
+3. [Section C] - Reason it could fit here
+
+**Final Placement:** [Section]
+
+**Rationale:** [Detailed explanation of decision - 2-4 sentences explaining why this section was chosen over alternatives, what prerequisite knowledge applies, how it fits the learning flow]
+
+---
+
+[Continue for all ambiguous anchors...]
+
+---
+
+## CROSS-REFERENCES
+
+| Anchor # | Primary Section | Cross-Reference In | Purpose |
+|----------|-----------------|-------------------|---------|
+| #[X] | [Primary] | [XRef Section] | [Why reference is valuable] |
+...
+```
+
+---
+
+### Part 5: Validation
+
+```
+===== SORTING VALIDATION =====
+
+## Completeness Check
+- Total anchors in document: [X]
+- Total anchors assigned: [X]
+- Unassigned anchors: [None / List]
+- Duplicate assignments: [None / List]
+
+## Section Size Check
+| Section | Anchors | Est. Slides | Status |
+|---------|---------|-------------|--------|
+| [Name] | [X] | [X×1.15+3] | [OK: 12-35 / Under / Over] |
+...
+
+## Flag Summary
+- Frontload anchors: [X]
+- Ambiguous anchors (resolved): [X]
+- Cross-references: [X]
+
+## Validation Status
+- [ ] Every anchor assigned to exactly one section
+- [ ] No duplicate assignments
+- [ ] No unassigned anchors
+- [ ] All ambiguous cases resolved with rationale
+- [ ] All sections have ≥9 anchors (or merged/Misc)
+- [ ] Frontload anchors identified for sequencing
+- [ ] Cross-references documented
+
+===VALIDATION COMPLETE===
+```
+
+---
+
+## STEP 3 COMPLETE OUTPUT
+
+Compile all parts into final output:
+
+```
+========================================
+STEP 3: OFFICIAL SORTING - COMPLETE OUTPUT
+========================================
+Domain: [Name]
+Total Anchors: [X]
+Total Sections: [X]
+Date: [Date]
+
+[Part 1: Domain-Specific Routing Table]
+
+[Part 2: Grouped List]
+
+[Part 3: Summary Table]
+
+[Part 4: Flagged Items Detail]
+
+[Part 5: Validation]
+
+========================================
+===HANDOFF TO STEP 4===
+========================================
+
+The following is ready for Step 4 (Outline Generation):
+- [X] sections with assigned anchors
+- [X] total anchors sorted
+- Frontload anchors identified: [list by section]
+- Cross-references documented: [count]
+
+Section Summary for Outline:
+| Section | Anchors | Est. Slides |
+|---------|---------|-------------|
+| [Name] | [X] | [Y] |
+...
+
+Proceed to Step 4 to generate the final outline structure with session distribution, subsections, and slide counts.
+```
+
+---
+
+## SAVE INSTRUCTION
+
+After generating Step 3 output, save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `sorting/`
+
+**Full Path:** `[Domain]_Production_[Date]/sorting/step3_output_[domain]_[date].txt`
+
+**Examples:**
+- `Fundamentals_of_Nursing_Production_2024-01-15/sorting/step3_output_fundamentals_of_nursing_2024-01-15.txt`
+- `Ethics_Legal_Production_2024-01-15/sorting/step3_output_ethics_legal_professional_2024-01-15.txt`
+
+This saved file serves as:
+1. Input reference for Step 4
+2. Troubleshooting documentation
+3. Audit trail for sorting decisions
+4. Reference for future lecture revisions

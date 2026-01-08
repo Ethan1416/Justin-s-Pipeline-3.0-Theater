@@ -1,0 +1,338 @@
+# Visual Styles Configuration
+# Colors, fonts, layouts, and positioning for all visual types
+# Migrated from pipeline_config.json v3.0
+
+# Slide dimensions
+slide_dimensions:
+  width_inches: 13.33
+  height_inches: 7.5
+
+# Shape mappings for NCLEX Tip PowerPoint template (Jan 2026 overhaul)
+# Full config in config/nclex_tip_template.yaml
+shape_mappings:
+  template: "templates/template_nclex_tip.pptx"
+  required_shapes:
+    - "TextBox 6"     # title
+    - "TextBox 12"    # body_line_1
+    - "TextBox 13"    # body_line_2
+    - "TextBox 14"    # body_line_3
+    - "TextBox 20"    # nclex_tip_label (static)
+    - "TextBox 24"    # nclex_tip
+    - "TextBox 30"    # footer
+  mappings:
+    "TextBox 6": "title"
+    "TextBox 12": "body_line_1"
+    "TextBox 13": "body_line_2"
+    "TextBox 14": "body_line_3"
+    "TextBox 20": "nclex_tip_label"
+    "TextBox 24": "nclex_tip"
+    "TextBox 30": "footer"
+  nclex_tip_handling: "dedicated_shape"
+  nclex_tip_shape: "TextBox 24"
+
+# Font settings
+# Note: Fonts are inherited from template, these are reference values only
+fonts:
+  inherit_from_template: true
+  default:
+    font_name: "inherit"
+    min_font_size_pt: 18
+
+  title:
+    shape: "TextBox 6"
+    inherit: true
+    # Reference: used for title/header
+
+  body_line_1:
+    shape: "TextBox 12"
+    inherit: true
+    # Reference: first body content line
+
+  body_line_2:
+    shape: "TextBox 13"
+    inherit: true
+    # Reference: second body content line
+
+  body_line_3:
+    shape: "TextBox 14"
+    inherit: true
+    # Reference: third body content line
+
+  nclex_tip:
+    shape: "TextBox 24"
+    inherit: true
+    # Reference: dedicated NCLEX tip content
+
+  footer:
+    shape: "TextBox 30"
+    inherit: true
+    # Reference: copyright/footer
+
+# Table visual settings
+table:
+  font_name: "Aptos"
+  font_size_pt: 20
+  min_font_size_pt: 18
+  font_color_rgb: [0, 0, 0]
+  header_font_color_rgb: [255, 255, 255]
+  header_background_rgb: [0, 51, 102]
+  header_bold: true
+  border_color_rgb: [0, 51, 102]
+  border_width_pt: 1
+
+  position:
+    left_inches: 0.5
+    top_inches: 1.8
+    width_inches: 12.3
+    max_height_inches: 4.5
+
+  font_scaling:
+    default_size_pt: 20
+    min_size_pt: 18
+    scale_threshold_rows: 8
+    scale_threshold_cols: 5
+
+  layouts:
+    A:
+      name: "Standard Comparison"
+      description: "2-4 cols, 3-6 rows"
+      columns: { min: 2, max: 4 }
+      rows: { min: 3, max: 6 }
+    B:
+      name: "Wide Comparison"
+      description: "2 cols, 4-8 rows"
+      columns: { min: 2, max: 2 }
+      rows: { min: 4, max: 8 }
+    C:
+      name: "Category List"
+      description: "3 cols, 4-6 rows"
+      columns: { min: 3, max: 3 }
+      rows: { min: 4, max: 6 }
+    D:
+      name: "Compact Reference"
+      description: "4-6 cols, 4-5 rows"
+      columns: { min: 4, max: 6 }
+      rows: { min: 4, max: 5 }
+    E:
+      name: "Tall Comparison"
+      description: "2 cols, 6-10 rows"
+      columns: { min: 2, max: 2 }
+      rows: { min: 6, max: 10 }
+
+# Decision tree visual settings
+decision_tree:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_nodes: 15
+  max_depth: 4
+
+  colors:
+    decision_header_rgb: [0, 51, 102]
+    decision_body_rgb: [240, 244, 248]
+    outcome_green_rgb: [0, 102, 68]
+    outcome_red_rgb: [153, 0, 0]
+    outcome_blue_rgb: [0, 71, 133]
+    outcome_purple_rgb: [75, 0, 110]
+    connector_rgb: [100, 100, 100]
+
+  layouts:
+    A:
+      name: "Three-level Binary"
+      structure: "1-2-4"
+    B:
+      name: "Two-level Binary"
+      structure: "1-2"
+    C:
+      name: "Two-level Triple"
+      structure: "1-3"
+    D:
+      name: "Three-level Asymmetric"
+      structure: "variable"
+    E:
+      name: "Three-level Extended"
+      structure: "1-2-6"
+
+# Flowchart visual settings
+flowchart:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_steps: 7
+
+  colors:
+    step_header_rgb: [0, 102, 102]
+    step_body_rgb: [224, 242, 241]
+    start_node_rgb: [46, 125, 50]
+    end_node_rgb: [0, 77, 64]
+    connector_rgb: [0, 102, 102]
+    text_header_rgb: [255, 255, 255]
+    text_body_rgb: [0, 0, 0]
+
+  layouts:
+    A:
+      name: "Linear Horizontal"
+      steps: "3-4"
+    B:
+      name: "Linear Vertical"
+      steps: "4-6"
+    C:
+      name: "Horizontal with Substeps"
+      steps: "3-4 main + substeps"
+    D:
+      name: "Snake/Zigzag"
+      steps: "5-7"
+    E:
+      name: "Branching Linear"
+      steps: "4-6 with optional paths"
+
+# Timeline visual settings
+timeline:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_events: 8
+
+  colors:
+    timeline_bar_rgb: [74, 20, 140]
+    event_marker_rgb: [123, 31, 162]
+    card_background_rgb: [243, 229, 245]
+    card_border_rgb: [74, 20, 140]
+    header_text_rgb: [74, 20, 140]
+    body_text_rgb: [0, 0, 0]
+    date_text_rgb: [255, 255, 255]
+
+  layouts:
+    A:
+      name: "Horizontal Timeline"
+      events: "3-5"
+    B:
+      name: "Vertical Timeline"
+      events: "4-7"
+    C:
+      name: "Horizontal Era Blocks"
+      events: "3-4 eras"
+    D:
+      name: "Developmental Stages"
+      events: "4-6 stages"
+    E:
+      name: "Milestone Timeline"
+      events: "5-8 milestones"
+
+# Hierarchy visual settings
+hierarchy:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_levels: 4
+  max_nodes: 15
+
+  colors:
+    level_1_rgb: [1, 87, 155]
+    level_2_rgb: [2, 119, 189]
+    level_3_rgb: [3, 155, 229]
+    level_4_rgb: [79, 195, 247]
+    connector_rgb: [1, 87, 155]
+    text_light_rgb: [255, 255, 255]
+    text_dark_rgb: [0, 0, 0]
+
+  layouts:
+    A:
+      name: "Top-Down Tree"
+      structure: "1-2-4"
+    B:
+      name: "Top-Down Tree Wide"
+      structure: "1-3-6"
+    C:
+      name: "Organizational Chart"
+      structure: "mixed branches"
+    D:
+      name: "Inverted Pyramid"
+      structure: "wide to narrow"
+    E:
+      name: "Side-by-Side Hierarchies"
+      structure: "2 parallel trees"
+
+# Spectrum visual settings
+spectrum:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_segments: 6
+
+  gradients:
+    blue:
+      low_rgb: [227, 242, 253]
+      mid_rgb: [100, 181, 246]
+      high_rgb: [13, 71, 161]
+    alert:
+      low_rgb: [76, 175, 80]
+      mid_rgb: [255, 235, 59]
+      high_rgb: [244, 67, 54]
+    bipolar:
+      left_rgb: [33, 150, 243]
+      center_rgb: [158, 158, 158]
+      right_rgb: [255, 87, 34]
+
+  layouts:
+    A:
+      name: "Horizontal Bar Spectrum"
+      segments: "3-5"
+    B:
+      name: "Vertical Bar Spectrum"
+      segments: "4-6"
+    C:
+      name: "Bipolar Spectrum with Center"
+      segments: "3-5 with center"
+    D:
+      name: "Segmented Spectrum"
+      segments: "4-6 discrete points"
+    E:
+      name: "Dual-Axis Spectrum"
+      segments: "2 dimensions"
+
+# Key differentiators visual settings
+key_differentiators:
+  font_name: "Aptos"
+  min_font_size_pt: 18
+  max_concepts: 4
+  max_features: 6
+
+  colors:
+    concept_1_header_rgb: [21, 101, 192]
+    concept_1_light_rgb: [227, 242, 253]
+    concept_2_header_rgb: [183, 28, 28]
+    concept_2_light_rgb: [255, 235, 238]
+    concept_3_header_rgb: [27, 94, 32]
+    concept_3_light_rgb: [232, 245, 233]
+    key_diff_rgb: [255, 193, 7]
+    key_diff_light_rgb: [255, 243, 224]
+    key_diff_border_rgb: [255, 160, 0]
+    separator_rgb: [97, 97, 97]
+
+  layouts:
+    A:
+      name: "Side-by-Side Comparison"
+      concepts: 2
+      features: "3-5"
+    B:
+      name: "Centered Key Differentiator"
+      concepts: 2
+      features: "focus on single difference"
+    C:
+      name: "Multiple Differentiators"
+      concepts: 2
+      features: "2-4 key differences"
+    D:
+      name: "Three-Way Discrimination"
+      concepts: 3
+      features: "3-4"
+    E:
+      name: "Feature Matrix"
+      concepts: "3-4"
+      features: "4-6"
+
+# Reference documents for each visual type
+reference_docs:
+  table: "docs/step12_table_generation.txt"
+  decision_tree: "docs/step12_decision_tree_generation.txt"
+  flowchart: "docs/step12_flowchart_generation.txt"
+  timeline: "docs/step12_timeline_generation.txt"
+  hierarchy: "docs/step12_hierarchy_diagram_generation.txt"
+  spectrum: "docs/step12_spectrum_generation.txt"
+  key_differentiators: "docs/step12_key_differentiators_generation.txt"

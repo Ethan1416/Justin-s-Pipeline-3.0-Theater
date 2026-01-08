@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "integrate_input.schema.json",
+  "title": "Step 10 Visual Integration Input Schema",
+  "description": "Schema for visual_integrator agent input - blueprint and visual specs for integration",
+  "type": "object",
+  "required": ["metadata", "blueprint", "visual_specifications", "reference_files"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "section_number", "section_name", "domain", "date"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 10: Visual Integration Revision"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "blueprint": {
+      "$ref": "#/definitions/blueprint_content"
+    },
+    "visual_specifications": {
+      "type": "array",
+      "description": "Visual specifications from Step 9",
+      "items": {
+        "$ref": "#/definitions/visual_spec"
+      }
+    },
+    "reference_files": {
+      "type": "object",
+      "description": "Source files for reference",
+      "properties": {
+        "step7_revised_blueprint": {
+          "type": "string"
+        },
+        "step9_visual_specs": {
+          "type": "string"
+        },
+        "step4_outline": {
+          "type": "string"
+        },
+        "step5_presentation_standards": {
+          "type": "string"
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Formatting and structural constraints",
+      "properties": {
+        "header_char_limit": {
+          "type": "integer",
+          "default": 32
+        },
+        "body_chars_per_line": {
+          "type": "integer",
+          "default": 66
+        },
+        "body_max_lines": {
+          "type": "integer",
+          "default": 8
+        },
+        "tip_chars_per_line": {
+          "type": "integer",
+          "default": 66
+        },
+        "tip_max_lines": {
+          "type": "integer",
+          "default": 2
+        },
+        "presenter_notes_max_seconds": {
+          "type": "integer",
+          "default": 180
+        },
+        "presenter_notes_max_words": {
+          "type": "integer",
+          "default": 450
+        },
+        "section_min_slides": {
+          "type": "integer",
+          "default": 12
+        },
+        "section_max_slides": {
+          "type": "integer",
+          "default": 35
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide"
+          }
+        }
+      }
+    },
+    "slide": {
+      "type": "object",
+      "required": ["slide_number", "title", "body"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer", "visual"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "delivery_mode": {
+          "type": "string",
+          "enum": ["Foundational", "Full", "Minor", "One-and-Done"]
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "presenter_notes": {
+          "type": "string"
+        }
+      }
+    },
+    "visual_spec": {
+      "type": "object",
+      "required": ["visual_id", "slide_number", "type", "integration_option"],
+      "properties": {
+        "visual_id": {
+          "type": "string",
+          "pattern": "^V[0-9]+$"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["TABLE", "KEY_DIFFERENTIATORS", "FLOWCHART", "DECISION_TREE", "HIERARCHY", "TIMELINE", "SPECTRUM"]
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E", "AUTO"]
+        },
+        "title": {
+          "type": "string"
+        },
+        "integration_option": {
+          "type": "string",
+          "enum": ["A", "B", "C"],
+          "description": "A = replace body, B = new slide after, C = reduce body + add visual"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

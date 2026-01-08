@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "color_output.schema.json",
+  "title": "Color Applier Output Schema",
+  "description": "Schema for color_applier agent output - color assignments for visual elements",
+  "type": "object",
+  "required": ["metadata", "colored_elements", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "color_applier"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "colored_elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/colored_element"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_elements": {
+          "type": "integer"
+        },
+        "colors_used": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unique_color_count": {
+          "type": "integer"
+        },
+        "contrast_check_passed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "color_legend": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "color": { "type": "string" },
+          "meaning": { "type": "string" }
+        }
+      },
+      "description": "Legend explaining color meanings"
+    }
+  },
+  "definitions": {
+    "colored_element": {
+      "type": "object",
+      "required": ["element_id"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "fill_color": {
+          "type": "object",
+          "properties": {
+            "hex": { "type": "string" },
+            "rgb": {
+              "type": "object",
+              "properties": {
+                "r": { "type": "integer" },
+                "g": { "type": "integer" },
+                "b": { "type": "integer" }
+              }
+            },
+            "transparency": { "type": "number" }
+          }
+        },
+        "text_color": {
+          "type": "object",
+          "properties": {
+            "hex": { "type": "string" },
+            "rgb": {
+              "type": "object",
+              "properties": {
+                "r": { "type": "integer" },
+                "g": { "type": "integer" },
+                "b": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "line_color": {
+          "type": "object",
+          "properties": {
+            "hex": { "type": "string" },
+            "rgb": {
+              "type": "object",
+              "properties": {
+                "r": { "type": "integer" },
+                "g": { "type": "integer" },
+                "b": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "contrast_ratio": {
+          "type": "number",
+          "description": "Text to background contrast ratio"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,595 @@
+{
+  "pipeline_info": {
+    "version": "3.0",
+    "last_updated": "2026-01-01",
+    "description": "NCLEX Lecture Generation Pipeline - GitHub-based with centralized templates",
+    "repository": "https://github.com/Ethan1416/JustinPipeline"
+  },
+  "templates": {
+    "_comment": "NCLEX Tip template for ALL slides (Jan 2026). Dedicated NCLEX tip banner.",
+    "master": "templates/template_nclex_tip.pptx",
+    "nclex_tip": "templates/template_nclex_tip.pptx",
+    "canvas": "templates/template_canvas.pptx",
+    "config": "config/nclex_tip_template.yaml",
+    "generator_script": "templates/complete_template_system.py",
+    "_legacy_note": "Canvas template available as fallback in templates/template_canvas.pptx"
+  },
+  "domain": {
+    "_comment": "Set these values when starting a new production run",
+    "name": "Pharmacology",
+    "display_name": "NCLEX Pharmacology",
+    "date": "2026-01-05"
+  },
+  "paths": {
+    "_comment": "production_folder is the only absolute path - set at runtime",
+    "production_folder": "/home/mcdanielmjustin/Desktop/Pharmacology_NCLEX_Production_2026-01-05"
+  },
+  "output_structure": {
+    "description": "All outputs go to a separate production folder organized by type",
+    "root_pattern": "{domain}_Production_{date}",
+    "subfolders": {
+      "mapping": "mapping",
+      "sorting": "sorting",
+      "outlines": "outlines",
+      "blueprints": "blueprints",
+      "revisions": "revisions",
+      "qa_reports": "qa_reports",
+      "visual_specs": "visual_specs",
+      "integrated": "integrated",
+      "diagrams": "diagrams",
+      "powerpoints": "powerpoints",
+      "logs": "logs"
+    },
+    "step_outputs": {
+      "step2": "mapping/step2_output_{domain}_{date}.txt",
+      "step3": "sorting/step3_output_{domain}_{date}.txt",
+      "step4": "outlines/step4_output_{domain}_{date}.txt",
+      "step6": "blueprints/step6_blueprint_{domain}_{section}_{date}.txt",
+      "step7_revised": "revisions/step7_revised_{domain}_{section}_{date}.txt",
+      "step7_changelog": "revisions/step7_changelog_{domain}_{section}_{date}.txt",
+      "step8_qa": "qa_reports/step8_qa_report_{domain}_{section}_{date}.txt",
+      "step8_score": "qa_reports/step8_validation_score_{domain}_{section}_{date}.txt",
+      "step9": "visual_specs/step9_visual_specs_{domain}_{section}_{date}.txt",
+      "step10_blueprint": "integrated/step10_integrated_blueprint_{domain}_{section}_{date}.txt",
+      "step10_changelog": "integrated/step10_revision_changelog_{domain}_{section}_{date}.txt",
+      "step12_diagrams": "diagrams/section_{num}_slide_{num}_{type}.png",
+      "step12_powerpoints": "powerpoints/{section_name}.pptx"
+    }
+  },
+  "template_requirements": {
+    "_comment": "Updated for NCLEX Tip template (Jan 2026). Full config in config/nclex_tip_template.yaml",
+    "required_shapes": [
+      "TextBox 6",
+      "TextBox 12",
+      "TextBox 13",
+      "TextBox 14",
+      "TextBox 20",
+      "TextBox 24",
+      "TextBox 30"
+    ],
+    "shape_mappings": {
+      "TextBox 6": "title",
+      "TextBox 12": "body_line_1",
+      "TextBox 13": "body_line_2",
+      "TextBox 14": "body_line_3",
+      "TextBox 20": "nclex_tip_label",
+      "TextBox 24": "nclex_tip",
+      "TextBox 30": "footer"
+    },
+    "nclex_tip_handling": "dedicated_shape",
+    "slide_dimensions": {
+      "width_inches": 13.33,
+      "height_inches": 7.5
+    },
+    "font_settings": {
+      "_comment": "Fonts are inherited from NCLEX Tip template - do not override",
+      "inherit_from_template": true,
+      "TextBox 6": {
+        "purpose": "title",
+        "inherit": true
+      },
+      "TextBox 12": {
+        "purpose": "body_line_1",
+        "inherit": true
+      },
+      "TextBox 13": {
+        "purpose": "body_line_2",
+        "inherit": true
+      },
+      "TextBox 14": {
+        "purpose": "body_line_3",
+        "inherit": true
+      },
+      "TextBox 24": {
+        "purpose": "nclex_tip",
+        "inherit": true
+      },
+      "TextBox 30": {
+        "purpose": "footer",
+        "inherit": true
+      }
+    },
+    "table_settings": {
+      "reference_doc": "docs/step12_table_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "font_size_pt": 20,
+      "min_font_size_pt": 18,
+      "font_color_rgb": [
+        0,
+        0,
+        0
+      ],
+      "header_font_color_rgb": [
+        255,
+        255,
+        255
+      ],
+      "header_background_rgb": [
+        0,
+        51,
+        102
+      ],
+      "header_bold": true,
+      "border_color_rgb": [
+        0,
+        51,
+        102
+      ],
+      "border_width_pt": 1,
+      "position": {
+        "left_inches": 0.5,
+        "top_inches": 1.8,
+        "width_inches": 12.3,
+        "max_height_inches": 4.5
+      },
+      "dimensions": {
+        "columns": {
+          "min": 2,
+          "max": 6,
+          "auto_width": true
+        },
+        "rows": {
+          "min": 2,
+          "max": 10,
+          "auto_height": true
+        }
+      },
+      "font_scaling": {
+        "default_size_pt": 20,
+        "min_size_pt": 18,
+        "scale_threshold_rows": 8,
+        "scale_threshold_cols": 5
+      },
+      "character_limits": {
+        "header_chars": 25,
+        "cell_chars_per_line": 30,
+        "cell_max_lines": 2
+      },
+      "layouts": {
+        "A": "Standard Comparison (2-4 cols, 3-6 rows)",
+        "B": "Wide Comparison (2 cols, 4-8 rows)",
+        "C": "Category List (3 cols, 4-6 rows)",
+        "D": "Compact Reference (4-6 cols, 4-5 rows)",
+        "E": "Tall Comparison (2 cols, 6-10 rows)"
+      }
+    },
+    "decision_tree_settings": {
+      "reference_doc": "docs/step12_decision_tree_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_nodes": 15,
+      "colors": {
+        "decision_header_rgb": [
+          0,
+          51,
+          102
+        ],
+        "decision_body_rgb": [
+          240,
+          244,
+          248
+        ],
+        "outcome_green_rgb": [
+          0,
+          102,
+          68
+        ],
+        "outcome_red_rgb": [
+          153,
+          0,
+          0
+        ],
+        "outcome_blue_rgb": [
+          0,
+          71,
+          133
+        ],
+        "outcome_purple_rgb": [
+          75,
+          0,
+          110
+        ],
+        "connector_rgb": [
+          100,
+          100,
+          100
+        ]
+      },
+      "character_limits": {
+        "decision_header_chars": 20,
+        "decision_body_chars_per_line": 25,
+        "decision_body_max_lines": 2,
+        "outcome_header_chars": 20,
+        "outcome_body_chars_per_line": 20,
+        "outcome_body_max_lines": 2,
+        "path_label_chars": 12
+      },
+      "layouts": {
+        "A": "Three-level binary (1-2-4)",
+        "B": "Two-level binary (1-2)",
+        "C": "Two-level triple (1-3)",
+        "D": "Three-level asymmetric",
+        "E": "Three-level extended (1-2-6)"
+      }
+    },
+    "flowchart_settings": {
+      "reference_doc": "docs/step12_flowchart_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_steps": 7,
+      "colors": {
+        "step_header_rgb": [
+          0,
+          102,
+          102
+        ],
+        "step_body_rgb": [
+          224,
+          242,
+          241
+        ],
+        "start_node_rgb": [
+          46,
+          125,
+          50
+        ],
+        "end_node_rgb": [
+          0,
+          77,
+          64
+        ],
+        "connector_rgb": [
+          0,
+          102,
+          102
+        ],
+        "text_header_rgb": [
+          255,
+          255,
+          255
+        ],
+        "text_body_rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "layouts": {
+        "A": "Linear Horizontal (3-4 steps)",
+        "B": "Linear Vertical (4-6 steps)",
+        "C": "Horizontal with Substeps (3-4 main + substeps)",
+        "D": "Snake/Zigzag (5-7 steps)",
+        "E": "Branching Linear (4-6 steps with optional paths)"
+      }
+    },
+    "timeline_settings": {
+      "reference_doc": "docs/step12_timeline_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_events": 8,
+      "colors": {
+        "timeline_bar_rgb": [
+          74,
+          20,
+          140
+        ],
+        "event_marker_rgb": [
+          123,
+          31,
+          162
+        ],
+        "card_background_rgb": [
+          243,
+          229,
+          245
+        ],
+        "card_border_rgb": [
+          74,
+          20,
+          140
+        ],
+        "header_text_rgb": [
+          74,
+          20,
+          140
+        ],
+        "body_text_rgb": [
+          0,
+          0,
+          0
+        ],
+        "date_text_rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      "layouts": {
+        "A": "Horizontal Timeline (3-5 events)",
+        "B": "Vertical Timeline (4-7 events)",
+        "C": "Horizontal Era Blocks (3-4 eras)",
+        "D": "Developmental Stages (4-6 stages)",
+        "E": "Milestone Timeline (5-8 milestones)"
+      }
+    },
+    "hierarchy_settings": {
+      "reference_doc": "docs/step12_hierarchy_diagram_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_levels": 4,
+      "max_nodes": 15,
+      "colors": {
+        "level_1_rgb": [
+          1,
+          87,
+          155
+        ],
+        "level_2_rgb": [
+          2,
+          119,
+          189
+        ],
+        "level_3_rgb": [
+          3,
+          155,
+          229
+        ],
+        "level_4_rgb": [
+          79,
+          195,
+          247
+        ],
+        "connector_rgb": [
+          1,
+          87,
+          155
+        ],
+        "text_light_rgb": [
+          255,
+          255,
+          255
+        ],
+        "text_dark_rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "layouts": {
+        "A": "Top-Down Tree (1-2-4 structure)",
+        "B": "Top-Down Tree (1-3-6 structure)",
+        "C": "Organizational Chart (mixed branches)",
+        "D": "Inverted Pyramid (wide to narrow)",
+        "E": "Side-by-Side Hierarchies (comparison)"
+      }
+    },
+    "spectrum_settings": {
+      "reference_doc": "docs/step12_spectrum_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_segments": 6,
+      "gradients": {
+        "blue": {
+          "low_rgb": [
+            227,
+            242,
+            253
+          ],
+          "mid_rgb": [
+            100,
+            181,
+            246
+          ],
+          "high_rgb": [
+            13,
+            71,
+            161
+          ]
+        },
+        "alert": {
+          "low_rgb": [
+            76,
+            175,
+            80
+          ],
+          "mid_rgb": [
+            255,
+            235,
+            59
+          ],
+          "high_rgb": [
+            244,
+            67,
+            54
+          ]
+        },
+        "bipolar": {
+          "left_rgb": [
+            33,
+            150,
+            243
+          ],
+          "center_rgb": [
+            158,
+            158,
+            158
+          ],
+          "right_rgb": [
+            255,
+            87,
+            34
+          ]
+        }
+      },
+      "layouts": {
+        "A": "Horizontal Bar Spectrum",
+        "B": "Vertical Bar Spectrum",
+        "C": "Bipolar Spectrum with Center",
+        "D": "Segmented Spectrum (discrete points)",
+        "E": "Dual-Axis Spectrum (two dimensions)"
+      }
+    },
+    "key_differentiators_settings": {
+      "reference_doc": "docs/step12_key_differentiators_generation.txt",
+      "template": "templates/template_nclex_tip.pptx",
+      "font_name": "Aptos",
+      "min_font_size_pt": 18,
+      "max_concepts": 4,
+      "max_features": 6,
+      "colors": {
+        "concept_1_header_rgb": [
+          21,
+          101,
+          192
+        ],
+        "concept_1_light_rgb": [
+          227,
+          242,
+          253
+        ],
+        "concept_2_header_rgb": [
+          183,
+          28,
+          28
+        ],
+        "concept_2_light_rgb": [
+          255,
+          235,
+          238
+        ],
+        "concept_3_header_rgb": [
+          27,
+          94,
+          32
+        ],
+        "concept_3_light_rgb": [
+          232,
+          245,
+          233
+        ],
+        "key_diff_rgb": [
+          255,
+          193,
+          7
+        ],
+        "key_diff_light_rgb": [
+          255,
+          243,
+          224
+        ],
+        "key_diff_border_rgb": [
+          255,
+          160,
+          0
+        ],
+        "separator_rgb": [
+          97,
+          97,
+          97
+        ]
+      },
+      "layouts": {
+        "A": "Side-by-Side Comparison (2 concepts, 3-5 features)",
+        "B": "Centered Key Differentiator (focus on single difference)",
+        "C": "Multiple Differentiators (2-4 key differences)",
+        "D": "Three-Way Discrimination",
+        "E": "Feature Matrix (multiple concepts/features)"
+      }
+    }
+  },
+  "constraints": {
+    "character_limits": {
+      "header_chars_per_line": 32,
+      "header_max_lines": 2,
+      "body_chars_per_line": 66,
+      "body_max_lines": 8,
+      "tip_chars_per_line": 66,
+      "tip_max_lines": 2
+    },
+    "presenter_notes": {
+      "max_seconds": 180,
+      "words_per_minute": 150,
+      "max_words": 450
+    },
+    "slides": {
+      "section_min_default": 12,
+      "section_min_if_5plus_sections": 10,
+      "section_max": 35,
+      "session_min": 72,
+      "session_max": 90,
+      "total_min": 144,
+      "total_max": 180
+    },
+    "sections": {
+      "min_sections": 4,
+      "max_sections": 12,
+      "formula": "total_anchors / 15-20",
+      "note": "Section count is dynamic based on anchor count. Use 12 slides min for 4 or fewer sections, 10 slides min for 5+ sections."
+    },
+    "visual_quotas": {
+      "note": "MANDATORY - Every section must have at least the minimum number of graphic organizers",
+      "by_section_size": {
+        "12-15_slides": {
+          "minimum": 2,
+          "target_min": 3,
+          "target_max": 4
+        },
+        "16-20_slides": {
+          "minimum": 3,
+          "target_min": 4,
+          "target_max": 5
+        },
+        "21-25_slides": {
+          "minimum": 3,
+          "target_min": 5,
+          "target_max": 6
+        },
+        "26-35_slides": {
+          "minimum": 4,
+          "target_min": 6,
+          "target_max": 8
+        }
+      },
+      "enforcement": "If a section has fewer than minimum visuals, Step 9 output is INCOMPLETE",
+      "proactive_triggers": [
+        "Any slide with 4+ bullet points -> TABLE",
+        "Any slide comparing 2+ items -> TABLE or KEY_DIFFERENTIATORS",
+        "Any slide listing criteria/symptoms/features -> TABLE",
+        "Any slide with process/sequence -> FLOWCHART",
+        "Any slide with diagnostic criteria -> DECISION_TREE or TABLE",
+        "Any slide with similar disorders -> KEY_DIFFERENTIATORS"
+      ]
+    }
+  },
+  "validation_settings": {
+    "strict_mode": true,
+    "warn_on_close_to_limit": true,
+    "close_to_limit_threshold": 0.9
+  }
+}

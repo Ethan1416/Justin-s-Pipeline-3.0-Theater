@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quota_output.schema.json",
+  "title": "Visual Quota Checker Output Schema",
+  "description": "Schema for visual_quota_checker agent output - visual quota validation results",
+  "type": "object",
+  "required": ["metadata", "results", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "visual_quota_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "required": ["overall_status", "quota_met", "ratio_met"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "quota_met": {
+          "type": "boolean",
+          "description": "Whether minimum visual count was met"
+        },
+        "ratio_met": {
+          "type": "boolean",
+          "description": "Whether target visual ratio was met"
+        },
+        "type_diversity": {
+          "type": "string",
+          "enum": ["GOOD", "ACCEPTABLE", "POOR"],
+          "description": "Diversity of visual types used"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "content_slides": {
+          "type": "integer"
+        },
+        "visual_slides": {
+          "type": "integer"
+        },
+        "visual_ratio": {
+          "type": "number"
+        },
+        "minimum_required": {
+          "type": "integer"
+        },
+        "shortfall": {
+          "type": "integer",
+          "description": "Number of visuals needed to meet quota (0 if met)"
+        },
+        "visual_type_breakdown": {
+          "type": "object",
+          "properties": {
+            "table": { "type": "integer" },
+            "flowchart": { "type": "integer" },
+            "decision_tree": { "type": "integer" },
+            "timeline": { "type": "integer" },
+            "hierarchy": { "type": "integer" },
+            "spectrum": { "type": "integer" },
+            "key_diff": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slide_number": { "type": "integer" },
+          "suggested_visual_type": { "type": "string" },
+          "rationale": { "type": "string" }
+        }
+      },
+      "description": "Suggestions for adding visuals if quota not met"
+    }
+  }
+}

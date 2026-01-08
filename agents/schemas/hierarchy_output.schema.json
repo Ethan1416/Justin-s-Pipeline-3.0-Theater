@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hierarchy_output.schema.json",
+  "title": "Hierarchy Generator Output Schema",
+  "description": "Output schema for the hierarchy_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_spec", "validation", "presenter_notes"],
+  "properties": {
+    "visual_spec": {
+      "type": "object",
+      "required": ["type", "layout", "title", "data"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "HIERARCHY"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E"],
+          "description": "Selected layout: A=1-2-4 Tree, B=1-3-6 Tree, C=Org Chart, D=Inverted Pyramid, E=Side-by-Side"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Hierarchy title"
+        },
+        "data": {
+          "type": "object",
+          "required": ["root"],
+          "properties": {
+            "root": {
+              "$ref": "#/definitions/hierarchy_node"
+            },
+            "node_count": {
+              "type": "integer",
+              "maximum": 15,
+              "description": "Total node count (max 15)"
+            },
+            "depth": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 4,
+              "description": "Actual depth of hierarchy"
+            },
+            "levels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Level labels for Layout D (inverted pyramid)"
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_valid", "checks"],
+      "properties": {
+        "is_valid": {
+          "type": "boolean",
+          "description": "Overall validation status"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "node_count_valid": {
+              "type": "boolean",
+              "description": "Total nodes <= 15"
+            },
+            "depth_valid": {
+              "type": "boolean",
+              "description": "Depth within 2-4 levels"
+            },
+            "level1_char_limits": {
+              "type": "boolean",
+              "description": "Level 1 nodes within 25 char limit"
+            },
+            "level2_char_limits": {
+              "type": "boolean",
+              "description": "Level 2 nodes within 22 char limit"
+            },
+            "level3_char_limits": {
+              "type": "boolean",
+              "description": "Level 3+ nodes within 18 char limit"
+            },
+            "layout_compatible": {
+              "type": "boolean",
+              "description": "Node structure compatible with selected layout"
+            },
+            "branches_balanced": {
+              "type": "boolean",
+              "description": "Branches reasonably balanced (for layouts A, B)"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Presenter notes explaining the hierarchy"
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 150,
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 180
+        }
+      }
+    },
+    "rendering_metadata": {
+      "type": "object",
+      "properties": {
+        "font_sizes": {
+          "type": "object",
+          "properties": {
+            "level_1": { "type": "integer", "default": 22 },
+            "level_2": { "type": "integer", "default": 20 },
+            "level_3": { "type": "integer", "default": 18 },
+            "level_4": { "type": "integer", "default": 18 }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "level_1_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(1, 87, 155) - Dark Blue"
+            },
+            "level_2_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(2, 119, 189) - Medium Blue"
+            },
+            "level_3_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(3, 155, 229) - Cyan Blue"
+            },
+            "level_4_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(79, 195, 247) - Light Cyan"
+            },
+            "connector_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "description": "RGB(1, 87, 155) - Dark Blue"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "hierarchy_node": {
+      "type": "object",
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hierarchy_node"
+          }
+        }
+      }
+    }
+  }
+}

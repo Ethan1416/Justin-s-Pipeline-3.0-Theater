@@ -1,0 +1,347 @@
+The amygdala, a component of the limbic system, primarily mediates the consolidation of emotional memories by linking events to their associated emotional responses.
+
+Damage to the cerebellum impairs coordination, balance, and muscle control, producing symptoms characteristic of alcohol intoxication.
+
+The thalamus functions as a relay station that processes and transmits all sensory information to the cerebral cortex, except for olfactory input.
+
+The hypothalamus maintains the body’s homeostasis by regulating vital functions such as temperature, fluid balance, blood pressure, and hormonal activity through its control of the autonomic nervous system and interactions with the endocrine and limbic systems.
+
+Bilateral lesioning of the amygdala, hippocampus, and temporal lobes produces Kluver-Bucy syndrome, characterized by visual agnosia, emotional blunting, altered feeding behavior, and abnormal sexual activity.
+
+The hippocampus is responsible for consolidating long-term declarative memories by transferring factual and event-related information from short-term to long-term storage.
+
+The ascending reticular activating system regulates arousal and the sleep-wake cycle, and its electrical stimulation increases alertness in awake individuals and induces awakening in those who are asleep.
+
+Tourette’s disorder, ADHD, and obsessive-compulsive disorder are associated with abnormalities in the basal ganglia, which regulate voluntary movement through structures such as the caudate nucleus, putamen, and globus pallidus.
+
+Bilateral damage to the amygdala impairs the ability to recognize negative emotions, particularly fear, in human facial expressions.
+
+Electrical stimulation of distinct regions within the hypothalamus produces different forms of aggressive behavior in animals, indicating its role in modulating aggression.
+
+Obsessive-compulsive disorder has been linked to increased activity in the basal ganglia, particularly the caudate nucleus, as shown by functional neuroimaging studies.
+
+Opioid overdose can cause respiratory failure by suppressing the medulla oblongata, which regulates breathing and other vital autonomic functions.
+
+Stress-induced elevations in cortisol levels within the hippocampus impair the retrieval of declarative memories, particularly when stress is present before memory retrieval.
+
+Memory impairment in Wernicke-Korsakoff syndrome is linked to damage in the thalamus and mammillary bodies, typically resulting from thiamine deficiency due to chronic alcohol abuse.
+
+The cerebral cortex areas responsible for planning and executing movement send excitatory signals to the striatum, a basal ganglia structure involved in facilitating voluntary motor control.
+
+Oxytocin, produced by the hypothalamus, plays a key role in stimulating milk ejection during breastfeeding and also contributes to uterine contractions, social bonding, and sexual arousal.
+
+Electrical stimulation of specific regions within the amygdala elicits conditioned fear responses such as freezing behavior, elevated heart rate and blood pressure, and the release of stress hormones.
+
+Opioid-induced respiratory depression results from the action of opiates on receptors in the medulla, which diminish the respiratory center’s sensitivity to carbon dioxide and impair autonomic control of breathing.
+
+The suprachiasmatic nucleus, located in the hypothalamus, regulates circadian rhythms including the sleep-wake cycle, earning it the designation of the body’s internal clock.
+
+Damage to the medulla oblongata is often fatal due to its critical role in regulating essential life functions such as breathing, heart rate, and blood pressure.
+
+Posttraumatic stress disorder is associated with reduced hippocampal volume, increased amygdala activity, and decreased activity in the ventromedial prefrontal cortex.
+
+Psychotherapy for major depressive disorder has been associated with decreased activity in the left precentral gyrus and increased activity in the cingulate cortex, a limbic system region involved in emotional processing.
+
+High scores on measures of uncertainty intolerance are most strongly associated with increased volume of the striatum, a brain region involved in anticipatory and anxiety-related processing.
+
+Ataxia, characterized by a lack of coordination and clumsiness of movement unrelated to muscle weakness, is the most common outcome of cerebellar damage and can also result from abnormalities in the sensory or vestibular systems.
+
+Intravenous administration of vitamin B1 (thiamine) is the primary treatment for Wernicke’s encephalopathy, an acute neurological disorder caused by thiamine deficiency.
+
+Damage to Broca’s area results in nonfluent, effortful speech with preserved comprehension, a condition known as expressive aphasia.
+
+Anosognosia is a condition marked by a lack of awareness of one’s own physical impairment, most commonly resulting from damage to the right parietal lobe.
+
+Damage to the parietal lobe, most often on the right side, causes contralateral neglect—a condition in which individuals ignore the side of space opposite the lesion, affecting perception and behavior on that side.
+
+In split-brain patients, visual stimuli presented to the right visual field can be verbally identified due to left hemisphere language dominance, while stimuli presented to the left visual field cannot be verbally identified but can be nonverbally recognized by the left hand via right hemisphere processing.
+
+Wernicke’s aphasia is characterized by fluent but meaningless speech and severely impaired comprehension of both spoken and written language.
+
+Gerstmann’s syndrome, resulting from damage to the dominant parietal lobe, includes finger agnosia, agraphia, left-right confusion, and acalculia, but does not include ataxia, which is associated with cerebellar dysfunction.
+
+Sperry and Gazzaniga’s split-brain research involved patients who had their corpus callosums severed to prevent the interhemispheric spread of epileptic seizures.
+
+Lesions in the dorsolateral prefrontal cortex result in impairments in executive functions, including deficits in insight, planning, judgment, and cognitive control.
+
+Prosopagnosia is a neurological condition characterized by the inability to recognize familiar faces, including one’s own.
+
+Damage to the frontal lobe can cause perseveration, characterized by the inappropriate and repeated execution of the same response or behavior across multiple contexts and tasks.
+
+Damage to the arcuate fasciculus results in conduction aphasia, which is characterized by fluent spontaneous speech, preserved comprehension, and impaired repetition of spoken language.
+
+Ideomotor apraxia is most commonly caused by damage to the left (dominant) parietal lobe, resulting in difficulty executing purposeful movements despite intact language, sensory, and motor functions.
+
+In a split-brain patient, visual input to the right visual field is processed by the language-dominant left hemisphere, enabling verbal identification of CAT, while input to the left visual field is processed by the right hemisphere, enabling nonverbal identification of COPY using the left hand.
+
+The dichotic listening task is used to assess hemispheric specialization by presenting different auditory stimuli to each ear simultaneously, revealing lateralized processing of auditory information.
+
+Lesions in the parietal lobe can cause tactile agnosia, a condition in which individuals are unable to recognize familiar objects by touch despite intact sensory function.
+
+Asomatognosia is a condition typically resulting from right parietal lobe damage, characterized by the lack of recognition or awareness of a part of one's own body, often affecting the left side.
+
+The left hemisphere is dominant for language in approximately 95% of right-handed individuals and 70% of left-handed individuals.
+
+Right hemisphere damage is associated with impairments in both emotional prosody and pragmatics, reflecting the right hemisphere's role in processing the emotional tone and social use of language.
+
+Personality and behavioral changes such as emotion dysregulation, impulsivity, immaturity, and lack of empathy are most indicative of damage to the orbitofrontal region of the prefrontal cortex.
+
+Conduction aphasia involves relatively intact comprehension, fluent but error-prone speech, anomia, and impaired repetition, typically resulting from damage to the arcuate fasciculus.
+
+Ideomotor apraxia, typically resulting from damage to the left parietal lobe, is the inability to carry out purposeful motor actions on command despite intact comprehension, motor ability, and motivation.
+
+Damage to the parietal lobe, particularly on the right side, can cause contralateral neglect, a condition in which individuals ignore or are unaware of stimuli on the side of the body opposite the lesion.
+
+Frontal lobe damage typically impairs motivation, judgment, and memory but is least likely to adversely affect IQ, as standard IQ tests primarily measure convergent thinking, which tends to remain intact.
+
+Conduction aphasia is characterized by fluent but paraphasic speech, relatively intact comprehension, impaired repetition of words, and difficulty with naming, resulting from damage to the arcuate fasciculus connecting language centers.
+
+Sam’s inability to carry out the purposeful motor actions required to open the wine bottle, despite intact movement and coordination, is an example of apraxia.
+
+Frontal lobe injury is most likely to result in impaired spontaneous social interaction, mood instability, and difficulty planning complex sequences of movement due to its role in executive functions, emotional regulation, and social behavior.
+
+Complete paralysis on the right side of the body, known as hemiplegia, indicates damage to the left side of the brain, which controls motor function for the contralateral side.
+
+In most individuals, Broca’s area is located in the left inferior frontal gyrus and Wernicke’s area is located in the left superior temporal gyrus, reflecting the left hemisphere’s dominance in language processing.
+
+The body’s fight-or-flight response is mediated by the sympathetic nervous system, which mobilizes physiological reactions to stress by increasing arousal, heart rate, and energy expenditure.
+
+Myasthenia gravis is an autoimmune disorder that causes degeneration of acetylcholine receptors at neuromuscular junctions, leading to severe muscle weakness and fatigue.
+
+GABA is a major inhibitory neurotransmitter in the brain, and disruptions in its production or transmission are associated with increased anxiety.
+
+An antagonist is a drug that inhibits the effects of a specific neurotransmitter by blocking its receptor sites or interfering with its synthesis or release.
+
+The parasympathetic nervous system is responsible for restoring the body to a calm state following a fear response by reversing the arousal effects triggered by the sympathetic nervous system.
+
+The dopamine hypothesis attributes schizophrenia to elevated dopamine levels or increased sensitivity to dopamine in specific brain regions, particularly the mesolimbic pathways.
+
+Chronic glutamate excitotoxicity, involving overstimulation of neurons, has been linked to neurodegenerative disorders such as Alzheimer’s disease, Huntington’s disease, and amyotrophic lateral sclerosis.
+
+The all-or-none law states that the intensity of a nerve impulse does not vary with stimulus strength and remains constant once the stimulus reaches the minimum threshold necessary to trigger an action potential.
+
+Research has shown that low levels of serotonin metabolites in the cerebrospinal fluid are associated with a higher risk of repeated suicide attempts and completed suicide.
+
+A GABA agonist enhances the inhibitory effects of GABA by increasing its activity, thereby reducing neuronal excitability in the brain.
+
+Dopamine is the key neurotransmitter in the mesolimbic pathway responsible for the rewarding and reinforcing effects of addictive drugs such as cocaine and amphetamines.
+
+Acetylcholine facilitates movement by stimulating muscle contraction and is the primary neurotransmitter present in all motor neurons involved in voluntary muscle activity.
+
+The all-or-none law applies to the intensity of action potentials, meaning that once the threshold is reached, an action potential occurs with full strength and does not vary in intensity.
+
+Curare causes paralysis of the skeletal muscles by blocking acetylcholine receptors at neuromuscular junctions, thereby preventing muscle contraction.
+
+When the dendrites of a neuron receive sufficient stimulation, depolarization occurs as positively charged sodium ions enter the neuron, making the internal charge less negative and initiating an action potential if the threshold is reached.
+
+A GABA receptor agonist is most likely to cause relaxed muscles and sleepiness by enhancing the inhibitory effects of GABA, which slows down brain activity and promotes calmness and sedation.
+
+The etiology of neurocognitive disorder due to Alzheimer’s disease has been linked to a low level of acetylcholine, which impairs memory and cognition, and a high level of glutamate, which leads to excitotoxicity and neuronal damage.
+
+Retinal disparity, which involves the slight difference in images between the two eyes, is most responsible for depth perception of objects at close distances.
+
+Depth perception at close distances relies mainly on **retinal disparity**, while motion parallax, interposition, and linear perspective are cues for greater distances.
+
+Synesthesia involves **one sensory input automatically triggering another**, such as **hearing sounds that are simultaneously experienced as colors**.
+
+Animals with more rods than cones have **better peripheral vision and superior night vision**, while cones support sharp detail and color in bright light.
+
+The **opponent process theory** best explains negative afterimages, because it proposes paired receptor cells (red/green, yellow/blue, white/black) where prolonged stimulation of one color leads to perception of its opposite when viewing a neutral surface.
+
+A just noticeable difference is described by **Weber’s law**, which states that the JND is always a constant proportion of the original stimulus intensity, regardless of magnitude.
+
+Top-down processing is concept-driven, relying on prior knowledge and expectations to interpret sensory input, whereas bottom-up processing is data-driven.
+
+**Stevens’s law** explains the relationship between a physical stimulus and its perceived magnitude, based on magnitude estimation experiments showing that perception follows an exponential function with exponents that vary across stimulus types.
+
+**Convergence** is a binocular cue for depth perception, while interposition, motion parallax, and linear perspective are monocular cues.
+
+The ability to read and understand text with multiple typographical errors is best explained by **top-down processing**, where prior knowledge and expectations allow the brain to interpret meaning despite errors.
+
+Rods are more important than cones for **peripheral vision and vision in dim light**, while cones specialize in **color vision and visual acuity in bright light**.
+
+**Bottom-up processing** is data-driven, beginning with incoming sensory input and moving upward to be perceived and interpreted, in contrast to top-down processing which is concept-driven.
+
+Cones are responsible for **color vision, vision in bright light, and visual acuity**, while **rods—not cones—are responsible for peripheral vision and dim-light vision**.
+
+In signal detection theory, d′ represents an observer’s sensitivity and is calculated as the difference between the z-scores of the hit rate and the false alarm rate: d′=z(H)−z(FA) This shows how well a person can distinguish signal from noise.
+
+Prosopagnosia (face blindness) involves **intact bottom-up processing—individuals can see facial features—but impaired top-down processing, which prevents them from using prior knowledge and experience to recognize familiar faces**.
+
+Long-term potentiation (LTP) is linked to **memory storage**, as it reflects a lasting increase in synaptic strength from repeated stimulation and is believed to underlie the formation and retention of new memories.
+
+An **advanced sleep phase**—falling asleep and waking up earlier than usual—is most characteristic of **older adults**, as aging is often associated with a circadian phase advance.
+
+In cases of retrograde amnesia following traumatic brain injury, **the most distant memories return first**, so she would most likely first recall **where she and her family went on vacation three years ago**, before more recent events.
+
+Infants younger than three months usually **begin a sleep period with REM sleep**, and only afterward transition into NREM sleep, with this sequence reversing around three months of age.
+
+The four stages of **non-REM sleep are characterized by high-voltage, slow-wave EEG activity**, reflecting synchronized brain activity distinct from the low-voltage, fast-wave patterns of wakefulness and REM sleep.
+
+Kandel’s research with the sea snail **Aplysia** demonstrated neuronal changes underlying **learning and memory**, showing that classical conditioning produces both synaptic modifications at existing connections and an increase in the number of synapses.
+
+Functional neuroimaging studies show that **the prefrontal cortex is essential for prospective memory**, with additional contributions from the parietal lobe, hippocampus, anterior cingulate cortex, and thalamus.
+
+Dreams occur during both **REM and non-REM sleep**, but those in **REM sleep are more frequent, longer, more bizarre, more emotional, and more likely to be recalled** than dreams in non-REM sleep.
+
+Drugs that **block protein synthesis during learning interfere with the formation of long-term memories but not short-term memories**, because long-term memory consolidation depends on protein-dependent structural changes at synapses, whereas short-term memory does not.
+
+Delta waves are the EEG pattern of **deep sleep (stages 3 and 4 of NREM sleep)**, characterized by large, slow waves distinct from the faster, low-voltage activity of wakefulness and lighter sleep stages.
+
+Eric Kandel and his associates originally studied neuronal changes linked to habituation, sensitization, and classical conditioning using **sea slugs (Aplysia)**, chosen because their nervous system is simple and composed of a small number of large, easily studied neurons.
+
+Newborn infants begin each sleep period with **active sleep**, which is most similar to **REM sleep in adults**, before transitioning into quiet (non-REM) sleep.
+
+**Infants** spend the largest proportion of their sleep in **REM sleep**, accounting for about 50% of their total sleep time, compared to roughly 25% in children, adolescents, and adults, with the percentage continuing to decline slightly with age.
+
+**Implicit memories**, which involve skills, actions, and conditioned responses recalled without conscious effort, are stored in the **cerebellum and basal ganglia**, whereas explicit memories rely on the hippocampus and prefrontal cortex.
+
+Compared to younger adults, **older adults experience more nighttime awakenings**, while also having longer sleep latency and spending less time in slow-wave sleep, though their overall sleep need does not decrease.
+
+Stage **2 of non-REM sleep** is characterized by **theta waves interrupted by sleep spindles and K complexes**, with spindles being brief bursts of high-frequency activity and K complexes being large, high-amplitude waves that can occur spontaneously or in response to stimuli.
+
+After his bilateral medial temporal lobectomy, **H. M. was unable to form new long-term declarative memories**, while his short-term memory and nondeclarative (procedural) memory remained intact, showing the critical role of the medial temporal lobe—especially the hippocampus—in consolidating declarative information into long-term storage.
+
+The James-Lange theory states that after perceiving a stimulus, bodily arousal and behavior occur first, and the resulting awareness of these reactions produces the experience of emotion.
+
+Damage to the left hemisphere is most likely to produce depression or emotional volatility, since positive emotions are primarily processed there.
+
+According to Lazarus’s cognitive appraisal theory, primary appraisal involves evaluating whether an external event is relevant or irrelevant and, if relevant, whether it is positive/benign or stressful.
+
+According to Lazarus’s cognitive appraisal theory, primary appraisal is the initial evaluation of an event to determine its relevance and, if relevant, whether it is positive/benign or stressful.
+
+The Schachter-Singer theory of emotion proposes that emotions result from physiological arousal combined with the cognitive interpretation (label) of that arousal.
+
+A person with damage to the right (non-dominant) hemisphere is most likely to exhibit an indifference reaction, often minimizing or denying impairments and disabilities.
+
+The James-Lange theory holds that physical reactions such as facial expressions precede and generate the experience of emotion.
+
+Allostasis refers to the body’s ability to adapt to stress and maintain stability through change.
+
+The Schachter-Singer theory proposes that emotions result from physiological arousal combined with cognitive attributions, with arousal being similar across emotions and differences arising from the attributions.
+
+According to Lazarus’s cognitive appraisal theory, secondary appraisal occurs when a person evaluates the resources available to cope with a stressful event.
+
+The Cannon-Bard theory proposes that physiological arousal and the experience of emotion occur simultaneously and independently in response to a stimulus.
+
+Huntington’s disease is linked to GABA and glutamate abnormalities in the basal ganglia, particularly the caudate nucleus and putamen.
+
+Primary hypertension, also called essential hypertension, is diagnosed when the cause of elevated blood pressure is unknown, while secondary hypertension is diagnosed when the cause is known.
+
+Hypothyroidism is caused by low levels of thyroxine from the thyroid gland and is characterized by cold intolerance, fatigue, memory problems, constipation, dry skin, and weight gain despite reduced food intake.
+
+CT and MRI are structural neuroimaging techniques that show brain structure, while fMRI, PET, and SPECT are functional techniques that measure brain activity.
+
+A stroke involving the middle cerebral artery in the dominant hemisphere most often causes contralateral hemiparesis, contralateral homonymous hemianopia, dysarthria, and aphasia.
+
+Parkinson’s disease is linked to the progressive degeneration of dopamine-producing cells in the substantia nigra, a structure connected to the basal ganglia that is critical for motor control.
+
+Classic migraines begin with an aura and cause throbbing unilateral pain that worsens with activity and is accompanied by nausea, vomiting, and sensitivity to light or sound.
+
+Hyperthyroidism is caused by excessive secretion of thyroxine and produces tremor, sweating, tachycardia, insomnia, anxiety, heat sensitivity, and unexplained weight loss.
+
+Recovery of retrograde amnesia after a traumatic brain injury usually follows a pattern of “shrinking retrograde amnesia,” meaning remote memories return first, so the earliest memory (the family reunion 4-1/2 years ago) would likely be recalled before more recent events.
+
+Simple partial (focal) seizures involve motor and sensory symptoms such as jerky movements, eye blinking, and abnormal sensations without a loss of consciousness.
+
+Diabetes insipidus is caused by low levels of antidiuretic hormone (ADH) secreted by the pituitary gland, leading to extreme thirst and the production of large amounts of diluted urine.
+
+An ischemic stroke is most often caused by a blockage in a cerebral artery due to a blood clot or plaque, while a hemorrhagic stroke results from a rupture in a cerebral artery.
+
+Generalized onset seizures always include a loss of consciousness; motor symptoms occur only in generalized motor seizures, while absence seizures involve non-motor symptoms.
+
+Insulin overproduction by the pancreas can lower blood glucose levels and lead to hypoglycemia.
+
+Diffusion tensor imaging (DTI), a specialized form of MRI, is used to detect abnormalities in brain white matter by measuring the rate and direction of water movement along myelinated axons.
+
+A stroke involving the middle cerebral artery typically causes expressive aphasia, contralateral ataxia and weakness, and apraxia, but bilateral vision loss is more characteristic of a stroke involving the posterior cerebral artery.
+
+“Shrinking retrograde amnesia” refers to the recovery pattern after a head injury in which older long-term memories return before more recent ones.
+
+Huntington’s disease is associated with glucose hypometabolism and atrophy in the caudate nucleus and putamen, changes that often precede the appearance of clinical symptoms.
+
+Deep brain stimulation (DBS) for Parkinson’s disease is a neurosurgical intervention in which implanted electrodes deliver electrical impulses to brain regions controlling motor symptoms, regulated by a programmable pulse generator placed under the skin.
+
+When one parent carries a single autosomal dominant gene for Huntington’s disease, each biological child has a 50% chance of inheriting the defective gene and, therefore, a 50% chance of developing the disease.
+
+Pramipexole and ropinirole are dopamine agonists used in the treatment of restless leg syndrome and Parkinson’s disease.
+
+FDG-PET (fluorodeoxyglucose positron emission tomography) is the most useful neuroimaging technique for distinguishing Alzheimer’s disease from other neurocognitive disorders because it reveals distinct patterns of glucose metabolism in the brain.
+
+Deep brain stimulation (DBS) is indicated for Parkinson’s disease, essential tremor, and dystonia, but it is not recommended for atypical parkinsonism, which does not respond well to levodopa or DBS.
+
+Temporal lobe seizures are characterized by auras such as sudden fear or unusual sensations, impaired memory of the event, and automatisms like fidgeting or lip-smacking.
+
+Hypoglycemia, caused by low blood glucose levels, produces symptoms such as shaking, sweating, hunger, dizziness, irritability, disorientation, weakness, sleepiness, and pallor.
+
+CT (computed tomography) is the preferred neuroimaging technique for assessing acute traumatic brain injury because it is fast, cost-effective, widely available, and easier to tolerate than MRI.
+
+When tardive dyskinesia develops from a conventional antipsychotic, the best course of action is to replace the conventional antipsychotic with an atypical antipsychotic, since atypicals are less likely to cause tardive dyskinesia and may help reduce symptoms while still treating schizophrenia.
+
+SSRIs and TCAs are similarly effective for depression, but SSRIs are preferred because they have a better tolerability profile with fewer side effects and are safer than TCAs in cases of overdose.
+
+Secondary amine tricyclic antidepressants primarily inhibit norepinephrine reuptake more than serotonin, while tertiary amines inhibit both serotonin and norepinephrine reuptake, often with a stronger effect on serotonin.
+
+Neuroleptic malignant syndrome (NMS) is a life-threatening reaction to antipsychotic drugs, and the neuroleptic must be discontinued immediately when symptoms appear.
+
+The greatest risk for developing tardive dyskinesia occurs in older adults taking conventional antipsychotics, since the condition is linked to long-term use, increases with age, and is more common with conventional than atypical drugs.
+
+People taking MAOIs must avoid foods containing tyramine (such as aged cheeses and processed meats), because the interaction can trigger a dangerous hypertensive crisis.
+
+Clozapine is most strongly associated with agranulocytosis, a rare but potentially fatal blood disorder marked by dangerously low white blood cell counts, which requires regular blood monitoring during treatment.
+
+Venlafaxine and duloxetine are serotonin-norepinephrine reuptake inhibitors (SNRIs) used to treat major depressive disorder, social anxiety disorder, and neuropathic pain.
+
+Older adults and women are at the highest risk for tardive dyskinesia, so a 70-year-old woman taking an antipsychotic drug has the greatest likelihood of developing the disorder.
+
+Clozapine carries the greatest risk of agranulocytosis, a rare but potentially fatal blood disorder, which is why patients taking it require regular blood monitoring.
+
+Risperidone and other second-generation (atypical) antipsychotics act as serotonin and dopamine antagonists by blocking serotonin and dopamine receptors to reduce psychotic symptoms.
+
+Treatment for serotonin syndrome requires immediately discontinuing all serotonergic drugs and providing supportive medical care, since the condition can cause severe and potentially fatal symptoms such as hyperthermia, seizures, and delirium.
+
+Phenelzine is an MAOI, and consuming tyramine-rich foods while taking it can trigger a hypertensive crisis, whereas the other listed drugs (imipramine, sertraline, fluoxetine) do not carry this specific risk.
+
+Both SSRIs and SNRIs are considered first-line pharmacological treatments for major depressive disorder, with SNRIs offering an added benefit when depression is comorbid with neuropathic pain.
+
+Long-term white blood cell monitoring is required for people taking clozapine or carbamazepine, since both drugs carry a risk of agranulocytosis, a potentially fatal condition characterized by abnormally low white blood cell counts.
+
+MAOIs are effective for treating major depressive disorder with atypical features, but research shows mixed findings on whether they are more effective than SSRIs, with some studies showing a slight advantage and others finding similar effectiveness.
+
+Clozapine can cause agranulocytosis, which is a severe form of neutropenia characterized by dangerously low neutrophil counts that compromise immune system function and can be life-threatening.
+
+Akathisia is a movement disorder caused by antipsychotic drugs and is characterized by a persistent sense of inner restlessness accompanied by an uncontrollable urge to keep moving.
+
+When lithium is ineffective or poorly tolerated for treating mania in bipolar disorder, carbamazepine—an anticonvulsant drug—can be used as an alternative treatment.
+
+Lithium is a first-line treatment for bipolar disorder, as it reduces the frequency and severity of manic and mixed episodes and helps lower the risk of suicide.
+
+Galantamine, rivastigmine, and donepezil slow cognitive decline in Alzheimer’s disease by increasing cholinergic activity through inhibiting acetylcholine breakdown, whereas memantine works differently by reducing the harmful effects of excess glutamate.
+
+Beta-blockers such as propranolol and atenolol are most effective for reducing the physical symptoms of anxiety—like rapid heartbeat, tremors, and sweating—while having little direct effect on the emotional or cognitive aspects of anxiety.
+
+For older adults, benzodiazepines with a shorter half-life are preferred because aging slows drug metabolism, increasing the risk of accumulation and side effects; in addition, tapering should be gradual over several months to minimize withdrawal symptoms, with the pace adjusted based on dose and treatment duration.
+
+Naltrexone is used in alcohol use disorder treatment because it reduces the rewarding effects of alcohol, such as euphoria, which in turn decreases the patient’s craving for alcohol.
+
+The therapeutic index (TI) measures drug safety and is calculated by dividing the lethal dose for 50% of a test sample (\$LD\_{50}\$) by the effective dose for 50% of a test sample (\$ED\_{50}\$), so: $TI = \frac{LD_{50}}{ED_{50}}$ A larger TI value indicates a safer drug, since it means the gap between an effective dose and a lethal dose is wider.
+
+Disulfiram (Antabuse) is a treatment for alcohol use disorder that causes nausea, vomiting, dizziness, confusion, and other unpleasant reactions when alcohol is consumed, making it an aversive deterrent to drinking.
+
+Carbamazepine and valproic acid are anticonvulsant drugs that serve as alternatives to lithium and are considered first-line treatments for managing manic episodes in bipolar disorder.
+
+GABA agonists, such as benzodiazepines and barbiturates, enhance the inhibitory effects of GABA in the brain, leading to relaxation, calmness, and sleepiness rather than increased attention or nervousness.
+
+Levodopa (L-dopa) is the first-line pharmacological treatment for Parkinson’s disease because it increases dopamine levels and reduces motor symptoms such as tremor, rigidity, bradykinesia, and impaired coordination.
+
+Diazepam, alprazolam, and lorazepam are benzodiazepines that increase GABA activity and are used to treat anxiety, insomnia, seizures, and alcohol withdrawal.
+
+Dronabinol is a synthetic form of THC that is FDA-approved for treating chemotherapy-induced nausea and vomiting in patients who do not respond to standard antiemetic treatments.
+
+Research on the nonmedical use of stimulant drugs like methylphenidate by college students without ADHD shows that these drugs can improve attention and mood but do not provide a beneficial effect on GPA.
+
+LSD (lysergic acid diethylamide) is a hallucinogenic drug that acts primarily as a **serotonin agonist**, with agonist and partial agonist effects at serotonergic and dopaminergic receptors.
+
+Buspirone (BuSpar), an anxiolytic drug used to treat anxiety disorders, most commonly causes side effects such as dizziness, drowsiness, headache, nausea, nervousness, blurred vision, and trouble sleeping.
+
+THC (tetrahydrocannabinol), the main psychoactive component of marijuana, produces its reinforcing effects by increasing dopamine concentrations in the **nucleus accumbens**, a key structure in the mesolimbic dopaminergic reward pathway.

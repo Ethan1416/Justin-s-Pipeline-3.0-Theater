@@ -1,0 +1,291 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sorting_input.schema.json",
+  "title": "Step 3 Sorting Input Schema",
+  "description": "Schema for input to Step 3 - combines anchor data with Step 2 mapping analysis",
+  "type": "object",
+  "required": ["metadata", "anchors", "step2_analysis"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["domain", "total_anchors", "source_step2"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The NCLEX domain being processed"
+        },
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_step2": {
+          "type": "string",
+          "description": "Reference to Step 2 output file"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/anchor_for_sorting"
+      },
+      "description": "Complete list of anchors to be sorted into NCLEX domains"
+    },
+    "step2_analysis": {
+      "type": "object",
+      "required": ["clusters", "proposed_sections", "arc_iterations", "multi_fit_anchors"],
+      "description": "Key analysis from Step 2 to inform sorting decisions",
+      "properties": {
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/cluster_summary"
+          },
+          "description": "Cluster analysis from Phase 2"
+        },
+        "relationship_mapping": {
+          "type": "object",
+          "properties": {
+            "foundational_clusters": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "dependent_clusters": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cluster": {
+                    "type": "string"
+                  },
+                  "depends_on": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "culminating_clusters": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Relationship mapping from Phase 3"
+        },
+        "proposed_sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section_proposal"
+          },
+          "description": "Section proposals from Phase 4"
+        },
+        "arc_iterations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/arc_iteration_summary"
+          },
+          "description": "Arc planning iterations from Phase 5"
+        },
+        "multi_fit_anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/multi_fit_anchor"
+          },
+          "description": "Anchors flagged for resolution during sorting"
+        },
+        "frontloading_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cluster": {
+                "type": "string"
+              },
+              "level": {
+                "type": "string",
+                "enum": ["None", "Minimal", "Moderate", "Extensive"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "nclex_domains": {
+      "type": "array",
+      "description": "Reference to the 6 NCLEX domains for sorting",
+      "items": {
+        "$ref": "#/definitions/nclex_domain"
+      },
+      "minItems": 6,
+      "maxItems": 6
+    }
+  },
+  "definitions": {
+    "anchor_for_sorting": {
+      "type": "object",
+      "required": ["anchor_number", "content"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "content": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The full anchor point content summary"
+        },
+        "provisional_cluster": {
+          "type": "string",
+          "description": "Cluster assignment from Step 2 Phase 2"
+        },
+        "provisional_section": {
+          "type": "string",
+          "description": "Section proposal from Step 2 Phase 4"
+        }
+      }
+    },
+    "cluster_summary": {
+      "type": "object",
+      "required": ["cluster_name", "anchor_count", "anchor_numbers", "core_theme"],
+      "properties": {
+        "cluster_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "anchor_numbers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "core_theme": {
+          "type": "string"
+        },
+        "key_concepts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "section_proposal": {
+      "type": "object",
+      "required": ["section_name", "anchor_count", "anchor_numbers"],
+      "properties": {
+        "section_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "anchor_numbers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "foundational_status": {
+          "type": "string",
+          "enum": ["Foundational", "Dependent", "Culminating"]
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "arc_iteration_summary": {
+      "type": "object",
+      "required": ["iteration_number", "label"],
+      "properties": {
+        "iteration_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "label": {
+          "type": "string"
+        },
+        "session1_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "session2_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "overall_rating": {
+          "type": "string",
+          "enum": ["Strong", "Moderate", "Weak"]
+        }
+      }
+    },
+    "multi_fit_anchor": {
+      "type": "object",
+      "required": ["anchor_number", "current_placement", "alternative_placements"],
+      "properties": {
+        "anchor_number": {
+          "type": "integer"
+        },
+        "current_placement": {
+          "type": "string"
+        },
+        "alternative_placements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolution_guidance": {
+          "type": "string",
+          "description": "Notes from Step 2 on how to resolve"
+        }
+      }
+    },
+    "nclex_domain": {
+      "type": "object",
+      "required": ["id", "key", "name"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "key": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "focus_areas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

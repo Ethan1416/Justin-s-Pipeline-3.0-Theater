@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "connector_output.schema.json",
+  "title": "Connector Drawer Output Schema",
+  "description": "Schema for connector_drawer agent output - rendered connector specifications for PPTX",
+  "type": "object",
+  "required": ["metadata", "rendered_connectors", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "connector_drawer"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "rendered_connectors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/rendered_connector"
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_connectors": {
+          "type": "integer"
+        },
+        "connectors_with_labels": {
+          "type": "integer"
+        },
+        "routing_types_used": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "render_order": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Order in which connectors should be rendered"
+    }
+  },
+  "definitions": {
+    "rendered_connector": {
+      "type": "object",
+      "required": ["connection_id", "path"],
+      "properties": {
+        "connection_id": {
+          "type": "string"
+        },
+        "connector_type": {
+          "type": "string",
+          "enum": ["line", "elbow", "curved"],
+          "description": "Type of connector shape"
+        },
+        "path": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {
+            "start": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" }
+              }
+            },
+            "end": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" }
+              }
+            },
+            "waypoints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "x": { "type": "number" },
+                  "y": { "type": "number" }
+                }
+              },
+              "description": "Intermediate points for orthogonal routing"
+            }
+          }
+        },
+        "style": {
+          "type": "object",
+          "properties": {
+            "line_color_rgb": { "type": "string" },
+            "line_width_pt": { "type": "number" },
+            "line_dash_style": { "type": "string" },
+            "begin_arrow_type": { "type": "string" },
+            "end_arrow_type": { "type": "string" }
+          }
+        },
+        "label": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" },
+            "position": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "number" },
+                "y": { "type": "number" }
+              }
+            },
+            "font_size_pt": { "type": "integer" },
+            "font_color_rgb": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

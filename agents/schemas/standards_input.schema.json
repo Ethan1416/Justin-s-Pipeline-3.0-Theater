@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "standards_input.schema.json",
+  "title": "Step 5 Presentation Standards Input Schema",
+  "description": "Schema for standards_applier agent input - takes Step 4 outline output to apply presentation delivery standards",
+  "type": "object",
+  "required": ["metadata", "outline", "domain_context"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "domain"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 5: Presentation Standards"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "source_files": {
+          "type": "object",
+          "properties": {
+            "step4_output": {
+              "type": "string",
+              "description": "Reference to Step 4 outline output file"
+            },
+            "standards_reference": {
+              "type": "string",
+              "description": "Reference to step5_presentation_standards.txt"
+            }
+          }
+        }
+      }
+    },
+    "outline": {
+      "type": "object",
+      "required": ["sessions", "total_sections", "total_subsections"],
+      "description": "Outline data from Step 4",
+      "properties": {
+        "total_sections": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 12
+        },
+        "total_subsections": {
+          "type": "integer"
+        },
+        "total_anchors": {
+          "type": "integer"
+        },
+        "sessions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/definitions/session_outline"
+          }
+        }
+      }
+    },
+    "domain_context": {
+      "type": "object",
+      "required": ["domain_type", "typical_adaptations"],
+      "description": "Domain-specific context for standards application",
+      "properties": {
+        "domain_type": {
+          "type": "string",
+          "enum": ["biological", "clinical", "treatment", "developmental", "ethics", "research", "social_cultural", "pharmacological", "fundamentals"],
+          "description": "Primary domain type for adaptation"
+        },
+        "typical_adaptations": {
+          "type": "string",
+          "description": "Domain-specific emphasis areas"
+        },
+        "exam_context": {
+          "type": "string",
+          "enum": ["NCLEX", "NCLEX"],
+          "default": "NCLEX"
+        },
+        "subsection_flow_pattern": {
+          "type": "string",
+          "description": "Typical subsection flow for this domain (e.g., Structure -> Function -> Dysfunction)"
+        }
+      }
+    },
+    "validation_checklist": {
+      "type": "object",
+      "description": "Checklist items from Step 4 to confirm before applying standards",
+      "properties": {
+        "section_names_and_sequence": {
+          "type": "boolean"
+        },
+        "subsection_names_with_anchors": {
+          "type": "boolean"
+        },
+        "anchor_summaries_present": {
+          "type": "boolean"
+        },
+        "frontload_flags_noted": {
+          "type": "boolean"
+        },
+        "xref_flags_noted": {
+          "type": "boolean"
+        },
+        "estimated_slide_counts": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "session_outline": {
+      "type": "object",
+      "required": ["session_number", "sections"],
+      "properties": {
+        "session_number": {
+          "type": "integer",
+          "enum": [1, 2]
+        },
+        "estimated_slides": {
+          "type": "integer",
+          "minimum": 72,
+          "maximum": 90
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section_outline"
+          }
+        }
+      }
+    },
+    "section_outline": {
+      "type": "object",
+      "required": ["section_number", "section_name", "subsections"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "estimated_slides": {
+          "type": "integer"
+        },
+        "is_misc": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this is a Misc section (no foundational subsection required)"
+        },
+        "is_culmination": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this is a Culmination section (integration at end)"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/subsection_outline"
+          }
+        },
+        "frontload_anchors": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "xref_flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_number": {
+                "type": "integer"
+              },
+              "xref_section": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "subsection_outline": {
+      "type": "object",
+      "required": ["subsection_id", "subsection_name", "anchor_count", "anchors"],
+      "properties": {
+        "subsection_id": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        },
+        "subsection_name": {
+          "type": "string"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "anchor_summaries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_number": {
+                "type": "integer"
+              },
+              "anchor_text": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "moderate", "complex"]
+        },
+        "is_first_subsection": {
+          "type": "boolean",
+          "description": "True if this is the first subsection of its section (Foundational mode)"
+        }
+      }
+    }
+  }
+}

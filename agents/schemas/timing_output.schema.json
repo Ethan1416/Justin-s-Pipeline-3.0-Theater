@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "timing_output.schema.json",
+  "title": "Timing Estimator Output Schema",
+  "description": "Schema for timing_estimator agent output - presentation timing estimates",
+  "type": "object",
+  "required": ["metadata", "timing", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "timing_estimator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "timing": {
+      "type": "object",
+      "required": ["total_seconds", "slides"],
+      "properties": {
+        "total_seconds": {
+          "type": "integer"
+        },
+        "total_minutes": {
+          "type": "number"
+        },
+        "formatted_time": {
+          "type": "string",
+          "description": "Human-readable time (e.g., '45:30')"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_timing"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "average_seconds_per_slide": {
+          "type": "number"
+        },
+        "shortest_slide": {
+          "type": "object",
+          "properties": {
+            "slide_number": { "type": "integer" },
+            "seconds": { "type": "integer" }
+          }
+        },
+        "longest_slide": {
+          "type": "object",
+          "properties": {
+            "slide_number": { "type": "integer" },
+            "seconds": { "type": "integer" }
+          }
+        },
+        "slides_over_limit": {
+          "type": "integer",
+          "description": "Number of slides exceeding max time"
+        },
+        "breakdown": {
+          "type": "object",
+          "properties": {
+            "speaking_time": { "type": "integer" },
+            "visual_time": { "type": "integer" },
+            "transition_time": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "slide_number": { "type": "integer" },
+          "warning": { "type": "string" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_timing": {
+      "type": "object",
+      "required": ["slide_number", "estimated_seconds"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "estimated_seconds": {
+          "type": "integer"
+        },
+        "breakdown": {
+          "type": "object",
+          "properties": {
+            "speaking": { "type": "integer" },
+            "visual": { "type": "integer" },
+            "transition": { "type": "integer" }
+          }
+        },
+        "cumulative_seconds": {
+          "type": "integer",
+          "description": "Total time up to and including this slide"
+        }
+      }
+    }
+  }
+}

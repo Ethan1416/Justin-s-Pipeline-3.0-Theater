@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "constraint_output.schema.json",
+  "title": "Constraint Validator Output Schema",
+  "description": "Schema for constraint_validator agent output - validation results for character and line limits",
+  "type": "object",
+  "required": ["metadata", "validation_results", "summary"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "constraint_validator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "validation_results": {
+      "type": "object",
+      "required": ["overall_status", "slides"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_validation"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides_passing": {
+          "type": "integer"
+        },
+        "slides_failing": {
+          "type": "integer"
+        },
+        "violation_counts": {
+          "type": "object",
+          "properties": {
+            "header_char_violations": { "type": "integer" },
+            "header_line_violations": { "type": "integer" },
+            "body_char_violations": { "type": "integer" },
+            "body_line_violations": { "type": "integer" },
+            "tip_char_violations": { "type": "integer" },
+            "tip_line_violations": { "type": "integer" },
+            "notes_word_violations": { "type": "integer" },
+            "notes_time_violations": { "type": "integer" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_validation": {
+      "type": "object",
+      "required": ["slide_number", "status"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/violation"
+          }
+        }
+      }
+    },
+    "violation": {
+      "type": "object",
+      "required": ["element", "violation_type", "actual", "limit"],
+      "properties": {
+        "element": {
+          "type": "string",
+          "enum": ["header", "body", "tip", "presenter_notes"]
+        },
+        "violation_type": {
+          "type": "string",
+          "enum": ["chars_per_line", "line_count", "word_count", "time_seconds"]
+        },
+        "line_number": {
+          "type": "integer",
+          "description": "For char violations, which line exceeded the limit"
+        },
+        "actual": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "excess": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

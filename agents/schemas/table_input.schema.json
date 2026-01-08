@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "table_input.schema.json",
+  "title": "Table Generator Input Schema",
+  "description": "Input schema for the table_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["slide_context", "content_data"],
+  "properties": {
+    "slide_context": {
+      "type": "object",
+      "required": ["slide_number", "section_name", "title"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Slide number within the section"
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the section this slide belongs to"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Section number"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Slide title"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+          "description": "NCLEX content domain"
+        }
+      }
+    },
+    "content_data": {
+      "type": "object",
+      "required": ["comparison_items"],
+      "properties": {
+        "comparison_items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "description": "Items to compare in the table (become rows)",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 30,
+                "description": "Item name (first column)"
+              },
+              "attributes": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "maxLength": 60
+                },
+                "description": "Key-value pairs of attributes for this item"
+              }
+            }
+          }
+        },
+        "attribute_names": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": {
+            "type": "string",
+            "maxLength": 25
+          },
+          "description": "Column headers for attributes (excluding first column)"
+        },
+        "table_purpose": {
+          "type": "string",
+          "description": "Purpose of the comparison (e.g., drug comparison, disorder comparison)"
+        }
+      }
+    },
+    "layout_preference": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "AUTO"],
+      "default": "AUTO",
+      "description": "Preferred table layout: A=Standard Comparison, B=Wide Comparison, C=Category List, D=Compact Reference, E=Tall Comparison, AUTO=auto-select"
+    },
+    "styling_options": {
+      "type": "object",
+      "properties": {
+        "use_alternating_rows": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to use alternating row colors"
+        },
+        "font_size_override": {
+          "type": "integer",
+          "minimum": 18,
+          "maximum": 20,
+          "description": "Override default font size (18-20pt)"
+        }
+      }
+    }
+  }
+}

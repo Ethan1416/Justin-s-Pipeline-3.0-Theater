@@ -1,0 +1,131 @@
+# Theater Lecture Generation Pipeline Configuration
+# Version: 1.0
+
+pipeline:
+  name: "Theater Lecture Generation Pipeline"
+  version: "1.0"
+  domain: "theater"
+
+settings:
+  # Execution settings
+  timeout_seconds: 300
+  max_retries: 3
+  retry_delay_seconds: 5
+  parallel_agents: false  # Set true for parallel visual generation
+
+  # Logging
+  log_level: "INFO"
+  log_to_file: true
+  log_directory: "outputs/logs"
+
+  # State persistence
+  save_state_after_each_step: true
+  state_file: "pipeline_state.json"
+
+# Quality gates - must pass before proceeding
+quality_gates:
+  step_8_qa:
+    min_score: 90
+    max_score: 100
+    fail_action: "return_to_step_7"
+
+  step_9_visual_quota:
+    required_status: "PASS"
+    fail_action: "return_to_step_9"
+
+  step_10_markers:
+    require_visual_marker_all_slides: true
+    fail_action: "halt"
+
+# Agent execution order
+execution_order:
+  preparation:
+    - anchor_uploader
+    - lecture_mapper
+    - content_sorter
+    - outline_generator
+    - standards_loader
+
+  blueprint_per_section:
+    - blueprint_generator
+    - line_enforcer
+    - formatting_reviser
+    - quality_reviewer
+    - visual_identifier
+    - visual_integrator
+    - blueprint_organizer
+
+  visual_generation:
+    # These can run in parallel
+    parallel: true
+    agents:
+      - table_generator
+      - flowchart_generator
+      - decision_tree_generator
+      - timeline_generator
+      - hierarchy_generator
+      - spectrum_generator
+      - key_diff_generator
+
+  powerpoint:
+    - pptx_populator
+    - slide_assembler
+    - final_validator
+
+# Orchestrator files
+orchestrators:
+  master: "orchestrators/lecture_pipeline.md"
+  preparation: "orchestrators/preparation_pipeline.md"
+  blueprint: "orchestrators/blueprint_pipeline.md"
+  visual: "orchestrators/visual_generation.md"
+  powerpoint: "orchestrators/powerpoint_pipeline.md"
+
+# Paths
+paths:
+  agents: "agents/prompts"
+  schemas: "agents/schemas"
+  skills: "skills"
+  standards: "standards"
+  templates: "templates"
+  inputs: "inputs"
+  outputs: "outputs"
+  tests: "tests"
+
+# Templates - Theater template for ALL slides
+templates:
+  # Primary template
+  master: "templates/template_theater.pptx"
+  theater: "templates/template_theater.pptx"
+
+  # Legacy templates (for reference)
+  canvas: "templates/template_canvas.pptx"
+
+  # Config file
+  config: "config/theater_template.yaml"
+
+  # Template generation system
+  generator: "templates/complete_template_system.py"
+
+# Output patterns
+output_patterns:
+  step_2: "outputs/mapping/step2_output_{topic}_{date}.txt"
+  step_3: "outputs/sorting/step3_output_{topic}_{date}.txt"
+  step_4: "outputs/outlines/step4_output_{topic}_{date}.txt"
+  step_6: "outputs/blueprints/step6_blueprint_{topic}_{section}_{date}.txt"
+  step_7_revised: "outputs/revisions/step7_revised_{topic}_{section}_{date}.txt"
+  step_7_changelog: "outputs/revisions/step7_changelog_{topic}_{section}_{date}.txt"
+  step_8_qa: "outputs/qa_reports/step8_qa_report_{topic}_{section}_{date}.txt"
+  step_8_score: "outputs/qa_reports/step8_score_{topic}_{section}_{date}.txt"
+  step_9: "outputs/visual_specs/step9_visual_specs_{topic}_{section}_{date}.txt"
+  step_10_blueprint: "outputs/integrated/step10_integrated_{topic}_{section}_{date}.txt"
+  step_10_changelog: "outputs/integrated/step10_changelog_{topic}_{section}_{date}.txt"
+  step_12_powerpoint: "outputs/powerpoints/{section_name}.pptx"
+  step_12_diagrams: "outputs/diagrams/section_{num}_slide_{num}_{type}.png"
+
+# Validation settings
+validation:
+  strict_mode: true
+  warn_on_close_to_limit: true
+  close_to_limit_threshold: 0.9
+  schema_validation: true
+  halt_on_schema_error: true

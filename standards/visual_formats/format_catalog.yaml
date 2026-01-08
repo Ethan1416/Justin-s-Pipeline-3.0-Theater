@@ -1,0 +1,252 @@
+# Visual Format Catalog
+# All available visual layouts for NCLEX lecture generation
+
+visual_types:
+  TABLE:
+    description: "Comparison tables, feature lists, diagnostic criteria"
+    use_cases:
+      - "Comparing 2+ items"
+      - "Listing criteria/symptoms/features"
+      - "Drug comparisons"
+      - "4+ bullet points that can be organized"
+    layouts:
+      A:
+        name: "Standard Comparison"
+        columns: "2-4"
+        rows: "3-6"
+        best_for: "Side-by-side comparisons"
+      B:
+        name: "Wide Comparison"
+        columns: "2"
+        rows: "4-8"
+        best_for: "Detailed two-item comparison"
+      C:
+        name: "Category List"
+        columns: "3"
+        rows: "4-6"
+        best_for: "Categorized information"
+      D:
+        name: "Compact Reference"
+        columns: "4-6"
+        rows: "4-5"
+        best_for: "Quick reference charts"
+      E:
+        name: "Tall Comparison"
+        columns: "2"
+        rows: "6-10"
+        best_for: "Extended feature lists"
+
+  FLOWCHART:
+    description: "Process flows, sequences, clinical pathways"
+    use_cases:
+      - "Step-by-step processes"
+      - "Clinical pathways"
+      - "Assessment sequences"
+      - "Nursing process (ADPIE)"
+    layouts:
+      A:
+        name: "Linear Horizontal"
+        steps: "3-4"
+        best_for: "Simple sequences"
+      B:
+        name: "Linear Vertical"
+        steps: "4-6"
+        best_for: "Longer processes"
+      C:
+        name: "Horizontal with Substeps"
+        steps: "3-4 main + substeps"
+        best_for: "Processes with details"
+      D:
+        name: "Snake/Zigzag"
+        steps: "5-7"
+        best_for: "Complex multi-step processes"
+      E:
+        name: "Branching Linear"
+        steps: "4-6 with branches"
+        best_for: "Processes with alternatives"
+
+  DECISION_TREE:
+    description: "Diagnostic criteria, branching logic, clinical decision-making"
+    use_cases:
+      - "Diagnostic criteria"
+      - "Clinical decision-making"
+      - "Priority setting"
+      - "Assessment pathways"
+    layouts:
+      A:
+        name: "Three-level Binary"
+        structure: "1-2-4"
+        best_for: "Standard diagnostic trees"
+      B:
+        name: "Two-level Binary"
+        structure: "1-2"
+        best_for: "Simple yes/no decisions"
+      C:
+        name: "Two-level Triple"
+        structure: "1-3"
+        best_for: "Multiple initial outcomes"
+      D:
+        name: "Three-level Asymmetric"
+        structure: "Variable"
+        best_for: "Complex branching"
+      E:
+        name: "Three-level Extended"
+        structure: "1-2-6"
+        best_for: "Detailed outcome trees"
+
+  TIMELINE:
+    description: "Historical events, developmental stages, disease progression"
+    use_cases:
+      - "Developmental milestones"
+      - "Disease progression"
+      - "Historical context"
+      - "Treatment timelines"
+    layouts:
+      A:
+        name: "Horizontal Timeline"
+        events: "3-5"
+        best_for: "Chronological overview"
+      B:
+        name: "Vertical Timeline"
+        events: "4-7"
+        best_for: "Detailed progression"
+      C:
+        name: "Horizontal Era Blocks"
+        events: "3-4 eras"
+        best_for: "Phase-based progression"
+      D:
+        name: "Developmental Stages"
+        events: "4-6 stages"
+        best_for: "Growth/development content"
+      E:
+        name: "Milestone Timeline"
+        events: "5-8 milestones"
+        best_for: "Key events tracking"
+
+  HIERARCHY:
+    description: "Classification systems, organizational structures, body systems"
+    use_cases:
+      - "Classification systems"
+      - "Organizational structures"
+      - "Body system hierarchies"
+      - "Taxonomies"
+    layouts:
+      A:
+        name: "Top-Down Tree (1-2-4)"
+        structure: "1-2-4"
+        best_for: "Standard hierarchies"
+      B:
+        name: "Top-Down Tree (1-3-6)"
+        structure: "1-3-6"
+        best_for: "Broader hierarchies"
+      C:
+        name: "Organizational Chart"
+        structure: "Mixed branches"
+        best_for: "Asymmetric structures"
+      D:
+        name: "Inverted Pyramid"
+        structure: "Wide to narrow"
+        best_for: "Filtering/narrowing concepts"
+      E:
+        name: "Side-by-Side Hierarchies"
+        structure: "2 parallel trees"
+        best_for: "Comparing organizations"
+
+  SPECTRUM:
+    description: "Severity scales, continua, gradients"
+    use_cases:
+      - "Severity scales"
+      - "Pain scales"
+      - "Progression continua"
+      - "Bipolar concepts"
+    layouts:
+      A:
+        name: "Horizontal Bar Spectrum"
+        segments: "3-5"
+        best_for: "Linear progression"
+      B:
+        name: "Vertical Bar Spectrum"
+        segments: "4-6"
+        best_for: "Vertical scales"
+      C:
+        name: "Bipolar Spectrum"
+        segments: "3-5 with center"
+        best_for: "Opposite extremes"
+      D:
+        name: "Segmented Spectrum"
+        segments: "4-6 discrete"
+        best_for: "Distinct levels"
+      E:
+        name: "Dual-Axis Spectrum"
+        segments: "2 dimensions"
+        best_for: "Two-factor scales"
+    gradient_types:
+      blue: "Intensity progression (low to high)"
+      alert: "Warning levels (green-yellow-red)"
+      bipolar: "Opposite extremes (blue-gray-orange)"
+
+  KEY_DIFFERENTIATORS:
+    description: "Similar concept discrimination, look-alike conditions"
+    use_cases:
+      - "Similar disorders"
+      - "Look-alike medications"
+      - "Confusing concepts"
+      - "NCLEX discriminators"
+    layouts:
+      A:
+        name: "Side-by-Side Comparison"
+        concepts: "2"
+        features: "3-5"
+        best_for: "Two similar items"
+      B:
+        name: "Centered Key Differentiator"
+        concepts: "2"
+        features: "Focus on 1 key difference"
+        best_for: "Single critical difference"
+      C:
+        name: "Multiple Differentiators"
+        concepts: "2"
+        features: "2-4 key differences"
+        best_for: "Several distinguishing features"
+      D:
+        name: "Three-Way Discrimination"
+        concepts: "3"
+        features: "3-4"
+        best_for: "Triple comparison"
+      E:
+        name: "Feature Matrix"
+        concepts: "3-4"
+        features: "4-6"
+        best_for: "Complex comparisons"
+
+# Selection guidance
+selection_triggers:
+  - content_pattern: "4+ bullet points"
+    recommended: "TABLE"
+
+  - content_pattern: "comparing 2+ items"
+    recommended: ["TABLE", "KEY_DIFFERENTIATORS"]
+
+  - content_pattern: "criteria/symptoms/features list"
+    recommended: "TABLE"
+
+  - content_pattern: "process/sequence/steps"
+    recommended: "FLOWCHART"
+
+  - content_pattern: "diagnostic criteria"
+    recommended: ["DECISION_TREE", "TABLE"]
+
+  - content_pattern: "similar disorders/conditions"
+    recommended: "KEY_DIFFERENTIATORS"
+
+  - content_pattern: "severity/intensity scale"
+    recommended: "SPECTRUM"
+
+  - content_pattern: "development/progression over time"
+    recommended: "TIMELINE"
+
+  - content_pattern: "classification/taxonomy"
+    recommended: "HIERARCHY"
+
+  - content_pattern: "organization/structure"
+    recommended: "HIERARCHY"

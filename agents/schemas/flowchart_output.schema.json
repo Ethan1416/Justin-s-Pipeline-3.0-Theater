@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "flowchart_output.schema.json",
+  "title": "Flowchart Generator Output Schema",
+  "description": "Output schema for the flowchart_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_spec", "validation", "presenter_notes"],
+  "properties": {
+    "visual_spec": {
+      "type": "object",
+      "required": ["type", "layout", "title", "data"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "FLOWCHART"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E"],
+          "description": "Selected layout: A=Linear Horizontal, B=Linear Vertical, C=Horizontal with Substeps, D=Snake/Zigzag, E=Branching Linear"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Flowchart title"
+        },
+        "data": {
+          "type": "object",
+          "required": ["start_label", "end_label", "steps"],
+          "properties": {
+            "start_label": {
+              "type": "string",
+              "maxLength": 12,
+              "description": "Start node label"
+            },
+            "end_label": {
+              "type": "string",
+              "maxLength": 12,
+              "description": "End node label"
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 7,
+              "items": {
+                "type": "object",
+                "required": ["step_number", "header", "body"],
+                "properties": {
+                  "step_number": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "header": {
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "body": {
+                    "type": "string",
+                    "maxLength": 50
+                  },
+                  "substeps": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "maxLength": 25
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "connectors": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "description": "Source node (START, step number, or END)"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "Target node"
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 15
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_valid", "checks"],
+      "properties": {
+        "is_valid": {
+          "type": "boolean",
+          "description": "Overall validation status"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "step_count_valid": {
+              "type": "boolean",
+              "description": "Step count within 3-7 range"
+            },
+            "header_char_limits": {
+              "type": "boolean",
+              "description": "All headers within 20 char limit"
+            },
+            "body_char_limits": {
+              "type": "boolean",
+              "description": "All bodies within 50 char limit (25 chars/line, 2 lines)"
+            },
+            "connector_labels_valid": {
+              "type": "boolean",
+              "description": "All connector labels within 15 char limit"
+            },
+            "layout_compatible": {
+              "type": "boolean",
+              "description": "Step count compatible with selected layout"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Presenter notes walking through the process steps"
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 150,
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 180
+        }
+      }
+    },
+    "rendering_metadata": {
+      "type": "object",
+      "properties": {
+        "font_size": {
+          "type": "integer",
+          "enum": [18, 19, 20],
+          "description": "Font size used"
+        },
+        "step_box_dimensions": {
+          "type": "object",
+          "properties": {
+            "width_inches": {
+              "type": "number"
+            },
+            "height_inches": {
+              "type": "number"
+            }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "properties": {
+            "step_header_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "step_body_rgb": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 3,
+              "maxItems": 3
+            }
+          }
+        }
+      }
+    }
+  }
+}

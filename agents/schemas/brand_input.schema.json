@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "brand_input.schema.json",
+  "title": "Brand Compliance Checker Input Schema",
+  "description": "Schema for brand_compliance_checker agent input - validates adherence to brand standards",
+  "type": "object",
+  "required": ["metadata", "content", "brand_standards"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "brand_compliance_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_content"
+          }
+        }
+      }
+    },
+    "brand_standards": {
+      "type": "object",
+      "properties": {
+        "terminology": {
+          "type": "object",
+          "properties": {
+            "required_terms": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Terms that should be used"
+            },
+            "prohibited_terms": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Terms that should not be used"
+            },
+            "replacements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "incorrect": { "type": "string" },
+                  "correct": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "voice_tone": {
+          "type": "object",
+          "properties": {
+            "style": {
+              "type": "string",
+              "enum": ["professional", "educational", "conversational"]
+            },
+            "person": {
+              "type": "string",
+              "enum": ["first", "second", "third"]
+            }
+          }
+        },
+        "formatting": {
+          "type": "object",
+          "properties": {
+            "bullet_style": { "type": "string" },
+            "capitalization": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_content": {
+      "type": "object",
+      "properties": {
+        "slide_number": { "type": "integer" },
+        "header": { "type": "string" },
+        "body": { "type": "string" },
+        "tip": { "type": "string" },
+        "presenter_notes": { "type": "string" }
+      }
+    }
+  }
+}

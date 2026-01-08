@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "enforce_input.schema.json",
+  "title": "Step 6.5 Line Enforcement Input Schema",
+  "description": "Schema for line_enforcer agent input - enforces 8-line body limit on blueprints",
+  "type": "object",
+  "required": ["metadata", "blueprint"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date", "source_file"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 6.5: Enforce Line Limit"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Step 6 blueprint file reference"
+        }
+      }
+    },
+    "blueprint": {
+      "$ref": "#/definitions/blueprint_reference"
+    },
+    "enforcement_rules": {
+      "type": "object",
+      "properties": {
+        "max_body_lines": {
+          "type": "integer",
+          "default": 8,
+          "description": "Maximum non-empty lines allowed in BODY section"
+        },
+        "count_blank_lines": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether blank lines count toward limit"
+        },
+        "count_sub_bullets": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether sub-bullets count as separate lines"
+        }
+      }
+    },
+    "condensation_priorities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "combine_related_subbullets",
+          "remove_redundant_info",
+          "prioritize_nclex_testable",
+          "use_concise_phrasing",
+          "move_examples_to_notes",
+          "keep_clinical_relevance"
+        ]
+      },
+      "default": [
+        "combine_related_subbullets",
+        "remove_redundant_info",
+        "prioritize_nclex_testable",
+        "use_concise_phrasing",
+        "move_examples_to_notes",
+        "keep_clinical_relevance"
+      ]
+    }
+  },
+  "definitions": {
+    "blueprint_reference": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_input"
+          }
+        }
+      }
+    },
+    "slide_input": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "body_line_count": {
+          "type": "integer",
+          "description": "Current count of non-empty lines in body"
+        },
+        "nclex_tip": {
+          "type": "string"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

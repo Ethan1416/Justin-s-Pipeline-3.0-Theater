@@ -1,0 +1,295 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pptx_output.schema.json",
+  "title": "Step 12 PowerPoint Population Output Schema",
+  "description": "Schema for pptx_populator agent output - results of PowerPoint generation",
+  "type": "object",
+  "required": ["metadata", "presentations", "summary", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "date", "completion_time"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 12: PowerPoint Population"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "domain_display_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "completion_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "pipeline_run_id": {
+          "type": "string"
+        },
+        "processing_duration_seconds": {
+          "type": "number"
+        }
+      }
+    },
+    "presentations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/presentation_result"
+      },
+      "description": "Array of generated presentation results"
+    },
+    "population_log": {
+      "type": "string",
+      "description": "Path to detailed population log file"
+    },
+    "summary": {
+      "type": "object",
+      "required": ["sections_processed", "total_slides", "success_count", "error_count"],
+      "properties": {
+        "sections_processed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of sections processed"
+        },
+        "total_slides": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total slides across all presentations"
+        },
+        "visual_slides": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of slides with visual content"
+        },
+        "content_slides": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of standard content slides"
+        },
+        "success_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of sections successfully processed"
+        },
+        "error_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of sections with errors"
+        },
+        "visual_breakdown": {
+          "type": "object",
+          "description": "Count of visuals by type",
+          "properties": {
+            "table": { "type": "integer" },
+            "flowchart": { "type": "integer" },
+            "decision_tree": { "type": "integer" },
+            "timeline": { "type": "integer" },
+            "hierarchy": { "type": "integer" },
+            "spectrum": { "type": "integer" },
+            "key_differentiators": { "type": "integer" },
+            "diagram": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["all_sections_complete", "template_preserved", "outputs_valid"],
+      "properties": {
+        "all_sections_complete": {
+          "type": "boolean",
+          "description": "True if all sections were processed without errors"
+        },
+        "template_preserved": {
+          "type": "boolean",
+          "description": "True if original template was not modified"
+        },
+        "outputs_valid": {
+          "type": "boolean",
+          "description": "True if all output files are valid PPTX"
+        },
+        "slide_count_match": {
+          "type": "boolean",
+          "description": "True if actual slide counts match expected"
+        },
+        "visual_quota_met": {
+          "type": "boolean",
+          "description": "True if visual quota requirements were met"
+        },
+        "presenter_notes_complete": {
+          "type": "boolean",
+          "description": "True if all slides have presenter notes"
+        },
+        "validation_details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/validation_issue"
+          }
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/error_entry"
+      },
+      "description": "Array of errors encountered during processing"
+    },
+    "output_paths": {
+      "type": "object",
+      "properties": {
+        "presentations_folder": {
+          "type": "string"
+        },
+        "diagrams_folder": {
+          "type": "string"
+        },
+        "logs_folder": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "presentation_result": {
+      "type": "object",
+      "required": ["section_name", "output_path", "status"],
+      "properties": {
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "output_path": {
+          "type": "string",
+          "description": "Path to generated PPTX file"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "error", "partial"]
+        },
+        "slide_count": {
+          "type": "integer"
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "content_count": {
+          "type": "integer"
+        },
+        "file_size_bytes": {
+          "type": "integer"
+        },
+        "processing_time_ms": {
+          "type": "integer"
+        },
+        "slides_populated": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_result"
+          }
+        }
+      }
+    },
+    "slide_result": {
+      "type": "object",
+      "properties": {
+        "slide_number": {
+          "type": "string"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["Section Intro", "Content", "Vignette", "Answer", "Visual"]
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_differentiators", "diagram", "none"]
+        },
+        "header_populated": {
+          "type": "boolean"
+        },
+        "body_populated": {
+          "type": "boolean"
+        },
+        "tip_populated": {
+          "type": "boolean"
+        },
+        "notes_populated": {
+          "type": "boolean"
+        },
+        "visual_generated": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "warning", "error"]
+        },
+        "warnings": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "validation_issue": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "slide": {
+          "type": "string"
+        },
+        "issue_type": {
+          "type": "string",
+          "enum": ["missing_content", "shape_not_found", "visual_error", "notes_missing", "quota_not_met", "other"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["error", "warning", "info"]
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "error_entry": {
+      "type": "object",
+      "required": ["timestamp", "section", "error_type", "message"],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "section": {
+          "type": "string"
+        },
+        "slide": {
+          "type": "string"
+        },
+        "error_type": {
+          "type": "string",
+          "enum": ["parse_error", "template_error", "shape_error", "visual_error", "save_error", "validation_error", "unknown"]
+        },
+        "message": {
+          "type": "string"
+        },
+        "stack_trace": {
+          "type": "string"
+        },
+        "recoverable": {
+          "type": "boolean"
+        },
+        "action_taken": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

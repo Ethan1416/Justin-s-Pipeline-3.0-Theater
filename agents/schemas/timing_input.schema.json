@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "timing_input.schema.json",
+  "title": "Timing Estimator Input Schema",
+  "description": "Schema for timing_estimator agent input - estimates presentation timing",
+  "type": "object",
+  "required": ["metadata", "content"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "timing_estimator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_for_timing"
+          }
+        }
+      }
+    },
+    "timing_parameters": {
+      "type": "object",
+      "properties": {
+        "words_per_minute": {
+          "type": "integer",
+          "default": 150,
+          "description": "Average speaking rate"
+        },
+        "visual_slide_extra_seconds": {
+          "type": "integer",
+          "default": 30,
+          "description": "Extra time for visual slides"
+        },
+        "transition_seconds": {
+          "type": "integer",
+          "default": 5,
+          "description": "Time between slides"
+        },
+        "max_seconds_per_slide": {
+          "type": "integer",
+          "default": 180,
+          "description": "Maximum time per slide"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_for_timing": {
+      "type": "object",
+      "required": ["slide_number"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "has_visual": {
+          "type": "boolean"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "presenter_notes_word_count": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

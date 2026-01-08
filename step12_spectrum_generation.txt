@@ -1,0 +1,968 @@
+# STEP 12: SPECTRUM/CONTINUUM GENERATION
+## PowerPoint Spectrum and Continuum Visual Aid Specifications
+## NCLEX Lecture Pipeline
+
+---
+
+## PURPOSE
+
+This document specifies how to generate spectrum and continuum visual aids for NCLEX lecture slides. Spectrums visualize gradients, ranges, degrees, and continuous dimensions where concepts exist along a scale rather than in discrete categories.
+
+---
+
+## SECTION 1: IDENTIFICATION CONDITIONS
+
+### When to Use a Spectrum/Continuum
+
+A slide should use a spectrum when the blueprint content contains:
+
+1. **Degree Variations**: Concepts that vary by intensity or amount
+   - Keywords: "ranges from", "spectrum", "degrees of", "mild to severe"
+   - Example: "Depression severity: mild → moderate → severe"
+
+2. **Continuous Dimensions**: Traits or characteristics on a scale
+   - Keywords: "continuum", "scale", "dimension", "gradient"
+   - Example: "Introversion-Extraversion continuum"
+
+3. **Progressive Scales**: Measurements with gradual change
+   - Keywords: "levels of", "increasing", "decreasing", "progressive"
+   - Example: "Levels of consciousness from alert to coma"
+
+4. **Bipolar Constructs**: Opposites with middle ground
+   - Keywords: "versus", "to", "between", "opposing ends"
+   - Example: "Nature vs. Nurture: genetic to environmental influences"
+
+5. **Severity or Intensity Gradients**: Clinical severity scales
+   - Keywords: "severity", "intensity", "mild... moderate... severe"
+   - Example: "Autism spectrum: low support needs to high support needs"
+
+### When NOT to Use a Spectrum
+
+- If categories are discrete/separate → Use Table or Hierarchy
+- If content is a process with steps → Use Flowchart
+- If content cycles back → Use Cycle Diagram
+- If comparing distinct groups → Use Venn or Key Differentiators
+
+---
+
+## SECTION 2: COLOR SCHEME
+
+### Spectrum Color Palette (Gradient Theme)
+
+```
+GRADIENT OPTIONS:
+
+Option 1: Blue Gradient (Intensity/Severity)
+- Low End: RGB(227, 242, 253) - Light Blue #E3F2FD
+- Mid Point: RGB(100, 181, 246) - Medium Blue #64B5F6
+- High End: RGB(13, 71, 161) - Dark Blue #0D47A1
+
+Option 2: Green-Yellow-Red (Warning/Alert)
+- Low End: RGB(76, 175, 80) - Green #4CAF50
+- Mid Point: RGB(255, 235, 59) - Yellow #FFEB3B
+- High End: RGB(244, 67, 54) - Red #F44336
+
+Option 3: Cool-Warm (Bipolar)
+- Left End: RGB(33, 150, 243) - Blue #2196F3
+- Center: RGB(158, 158, 158) - Gray #9E9E9E
+- Right End: RGB(255, 87, 34) - Orange #FF5722
+
+ACCENT COLORS:
+- Scale Markers: RGB(33, 33, 33) - Dark Gray #212121
+- Position Indicator: RGB(0, 0, 0) - Black
+- Labels: RGB(0, 0, 0) - Black
+
+TEXT COLORS:
+- On Light Background: RGB(0, 0, 0) - Black
+- On Dark Background: RGB(255, 255, 255) - White
+- End Labels: Match gradient ends
+```
+
+---
+
+## SECTION 3: LAYOUT SPECIFICATIONS
+
+### Layout A: Horizontal Bar Spectrum
+```
+[Low]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[High]
+  │         │         │         │         │
+Label 1  Label 2  Label 3  Label 4  Label 5
+
+Dimensions:
+- Bar width: 10.0 inches
+- Bar height: 0.5 inches
+- Marker spacing: Even distribution
+- Labels below bar
+```
+
+### Layout B: Vertical Bar Spectrum
+```
+    [High]
+      ┃
+      ┃ ← Label 5
+      ┃
+      ┃ ← Label 4
+      ┃
+      ┃ ← Label 3
+      ┃
+      ┃ ← Label 2
+      ┃
+      ┃ ← Label 1
+      ┃
+    [Low]
+
+Dimensions:
+- Bar height: 4.5 inches
+- Bar width: 0.5 inches
+- Labels to the right
+- Gradient from bottom to top
+```
+
+### Layout C: Bipolar Spectrum with Center
+```
+[Extreme A]━━━━━━━━━●━━━━━━━━━[Extreme B]
+                 CENTER
+     ←──────────────│──────────────→
+   Features A                Features B
+
+Dimensions:
+- Bar width: 10.0 inches
+- Center marker emphasized
+- Features listed on each side
+- Shows balance between opposites
+```
+
+### Layout D: Segmented Spectrum (Discrete points on continuum)
+```
+┌─────────┬─────────┬─────────┬─────────┬─────────┐
+│  None   │  Mild   │Moderate │ Severe  │ Extreme │
+├─────────┼─────────┼─────────┼─────────┼─────────┤
+│ Desc 1  │ Desc 2  │ Desc 3  │ Desc 4  │ Desc 5  │
+└─────────┴─────────┴─────────┴─────────┴─────────┘
+──────────────────────────────────────────────────→
+Low Severity                          High Severity
+
+Dimensions:
+- 3-6 segments
+- Each segment: ~2.0 inches wide
+- Description under each segment
+- Arrow showing direction
+```
+
+### Layout E: Dual-Axis Spectrum (Two dimensions)
+```
+                      HIGH
+                       ↑
+                       │
+            Q2         │         Q1
+         [Label]       │       [Label]
+                       │
+     LOW ←─────────────┼─────────────→ HIGH
+                       │
+            Q3         │         Q4
+         [Label]       │       [Label]
+                       │
+                       ↓
+                      LOW
+
+Dimensions:
+- Grid: 8.0 x 6.0 inches
+- Four quadrants
+- Axis labels at ends
+- Example: Arousal × Valence model
+```
+
+---
+
+## SECTION 4: FONT SPECIFICATIONS
+
+### Text Hierarchy
+
+```
+END LABELS (extremes of spectrum):
+- Font: Aptos
+- Size: 22pt
+- Color: Matches gradient end
+- Style: Bold
+- Alignment: Center
+
+SEGMENT/MARKER LABELS:
+- Font: Aptos
+- Size: 18pt
+- Color: Black
+- Style: Bold
+- Alignment: Center
+
+DESCRIPTION TEXT:
+- Font: Aptos
+- Size: 18pt minimum
+- Color: Black
+- Style: Regular
+- Alignment: Center or Left
+
+AXIS LABELS (Layout E):
+- Font: Aptos
+- Size: 20pt
+- Color: Black
+- Style: Bold
+- Alignment: Center
+```
+
+---
+
+## SECTION 5: CHARACTER LIMITS
+
+### Per-Element Limits
+
+```
+END LABELS:
+- Characters per line: 15
+- Maximum lines: 1
+
+SEGMENT LABELS:
+- Characters per line: 12
+- Maximum lines: 1
+
+SEGMENT DESCRIPTIONS:
+- Characters per line: 20
+- Maximum lines: 2
+
+QUADRANT LABELS (Layout E):
+- Characters per line: 18
+- Maximum lines: 2
+
+AXIS LABELS:
+- Characters: 15 max
+```
+
+### Adaptive Sizing Rules
+
+```python
+def get_adaptive_spectrum_font(element_type, segment_count):
+    """Determine font size based on element type and segment count."""
+
+    base_sizes = {
+        'end_label': 22,
+        'segment_label': 20,
+        'description': 18,
+        'axis_label': 20
+    }
+
+    base_size = base_sizes.get(element_type, 18)
+
+    # More segments = tighter space
+    if segment_count >= 6:
+        base_size = max(base_size - 2, 18)
+    elif segment_count >= 5:
+        base_size = max(base_size - 1, 18)
+
+    return max(base_size, 18)
+```
+
+---
+
+## SECTION 6: CONTENT REVISION INSTRUCTIONS
+
+### How to Revise Blueprint Content for Spectrums
+
+1. **Identify the Dimension**
+   - What is being measured or scaled?
+   - Is it truly continuous or discrete?
+   - Examples: "severity", "intensity", "frequency"
+
+2. **Define the Extremes**
+   - What are the opposite ends?
+   - Keep labels brief (1-2 words)
+   - Examples: "Low/High", "Never/Always", "Mild/Severe"
+
+3. **Identify Key Points Along the Spectrum**
+   - What are the meaningful markers?
+   - Usually 3-6 points
+   - Examples: "Mild → Moderate → Severe"
+
+4. **Add Descriptions (optional)**
+   - Brief description for each point
+   - What characterizes each level?
+   - Keep to 1-2 sentences
+
+5. **Determine Gradient Type**
+   - Intensity/Severity → Blue gradient
+   - Warning/Risk → Green-Yellow-Red
+   - Bipolar construct → Cool-Warm
+
+6. **Select Appropriate Layout**
+   - Simple scale → Layout A or B
+   - Opposites with balance point → Layout C
+   - Discrete levels on continuum → Layout D
+   - Two-dimensional → Layout E
+
+### Example Revision
+
+**Original Blueprint Content:**
+"Depression severity exists on a continuum. Mild depression involves some symptoms but continued functioning. Moderate depression shows more symptoms and functional impairment. Severe depression involves most symptoms with significant impairment. In the most extreme cases, psychotic features may be present."
+
+**Revised for Spectrum:**
+
+```
+Title: "Depression Severity Spectrum"
+Layout: D (Segmented Spectrum)
+
+Dimension: Severity
+Gradient: Blue (light to dark)
+
+Segments:
+1. Label: "Mild"
+   Description: "Some symptoms, functioning maintained"
+   Color: Light Blue
+
+2. Label: "Moderate"
+   Description: "More symptoms, some impairment"
+   Color: Medium Blue
+
+3. Label: "Severe"
+   Description: "Most symptoms, significant impairment"
+   Color: Dark Blue
+
+4. Label: "With Psychosis"
+   Description: "Severe + psychotic features"
+   Color: Darkest Blue
+
+End Labels:
+- Left: "Lower Severity"
+- Right: "Higher Severity"
+```
+
+---
+
+## SECTION 7: POPULATION SPECIFICATIONS
+
+### Python Implementation Structure
+
+```python
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RgbColor
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import PP_ALIGN
+from pptx.oxml.ns import nsmap
+from pptx.oxml import parse_xml
+
+# Gradient color sets
+BLUE_GRADIENT = [
+    RgbColor(227, 242, 253),  # Light
+    RgbColor(144, 202, 249),
+    RgbColor(100, 181, 246),
+    RgbColor(66, 165, 245),
+    RgbColor(13, 71, 161),    # Dark
+]
+
+ALERT_GRADIENT = [
+    RgbColor(76, 175, 80),    # Green
+    RgbColor(205, 220, 57),
+    RgbColor(255, 235, 59),   # Yellow
+    RgbColor(255, 152, 0),
+    RgbColor(244, 67, 54),    # Red
+]
+
+BIPOLAR_GRADIENT = [
+    RgbColor(33, 150, 243),   # Blue (cool)
+    RgbColor(144, 202, 249),
+    RgbColor(158, 158, 158),  # Gray (neutral)
+    RgbColor(255, 171, 145),
+    RgbColor(255, 87, 34),    # Orange (warm)
+]
+
+BLACK = RgbColor(0, 0, 0)
+WHITE = RgbColor(255, 255, 255)
+
+def create_spectrum_slide(prs, slide_data):
+    """
+    Create a spectrum slide from structured data.
+
+    slide_data = {
+        'title': 'Slide Title',
+        'layout': 'A',  # A, B, C, D, or E
+        'gradient': 'blue',  # 'blue', 'alert', 'bipolar'
+        'dimension': 'Severity',
+        'endpoints': {
+            'low': 'Mild',
+            'high': 'Severe'
+        },
+        'segments': [
+            {'label': 'Level 1', 'description': 'Description'},
+            {'label': 'Level 2', 'description': 'Description'},
+            ...
+        ],
+        'center_label': 'Balanced'  # For Layout C
+    }
+    """
+    slide_layout = prs.slide_layouts[6]  # Blank
+    slide = prs.slides.add_slide(slide_layout)
+
+    add_title(slide, slide_data['title'])
+
+    layout = slide_data.get('layout', 'A')
+
+    if layout == 'A':
+        create_horizontal_spectrum(slide, slide_data)
+    elif layout == 'B':
+        create_vertical_spectrum(slide, slide_data)
+    elif layout == 'C':
+        create_bipolar_spectrum(slide, slide_data)
+    elif layout == 'D':
+        create_segmented_spectrum(slide, slide_data)
+    elif layout == 'E':
+        create_dual_axis_spectrum(slide, slide_data)
+
+    return slide
+
+def create_horizontal_spectrum(slide, data):
+    """Layout A: Simple horizontal gradient bar."""
+
+    gradient_type = data.get('gradient', 'blue')
+    endpoints = data.get('endpoints', {'low': 'Low', 'high': 'High'})
+    segments = data.get('segments', [])
+
+    # Bar dimensions
+    bar_left = Inches(1.5)
+    bar_top = Inches(3.0)
+    bar_width = Inches(10.0)
+    bar_height = Inches(0.5)
+
+    # Create gradient bar
+    bar = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        bar_left, bar_top, bar_width, bar_height
+    )
+
+    # Apply gradient fill
+    apply_gradient_fill(bar, gradient_type)
+
+    # Add endpoint labels
+    add_text_label(slide, bar_left - Inches(0.5), bar_top - Inches(0.6),
+                   Inches(2.0), Inches(0.5),
+                   endpoints['low'], 22, True, get_gradient_color(gradient_type, 0))
+
+    add_text_label(slide, bar_left + bar_width - Inches(1.5), bar_top - Inches(0.6),
+                   Inches(2.0), Inches(0.5),
+                   endpoints['high'], 22, True, get_gradient_color(gradient_type, -1))
+
+    # Add segment markers and labels
+    if segments:
+        segment_count = len(segments)
+        segment_width = bar_width / segment_count
+
+        for i, segment in enumerate(segments):
+            marker_x = bar_left + segment_width * (i + 0.5)
+
+            # Marker line
+            marker = slide.shapes.add_shape(
+                MSO_SHAPE.RECTANGLE,
+                marker_x - Inches(0.02), bar_top + bar_height,
+                Inches(0.04), Inches(0.2)
+            )
+            marker.fill.solid()
+            marker.fill.fore_color.rgb = BLACK
+
+            # Label
+            add_text_label(slide, marker_x - Inches(1.0),
+                          bar_top + bar_height + Inches(0.3),
+                          Inches(2.0), Inches(0.4),
+                          segment['label'], 18, True, BLACK)
+
+            # Description
+            if segment.get('description'):
+                add_text_label(slide, marker_x - Inches(1.2),
+                              bar_top + bar_height + Inches(0.7),
+                              Inches(2.4), Inches(0.8),
+                              segment['description'], 18, False, BLACK)
+
+def create_segmented_spectrum(slide, data):
+    """Layout D: Discrete segments on a continuum."""
+
+    segments = data.get('segments', [])
+    gradient_type = data.get('gradient', 'blue')
+    endpoints = data.get('endpoints', {})
+
+    segment_count = len(segments)
+
+    # Calculate dimensions
+    total_width = Inches(10.5)
+    segment_width = total_width / segment_count
+    segment_height = Inches(1.0)
+    desc_height = Inches(1.2)
+
+    start_left = Inches(1.4)
+    top = Inches(2.0)
+
+    # Get gradient colors
+    colors = get_gradient_colors(gradient_type, segment_count)
+
+    for i, segment in enumerate(segments):
+        left = start_left + i * segment_width
+
+        # Segment header box
+        header_box = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            left, top, segment_width - Inches(0.05), segment_height
+        )
+        header_box.fill.solid()
+        header_box.fill.fore_color.rgb = colors[i]
+
+        # Add border
+        header_box.line.color.rgb = BLACK
+        header_box.line.width = Pt(1)
+
+        # Header text
+        tf = header_box.text_frame
+        tf.paragraphs[0].text = segment['label']
+        tf.paragraphs[0].font.size = Pt(20)
+        tf.paragraphs[0].font.bold = True
+        # White text on dark colors, black on light
+        text_color = WHITE if i >= segment_count // 2 else BLACK
+        tf.paragraphs[0].font.color.rgb = text_color
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+        # Description box
+        desc_box = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            left, top + segment_height, segment_width - Inches(0.05), desc_height
+        )
+        desc_box.fill.solid()
+        desc_box.fill.fore_color.rgb = lighten_color(colors[i], 0.5)
+
+        desc_box.line.color.rgb = BLACK
+        desc_box.line.width = Pt(1)
+
+        if segment.get('description'):
+            tf = desc_box.text_frame
+            tf.word_wrap = True
+            tf.paragraphs[0].text = segment['description']
+            tf.paragraphs[0].font.size = Pt(18)
+            tf.paragraphs[0].font.color.rgb = BLACK
+            tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Add direction arrow
+    arrow_top = top + segment_height + desc_height + Inches(0.3)
+    arrow = slide.shapes.add_shape(
+        MSO_SHAPE.RIGHT_ARROW,
+        start_left, arrow_top,
+        total_width, Inches(0.3)
+    )
+    arrow.fill.solid()
+    arrow.fill.fore_color.rgb = get_gradient_color(gradient_type, -1)
+
+    # Endpoint labels
+    if endpoints:
+        add_text_label(slide, start_left - Inches(0.3), arrow_top + Inches(0.4),
+                      Inches(2.5), Inches(0.4),
+                      endpoints.get('low', ''), 18, False, BLACK)
+
+        add_text_label(slide, start_left + total_width - Inches(2.2),
+                      arrow_top + Inches(0.4),
+                      Inches(2.5), Inches(0.4),
+                      endpoints.get('high', ''), 18, False, BLACK)
+
+def create_dual_axis_spectrum(slide, data):
+    """Layout E: Two-dimensional spectrum with quadrants."""
+
+    axes = data.get('axes', {'x': 'Dimension 1', 'y': 'Dimension 2'})
+    quadrants = data.get('quadrants', [])
+
+    # Center of grid
+    center_x = Inches(6.66)
+    center_y = Inches(3.8)
+    axis_length = Inches(4.0)
+
+    # Draw horizontal axis
+    h_line = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        center_x - axis_length, center_y - Inches(0.02),
+        axis_length * 2, Inches(0.04)
+    )
+    h_line.fill.solid()
+    h_line.fill.fore_color.rgb = BLACK
+
+    # Draw vertical axis
+    v_line = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        center_x - Inches(0.02), center_y - axis_length,
+        Inches(0.04), axis_length * 2
+    )
+    v_line.fill.solid()
+    v_line.fill.fore_color.rgb = BLACK
+
+    # Add axis labels
+    # X-axis labels
+    add_text_label(slide, center_x - axis_length - Inches(1.0), center_y - Inches(0.2),
+                   Inches(1.0), Inches(0.4),
+                   "LOW", 18, True, BLACK)
+    add_text_label(slide, center_x + axis_length, center_y - Inches(0.2),
+                   Inches(1.0), Inches(0.4),
+                   "HIGH", 18, True, BLACK)
+
+    # Y-axis labels
+    add_text_label(slide, center_x - Inches(0.5), center_y - axis_length - Inches(0.5),
+                   Inches(1.0), Inches(0.4),
+                   "HIGH", 18, True, BLACK)
+    add_text_label(slide, center_x - Inches(0.5), center_y + axis_length + Inches(0.1),
+                   Inches(1.0), Inches(0.4),
+                   "LOW", 18, True, BLACK)
+
+    # Axis dimension labels
+    add_text_label(slide, center_x - Inches(1.0), center_y + axis_length + Inches(0.5),
+                   Inches(2.0), Inches(0.4),
+                   axes['x'], 20, True, BLACK)
+    add_text_label(slide, center_x + axis_length + Inches(0.3), center_y - Inches(0.2),
+                   Inches(2.0), Inches(0.4),
+                   axes['y'], 20, True, BLACK)
+
+    # Add quadrant labels
+    quadrant_positions = [
+        (center_x + Inches(1.5), center_y - Inches(2.0)),  # Q1: High-High
+        (center_x - Inches(3.0), center_y - Inches(2.0)),  # Q2: Low-High
+        (center_x - Inches(3.0), center_y + Inches(1.0)),  # Q3: Low-Low
+        (center_x + Inches(1.5), center_y + Inches(1.0)),  # Q4: High-Low
+    ]
+
+    for i, quadrant in enumerate(quadrants[:4]):
+        pos_x, pos_y = quadrant_positions[i]
+        add_text_label(slide, pos_x, pos_y,
+                      Inches(2.5), Inches(1.0),
+                      quadrant.get('label', ''), 18, True, BLACK)
+
+def apply_gradient_fill(shape, gradient_type):
+    """Apply linear gradient fill to shape."""
+    # Simplified - for full gradient, use OOXML
+    colors = {
+        'blue': BLUE_GRADIENT,
+        'alert': ALERT_GRADIENT,
+        'bipolar': BIPOLAR_GRADIENT
+    }
+
+    gradient_colors = colors.get(gradient_type, BLUE_GRADIENT)
+
+    # For now, use middle color as solid fill
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = gradient_colors[len(gradient_colors) // 2]
+
+def get_gradient_colors(gradient_type, count):
+    """Get interpolated colors for segment count."""
+    gradients = {
+        'blue': BLUE_GRADIENT,
+        'alert': ALERT_GRADIENT,
+        'bipolar': BIPOLAR_GRADIENT
+    }
+
+    base_colors = gradients.get(gradient_type, BLUE_GRADIENT)
+
+    if count <= len(base_colors):
+        # Select evenly spaced colors
+        step = len(base_colors) / count
+        return [base_colors[int(i * step)] for i in range(count)]
+    else:
+        # Interpolate if more segments than colors
+        return interpolate_colors(base_colors, count)
+
+def get_gradient_color(gradient_type, index):
+    """Get specific color from gradient."""
+    gradients = {
+        'blue': BLUE_GRADIENT,
+        'alert': ALERT_GRADIENT,
+        'bipolar': BIPOLAR_GRADIENT
+    }
+    colors = gradients.get(gradient_type, BLUE_GRADIENT)
+    return colors[index]
+
+def lighten_color(color, factor):
+    """Lighten a color by factor (0-1)."""
+    r = min(255, int(color[0] + (255 - color[0]) * factor))
+    g = min(255, int(color[1] + (255 - color[1]) * factor))
+    b = min(255, int(color[2] + (255 - color[2]) * factor))
+    return RgbColor(r, g, b)
+
+def add_text_label(slide, left, top, width, height, text, font_size, bold, color):
+    """Add a text box with specified formatting."""
+    textbox = slide.shapes.add_textbox(left, top, width, height)
+    tf = textbox.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.text = text
+    p.font.size = Pt(font_size)
+    p.font.bold = bold
+    p.font.color.rgb = color
+    p.alignment = PP_ALIGN.CENTER
+```
+
+---
+
+## SECTION 8: NCLEX CONTENT EXAMPLES
+
+### Example 1: Depression Severity
+
+```
+Title: "Depression Severity Spectrum"
+Layout: D (Segmented Spectrum)
+Gradient: blue
+
+Segments:
+1. Label: "Mild"
+   Description: "Some symptoms; maintains functioning"
+
+2. Label: "Moderate"
+   Description: "More symptoms; noticeable impairment"
+
+3. Label: "Severe"
+   Description: "Most symptoms; significant impairment"
+
+4. Label: "With Psychosis"
+   Description: "Severe + delusions/hallucinations"
+
+Endpoints:
+- Low: "Lower Severity"
+- High: "Higher Severity"
+```
+
+### Example 2: Introversion-Extraversion
+
+```
+Title: "Introversion-Extraversion Continuum"
+Layout: C (Bipolar Spectrum)
+Gradient: bipolar
+
+Endpoints:
+- Low: "INTROVERSION"
+- High: "EXTRAVERSION"
+
+Center: "AMBIVERSION"
+
+Left Features:
+- Prefers solitude
+- Internal processing
+- Deep conversations
+
+Right Features:
+- Seeks stimulation
+- External processing
+- Group activities
+```
+
+### Example 3: Consciousness Levels
+
+```
+Title: "Levels of Consciousness"
+Layout: B (Vertical Spectrum)
+Gradient: blue
+
+Segments (top to bottom):
+1. Label: "Alert"
+   Description: "Fully aware and responsive"
+
+2. Label: "Lethargic"
+   Description: "Drowsy but arousable"
+
+3. Label: "Obtunded"
+   Description: "Difficult to arouse"
+
+4. Label: "Stupor"
+   Description: "Responds only to painful stimuli"
+
+5. Label: "Coma"
+   Description: "Unresponsive"
+
+Endpoints:
+- Top: "Full Consciousness"
+- Bottom: "No Consciousness"
+```
+
+### Example 4: Circumplex Model of Affect
+
+```
+Title: "Circumplex Model of Emotion"
+Layout: E (Dual-Axis)
+
+Axes:
+- X: "Valence (Pleasant-Unpleasant)"
+- Y: "Arousal (Activation)"
+
+Quadrants:
+1. Label: "Excited, Elated"
+   Position: High Arousal, Pleasant
+
+2. Label: "Tense, Anxious"
+   Position: High Arousal, Unpleasant
+
+3. Label: "Sad, Depressed"
+   Position: Low Arousal, Unpleasant
+
+4. Label: "Calm, Relaxed"
+   Position: Low Arousal, Pleasant
+```
+
+---
+
+## SECTION 9: VALIDATION CHECKLIST
+
+### Before Population
+
+- [ ] Content truly exists on a continuum (not discrete categories)
+- [ ] Endpoints represent genuine extremes
+- [ ] Segment count matches layout capacity (3-6 segments)
+- [ ] All text within character limits
+- [ ] Gradient type matches content nature
+
+### After Population
+
+- [ ] Gradient colors flow smoothly
+- [ ] Segments are evenly distributed
+- [ ] All labels readable (minimum 18pt font)
+- [ ] Endpoint labels visible and distinct
+- [ ] Colors match specification for gradient type
+- [ ] Title is present and visible
+
+### Content Validation
+
+- [ ] Segments are ordered correctly on continuum
+- [ ] Descriptions match severity/intensity level
+- [ ] No gaps or overlaps in conceptual coverage
+- [ ] Direction arrow (if present) points correctly
+- [ ] Bipolar extremes are true opposites
+
+---
+
+## SECTION 10: COMMON ISSUES AND FIXES
+
+### Issue 1: Forced Continuum
+
+**Problem:** Content is categorical but treated as continuum
+
+**Solution:**
+- Re-evaluate if spectrum is appropriate
+- Consider Table or Hierarchy instead
+- If some gradation exists, use segmented layout (D)
+
+### Issue 2: Too Many Segments
+
+**Problem:** 8+ segments don't fit clearly
+
+**Solution:**
+- Combine related levels
+- Use fewer key points with descriptions
+- Split into two spectrum slides if needed
+
+### Issue 3: Gradient Not Visible
+
+**Problem:** Colors too similar across spectrum
+
+**Solution:**
+```python
+def ensure_contrast(colors, min_difference=50):
+    # Check RGB difference between adjacent colors
+    # Adjust if below minimum
+    pass
+```
+
+### Issue 4: Text Overlaps Gradient
+
+**Problem:** Dark text invisible on dark end of gradient
+
+**Solution:**
+- Use white text on darker segments
+- Add semi-transparent background to text
+- Position labels outside gradient bar
+
+### Issue 5: Bipolar Center Not Emphasized
+
+**Problem:** Balance point not visible in Layout C
+
+**Solution:**
+- Add distinct marker at center
+- Use neutral color (gray) at midpoint
+- Add "CENTER" or concept label
+
+---
+
+## SECTION 11: INTEGRATION WITH PIPELINE
+
+### Blueprint Identification Markers
+
+When generating blueprints in Step 6, mark slides for spectrum treatment:
+
+```
+[VISUAL: SPECTRUM]
+Type: [Severity/Bipolar/Progressive/Dual-Axis]
+Dimension: [name of what's being scaled]
+Segments: [number of segments]
+Gradient: [blue/alert/bipolar]
+Layout Recommendation: [A/B/C/D/E]
+```
+
+### Pipeline Config Entry
+
+Add to pipeline_config.json:
+
+```json
+"spectrum_settings": {
+  "reference_doc": "step12_spectrum_generation.txt",
+  "template": "visual aid and graphic organizer template.pptx",
+  "font_name": "Aptos",
+  "min_font_size_pt": 18,
+  "max_segments": 6,
+  "gradients": {
+    "blue": {
+      "low_rgb": [227, 242, 253],
+      "mid_rgb": [100, 181, 246],
+      "high_rgb": [13, 71, 161]
+    },
+    "alert": {
+      "low_rgb": [76, 175, 80],
+      "mid_rgb": [255, 235, 59],
+      "high_rgb": [244, 67, 54]
+    },
+    "bipolar": {
+      "left_rgb": [33, 150, 243],
+      "center_rgb": [158, 158, 158],
+      "right_rgb": [255, 87, 34]
+    }
+  },
+  "layouts": {
+    "A": "Horizontal Bar Spectrum",
+    "B": "Vertical Bar Spectrum",
+    "C": "Bipolar Spectrum with Center",
+    "D": "Segmented Spectrum (discrete points)",
+    "E": "Dual-Axis Spectrum (two dimensions)"
+  }
+}
+```
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population  ← SPECTRUM GENERATION HERE
+    ↓
+[PRODUCTION COMPLETE]
+```

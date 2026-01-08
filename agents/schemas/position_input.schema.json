@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "position_input.schema.json",
+  "title": "Position Calculator Input Schema",
+  "description": "Schema for position_calculator agent input - calculates element positions for visuals",
+  "type": "object",
+  "required": ["metadata", "elements", "canvas"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "position_calculator"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_diff"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/element_for_positioning"
+      }
+    },
+    "canvas": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {
+          "type": "number",
+          "description": "Available width in inches"
+        },
+        "height": {
+          "type": "number",
+          "description": "Available height in inches"
+        },
+        "margin_left": {
+          "type": "number",
+          "default": 0.5
+        },
+        "margin_right": {
+          "type": "number",
+          "default": 0.5
+        },
+        "margin_top": {
+          "type": "number",
+          "default": 0.5
+        },
+        "margin_bottom": {
+          "type": "number",
+          "default": 0.5
+        }
+      }
+    },
+    "layout_rules": {
+      "type": "object",
+      "properties": {
+        "alignment": {
+          "type": "string",
+          "enum": ["left", "center", "right"],
+          "default": "center"
+        },
+        "vertical_alignment": {
+          "type": "string",
+          "enum": ["top", "middle", "bottom"],
+          "default": "middle"
+        },
+        "spacing": {
+          "type": "number",
+          "default": 0.25,
+          "description": "Spacing between elements in inches"
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["horizontal", "vertical", "grid", "radial"],
+          "default": "vertical"
+        },
+        "wrap": {
+          "type": "boolean",
+          "default": false,
+          "description": "Wrap to next row/column if needed"
+        }
+      }
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_id": { "type": "string" },
+          "to_id": { "type": "string" },
+          "connection_type": {
+            "type": "string",
+            "enum": ["arrow", "line", "bracket"]
+          }
+        }
+      },
+      "description": "Connections between elements that affect positioning"
+    }
+  },
+  "definitions": {
+    "element_for_positioning": {
+      "type": "object",
+      "required": ["element_id"],
+      "properties": {
+        "element_id": {
+          "type": "string"
+        },
+        "element_type": {
+          "type": "string"
+        },
+        "preferred_width": {
+          "type": "number"
+        },
+        "preferred_height": {
+          "type": "number"
+        },
+        "min_width": {
+          "type": "number"
+        },
+        "min_height": {
+          "type": "number"
+        },
+        "level": {
+          "type": "integer",
+          "description": "Hierarchy level for tree layouts"
+        },
+        "sequence": {
+          "type": "integer",
+          "description": "Sequence number for ordered layouts"
+        },
+        "parent_id": {
+          "type": "string",
+          "description": "Parent element for hierarchical layouts"
+        }
+      }
+    }
+  }
+}

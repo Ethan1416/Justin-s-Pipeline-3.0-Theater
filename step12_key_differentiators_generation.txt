@@ -1,0 +1,1024 @@
+# STEP 12: KEY DIFFERENTIATORS GENERATION
+## PowerPoint Key Differentiators Visual Aid Specifications
+## NCLEX Lecture Pipeline
+
+---
+
+## PURPOSE
+
+This document specifies how to generate Key Differentiators visual aids for NCLEX lecture slides. Key Differentiators are discrimination-focused graphic organizers that highlight the critical distinguishing features between similar or commonly confused concepts.
+
+**Primary Use Case:** Differential diagnosis, distinguishing similar disorders, discriminating between confusable concepts on the NCLEX.
+
+---
+
+## SECTION 1: IDENTIFICATION CONDITIONS
+
+### When to Use Key Differentiators
+
+A slide should use Key Differentiators when the blueprint content contains:
+
+1. **Differential Diagnosis Content**: Distinguishing between similar disorders
+   - Keywords: "differentiate", "distinguish", "differential diagnosis", "vs"
+   - Example: "Major Depression vs Bipolar II: Key differences"
+
+2. **Commonly Confused Concepts**: Items frequently mistaken for each other
+   - Keywords: "often confused", "similar but", "unlike", "in contrast to"
+   - Example: "Schizophrenia vs Brief Psychotic Disorder"
+
+3. **Critical Distinguishing Features**: When one feature determines classification
+   - Keywords: "key difference", "distinguishing feature", "pathognomonic"
+   - Example: "The key differentiator is duration of symptoms"
+
+4. **NCLEX Discrimination Items**: Content likely to appear as discrimination questions
+   - Keywords: "which of the following", "best distinguishes", "most likely"
+   - Example: "Panic Disorder vs Generalized Anxiety Disorder"
+
+5. **Side-by-Side Comparisons**: Mutually exclusive categories with parallel features
+   - Keywords: "compared to", "whereas", "while... differs from"
+   - Example: "Classical vs Operant Conditioning: Key Differences"
+
+### When NOT to Use Key Differentiators
+
+- If concepts overlap significantly → Use Venn Diagram
+- If content is hierarchical → Use Hierarchy Diagram
+- If comparing many items at once → Use Table
+- If content is a process → Use Flowchart
+
+---
+
+## SECTION 2: COLOR SCHEME
+
+### Key Differentiators Color Palette (Contrasting Theme)
+
+```
+PRIMARY COLORS:
+- Left Concept Header: RGB(21, 101, 192) - Blue #1565C0
+- Right Concept Header: RGB(183, 28, 28) - Red #B71C1C
+- Left Feature Background: RGB(227, 242, 253) - Light Blue #E3F2FD
+- Right Feature Background: RGB(255, 235, 238) - Light Red #FFEBEE
+
+DIFFERENTIATOR EMPHASIS:
+- Key Difference Icon: RGB(255, 193, 7) - Amber #FFC107
+- Key Difference Background: RGB(255, 243, 224) - Light Amber #FFF3E0
+- Key Difference Border: RGB(255, 160, 0) - Orange #FFA000
+
+NEUTRAL COLORS:
+- VS/Separator: RGB(97, 97, 97) - Dark Gray #616161
+- Border Lines: RGB(189, 189, 189) - Medium Gray #BDBDBD
+- Arrow/Indicator: RGB(0, 0, 0) - Black
+
+TEXT COLORS:
+- Header Text: RGB(255, 255, 255) - White
+- Feature Text: RGB(0, 0, 0) - Black
+- Key Difference Text: RGB(0, 0, 0) - Black (bold)
+```
+
+---
+
+## SECTION 3: LAYOUT SPECIFICATIONS
+
+### Layout A: Side-by-Side Comparison (2 concepts, 3-5 features)
+```
+┌────────────────────────┐   VS   ┌────────────────────────┐
+│     CONCEPT A          │        │     CONCEPT B          │
+│    [Blue Header]       │        │    [Red Header]        │
+├────────────────────────┤        ├────────────────────────┤
+│ Feature 1: Description │        │ Feature 1: Description │
+├────────────────────────┤        ├────────────────────────┤
+│ Feature 2: Description │        │ Feature 2: Description │
+├────────────────────────┤        ├────────────────────────┤
+│★KEY DIFFERENTIATOR ★  │   ≠   │★KEY DIFFERENTIATOR ★  │
+│   [Highlighted]        │        │   [Highlighted]        │
+├────────────────────────┤        ├────────────────────────┤
+│ Feature 4: Description │        │ Feature 4: Description │
+└────────────────────────┘        └────────────────────────┘
+
+Dimensions:
+- Each column: 5.5 inches wide
+- Gap between: 1.0 inch (contains VS)
+- Feature rows: 0.7-0.9 inches
+- Key differentiator row: Highlighted with amber
+```
+
+### Layout B: Centered Key Differentiator (Focus on single difference)
+```
+        ┌───────────────────────────────────┐
+        │      KEY DIFFERENTIATOR            │
+        │   [The critical distinction]       │
+        └───────────────────────────────────┘
+                        │
+         ┌──────────────┼──────────────┐
+         │                              │
+         ▼                              ▼
+┌─────────────────┐           ┌─────────────────┐
+│   CONCEPT A     │           │   CONCEPT B     │
+│ ────────────── │           │ ────────────── │
+│ Because of X:   │           │ Because of Y:   │
+│  • Feature 1    │           │  • Feature 1    │
+│  • Feature 2    │           │  • Feature 2    │
+└─────────────────┘           └─────────────────┘
+
+Dimensions:
+- Key differentiator box: 8.0 x 1.2 inches (centered)
+- Concept boxes: 4.5 x 3.0 inches each
+- Connectors: Arrows from key differentiator to each concept
+```
+
+### Layout C: Multiple Differentiators (2-4 key differences)
+```
+      CONCEPT A               CONCEPT B
+┌─────────────────────────────────────────────────┐
+│    ┌──────────┐    ╳    ┌──────────┐           │
+│    │  Value A │         │  Value B │  Feature 1│
+│    └──────────┘         └──────────┘           │
+├─────────────────────────────────────────────────┤
+│    ┌──────────┐    ╳    ┌──────────┐           │
+│    │  Value A │         │  Value B │  Feature 2│
+│    └──────────┘         └──────────┘           │
+├─────────────────────────────────────────────────┤
+│    ┌──────────┐    ╳    ┌──────────┐           │
+│    │  Value A │         │  Value B │  Feature 3│
+│    └──────────┘         └──────────┘           │
+└─────────────────────────────────────────────────┘
+
+Dimensions:
+- Full width: 11.0 inches
+- Each row: 1.2 inches
+- Value boxes: 3.5 x 0.8 inches
+- Feature labels on right
+```
+
+### Layout D: Three-Way Discrimination
+```
+                    ┌─────────────┐
+                    │  CONCEPT A  │
+                    │   (Blue)    │
+                    └──────┬──────┘
+                           │
+         KEY DIFF ─────────┼───────── KEY DIFF
+         (A vs B)          │          (A vs C)
+                           │
+    ┌─────────────┐        │        ┌─────────────┐
+    │  CONCEPT B  │        │        │  CONCEPT C  │
+    │   (Red)     │────────┼────────│  (Green)    │
+    └─────────────┘   KEY DIFF      └─────────────┘
+                      (B vs C)
+
+Dimensions:
+- Triangle arrangement
+- Concept boxes: 3.0 x 1.5 inches
+- Key differentiators on connecting lines
+```
+
+### Layout E: Feature Matrix (Multiple concepts, multiple features)
+```
+                    Concept A   Concept B   Concept C
+                    ─────────   ─────────   ─────────
+Feature 1          │   ✓    │     ✗     │     ✓     │
+(Key Diff) ★       │Duration│ <6 months │ ≥6 months │
+Feature 2          │  Value  │   Value   │   Value   │
+Feature 3          │  Value  │   Value   │   Value   │
+────────────────────────────────────────────────────────
+
+Dimensions:
+- Header row: Bold with concept names
+- Feature rows: Alternating light backgrounds
+- Key differentiator row: Amber highlight
+- Checkmarks/crosses for present/absent
+```
+
+---
+
+## SECTION 4: FONT SPECIFICATIONS
+
+### Text Hierarchy
+
+```
+CONCEPT HEADER:
+- Font: Aptos
+- Size: 24pt
+- Color: White
+- Style: Bold
+- Alignment: Center
+
+FEATURE LABEL:
+- Font: Aptos
+- Size: 18pt
+- Color: Black
+- Style: Bold
+- Alignment: Left
+
+FEATURE VALUE/DESCRIPTION:
+- Font: Aptos
+- Size: 18pt minimum
+- Color: Black
+- Style: Regular
+- Alignment: Left or Center
+
+KEY DIFFERENTIATOR:
+- Font: Aptos
+- Size: 20pt
+- Color: Black
+- Style: Bold + Underline (or amber background)
+- Alignment: Center
+
+VS/SEPARATOR:
+- Font: Aptos
+- Size: 28pt
+- Color: Dark Gray
+- Style: Bold
+- Text: "VS" or "≠"
+```
+
+---
+
+## SECTION 5: CHARACTER LIMITS
+
+### Per-Element Limits
+
+```
+CONCEPT HEADER:
+- Characters per line: 22
+- Maximum lines: 2
+
+FEATURE LABEL:
+- Characters per line: 18
+- Maximum lines: 1
+
+FEATURE VALUE:
+- Characters per line: 25
+- Maximum lines: 2
+
+KEY DIFFERENTIATOR VALUE:
+- Characters per line: 28
+- Maximum lines: 2
+
+DIFFERENTIATOR EXPLANATION:
+- Characters per line: 35
+- Maximum lines: 2
+```
+
+### Adaptive Sizing Rules
+
+```python
+def get_adaptive_differentiator_font(element_type, concept_count):
+    """Determine font size based on element type and complexity."""
+
+    base_sizes = {
+        'concept_header': 24,
+        'feature_label': 18,
+        'feature_value': 18,
+        'key_differentiator': 20,
+        'vs_separator': 28
+    }
+
+    base_size = base_sizes.get(element_type, 18)
+
+    # Scale down for 3+ concepts
+    if concept_count >= 3:
+        if element_type == 'concept_header':
+            base_size = 20
+        elif element_type in ['feature_value', 'key_differentiator']:
+            base_size = 18
+
+    return max(base_size, 18)
+```
+
+---
+
+## SECTION 6: CONTENT REVISION INSTRUCTIONS
+
+### How to Revise Blueprint Content for Key Differentiators
+
+1. **Identify the Concepts Being Distinguished**
+   - What two (or more) concepts are commonly confused?
+   - Are they mutually exclusive categories?
+   - Examples: "Major Depressive Disorder" vs "Persistent Depressive Disorder"
+
+2. **Identify the KEY Differentiator(s)**
+   - What is the MOST important distinguishing feature?
+   - What would definitely rule in/out one vs the other?
+   - Usually 1-2 critical differences
+   - Example: "Duration: <2 weeks vs ≥2 years"
+
+3. **List Parallel Features**
+   - What features apply to both but have different values?
+   - Frame features identically for both concepts
+   - Examples: "Onset", "Duration", "Severity", "Course"
+
+4. **Note Similarities (if helpful)**
+   - Acknowledge what's the same to highlight what differs
+   - Optional: Include a "Both have:" section
+
+5. **Select Appropriate Layout**
+   - Two concepts, 1 key diff → Layout B
+   - Two concepts, multiple features → Layout A
+   - Two concepts, multiple key diffs → Layout C
+   - Three concepts → Layout D
+   - Multiple concepts/features → Layout E
+
+### Example Revision
+
+**Original Blueprint Content:**
+"Major Depressive Disorder (MDD) and Persistent Depressive Disorder (PDD, formerly dysthymia) are both depressive disorders but differ in key ways. MDD involves severe symptoms lasting at least 2 weeks, with discrete episodes. PDD involves milder but chronic symptoms lasting at least 2 years. MDD has higher intensity but shorter duration; PDD has lower intensity but longer duration. Both involve depressed mood, but MDD requires at least 5 symptoms while PDD requires only 2."
+
+**Revised for Key Differentiators:**
+
+```
+Title: "MDD vs Persistent Depressive Disorder"
+Layout: A (Side-by-Side Comparison)
+
+Concept A: "Major Depressive Disorder (MDD)"
+Color: Blue
+
+Concept B: "Persistent Depressive Disorder (PDD)"
+Color: Red
+
+Features:
+1. Feature: "Duration Requirement"
+   A Value: "≥2 weeks"
+   B Value: "≥2 years"
+   IS_KEY: Yes ★
+
+2. Feature: "Symptom Count"
+   A Value: "≥5 of 9 symptoms"
+   B Value: "≥2 of 6 symptoms"
+   IS_KEY: No
+
+3. Feature: "Intensity"
+   A Value: "Severe (more intense)"
+   B Value: "Mild-moderate (less intense)"
+   IS_KEY: Yes ★
+
+4. Feature: "Course"
+   A Value: "Episodic (discrete episodes)"
+   B Value: "Chronic (persistent)"
+   IS_KEY: No
+```
+
+---
+
+## SECTION 7: POPULATION SPECIFICATIONS
+
+### Python Implementation Structure
+
+```python
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RgbColor
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import PP_ALIGN
+
+# Color constants
+BLUE_HEADER = RgbColor(21, 101, 192)
+RED_HEADER = RgbColor(183, 28, 28)
+GREEN_HEADER = RgbColor(27, 94, 32)  # For 3rd concept
+
+BLUE_LIGHT = RgbColor(227, 242, 253)
+RED_LIGHT = RgbColor(255, 235, 238)
+GREEN_LIGHT = RgbColor(232, 245, 233)
+
+AMBER = RgbColor(255, 193, 7)
+AMBER_LIGHT = RgbColor(255, 243, 224)
+AMBER_BORDER = RgbColor(255, 160, 0)
+
+GRAY_DARK = RgbColor(97, 97, 97)
+GRAY_MEDIUM = RgbColor(189, 189, 189)
+WHITE = RgbColor(255, 255, 255)
+BLACK = RgbColor(0, 0, 0)
+
+def create_key_differentiators_slide(prs, slide_data):
+    """
+    Create a Key Differentiators slide from structured data.
+
+    slide_data = {
+        'title': 'Slide Title',
+        'layout': 'A',  # A, B, C, D, or E
+        'concepts': [
+            {
+                'name': 'Concept A',
+                'color': 'blue'  # or 'red', 'green'
+            },
+            {
+                'name': 'Concept B',
+                'color': 'red'
+            }
+        ],
+        'features': [
+            {
+                'label': 'Duration',
+                'values': ['≥2 weeks', '≥2 years'],
+                'is_key': True
+            },
+            {
+                'label': 'Intensity',
+                'values': ['Severe', 'Mild-moderate'],
+                'is_key': False
+            }
+        ]
+    }
+    """
+    slide_layout = prs.slide_layouts[6]  # Blank
+    slide = prs.slides.add_slide(slide_layout)
+
+    add_title(slide, slide_data['title'])
+
+    layout = slide_data.get('layout', 'A')
+
+    if layout == 'A':
+        create_side_by_side(slide, slide_data)
+    elif layout == 'B':
+        create_centered_key_diff(slide, slide_data)
+    elif layout == 'C':
+        create_multiple_diffs(slide, slide_data)
+    elif layout == 'D':
+        create_three_way(slide, slide_data)
+    elif layout == 'E':
+        create_feature_matrix(slide, slide_data)
+
+    return slide
+
+def create_side_by_side(slide, data):
+    """Layout A: Side-by-side comparison with VS separator."""
+
+    concepts = data['concepts']
+    features = data['features']
+
+    # Column dimensions
+    col_width = Inches(5.5)
+    gap = Inches(1.0)
+    left_col_start = Inches(0.9)
+    right_col_start = left_col_start + col_width + gap
+
+    header_top = Inches(1.5)
+    header_height = Inches(0.8)
+
+    # Color mapping
+    color_map = {
+        'blue': (BLUE_HEADER, BLUE_LIGHT),
+        'red': (RED_HEADER, RED_LIGHT),
+        'green': (GREEN_HEADER, GREEN_LIGHT)
+    }
+
+    # Add concept headers
+    for i, concept in enumerate(concepts[:2]):
+        col_start = left_col_start if i == 0 else right_col_start
+        header_color, _ = color_map.get(concept.get('color', 'blue' if i == 0 else 'red'))
+
+        header = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            col_start, header_top, col_width, header_height
+        )
+        header.fill.solid()
+        header.fill.fore_color.rgb = header_color
+
+        tf = header.text_frame
+        tf.paragraphs[0].text = concept['name']
+        tf.paragraphs[0].font.size = Pt(24)
+        tf.paragraphs[0].font.bold = True
+        tf.paragraphs[0].font.color.rgb = WHITE
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Add VS separator
+    vs_left = left_col_start + col_width + Inches(0.15)
+    vs_top = header_top + Inches(0.1)
+    add_text_label(slide, vs_left, vs_top, gap - Inches(0.3), header_height,
+                   "VS", 28, True, GRAY_DARK)
+
+    # Add feature rows
+    row_top = header_top + header_height + Inches(0.1)
+    row_height = Inches(0.75)
+
+    for i, feature in enumerate(features):
+        is_key = feature.get('is_key', False)
+
+        for j, concept in enumerate(concepts[:2]):
+            col_start = left_col_start if j == 0 else right_col_start
+            _, bg_color = color_map.get(concept.get('color', 'blue' if j == 0 else 'red'))
+
+            # Use amber for key differentiator
+            if is_key:
+                bg_color = AMBER_LIGHT
+
+            # Feature row
+            row = slide.shapes.add_shape(
+                MSO_SHAPE.RECTANGLE,
+                col_start, row_top, col_width, row_height
+            )
+            row.fill.solid()
+            row.fill.fore_color.rgb = bg_color
+            row.line.color.rgb = GRAY_MEDIUM if not is_key else AMBER_BORDER
+            row.line.width = Pt(1) if not is_key else Pt(2)
+
+            # Value text
+            value_text = feature['values'][j] if j < len(feature['values']) else ''
+            if is_key:
+                value_text = "★ " + value_text + " ★"
+
+            tf = row.text_frame
+            tf.word_wrap = True
+
+            # Label on left side
+            if j == 0:
+                tf.paragraphs[0].text = f"{feature['label']}: {value_text}"
+            else:
+                tf.paragraphs[0].text = f"{feature['label']}: {value_text}"
+
+            tf.paragraphs[0].font.size = Pt(18)
+            tf.paragraphs[0].font.bold = is_key
+            tf.paragraphs[0].font.color.rgb = BLACK
+            tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+        # Add ≠ symbol between key differentiator rows
+        if is_key:
+            neq_left = left_col_start + col_width + Inches(0.25)
+            add_text_label(slide, neq_left, row_top, Inches(0.5), row_height,
+                          "≠", 24, True, AMBER_BORDER)
+
+        row_top += row_height + Inches(0.05)
+
+def create_centered_key_diff(slide, data):
+    """Layout B: Single key differentiator emphasized at top."""
+
+    concepts = data['concepts']
+    features = data['features']
+
+    # Find key differentiator
+    key_diff = None
+    for f in features:
+        if f.get('is_key', False):
+            key_diff = f
+            break
+
+    # Key differentiator box at top
+    key_box_width = Inches(8.0)
+    key_box_height = Inches(1.2)
+    key_box_left = (Inches(13.33) - key_box_width) / 2
+    key_box_top = Inches(1.5)
+
+    key_box = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        key_box_left, key_box_top, key_box_width, key_box_height
+    )
+    key_box.fill.solid()
+    key_box.fill.fore_color.rgb = AMBER_LIGHT
+    key_box.line.color.rgb = AMBER_BORDER
+    key_box.line.width = Pt(3)
+
+    if key_diff:
+        tf = key_box.text_frame
+        tf.paragraphs[0].text = f"KEY DIFFERENTIATOR: {key_diff['label']}"
+        tf.paragraphs[0].font.size = Pt(22)
+        tf.paragraphs[0].font.bold = True
+        tf.paragraphs[0].font.color.rgb = BLACK
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Concept boxes below
+    concept_width = Inches(4.5)
+    concept_height = Inches(3.0)
+    concept_top = key_box_top + key_box_height + Inches(0.8)
+    concept_spacing = Inches(1.5)
+
+    color_map = {
+        'blue': (BLUE_HEADER, BLUE_LIGHT),
+        'red': (RED_HEADER, RED_LIGHT)
+    }
+
+    for i, concept in enumerate(concepts[:2]):
+        if i == 0:
+            concept_left = Inches(13.33) / 2 - concept_width - concept_spacing / 2
+        else:
+            concept_left = Inches(13.33) / 2 + concept_spacing / 2
+
+        header_color, bg_color = color_map.get(concept.get('color', 'blue' if i == 0 else 'red'))
+
+        # Header
+        header = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            concept_left, concept_top, concept_width, Inches(0.6)
+        )
+        header.fill.solid()
+        header.fill.fore_color.rgb = header_color
+
+        tf = header.text_frame
+        tf.paragraphs[0].text = concept['name']
+        tf.paragraphs[0].font.size = Pt(20)
+        tf.paragraphs[0].font.bold = True
+        tf.paragraphs[0].font.color.rgb = WHITE
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+        # Body with key diff value
+        body = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            concept_left, concept_top + Inches(0.6),
+            concept_width, concept_height - Inches(0.6)
+        )
+        body.fill.solid()
+        body.fill.fore_color.rgb = bg_color
+
+        if key_diff and i < len(key_diff['values']):
+            tf = body.text_frame
+            tf.paragraphs[0].text = key_diff['values'][i]
+            tf.paragraphs[0].font.size = Pt(22)
+            tf.paragraphs[0].font.bold = True
+            tf.paragraphs[0].font.color.rgb = BLACK
+            tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+def create_feature_matrix(slide, data):
+    """Layout E: Matrix of concepts × features."""
+
+    concepts = data['concepts']
+    features = data['features']
+
+    # Table dimensions
+    table_left = Inches(0.5)
+    table_top = Inches(1.8)
+    feature_col_width = Inches(2.5)
+    concept_col_width = Inches(3.0)
+
+    num_concepts = len(concepts)
+    num_features = len(features)
+
+    table_width = feature_col_width + (concept_col_width * num_concepts)
+    row_height = Inches(0.7)
+    header_height = Inches(0.8)
+
+    # Header row
+    # Feature label column header
+    feature_header = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        table_left, table_top, feature_col_width, header_height
+    )
+    feature_header.fill.solid()
+    feature_header.fill.fore_color.rgb = GRAY_DARK
+
+    tf = feature_header.text_frame
+    tf.paragraphs[0].text = "Feature"
+    tf.paragraphs[0].font.size = Pt(18)
+    tf.paragraphs[0].font.bold = True
+    tf.paragraphs[0].font.color.rgb = WHITE
+    tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Concept column headers
+    color_list = [BLUE_HEADER, RED_HEADER, GREEN_HEADER]
+    for i, concept in enumerate(concepts[:3]):
+        header = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            table_left + feature_col_width + (i * concept_col_width),
+            table_top, concept_col_width, header_height
+        )
+        header.fill.solid()
+        header.fill.fore_color.rgb = color_list[i % len(color_list)]
+
+        tf = header.text_frame
+        tf.paragraphs[0].text = concept['name']
+        tf.paragraphs[0].font.size = Pt(18)
+        tf.paragraphs[0].font.bold = True
+        tf.paragraphs[0].font.color.rgb = WHITE
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+    # Feature rows
+    current_top = table_top + header_height
+
+    light_colors = [BLUE_LIGHT, RED_LIGHT, GREEN_LIGHT]
+
+    for f_idx, feature in enumerate(features):
+        is_key = feature.get('is_key', False)
+
+        # Feature label cell
+        label_cell = slide.shapes.add_shape(
+            MSO_SHAPE.RECTANGLE,
+            table_left, current_top, feature_col_width, row_height
+        )
+        label_cell.fill.solid()
+        label_cell.fill.fore_color.rgb = AMBER_LIGHT if is_key else GRAY_MEDIUM
+        label_cell.line.color.rgb = AMBER_BORDER if is_key else GRAY_DARK
+
+        label_text = "★ " + feature['label'] if is_key else feature['label']
+        tf = label_cell.text_frame
+        tf.paragraphs[0].text = label_text
+        tf.paragraphs[0].font.size = Pt(18)
+        tf.paragraphs[0].font.bold = True
+        tf.paragraphs[0].font.color.rgb = BLACK
+        tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+        # Value cells
+        for c_idx, concept in enumerate(concepts[:3]):
+            value_cell = slide.shapes.add_shape(
+                MSO_SHAPE.RECTANGLE,
+                table_left + feature_col_width + (c_idx * concept_col_width),
+                current_top, concept_col_width, row_height
+            )
+            value_cell.fill.solid()
+            value_cell.fill.fore_color.rgb = AMBER_LIGHT if is_key else light_colors[c_idx % len(light_colors)]
+            value_cell.line.color.rgb = AMBER_BORDER if is_key else GRAY_MEDIUM
+
+            value_text = feature['values'][c_idx] if c_idx < len(feature['values']) else ''
+            tf = value_cell.text_frame
+            tf.paragraphs[0].text = value_text
+            tf.paragraphs[0].font.size = Pt(18)
+            tf.paragraphs[0].font.bold = is_key
+            tf.paragraphs[0].font.color.rgb = BLACK
+            tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+        current_top += row_height
+
+def add_text_label(slide, left, top, width, height, text, font_size, bold, color):
+    """Add a text box with specified formatting."""
+    textbox = slide.shapes.add_textbox(left, top, width, height)
+    tf = textbox.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.text = text
+    p.font.size = Pt(font_size)
+    p.font.bold = bold
+    p.font.color.rgb = color
+    p.alignment = PP_ALIGN.CENTER
+```
+
+---
+
+## SECTION 8: NCLEX CONTENT EXAMPLES
+
+### Example 1: MDD vs PDD
+
+```
+Title: "Major Depressive Disorder vs Persistent Depressive Disorder"
+Layout: A (Side-by-Side)
+
+Concepts:
+- Name: "MDD", Color: blue
+- Name: "PDD (Dysthymia)", Color: red
+
+Features:
+1. Label: "Duration"
+   Values: ["≥2 weeks", "≥2 years"]
+   is_key: True
+
+2. Label: "Symptom Count"
+   Values: ["≥5 of 9 symptoms", "≥2 of 6 symptoms"]
+   is_key: False
+
+3. Label: "Intensity"
+   Values: ["More severe", "Less severe (chronic)"]
+   is_key: True
+
+4. Label: "Course"
+   Values: ["Episodic", "Persistent"]
+   is_key: False
+```
+
+### Example 2: Panic Disorder vs GAD
+
+```
+Title: "Panic Disorder vs Generalized Anxiety Disorder"
+Layout: B (Centered Key Differentiator)
+
+Key Differentiator: "Pattern of Anxiety"
+- Panic: "Discrete, sudden attacks"
+- GAD: "Persistent, pervasive worry"
+
+Concepts:
+- Name: "Panic Disorder", Color: blue
+- Name: "GAD", Color: red
+```
+
+### Example 3: Three Psychotic Disorders
+
+```
+Title: "Schizophrenia vs Brief Psychotic vs Schizophreniform"
+Layout: D (Three-Way)
+
+Concepts:
+- "Schizophrenia" (Blue)
+- "Brief Psychotic Disorder" (Red)
+- "Schizophreniform" (Green)
+
+Key Differentiators:
+- Schizo vs Brief: "Duration ≥6 months vs <1 month"
+- Schizo vs Schizophreniform: "Duration ≥6 mo vs 1-6 mo"
+- Brief vs Schizophreniform: "Duration <1 mo vs 1-6 mo"
+```
+
+### Example 4: Learning Paradigms
+
+```
+Title: "Classical vs Operant Conditioning"
+Layout: C (Multiple Differentiators)
+
+Features:
+1. Label: "Association Type"
+   Values: ["Stimulus-Stimulus (S-S)", "Response-Consequence (R-S)"]
+   is_key: True
+
+2. Label: "Response"
+   Values: ["Involuntary/reflexive", "Voluntary/emitted"]
+   is_key: True
+
+3. Label: "Key Researcher"
+   Values: ["Pavlov", "Skinner"]
+   is_key: False
+```
+
+---
+
+## SECTION 9: VALIDATION CHECKLIST
+
+### Before Population
+
+- [ ] Concepts are genuinely comparable/confusable
+- [ ] At least one key differentiator identified
+- [ ] Features are parallel across concepts
+- [ ] All text within character limits
+- [ ] Layout matches concept count (2 for A-C, 3 for D, 2+ for E)
+
+### After Population
+
+- [ ] Concept headers clearly distinguishable (colors)
+- [ ] Key differentiator visually emphasized (amber)
+- [ ] VS or ≠ separator visible (Layout A)
+- [ ] All text readable (minimum 18pt font)
+- [ ] Colors match specification (blue/red/amber)
+- [ ] Title is present and visible
+
+### Content Validation
+
+- [ ] Key differentiator is truly diagnostic/distinguishing
+- [ ] Feature values are accurate for each concept
+- [ ] No misleading similarities presented as differences
+- [ ] Information is clinically/scientifically accurate
+- [ ] Would help with NCLEX discrimination questions
+
+---
+
+## SECTION 10: COMMON ISSUES AND FIXES
+
+### Issue 1: No Clear Key Differentiator
+
+**Problem:** All features seem equally important
+
+**Solution:**
+- Identify what would definitively rule in/out each concept
+- Ask: "If I only knew ONE thing, which would tell me which it is?"
+- Consider using Table instead if no single key feature exists
+
+### Issue 2: Features Not Parallel
+
+**Problem:** Feature labels don't apply to both concepts
+
+**Solution:**
+- Reframe features to apply universally
+- "Duration" applies to both; "Only in X" is not parallel
+- Use "Present/Absent" or specific values for each
+
+### Issue 3: Too Many Key Differentiators
+
+**Problem:** 4+ features marked as key
+
+**Solution:**
+- Limit to 1-2 most critical differentiators
+- Others are important but not "key"
+- Use Layout C if 2-4 key differences truly exist
+
+### Issue 4: Colors Too Similar
+
+**Problem:** Can't distinguish concepts visually
+
+**Solution:**
+- Use specified blue/red contrast
+- For 3 concepts, add green
+- Ensure headers are clearly different colors
+
+### Issue 5: Key Differentiator Lost Visually
+
+**Problem:** Amber highlighting not visible
+
+**Solution:**
+```python
+def ensure_key_diff_visibility():
+    # Add ★ symbols to text
+    # Increase border weight to 2-3pt
+    # Use orange border, not just fill
+    pass
+```
+
+---
+
+## SECTION 11: INTEGRATION WITH PIPELINE
+
+### Blueprint Identification Markers
+
+When generating blueprints in Step 6, mark slides for Key Differentiators treatment:
+
+```
+[VISUAL: KEY_DIFFERENTIATORS]
+Type: [Differential/Discrimination/Comparison]
+Concepts: [number of concepts]
+Key Differentiator(s): [list the 1-2 key distinguishing features]
+Layout Recommendation: [A/B/C/D/E]
+```
+
+### Pipeline Config Entry
+
+Add to pipeline_config.json:
+
+```json
+"key_differentiators_settings": {
+  "reference_doc": "step12_key_differentiators_generation.txt",
+  "template": "visual aid and graphic organizer template.pptx",
+  "font_name": "Aptos",
+  "min_font_size_pt": 18,
+  "max_concepts": 4,
+  "max_features": 6,
+  "colors": {
+    "concept_1_header_rgb": [21, 101, 192],
+    "concept_1_light_rgb": [227, 242, 253],
+    "concept_2_header_rgb": [183, 28, 28],
+    "concept_2_light_rgb": [255, 235, 238],
+    "concept_3_header_rgb": [27, 94, 32],
+    "concept_3_light_rgb": [232, 245, 233],
+    "key_diff_rgb": [255, 193, 7],
+    "key_diff_light_rgb": [255, 243, 224],
+    "key_diff_border_rgb": [255, 160, 0],
+    "separator_rgb": [97, 97, 97]
+  },
+  "layouts": {
+    "A": "Side-by-Side Comparison (2 concepts, 3-5 features)",
+    "B": "Centered Key Differentiator (focus on single difference)",
+    "C": "Multiple Differentiators (2-4 key differences)",
+    "D": "Three-Way Discrimination",
+    "E": "Feature Matrix (multiple concepts/features)"
+  }
+}
+```
+
+---
+
+## SECTION 12: NCLEX DISCRIMINATION STRATEGY
+
+### High-Yield Discrimination Topics for NCLEX
+
+Key Differentiators are especially valuable for these commonly tested distinctions:
+
+**Mood Disorders:**
+- MDD vs Bipolar I vs Bipolar II
+- MDD vs PDD (Dysthymia)
+- Grief vs MDD
+
+**Anxiety Disorders:**
+- Panic Disorder vs GAD
+- Social Anxiety vs Agoraphobia
+- Specific Phobia types
+
+**Psychotic Disorders:**
+- Schizophrenia vs Brief Psychotic vs Schizophreniform
+- Schizophrenia vs Schizoaffective
+- Schizophrenia vs Delusional Disorder
+
+**Personality Disorders:**
+- Cluster A vs B vs C
+- Borderline vs Bipolar
+- Antisocial vs Narcissistic
+
+**Child Disorders:**
+- ADHD vs Conduct Disorder
+- Autism vs Intellectual Disability
+- Specific Learning Disorders
+
+**Treatment Approaches:**
+- CBT vs DBT vs ACT
+- Classical vs Operant Conditioning
+- Positive vs Negative Reinforcement
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population  ← KEY DIFFERENTIATORS GENERATION HERE
+    ↓
+[PRODUCTION COMPLETE]
+```

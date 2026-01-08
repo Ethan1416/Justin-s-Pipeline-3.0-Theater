@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "notes_output.schema.json",
+  "title": "Presenter Notes Writer Output Schema",
+  "description": "Schema for presenter_notes_writer agent output - generated verbatim presenter notes",
+  "type": "object",
+  "required": ["metadata", "presenter_notes", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "slide_number", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "presenter_notes_writer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count", "estimated_seconds"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The verbatim presenter notes monologue"
+        },
+        "word_count": {
+          "type": "integer"
+        },
+        "estimated_seconds": {
+          "type": "integer",
+          "description": "Estimated speaking time at 150 words/minute"
+        },
+        "markers": {
+          "type": "object",
+          "properties": {
+            "pause_count": {
+              "type": "integer",
+              "description": "Number of [PAUSE] markers"
+            },
+            "emphasis_count": {
+              "type": "integer",
+              "description": "Number of emphasis markers"
+            },
+            "transition_present": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "within_word_limit": { "type": "boolean" },
+            "within_time_limit": { "type": "boolean" },
+            "has_pause_markers": { "type": "boolean" },
+            "has_emphasis_markers": { "type": "boolean" },
+            "has_transition": { "type": "boolean" },
+            "is_verbatim_ready": { "type": "boolean" }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

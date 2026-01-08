@@ -1,0 +1,123 @@
+# Theater Template Configuration
+# Single source of truth for Theater PowerPoint template
+# Last Updated: 2026-01-08
+
+template:
+  name: "Theater Template"
+  file: "templates/template_theater.pptx"
+  version: "1.0"
+  description: "Theater-specific template with dedicated tip banner for all lecture slides"
+
+# Slide Dimensions (16:9 widescreen)
+dimensions:
+  width_inches: 13.33
+  height_inches: 7.50
+  width_emu: 12191695
+  height_emu: 6858000
+
+# Shape Mappings - Maps logical names to actual shape names in template
+# These are the shapes that will be populated with content
+shapes:
+  title:
+    name: "TextBox 6"
+    purpose: "Slide title/header"
+    placeholder_text: "Slide Title"
+
+  body:
+    name: "TextBox Body"
+    purpose: "Unified body content area with word wrapping"
+    placeholder_text: "Body content with natural text wrapping..."
+    word_wrap: true
+    auto_size: none  # Don't shrink text - let it wrap naturally
+
+  performance_tip_label:
+    name: "TextBox 20"
+    purpose: "PERFORMANCE TIP label (static - do not modify)"
+    placeholder_text: "PERFORMANCE TIP"
+    static: true
+
+  performance_tip:
+    name: "TextBox 24"
+    purpose: "Performance tip content"
+    placeholder_text: "Remember: Focus on breath support when projecting..."
+
+  footer:
+    name: "TextBox 30"
+    purpose: "Copyright and footer"
+    placeholder_text: "2026 Adaptive Academic Learning Solutions Inc"
+
+# Required shapes for validation
+required_shapes:
+  - "TextBox 6"     # title
+  - "TextBox Body"  # unified body (replaced TextBox 12, 13, 14)
+  - "TextBox 20"    # performance_tip_label
+  - "TextBox 24"    # performance_tip
+  - "TextBox 30"    # footer
+
+# Shape name mappings for programmatic access
+shape_mappings:
+  "TextBox 6": "title"
+  "TextBox Body": "body"  # Single unified body shape
+  "TextBox 20": "performance_tip_label"
+  "TextBox 24": "performance_tip"
+  "TextBox 30": "footer"
+
+# Text Limits (from constraints.yaml)
+text_limits:
+  title:
+    max_chars_per_line: 36
+    max_lines: 1
+  body:
+    max_lines: 12
+    word_wrap: true
+    # No chars_per_line - PowerPoint handles wrapping
+    note: "Single unified TextBox Body with word wrapping enabled"
+  performance_tip:
+    max_chars: 132
+    shape: "TextBox 24"
+    note: "Dedicated tip shape - not appended to body"
+  footer:
+    max_chars: 60
+
+# Performance Tip Integration
+# This template has a DEDICATED tip shape (TextBox 24)
+performance_tip_format:
+  enabled: true
+  position: "dedicated_shape"
+  shape: "TextBox 24"
+  label_shape: "TextBox 20"
+  style:
+    prefix: ""  # No prefix needed, label is in separate shape
+    max_chars: 132
+
+# Font Settings (for validation)
+fonts:
+  default_family: "inherit"
+  note: "Font settings are inherited from template - do not override programmatically"
+
+# Slide Layouts Available
+slide_layouts:
+  0: "Title Slide"
+  1: "Title and Content"
+  2: "Section Header"
+  3: "Two Content"
+  4: "Comparison"
+  5: "Title Only"
+  6: "Blank"
+
+# Recommended layout for theater slides
+default_layout_index: 6  # Blank - we populate shapes directly
+
+# Decorative elements (do not modify)
+decorative:
+  - "Rounded Rectangle 1"   # Background decorations
+  - "Rounded Rectangle 2"
+  - "Rounded Rectangle 3"
+  - "Oval 4"
+  - "TextBox 5"             # Plus symbol
+  - "Rectangle 7-11"        # Header/accent elements
+  - "Rounded Rectangle 10"
+  - "Rounded Rectangle 15-19"  # Tip banner decorations
+  - "Oval 21-28"            # Visual elements
+  - "Rectangle 29"          # Footer background
+  - "TextBox 23"            # Lightbulb emoji

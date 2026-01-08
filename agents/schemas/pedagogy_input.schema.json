@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pedagogy_input.schema.json",
+  "title": "Pedagogy Checker Input Schema",
+  "description": "Schema for pedagogy_checker agent input - validates learning objectives and pedagogical soundness",
+  "type": "object",
+  "required": ["metadata", "blueprint", "pedagogy_standards"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "pedagogy_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "blueprint": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_for_pedagogy"
+          }
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_number": { "type": "integer" },
+              "anchor_summary": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "pedagogy_standards": {
+      "type": "object",
+      "properties": {
+        "bloom_taxonomy_levels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"]
+          },
+          "description": "Required Bloom's taxonomy levels to address"
+        },
+        "learning_principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Learning principles to verify (e.g., scaffolding, repetition, application)"
+        },
+        "require_clinical_connection": {
+          "type": "boolean",
+          "default": true
+        },
+        "require_nclex_relevance": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_for_pedagogy": {
+      "type": "object",
+      "properties": {
+        "slide_number": { "type": "integer" },
+        "slide_type": { "type": "string" },
+        "header": { "type": "string" },
+        "body": { "type": "string" },
+        "tip": { "type": "string" },
+        "presenter_notes": { "type": "string" },
+        "anchors_covered": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

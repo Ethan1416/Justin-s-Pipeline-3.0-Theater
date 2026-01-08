@@ -1,0 +1,89 @@
+# Theater Brand Configuration
+# Simplified structure without domain system
+
+brand:
+  name: "Theater"
+  display_name: "Theater Education"
+  domain: "performing_arts"
+
+# Content focus areas (no domain categorization)
+content:
+  type: "theater_lectures"
+
+  # Topic suggestions (not enforced categorization)
+  suggested_topics:
+    - "Acting Techniques"
+    - "Stagecraft"
+    - "Directing"
+    - "Theater History"
+    - "Script Analysis"
+    - "Voice and Movement"
+    - "Costume and Makeup"
+    - "Lighting Design"
+    - "Sound Design"
+    - "Stage Management"
+    - "Playwriting"
+    - "Musical Theater"
+
+# Visual preferences for theater content
+visuals:
+  preferred_types:
+    processes: "FLOWCHART"
+    decisions: "DECISION_TREE"
+    comparisons: "TABLE"
+    historical: "TIMELINE"
+    organizations: "HIERARCHY"
+    ranges: "SPECTRUM"
+    differences: "KEY_DIFFERENTIATORS"
+
+  # Single color theme (no domain-based coloring)
+  color_theme:
+    primary_rgb: [139, 0, 0]       # Dark Red (theater curtain)
+    secondary_rgb: [255, 245, 238] # Seashell (stage light warm)
+    accent_rgb: [218, 165, 32]     # Goldenrod (spotlight)
+
+# Teaching approach for theater
+teaching:
+  style: "performance_focused"
+  emphasis:
+    - "Practical application"
+    - "Performance technique"
+    - "Creative expression"
+    - "Collaboration skills"
+    - "Artistic interpretation"
+
+  # Common discussion points
+  discussion_patterns:
+    - "How would you approach this scene?"
+    - "What choices does the director have here?"
+    - "How does this technique serve the story?"
+    - "What is the character's motivation?"
+    - "How do the technical elements support the performance?"
+
+  # Key concepts to emphasize
+  concept_focus:
+    - "Character development"
+    - "Blocking and staging"
+    - "Vocal projection"
+    - "Emotional truth"
+    - "Ensemble work"
+
+# Presenter notes style
+presenter_notes:
+  style: "theater_instructor"
+  include:
+    - "Performance tip"
+    - "Common mistakes to avoid"
+    - "Historical context"
+    - "Practical exercises"
+  max_words: 450
+  speaking_rate_wpm: 150
+
+# Slide tips
+tips:
+  prefix: "PERFORMANCE TIP:"
+  focus:
+    - "Practical technique"
+    - "Performance strategy"
+    - "Common pitfalls"
+    - "Professional practice"

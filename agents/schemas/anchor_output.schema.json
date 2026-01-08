@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "anchor_output.schema.json",
+  "title": "Step 1 Anchor Upload Output Schema",
+  "description": "Schema for Step 1 output - confirmation of anchor document upload and initial processing",
+  "type": "object",
+  "required": ["metadata", "anchor_summary", "validation", "next_step"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "date", "domain_name"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 1: Anchor Upload"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Extracted domain name from uploaded document"
+        },
+        "source_file": {
+          "type": "string",
+          "description": "Original uploaded file name or identifier"
+        }
+      }
+    },
+    "anchor_summary": {
+      "type": "object",
+      "required": ["total_anchors"],
+      "properties": {
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total number of anchor points in the document"
+        },
+        "anchor_range": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "last": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "format_validation": {
+          "type": "string",
+          "enum": ["VALID", "VALID_WITH_WARNINGS", "INVALID"],
+          "description": "Whether the anchor format meets expected structure"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Any format warnings detected during upload"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checks"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "domain_identified": {
+              "type": "boolean",
+              "description": "Domain name was successfully extracted"
+            },
+            "anchors_numbered": {
+              "type": "boolean",
+              "description": "Anchors follow sequential numbering"
+            },
+            "minimum_anchors_met": {
+              "type": "boolean",
+              "description": "Document has at least 1 anchor"
+            },
+            "format_parseable": {
+              "type": "boolean",
+              "description": "Document structure could be parsed"
+            }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "next_step": {
+      "type": "object",
+      "required": ["step_number", "step_name", "prompt"],
+      "properties": {
+        "step_number": {
+          "type": "integer",
+          "const": 2
+        },
+        "step_name": {
+          "type": "string",
+          "const": "Lecture Mapping"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Suggested prompt to initiate Step 2"
+        }
+      }
+    }
+  }
+}

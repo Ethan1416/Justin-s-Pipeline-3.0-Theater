@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "constraint_input.schema.json",
+  "title": "Constraint Validator Input Schema",
+  "description": "Schema for constraint_validator agent input - validates character and line limits on blueprint content",
+  "type": "object",
+  "required": ["metadata", "content", "constraints"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "constraint_validator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "source_file": {
+          "type": "string",
+          "description": "Path to the blueprint file being validated"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_content"
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["header", "body", "tip", "notes"],
+      "properties": {
+        "header": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 32 },
+            "max_lines": { "type": "integer", "default": 2 }
+          }
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 66 },
+            "max_lines": { "type": "integer", "default": 8 }
+          }
+        },
+        "tip": {
+          "type": "object",
+          "properties": {
+            "max_chars_per_line": { "type": "integer", "default": 66 },
+            "max_lines": { "type": "integer", "default": 2 }
+          }
+        },
+        "notes": {
+          "type": "object",
+          "properties": {
+            "max_words": { "type": "integer", "default": 450 },
+            "max_seconds": { "type": "integer", "default": 180 }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_content": {
+      "type": "object",
+      "required": ["slide_number"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string"
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tip": {
+          "type": "string"
+        },
+        "presenter_notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

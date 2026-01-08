@@ -1,0 +1,440 @@
+================================================================================
+GRAPHIC ORGANIZER VISUAL SPECIFICATIONS
+Pipeline Part 2 - Lecture Enhancement
+================================================================================
+
+GLOBAL SETTINGS
+--------------------------------------------------------------------------------
+Font Family: Calibri
+Text Color: RGB(0, 0, 0) - Black
+Minimum Font Size: 18pt
+Title Font Size: 24pt (Bold)
+Header Font Size: 20pt (Bold)
+Body Font Size: 18pt
+3D Effects: Enabled on all shapes
+Shadow: Applied to all graphic elements
+Content Area: Position within white rectangle (0.54", 0.72", 12.26" x 6.52")
+
+COLOR PALETTE (from template)
+--------------------------------------------------------------------------------
+Accent Red: RGB(220, 38, 38) - DC2626
+Dark Header: RGB(26, 26, 26) - 1A1A1A
+Light Gray BG: RGB(245, 245, 245) - F5F5F5
+White Content: RGB(255, 255, 255) - FFFFFF
+Medium Gray: RGB(128, 128, 128) - 808080
+Light Blue: RGB(96, 165, 250) - 60A5FA
+Light Green: RGB(74, 222, 128) - 4ADE80
+Light Yellow: RGB(250, 204, 21) - FACC15
+
+
+================================================================================
+1. TABLE SPECIFICATIONS
+================================================================================
+Priority: HIGHEST - Most versatile visual type
+
+STRUCTURE
+--------------------------------------------------------------------------------
+- Border Style: Solid, 2pt, RGB(128, 128, 128)
+- Cell Padding: 0.1" all sides
+- Minimum Column Width: 1.5"
+- Text Alignment: Left (default), Center (headers)
+
+HEADER ROW
+--------------------------------------------------------------------------------
+- Fill: Gradient (Dark Header RGB(26,26,26) → Medium Gray RGB(64,64,64))
+- Text Color: RGB(255, 255, 255) - White (EXCEPTION to global black)
+- Font: 20pt Bold
+- Alignment: Center
+- 3D Effect: Bevel (Soft Round, 6pt depth)
+- Shadow: Offset Shadow (0.05" right, 0.05" down, 50% transparency)
+
+DATA ROWS
+--------------------------------------------------------------------------------
+- Fill: White RGB(255, 255, 255) with subtle gradient
+- Alternating Row Fill: Very light gray RGB(250, 250, 250) for readability
+- Text Color: Black RGB(0, 0, 0)
+- Font: 18pt Regular
+- Alignment: Left
+- Cell 3D Effect: Soft Bevel (3pt depth)
+- Row Height: Auto-adjust to fit 18pt text with padding
+
+TABLE SHADOW
+--------------------------------------------------------------------------------
+- Drop Shadow: 0.08" right, 0.08" down, 40% transparency
+- Blur: 0.05"
+
+COMPARISON TABLE VARIANT
+--------------------------------------------------------------------------------
+- Column 1 (Item names): Light blue fill RGB(224, 242, 254)
+- Remaining columns: Standard data row fill
+- Bold first column text
+
+
+================================================================================
+2. FLOWCHART SPECIFICATIONS
+================================================================================
+Used for: Sequential processes, mechanisms, protocols
+
+BOX SHAPE
+--------------------------------------------------------------------------------
+- Shape: Rounded Rectangle (corner radius 0.15")
+- Size: 2.5" width x 1.0" height (adjust height for text)
+- Fill: Gradient (Light Blue RGB(191, 219, 254) → RGB(147, 197, 253))
+- Border: 2.5pt solid, RGB(59, 130, 246)
+- 3D Effect: Bevel (Soft Round, 8pt depth)
+- Shadow: Perspective shadow (0.1" right, 0.1" down, 60% transparency, 0.08" blur)
+
+TEXT
+--------------------------------------------------------------------------------
+- Font: 18pt Black, Centered
+- Vertical Alignment: Middle
+- Text Wrapping: Enabled
+- Margins: 0.15" all sides
+
+CONNECTORS (ARROWS)
+--------------------------------------------------------------------------------
+- Style: Straight connector with arrow
+- Line Weight: 3pt
+- Line Color: RGB(30, 64, 175) - Dark Blue
+- Arrow Head: Filled triangle, 12pt
+- 3D Effect: Slight bevel on arrow (3pt)
+- Shadow: Subtle line shadow (2pt offset, 30% transparency)
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Orientation: Top-to-bottom (vertical flow)
+- Spacing: 0.4" vertical gap between boxes
+- Horizontal Centering: All boxes centered in content area
+- Start Position: 1.5" from top of content area
+
+
+================================================================================
+3. DECISION TREE SPECIFICATIONS
+================================================================================
+Used for: Diagnostic decisions, classification, algorithms
+
+DECISION NODES (DIAMONDS)
+--------------------------------------------------------------------------------
+- Shape: Diamond (rotated square)
+- Size: 2.8" width x 1.8" height
+- Fill: Gradient (Light Yellow RGB(254, 249, 195) → RGB(253, 224, 71))
+- Border: 2.5pt solid, RGB(234, 179, 8)
+- 3D Effect: Bevel (Angle, 10pt depth)
+- Shadow: Drop shadow (0.12" right, 0.12" down, 50% transparency, 0.1" blur)
+- Text: 18pt Black, Centered, Bold
+
+OUTCOME NODES (RECTANGLES)
+--------------------------------------------------------------------------------
+- Shape: Rectangle with soft corners (0.1" radius)
+- Size: 2.2" width x 0.8" height
+- Fill: Gradient (Light Green RGB(220, 252, 231) → RGB(134, 239, 172))
+- Border: 2.5pt solid, RGB(34, 197, 94)
+- 3D Effect: Bevel (Soft Round, 6pt depth)
+- Shadow: Drop shadow (0.08" right, 0.08" down, 40% transparency)
+- Text: 18pt Black, Centered
+
+CONNECTOR LABELS (YES/NO)
+--------------------------------------------------------------------------------
+- Background: Small rounded rectangle RGB(255, 255, 255)
+- Border: 1.5pt solid RGB(128, 128, 128)
+- Text: 18pt Black, Bold
+- Position: On connector line (not floating)
+- 3D Effect: Subtle emboss (2pt)
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Root node: Top center
+- Horizontal spacing between branches: 3.0" minimum
+- Vertical spacing: 1.0" between levels
+- Maximum depth: 3 levels (to fit in content area)
+
+
+================================================================================
+4. HIERARCHY DIAGRAM SPECIFICATIONS
+================================================================================
+Used for: Classifications, taxonomies, organizational structures (3+ levels)
+
+LEVEL 1 (TOP/PARENT) BOXES
+--------------------------------------------------------------------------------
+- Shape: Rectangle with rounded corners (0.12" radius)
+- Size: 3.5" width x 0.9" height
+- Fill: Gradient (Accent Red RGB(220, 38, 38) → RGB(185, 28, 28))
+- Border: 3pt solid RGB(153, 27, 27)
+- Text Color: RGB(255, 255, 255) - White (EXCEPTION)
+- Font: 20pt Bold, Centered
+- 3D Effect: Bevel (Angle, 12pt depth)
+- Shadow: Strong drop shadow (0.15" right, 0.15" down, 60% transparency, 0.12" blur)
+
+LEVEL 2 (CHILD) BOXES
+--------------------------------------------------------------------------------
+- Shape: Rectangle with rounded corners (0.1" radius)
+- Size: 2.5" width x 0.75" height
+- Fill: Gradient (Medium Gray RGB(156, 163, 175) → RGB(107, 114, 128))
+- Border: 2.5pt solid RGB(75, 85, 99)
+- Text Color: RGB(255, 255, 255) - White (EXCEPTION)
+- Font: 18pt Bold, Centered
+- 3D Effect: Bevel (Soft Round, 8pt depth)
+- Shadow: Drop shadow (0.1" right, 0.1" down, 50% transparency, 0.08" blur)
+
+LEVEL 3+ (GRANDCHILD) BOXES
+--------------------------------------------------------------------------------
+- Shape: Rectangle with soft corners (0.08" radius)
+- Size: 2.0" width x 0.65" height
+- Fill: Gradient (Light Blue RGB(191, 219, 254) → RGB(147, 197, 253))
+- Border: 2pt solid RGB(59, 130, 246)
+- Text Color: RGB(0, 0, 0) - Black
+- Font: 18pt Regular, Centered
+- 3D Effect: Bevel (Soft Round, 6pt depth)
+- Shadow: Drop shadow (0.08" right, 0.08" down, 40% transparency)
+
+CONNECTING LINES
+--------------------------------------------------------------------------------
+- Style: Elbow connector (straight lines with angles)
+- Line Weight: 2.5pt
+- Line Color: RGB(100, 100, 100)
+- 3D Effect: Slight shadow on lines (1pt offset)
+- Line Style: Solid
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Vertical spacing between levels: 1.2"
+- Horizontal spacing between siblings: 0.5" minimum
+- Parent-child connectors: From bottom center of parent to top center of child
+- Centering: Each level centered under parent
+
+
+================================================================================
+5. TIMELINE SPECIFICATIONS
+================================================================================
+Used for: Chronological events, developmental stages, historical progression
+
+TIMELINE BAR
+--------------------------------------------------------------------------------
+- Shape: Rounded rectangle (0.15" corner radius)
+- Size: 10.5" width x 0.3" height
+- Fill: Gradient (Medium Gray RGB(156, 163, 175) → RGB(107, 114, 128))
+- Border: 2pt solid RGB(75, 85, 99)
+- Position: Horizontal, centered in content area
+- 3D Effect: Bevel (Soft Round, 6pt depth)
+- Shadow: Drop shadow (0.1" right, 0.08" down, 50% transparency, 0.08" blur)
+
+MILESTONE MARKERS
+--------------------------------------------------------------------------------
+- Shape: Circle (3D sphere effect)
+- Size: 0.5" diameter
+- Fill: Gradient radial (Accent Red RGB(220, 38, 38) center → RGB(185, 28, 28) edge)
+- Border: 2.5pt solid RGB(153, 27, 27)
+- Position: Centered on timeline bar
+- 3D Effect: Preset "3D Style 1" (sphere with lighting)
+- Shadow: Glow effect RGB(220, 38, 38) 0.08" soft edge
+
+EVENT BOXES (above/below timeline)
+--------------------------------------------------------------------------------
+- Shape: Rectangle with rounded corners (0.1" radius)
+- Size: 1.8" width x auto-height (fit text)
+- Fill: White RGB(255, 255, 255) with subtle gradient to RGB(250, 250, 250)
+- Border: 2pt solid RGB(128, 128, 128)
+- Text: 18pt Black, Centered, Bold (event name on top), Regular (description below)
+- 3D Effect: Bevel (Soft Round, 4pt depth)
+- Shadow: Drop shadow (0.06" right, 0.06" down, 40% transparency)
+
+DATE/AGE LABELS (on timeline)
+--------------------------------------------------------------------------------
+- Text: 18pt Black, Bold
+- Position: Inside or just above milestone markers
+- Background: Small white rounded rectangle (if needed for contrast)
+- 3D Effect: Emboss (2pt)
+
+CONNECTOR LINES (marker to event box)
+--------------------------------------------------------------------------------
+- Style: Straight line
+- Weight: 1.5pt
+- Color: RGB(150, 150, 150)
+- Arrow: Small arrow pointing to event box
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Timeline bar: Centered vertically in content area
+- Alternating event boxes: Above timeline, below timeline (for spacing)
+- Spacing: Events evenly distributed along timeline
+- Margins: 1" from left/right edges of content area
+
+
+================================================================================
+6. SPECTRUM SPECIFICATIONS
+================================================================================
+Used for: Continuums, severity scales, gradients, bipolar dimensions
+
+SPECTRUM BAR
+--------------------------------------------------------------------------------
+- Shape: Rounded rectangle (0.2" corner radius)
+- Size: 10.0" width x 1.2" height
+- Fill: Horizontal gradient with 3 stops:
+  * Left: Light Blue RGB(191, 219, 254)
+  * Center: Light Yellow RGB(254, 249, 195)
+  * Right: Light Red RGB(254, 202, 202)
+- Border: 3pt solid RGB(100, 100, 100)
+- 3D Effect: Bevel (Soft Round, 10pt depth) + Inner Shadow
+- Shadow: Drop shadow (0.12" right, 0.12" down, 50% transparency, 0.1" blur)
+- Position: Centered horizontally in content area
+
+SEGMENT DIVIDERS (if discrete categories)
+--------------------------------------------------------------------------------
+- Lines: Vertical, 2pt, RGB(80, 80, 80)
+- Style: Dashed or solid
+- Height: Full height of spectrum bar
+- Labels: Below each segment
+
+ENDPOINT MARKERS
+--------------------------------------------------------------------------------
+- Shape: Triangle (arrow) pointing outward from bar ends
+- Size: 0.4" width x 0.5" height
+- Fill: Solid color matching bar endpoint color
+- Border: 2pt solid RGB(60, 60, 60)
+- 3D Effect: Bevel (Angle, 6pt depth)
+- Shadow: Small drop shadow
+
+ENDPOINT LABELS
+--------------------------------------------------------------------------------
+- Text: 20pt Black, Bold
+- Position: Outside bar, aligned with endpoints
+- Background: White rounded rectangle (0.08" radius)
+- Border: 2pt solid RGB(128, 128, 128)
+- 3D Effect: Soft bevel (3pt)
+
+INTERMEDIATE LABELS (severity levels, stages)
+--------------------------------------------------------------------------------
+- Text: 18pt Black, Bold
+- Position: Below bar, aligned with position on spectrum
+- Connector: Short line from spectrum to label (1pt, dashed)
+- Background: Optional white box if text overlaps
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Spectrum bar: Centered both horizontally and vertically
+- Endpoint labels: Outside bar with 0.3" margin
+- Intermediate labels: 0.4" below bar
+- Title: Above spectrum by 0.5"
+
+
+================================================================================
+7. KEY DIFFERENTIATORS SPECIFICATIONS
+================================================================================
+Used for: High-yield distinctions, differential diagnosis, commonly confused concepts
+Priority: HIGH (second only to TABLE)
+
+LAYOUT STRUCTURE
+--------------------------------------------------------------------------------
+- Style: Side-by-side comparison boxes with center divider
+- Boxes: 2 or 3 comparison items maximum (for readability)
+
+ITEM BOXES
+--------------------------------------------------------------------------------
+- Shape: Rectangle with rounded corners (0.12" radius)
+- Size: 4.0" width x 4.5" height (adjust based on content)
+- Fill: Gradient vertical:
+  * Item 1: Light Blue (RGB(224, 242, 254) → RGB(186, 230, 253))
+  * Item 2: Light Green (RGB(220, 252, 231) → RGB(187, 247, 208))
+  * Item 3 (if needed): Light Yellow (RGB(254, 249, 195) → RGB(253, 230, 138))
+- Border: 3pt solid (matching darker shade of fill color)
+- 3D Effect: Bevel (Soft Round, 10pt depth)
+- Shadow: Strong drop shadow (0.15" right, 0.15" down, 60% transparency, 0.12" blur)
+
+ITEM TITLE (within box)
+--------------------------------------------------------------------------------
+- Background: Darker shade bar at top of box
+  * Item 1: RGB(59, 130, 246) - Blue
+  * Item 2: RGB(34, 197, 94) - Green
+  * Item 3: RGB(234, 179, 8) - Yellow
+- Text: 20pt White, Bold, Centered
+- Height: 0.6"
+- 3D Effect: Emboss (4pt)
+
+ITEM CONTENT (within box)
+--------------------------------------------------------------------------------
+- Text: 18pt Black, Left-aligned
+- Padding: 0.2" all sides
+- Line Spacing: 1.2x
+- Bullet style: Simple dots (black, 12pt)
+
+KEY DIFFERENCE CALLOUT (highlighted feature)
+--------------------------------------------------------------------------------
+- Background: Accent Red rounded rectangle RGB(220, 38, 38)
+- Text: 18pt White, Bold
+- Icon: Star or exclamation icon (optional)
+- Position: Bottom of each item box OR in center divider pointing to relevant box
+- 3D Effect: Strong bevel (8pt depth)
+- Shadow: Strong glow RGB(220, 38, 38) 0.1" soft edge
+
+CENTER DIVIDER ELEMENT
+--------------------------------------------------------------------------------
+- Shape: Vertical line with "VS." or "⟺" symbol in center
+- Line: 4pt solid RGB(100, 100, 100)
+- Symbol: Circle with 3D effect containing "VS."
+  * Circle: 1.0" diameter
+  * Fill: White with gradient to light gray
+  * Border: 3pt solid RGB(100, 100, 100)
+  * Text: 24pt Black, Bold
+  * 3D Effect: Bevel (Soft Round, 8pt depth)
+  * Shadow: Drop shadow (0.1" offset, 50% transparency)
+
+LAYOUT
+--------------------------------------------------------------------------------
+- Spacing between item boxes: 0.8" (room for divider)
+- Vertical centering: Boxes centered in content area
+- Horizontal: Evenly distributed with divider in center
+- Title positioning: 0.3" from top of content area (if overall title needed)
+
+
+================================================================================
+IMPLEMENTATION NOTES
+================================================================================
+
+CONTENT AREA BOUNDARIES
+--------------------------------------------------------------------------------
+All graphic organizers must fit within white content rectangle:
+- Left: 0.54"
+- Top: 0.72"
+- Width: 12.26"
+- Height: 6.52"
+- Margins: 0.3" from edges (usable area: 11.66" x 5.92")
+
+TITLE HANDLING
+--------------------------------------------------------------------------------
+- Original slide title: Move to template header TextBox 2
+- Shorten to ≤28 characters if needed
+- Title font: 24pt Bold White (in dark header area)
+
+TEXT OVERFLOW HANDLING
+--------------------------------------------------------------------------------
+- If text exceeds shape bounds: Reduce font to 16pt minimum
+- If still overflowing: Expand shape height (not width)
+- Maintain minimum 18pt for final output
+
+TIER BADGE
+--------------------------------------------------------------------------------
+- Keep original "TIER 1" badge from template (or update based on section)
+- Position: Top-right (11.49", 0.13")
+
+SHADOW RENDERING
+--------------------------------------------------------------------------------
+- Use PowerPoint's built-in shadow presets where possible
+- Outer shadows: For depth and separation
+- Inner shadows: For recessed effects (spectrum bar)
+- Glow: For emphasis (timeline markers, key differentiators)
+
+3D BEVEL TYPES
+--------------------------------------------------------------------------------
+- Soft Round: Gentle, professional (most common)
+- Angle: Sharp, modern (hierarchy top level, decision diamonds)
+- Emboss: Subtle raised effect (labels, small elements)
+
+COLOR ACCESSIBILITY
+--------------------------------------------------------------------------------
+- All color combinations must maintain 4.5:1 contrast ratio minimum
+- Black text on light backgrounds (always)
+- White text only on dark backgrounds (headers, some hierarchy boxes)
+
+================================================================================
+END OF SPECIFICATIONS
+================================================================================

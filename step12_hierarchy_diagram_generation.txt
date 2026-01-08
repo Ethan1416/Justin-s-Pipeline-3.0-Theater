@@ -1,0 +1,785 @@
+# STEP 12: HIERARCHY DIAGRAM GENERATION
+## PowerPoint Hierarchy Diagram Visual Aid Specifications
+## NCLEX Lecture Pipeline
+
+---
+
+## PURPOSE
+
+This document specifies how to generate hierarchy diagram visual aids for NCLEX lecture slides. Hierarchy diagrams visualize organizational structures, classification systems, taxonomies, and parent-child relationships where levels of organization matter.
+
+---
+
+## SECTION 1: IDENTIFICATION CONDITIONS
+
+### When to Use a Hierarchy Diagram
+
+A slide should use a hierarchy diagram when the blueprint content contains:
+
+1. **Classification Systems**: Taxonomies with levels
+   - Keywords: "types of", "categories", "classified as", "subtypes"
+   - Example: "Types of memory: Sensory → Short-term → Long-term (Explicit/Implicit)"
+
+2. **Organizational Structures**: Nested categories or hierarchies
+   - Keywords: "includes", "comprises", "consists of", "subdivided into"
+   - Example: "DSM-5 structure: Disorders → Categories → Specific Diagnoses"
+
+3. **Part-Whole Relationships**: Components within larger systems
+   - Keywords: "parts of", "components", "elements", "subsystems"
+   - Example: "Nervous system: CNS (Brain, Spinal Cord) → PNS (Somatic, Autonomic)"
+
+4. **Conceptual Hierarchies**: Abstract to specific relationships
+   - Keywords: "general to specific", "broad to narrow", "overarching"
+   - Example: "Reinforcement: Positive/Negative → Continuous/Partial → Schedules"
+
+5. **Theoretical Models with Levels**: Layered models
+   - Keywords: "levels", "tiers", "layers", "strata"
+   - Example: "Maslow's hierarchy", "Levels of processing"
+
+### When NOT to Use a Hierarchy Diagram
+
+- If content is sequential/process → Use Flowchart
+- If content compares equal categories → Use Table or Key Differentiators
+- If relationships are cyclical → Use Cycle Diagram
+- If content requires YES/NO decisions → Use Decision Tree
+
+---
+
+## SECTION 2: COLOR SCHEME
+
+### Hierarchy Diagram Color Palette (Blue/Cyan Theme)
+
+```
+PRIMARY COLORS (by Level):
+- Level 1 (Top): RGB(1, 87, 155) - Dark Blue #01579B
+- Level 2: RGB(2, 119, 189) - Medium Blue #0277BD
+- Level 3: RGB(3, 155, 229) - Cyan Blue #039BE5
+- Level 4: RGB(79, 195, 247) - Light Cyan #4FC3F7
+
+ACCENT COLORS:
+- Connector Lines: RGB(1, 87, 155) - Dark Blue
+- Background (subtle): RGB(227, 242, 253) - Very Light Blue #E3F2FD
+- Highlight: RGB(0, 188, 212) - Cyan #00BCD4
+
+TEXT COLORS:
+- Level 1-2 Text: RGB(255, 255, 255) - White
+- Level 3-4 Text: RGB(0, 0, 0) - Black (on lighter backgrounds)
+- Connector Labels: RGB(1, 87, 155) - Dark Blue
+```
+
+---
+
+## SECTION 3: LAYOUT SPECIFICATIONS
+
+### Layout A: Top-Down Tree (1-2-4 structure)
+```
+              [Top Level]
+                  │
+        ┌─────────┴─────────┐
+        │                   │
+   [Level 2A]          [Level 2B]
+        │                   │
+   ┌────┴────┐         ┌────┴────┐
+   │         │         │         │
+[L3A1]   [L3A2]     [L3B1]   [L3B2]
+
+Dimensions:
+- Level 1 box: 3.0 x 0.9 inches
+- Level 2 boxes: 2.5 x 0.8 inches
+- Level 3 boxes: 2.0 x 0.7 inches
+- Vertical spacing: 0.8 inches
+- Horizontal spacing: 0.3 inches minimum
+```
+
+### Layout B: Top-Down Tree (1-3-6 structure)
+```
+                    [Top Level]
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+     [Level 2A]    [Level 2B]    [Level 2C]
+          │             │             │
+       ┌──┴──┐       ┌──┴──┐       ┌──┴──┐
+      [L3]  [L3]    [L3]  [L3]    [L3]  [L3]
+
+Dimensions:
+- Level 1: 2.5 x 0.8 inches
+- Level 2: 2.0 x 0.7 inches
+- Level 3: 1.5 x 0.6 inches
+- Evenly distributed across slide width
+```
+
+### Layout C: Organizational Chart (Mixed branches)
+```
+              [Top Level]
+                  │
+    ┌─────────────┼─────────────┐
+    │             │             │
+[Branch A]   [Branch B]   [Branch C]
+    │             │
+┌───┴───┐    ┌───┴───┐
+│       │    │       │
+[A1]   [A2] [B1]    [B2]
+
+Dimensions:
+- Flexible branch sizes based on content
+- Not all branches need same depth
+- Level 2+ items vary in width
+```
+
+### Layout D: Inverted Pyramid (Wide to Narrow)
+```
+┌─────────────────────────────────────┐
+│           [Broad Category]          │
+└─────────────────────────────────────┘
+        ┌─────────────────────┐
+        │  [More Specific]    │
+        └─────────────────────┘
+              ┌───────────┐
+              │ [Narrow]  │
+              └───────────┘
+                  ┌───┐
+                  │[X]│
+                  └───┘
+
+Dimensions:
+- Each level narrower than previous
+- Centered alignment
+- 4 levels maximum
+```
+
+### Layout E: Side-by-Side Hierarchies (Comparison)
+```
+    [Category A]           [Category B]
+         │                      │
+    ┌────┴────┐            ┌────┴────┐
+    │         │            │         │
+  [A1]      [A2]         [B1]      [B2]
+    │         │            │         │
+  ┌─┴─┐     ┌─┴─┐        ┌─┴─┐     ┌─┴─┐
+ [x] [y]   [x] [y]      [x] [y]   [x] [y]
+
+Dimensions:
+- Two parallel hierarchies
+- Same structure for comparison
+- Dividing line or spacing between
+```
+
+---
+
+## SECTION 4: FONT SPECIFICATIONS
+
+### Text Hierarchy
+
+```
+LEVEL 1 (TOP):
+- Font: Aptos
+- Size: 22pt
+- Color: White
+- Style: Bold
+- Alignment: Center
+
+LEVEL 2:
+- Font: Aptos
+- Size: 20pt
+- Color: White
+- Style: Bold
+- Alignment: Center
+
+LEVEL 3:
+- Font: Aptos
+- Size: 18pt
+- Color: White or Black (based on background)
+- Style: Bold
+- Alignment: Center
+
+LEVEL 4+:
+- Font: Aptos
+- Size: 18pt minimum
+- Color: Black (on light backgrounds)
+- Style: Regular
+- Alignment: Center
+
+CONNECTOR LABELS (if used):
+- Font: Aptos
+- Size: 18pt
+- Color: Dark Blue #01579B
+- Style: Italic
+```
+
+---
+
+## SECTION 5: CHARACTER LIMITS
+
+### Per-Element Limits
+
+```
+LEVEL 1 HEADER:
+- Characters per line: 25
+- Maximum lines: 2
+
+LEVEL 2 HEADER:
+- Characters per line: 22
+- Maximum lines: 2
+
+LEVEL 3+ HEADER:
+- Characters per line: 18
+- Maximum lines: 2
+
+CONNECTOR LABEL:
+- Characters: 12 max
+```
+
+### Adaptive Sizing Rules
+
+```python
+def get_adaptive_hierarchy_font(level, total_items_at_level):
+    """Determine font size based on level and crowding."""
+
+    base_sizes = {1: 22, 2: 20, 3: 18, 4: 18}
+    base_size = base_sizes.get(level, 18)
+
+    # Scale down if many items at this level
+    if total_items_at_level >= 6:
+        base_size = max(base_size - 2, 18)
+    elif total_items_at_level >= 4:
+        base_size = max(base_size - 1, 18)
+
+    return max(base_size, 18)
+```
+
+---
+
+## SECTION 6: CONTENT REVISION INSTRUCTIONS
+
+### How to Revise Blueprint Content for Hierarchy Diagrams
+
+1. **Identify the Top-Level Category**
+   - What is the overarching concept or system?
+   - This becomes Level 1
+   - Examples: "Memory", "Nervous System", "Anxiety Disorders"
+
+2. **Identify Main Subdivisions (Level 2)**
+   - How does the top level break down?
+   - Usually 2-4 main categories
+   - Examples: "Sensory, Short-term, Long-term"
+
+3. **Identify Further Subdivisions (Level 3+)**
+   - Do Level 2 items have subtypes?
+   - Maximum 4 levels recommended
+   - Keep branches balanced when possible
+
+4. **Write Node Labels**
+   - Keep labels concise (1-4 words)
+   - Use parallel structure across levels
+   - Examples: "Explicit Memory", "Episodic", "Semantic"
+
+5. **Determine Connector Labels (optional)**
+   - Only if relationship needs clarification
+   - Examples: "includes", "type of", "subdivided into"
+
+6. **Select Appropriate Layout**
+   - Balanced tree → Layout A or B
+   - Uneven branches → Layout C
+   - Abstract to specific → Layout D
+   - Comparing two hierarchies → Layout E
+
+### Example Revision
+
+**Original Blueprint Content:**
+"Long-term memory is divided into explicit (declarative) and implicit (non-declarative) memory. Explicit memory includes episodic memory for personal experiences and semantic memory for facts and concepts. Implicit memory includes procedural memory for skills, classical conditioning, and priming effects."
+
+**Revised for Hierarchy Diagram:**
+
+```
+Title: "Long-Term Memory Organization"
+Layout: A (Top-Down Tree, 1-2-4)
+
+Level 1:
+- "Long-Term Memory"
+
+Level 2:
+- "Explicit (Declarative)"
+- "Implicit (Non-declarative)"
+
+Level 3 under Explicit:
+- "Episodic" (personal experiences)
+- "Semantic" (facts/concepts)
+
+Level 3 under Implicit:
+- "Procedural" (skills)
+- "Conditioning/Priming"
+```
+
+---
+
+## SECTION 7: POPULATION SPECIFICATIONS
+
+### Python Implementation Structure
+
+```python
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RgbColor
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.text import PP_ALIGN
+
+# Color constants by level
+LEVEL_COLORS = {
+    1: RgbColor(1, 87, 155),    # Dark Blue
+    2: RgbColor(2, 119, 189),   # Medium Blue
+    3: RgbColor(3, 155, 229),   # Cyan Blue
+    4: RgbColor(79, 195, 247),  # Light Cyan
+}
+WHITE = RgbColor(255, 255, 255)
+BLACK = RgbColor(0, 0, 0)
+DARK_BLUE = RgbColor(1, 87, 155)
+
+def create_hierarchy_slide(prs, slide_data):
+    """
+    Create a hierarchy diagram slide from structured data.
+
+    slide_data = {
+        'title': 'Slide Title',
+        'layout': 'A',  # A, B, C, D, or E
+        'nodes': {
+            'root': {
+                'text': 'Top Level',
+                'children': [
+                    {
+                        'text': 'Level 2A',
+                        'children': [
+                            {'text': 'Level 3A1'},
+                            {'text': 'Level 3A2'}
+                        ]
+                    },
+                    {
+                        'text': 'Level 2B',
+                        'children': [
+                            {'text': 'Level 3B1'},
+                            {'text': 'Level 3B2'}
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+    """
+    slide_layout = prs.slide_layouts[6]  # Blank
+    slide = prs.slides.add_slide(slide_layout)
+
+    add_title(slide, slide_data['title'])
+
+    layout = slide_data.get('layout', 'A')
+
+    if layout == 'A':
+        create_tree_1_2_4(slide, slide_data)
+    elif layout == 'B':
+        create_tree_1_3_6(slide, slide_data)
+    elif layout == 'C':
+        create_org_chart(slide, slide_data)
+    elif layout == 'D':
+        create_inverted_pyramid(slide, slide_data)
+    elif layout == 'E':
+        create_side_by_side(slide, slide_data)
+
+    return slide
+
+def create_tree_1_2_4(slide, data):
+    """Layout A: Standard top-down tree with 1-2-4 structure."""
+
+    nodes = data['nodes']['root']
+    slide_width = Inches(13.33)
+
+    # Level 1 (single node at top)
+    level1_width = Inches(3.0)
+    level1_height = Inches(0.9)
+    level1_left = (slide_width - level1_width) / 2
+    level1_top = Inches(1.5)
+
+    add_hierarchy_node(slide, level1_left, level1_top,
+                       level1_width, level1_height,
+                       nodes['text'], 1)
+
+    level1_center_x = level1_left + level1_width / 2
+    level1_bottom = level1_top + level1_height
+
+    # Level 2 (2 nodes)
+    if 'children' in nodes and len(nodes['children']) >= 2:
+        level2_width = Inches(2.5)
+        level2_height = Inches(0.8)
+        level2_top = level1_bottom + Inches(0.8)
+        level2_spacing = Inches(3.0)
+
+        level2_positions = []
+        for i, child in enumerate(nodes['children'][:2]):
+            if i == 0:
+                level2_left = level1_center_x - level2_spacing - level2_width / 2
+            else:
+                level2_left = level1_center_x + level2_spacing - level2_width / 2
+
+            level2_positions.append({
+                'left': level2_left,
+                'center_x': level2_left + level2_width / 2
+            })
+
+            add_hierarchy_node(slide, level2_left, level2_top,
+                              level2_width, level2_height,
+                              child['text'], 2)
+
+            # Add connector from level 1 to level 2
+            add_connector(slide,
+                         level1_center_x, level1_bottom,
+                         level2_left + level2_width / 2, level2_top)
+
+            # Level 3 (under each level 2 node)
+            if 'children' in child:
+                level3_width = Inches(2.0)
+                level3_height = Inches(0.7)
+                level3_top = level2_top + level2_height + Inches(0.6)
+                level3_spacing = Inches(1.2)
+
+                level3_count = len(child['children'])
+                total_l3_width = level3_count * level3_width + (level3_count - 1) * Inches(0.3)
+                level3_start = level2_positions[i]['center_x'] - total_l3_width / 2
+
+                for j, grandchild in enumerate(child['children'][:2]):
+                    level3_left = level3_start + j * (level3_width + Inches(0.3))
+
+                    add_hierarchy_node(slide, level3_left, level3_top,
+                                      level3_width, level3_height,
+                                      grandchild['text'], 3)
+
+                    # Add connector from level 2 to level 3
+                    add_connector(slide,
+                                 level2_positions[i]['center_x'],
+                                 level2_top + level2_height,
+                                 level3_left + level3_width / 2, level3_top)
+
+def add_hierarchy_node(slide, left, top, width, height, text, level):
+    """Add a single hierarchy node with level-appropriate styling."""
+
+    # Get color for this level
+    bg_color = LEVEL_COLORS.get(level, LEVEL_COLORS[4])
+    text_color = WHITE if level <= 2 else BLACK
+
+    # Create rounded rectangle
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        left, top, width, height
+    )
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = bg_color
+
+    # Add border
+    shape.line.color.rgb = DARK_BLUE
+    shape.line.width = Pt(1.5)
+
+    # Add text
+    tf = shape.text_frame
+    tf.word_wrap = True
+    tf.paragraphs[0].text = text
+    tf.paragraphs[0].font.size = get_font_size_for_level(level)
+    tf.paragraphs[0].font.bold = True if level <= 3 else False
+    tf.paragraphs[0].font.color.rgb = text_color
+    tf.paragraphs[0].alignment = PP_ALIGN.CENTER
+
+def get_font_size_for_level(level):
+    """Return appropriate font size for hierarchy level."""
+    sizes = {1: Pt(22), 2: Pt(20), 3: Pt(18), 4: Pt(18)}
+    return sizes.get(level, Pt(18))
+
+def add_connector(slide, start_x, start_y, end_x, end_y):
+    """Add vertical connector line between hierarchy levels."""
+
+    # Vertical line down, then horizontal to target
+    mid_y = start_y + (end_y - start_y) / 2
+
+    # Elbow connector
+    connector = slide.shapes.add_connector(
+        MSO_CONNECTOR.ELBOW,
+        start_x, start_y, end_x, end_y
+    )
+    connector.line.color.rgb = DARK_BLUE
+    connector.line.width = Pt(2)
+
+def create_inverted_pyramid(slide, data):
+    """Layout D: Inverted pyramid from broad to narrow."""
+
+    levels = data.get('levels', [])
+    if not levels:
+        # Convert nodes to levels list
+        levels = flatten_to_levels(data['nodes']['root'])
+
+    slide_width = Inches(13.33)
+    start_top = Inches(1.8)
+    level_height = Inches(0.9)
+    level_spacing = Inches(0.4)
+
+    # Each level gets progressively narrower
+    max_width = Inches(10.0)
+    min_width = Inches(2.5)
+    width_step = (max_width - min_width) / max(len(levels) - 1, 1)
+
+    for i, level_text in enumerate(levels):
+        level_width = max_width - (width_step * i)
+        level_left = (slide_width - level_width) / 2
+        level_top = start_top + i * (level_height + level_spacing)
+
+        # Use darker blue as we go down (more specific)
+        level_num = min(i + 1, 4)
+
+        add_hierarchy_node(slide, level_left, level_top,
+                          level_width, level_height,
+                          level_text, level_num)
+
+        # Add downward arrow between levels
+        if i < len(levels) - 1:
+            arrow_left = slide_width / 2 - Inches(0.15)
+            arrow_top = level_top + level_height
+            arrow = slide.shapes.add_shape(
+                MSO_SHAPE.DOWN_ARROW,
+                arrow_left, arrow_top,
+                Inches(0.3), level_spacing
+            )
+            arrow.fill.solid()
+            arrow.fill.fore_color.rgb = DARK_BLUE
+```
+
+---
+
+## SECTION 8: NCLEX CONTENT EXAMPLES
+
+### Example 1: Memory System Classification
+
+```
+Title: "Memory System Hierarchy"
+Layout: A (Top-Down Tree 1-2-4)
+
+Level 1: "Long-Term Memory"
+
+Level 2:
+- "Explicit (Declarative)"
+- "Implicit (Non-declarative)"
+
+Level 3 (under Explicit):
+- "Episodic"
+- "Semantic"
+
+Level 3 (under Implicit):
+- "Procedural"
+- "Priming"
+```
+
+### Example 2: Nervous System Organization
+
+```
+Title: "Nervous System Organization"
+Layout: B (Top-Down Tree 1-3-6)
+
+Level 1: "Nervous System"
+
+Level 2:
+- "CNS"
+- "PNS - Somatic"
+- "PNS - Autonomic"
+
+Level 3 (under CNS):
+- "Brain"
+- "Spinal Cord"
+
+Level 3 (under PNS-Autonomic):
+- "Sympathetic"
+- "Parasympathetic"
+```
+
+### Example 3: Defense Mechanisms Levels
+
+```
+Title: "Vaillant's Defense Mechanism Hierarchy"
+Layout: D (Inverted Pyramid)
+
+Levels (top to bottom - most to least mature):
+1. "Mature Defenses" (altruism, humor, sublimation)
+2. "Neurotic Defenses" (repression, displacement)
+3. "Immature Defenses" (projection, acting out)
+4. "Psychotic Defenses" (denial, distortion)
+```
+
+### Example 4: Anxiety Disorders Classification
+
+```
+Title: "DSM-5 Anxiety Disorders"
+Layout: C (Organizational Chart)
+
+Level 1: "Anxiety Disorders"
+
+Level 2 (with varying children):
+- "Specific Phobia"
+  - "Animal", "Natural Environment", "Situational", "Blood-Injection"
+- "Social Anxiety Disorder"
+- "Panic Disorder"
+- "Agoraphobia"
+- "Generalized Anxiety"
+```
+
+---
+
+## SECTION 9: VALIDATION CHECKLIST
+
+### Before Population
+
+- [ ] Hierarchy has clear parent-child relationships
+- [ ] Node count appropriate for selected layout
+- [ ] All levels have appropriate labels
+- [ ] All text within character limits
+- [ ] Layout matches content structure (balanced vs. uneven)
+
+### After Population
+
+- [ ] All nodes visible and not overlapping
+- [ ] Connectors clearly show relationships
+- [ ] Color gradient indicates level depth
+- [ ] All text readable (minimum 18pt font)
+- [ ] Colors match specification (blue theme)
+- [ ] Title is present and visible
+
+### Content Validation
+
+- [ ] Top level is the most general category
+- [ ] Each level is more specific than the one above
+- [ ] Sibling nodes are at the same level of abstraction
+- [ ] All categories are mutually exclusive
+- [ ] Classification is complete (no major categories missing)
+
+---
+
+## SECTION 10: COMMON ISSUES AND FIXES
+
+### Issue 1: Too Many Nodes for Layout
+
+**Problem:** 15+ nodes don't fit cleanly
+
+**Solution:**
+- Show only top 2-3 levels; detail in separate slides
+- Combine similar categories
+- Use Layout C for variable branching
+
+### Issue 2: Unbalanced Branches
+
+**Problem:** One branch has 6 children, another has 1
+
+**Solution:**
+- Use Layout C (org chart) which allows variable branching
+- Show branches on separate slides if too complex
+- Consider if unbalanced structure is accurate
+
+### Issue 3: Connectors Cross or Overlap
+
+**Problem:** Lines cross each other in complex hierarchies
+
+**Solution:**
+```python
+def route_connectors(nodes):
+    # Use elbow connectors instead of straight
+    # Route around nodes when necessary
+    # Increase horizontal spacing between branches
+    pass
+```
+
+### Issue 4: Lower Levels Too Small to Read
+
+**Problem:** Level 4+ text is cramped
+
+**Solution:**
+- Limit to 3-4 levels per slide
+- Continue hierarchy on subsequent slide
+- Increase minimum font size for lower levels
+
+### Issue 5: Unclear Level Distinction
+
+**Problem:** All nodes look the same
+
+**Solution:**
+- Ensure color gradient is visible
+- Verify font size decreases by level
+- Add subtle shadows or borders to create depth
+
+---
+
+## SECTION 11: INTEGRATION WITH PIPELINE
+
+### Blueprint Identification Markers
+
+When generating blueprints in Step 6, mark slides for hierarchy treatment:
+
+```
+[VISUAL: HIERARCHY]
+Type: [Classification/Organization/Taxonomy/Model]
+Levels: [number of levels]
+Max Nodes at Any Level: [number]
+Layout Recommendation: [A/B/C/D/E]
+```
+
+### Pipeline Config Entry
+
+Add to pipeline_config.json:
+
+```json
+"hierarchy_settings": {
+  "reference_doc": "step12_hierarchy_diagram_generation.txt",
+  "template": "visual aid and graphic organizer template.pptx",
+  "font_name": "Aptos",
+  "min_font_size_pt": 18,
+  "max_levels": 4,
+  "max_nodes": 15,
+  "colors": {
+    "level_1_rgb": [1, 87, 155],
+    "level_2_rgb": [2, 119, 189],
+    "level_3_rgb": [3, 155, 229],
+    "level_4_rgb": [79, 195, 247],
+    "connector_rgb": [1, 87, 155],
+    "text_light_rgb": [255, 255, 255],
+    "text_dark_rgb": [0, 0, 0]
+  },
+  "layouts": {
+    "A": "Top-Down Tree (1-2-4 structure)",
+    "B": "Top-Down Tree (1-3-6 structure)",
+    "C": "Organizational Chart (mixed branches)",
+    "D": "Inverted Pyramid (wide to narrow)",
+    "E": "Side-by-Side Hierarchies (comparison)"
+  }
+}
+```
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population  ← HIERARCHY DIAGRAM GENERATION HERE
+    ↓
+[PRODUCTION COMPLETE]
+```

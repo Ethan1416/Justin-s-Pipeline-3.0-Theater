@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "enforce_output.schema.json",
+  "title": "Step 6.5 Line Enforcement Output Schema",
+  "description": "Schema for line_enforcer agent output - blueprint with enforced 8-line body limits",
+  "type": "object",
+  "required": ["metadata", "enforced_blueprint", "enforcement_summary", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "section_name", "date", "source_file", "output_file"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 6.5: Enforce Line Limit"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "source_file": {
+          "type": "string"
+        },
+        "output_file": {
+          "type": "string"
+        }
+      }
+    },
+    "enforced_blueprint": {
+      "$ref": "#/definitions/blueprint_output"
+    },
+    "enforcement_summary": {
+      "type": "object",
+      "required": ["total_slides", "slides_modified", "slides_compliant"],
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides_modified": {
+          "type": "integer",
+          "description": "Number of slides that required condensation"
+        },
+        "slides_compliant": {
+          "type": "integer",
+          "description": "Number of slides already compliant"
+        },
+        "modifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modification_record"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "all_slides_compliant"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "all_slides_compliant": {
+          "type": "boolean"
+        },
+        "non_compliant_slides": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Slide numbers still exceeding limit (should be empty on success)"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_output": {
+      "type": "object",
+      "required": ["slides"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_output"
+          }
+        }
+      }
+    },
+    "slide_output": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body", "body_line_count"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "subsection": {
+          "type": "string"
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "body_line_count": {
+          "type": "integer",
+          "maximum": 8,
+          "description": "Must be 8 or fewer after enforcement"
+        },
+        "nclex_tip": {
+          "type": "string"
+        },
+        "presenter_notes": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "was_modified": {
+          "type": "boolean",
+          "description": "Whether this slide required modification"
+        }
+      }
+    },
+    "modification_record": {
+      "type": "object",
+      "required": ["slide_number", "original_line_count", "new_line_count", "technique_used"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "original_line_count": {
+          "type": "integer"
+        },
+        "new_line_count": {
+          "type": "integer",
+          "maximum": 8
+        },
+        "technique_used": {
+          "type": "string",
+          "enum": [
+            "combine_related_subbullets",
+            "remove_redundant_info",
+            "prioritize_nclex_testable",
+            "use_concise_phrasing",
+            "move_examples_to_notes",
+            "keep_clinical_relevance"
+          ]
+        },
+        "content_moved_to_notes": {
+          "type": "boolean",
+          "description": "Whether content was moved to presenter notes"
+        },
+        "annotation": {
+          "type": "string",
+          "description": "Description of what was changed"
+        }
+      }
+    }
+  }
+}

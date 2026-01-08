@@ -1,0 +1,535 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "outline_output.schema.json",
+  "title": "Step 4 Outline Generation Output Schema",
+  "description": "Schema for outline_generator agent output - final lecture outline with sessions, sections, subsections, and slide counts",
+  "type": "object",
+  "required": [
+    "metadata",
+    "sessions",
+    "grand_summary",
+    "validation"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "step",
+        "date",
+        "domain",
+        "total_anchors",
+        "total_sections",
+        "total_estimated_slides"
+      ],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 4: Outline Generation"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "total_anchors": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "total_sections": {
+          "type": "integer",
+          "minimum": 4,
+          "maximum": 12
+        },
+        "total_estimated_slides": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Production: 144-180 slides; Demo/sample: any positive integer"
+        },
+        "output_file": {
+          "type": "string",
+          "description": "Path to saved output file"
+        }
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/definitions/session"
+      }
+    },
+    "grand_summary": {
+      "type": "object",
+      "required": [
+        "overall_statistics",
+        "section_flow",
+        "prerequisite_chain"
+      ],
+      "properties": {
+        "overall_statistics": {
+          "type": "object",
+          "required": [
+            "session_1",
+            "session_2",
+            "total"
+          ],
+          "properties": {
+            "session_1": {
+              "$ref": "#/definitions/session_stats"
+            },
+            "session_2": {
+              "$ref": "#/definitions/session_stats"
+            },
+            "total": {
+              "$ref": "#/definitions/session_stats"
+            }
+          }
+        },
+        "section_flow": {
+          "type": "object",
+          "description": "Visual representation of section progression",
+          "properties": {
+            "session_1_sequence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "session_2_sequence": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "prerequisite_chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/prerequisite_chain_item"
+          }
+        },
+        "flagged_content_summary": {
+          "type": "object",
+          "properties": {
+            "frontload_by_section": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "section_name": {
+                    "type": "string"
+                  },
+                  "frontload_anchors": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "cross_references": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from_section": {
+                    "type": "string"
+                  },
+                  "to_section": {
+                    "type": "string"
+                  },
+                  "anchors": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "purpose": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "notes_for_blueprint": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Special sequencing notes for Step 5+ blueprint development"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "status",
+        "constraint_checks"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "constraint_checks": {
+          "type": "object",
+          "properties": {
+            "session_1_slides": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "session_2_slides": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "total_slides": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "min_slides_per_section": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "max_slides_per_section": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "section_count": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "all_anchors_assigned": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "no_duplicate_anchors": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "prerequisites_respected": {
+              "$ref": "#/definitions/constraint_check"
+            },
+            "culmination_at_end": {
+              "$ref": "#/definitions/constraint_check"
+            }
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "session": {
+      "type": "object",
+      "required": [
+        "session_number",
+        "duration_minutes",
+        "estimated_slides",
+        "sections",
+        "break"
+      ],
+      "properties": {
+        "session_number": {
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "const": 150
+        },
+        "estimated_slides": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Production: 72-90 slides per session; Demo/sample: any positive integer"
+        },
+        "section_count": {
+          "type": "integer"
+        },
+        "anchor_count": {
+          "type": "integer"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section"
+          }
+        },
+        "break": {
+          "type": "object",
+          "required": [
+            "duration_minutes",
+            "slide_count",
+            "placement"
+          ],
+          "properties": {
+            "duration_minutes": {
+              "type": "integer",
+              "const": 10
+            },
+            "slide_count": {
+              "type": "integer",
+              "const": 1
+            },
+            "placement": {
+              "type": "string",
+              "description": "After which section the break occurs"
+            }
+          }
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "section_breakdown": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "anchors": {
+                    "type": "integer"
+                  },
+                  "slides": {
+                    "type": "integer"
+                  },
+                  "subsections": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "constraint_check": {
+              "type": "object",
+              "properties": {
+                "slides_in_range": {
+                  "type": "boolean"
+                },
+                "all_sections_valid": {
+                  "type": "boolean"
+                },
+                "prerequisites_respected": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "section_number",
+        "section_name",
+        "anchor_count",
+        "estimated_slides",
+        "subsections"
+      ],
+      "properties": {
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "estimated_slides": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 35
+        },
+        "complexity_multiplier": {
+          "type": "number",
+          "minimum": 1.0,
+          "maximum": 1.3,
+          "description": "1.0 simple, 1.15 moderate, 1.3 complex"
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of prerequisite section names"
+        },
+        "is_culmination": {
+          "type": "boolean",
+          "default": false,
+          "description": "True if this is a culmination/integration section"
+        },
+        "subsections": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/definitions/subsection"
+          }
+        },
+        "frontload_anchors": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Anchor numbers flagged for frontloading in this section"
+        },
+        "cross_references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "to_section": {
+                "type": "string"
+              },
+              "anchors": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "purpose": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "subsection": {
+      "type": "object",
+      "required": [
+        "subsection_id",
+        "subsection_name",
+        "anchor_count",
+        "anchors",
+        "focus"
+      ],
+      "properties": {
+        "subsection_id": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$",
+          "description": "Format: section.subsection (e.g., 1.1, 2.3)"
+        },
+        "subsection_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchor_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "List of anchor numbers in this subsection"
+        },
+        "focus": {
+          "type": "string",
+          "description": "1-line description of what this subsection covers"
+        },
+        "sequencing_position": {
+          "type": "string",
+          "enum": [
+            "foundational",
+            "core",
+            "application",
+            "integration"
+          ],
+          "description": "Position in foundation -> application flow"
+        }
+      }
+    },
+    "session_stats": {
+      "type": "object",
+      "properties": {
+        "sections": {
+          "type": "integer"
+        },
+        "anchors": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "integer"
+        },
+        "subsections": {
+          "type": "integer"
+        }
+      }
+    },
+    "prerequisite_chain_item": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "depends_on": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "leads_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "constraint_check": {
+      "type": "object",
+      "required": [
+        "requirement",
+        "actual",
+        "status"
+      ],
+      "properties": {
+        "requirement": {
+          "type": "string"
+        },
+        "actual": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL",
+            "N/A"
+          ]
+        }
+      }
+    }
+  }
+}

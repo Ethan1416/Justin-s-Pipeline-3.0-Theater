@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "spectrum_output.schema.json",
+  "title": "Spectrum Generator Output Schema",
+  "description": "Output schema for the spectrum_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["visual_spec", "validation", "presenter_notes"],
+  "properties": {
+    "visual_spec": {
+      "type": "object",
+      "required": ["type", "layout", "title", "data"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "SPECTRUM"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["A", "B", "C", "D", "E"],
+          "description": "Selected layout: A=Horizontal Bar, B=Vertical Bar, C=Bipolar, D=Segmented, E=Dual-Axis"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "Spectrum title"
+        },
+        "data": {
+          "type": "object",
+          "required": ["gradient_type", "segments"],
+          "properties": {
+            "dimension": {
+              "type": "string",
+              "maxLength": 30
+            },
+            "gradient_type": {
+              "type": "string",
+              "enum": ["blue", "alert", "bipolar"]
+            },
+            "endpoints": {
+              "type": "object",
+              "properties": {
+                "low": {
+                  "type": "string",
+                  "maxLength": 15
+                },
+                "high": {
+                  "type": "string",
+                  "maxLength": 15
+                }
+              }
+            },
+            "center_label": {
+              "type": "string",
+              "maxLength": 15
+            },
+            "segments": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 6,
+              "items": {
+                "type": "object",
+                "required": ["label"],
+                "properties": {
+                  "segment_number": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 12
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "color_index": {
+                    "type": "integer",
+                    "description": "Index into gradient color array"
+                  }
+                }
+              }
+            },
+            "axes": {
+              "type": "object",
+              "properties": {
+                "x": { "type": "string", "maxLength": 25 },
+                "y": { "type": "string", "maxLength": 25 }
+              }
+            },
+            "quadrants": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string", "maxLength": 36 },
+                  "position": {
+                    "type": "string",
+                    "enum": ["high_high", "low_high", "low_low", "high_low"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["is_valid", "checks"],
+      "properties": {
+        "is_valid": {
+          "type": "boolean",
+          "description": "Overall validation status"
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "segment_count_valid": {
+              "type": "boolean",
+              "description": "Segment count within 2-6 range"
+            },
+            "endpoint_char_limits": {
+              "type": "boolean",
+              "description": "All endpoint labels within 15 char limit"
+            },
+            "segment_label_limits": {
+              "type": "boolean",
+              "description": "All segment labels within 12 char limit"
+            },
+            "description_char_limits": {
+              "type": "boolean",
+              "description": "All descriptions within 40 char limit"
+            },
+            "gradient_type_valid": {
+              "type": "boolean",
+              "description": "Gradient type is valid"
+            },
+            "layout_compatible": {
+              "type": "boolean",
+              "description": "Content compatible with selected layout"
+            },
+            "is_true_continuum": {
+              "type": "boolean",
+              "description": "Content represents a true continuum (not discrete categories)"
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "presenter_notes": {
+      "type": "object",
+      "required": ["text", "word_count"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Presenter notes explaining the spectrum"
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 150,
+          "maximum": 450
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 180
+        }
+      }
+    },
+    "rendering_metadata": {
+      "type": "object",
+      "properties": {
+        "font_sizes": {
+          "type": "object",
+          "properties": {
+            "end_label": { "type": "integer", "default": 22 },
+            "segment_label": { "type": "integer", "default": 20 },
+            "description": { "type": "integer", "default": 18 },
+            "axis_label": { "type": "integer", "default": 20 }
+          }
+        },
+        "gradient_colors": {
+          "type": "object",
+          "description": "Computed gradient colors for segments",
+          "properties": {
+            "colors": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

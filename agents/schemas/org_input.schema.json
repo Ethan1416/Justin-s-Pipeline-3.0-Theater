@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "org_input.schema.json",
+  "title": "Step 11 Blueprint Organization Input Schema",
+  "description": "Schema for blueprint_organizer agent input - integrated blueprints for organization",
+  "type": "object",
+  "required": ["metadata", "sections", "validation_scores"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "date", "production_folder"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 11: Blueprint Organization"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "production_folder": {
+          "type": "string",
+          "description": "Path to production folder on Desktop"
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "All sections to be organized, in session order",
+      "items": {
+        "$ref": "#/definitions/section_input"
+      }
+    },
+    "validation_scores": {
+      "type": "object",
+      "description": "QA scores from Step 8 to confirm all sections passed",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "minimum": 90
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PASS"]
+          }
+        }
+      }
+    },
+    "session_structure": {
+      "type": "object",
+      "description": "How sections are organized into sessions",
+      "properties": {
+        "session_1_sections": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "session_2_sections": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "source_files": {
+      "type": "object",
+      "description": "References to source files from previous steps",
+      "properties": {
+        "step4_outline": {
+          "type": "string"
+        },
+        "step10_blueprints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "section_input": {
+      "type": "object",
+      "required": ["section_number", "section_name", "session", "integrated_blueprint_file"],
+      "properties": {
+        "section_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "session": {
+          "type": "integer",
+          "enum": [1, 2]
+        },
+        "integrated_blueprint_file": {
+          "type": "string",
+          "description": "Path to step10 integrated blueprint file"
+        },
+        "slide_count": {
+          "type": "integer",
+          "minimum": 12,
+          "maximum": 35
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "qa_score": {
+          "type": "integer",
+          "minimum": 90
+        }
+      }
+    }
+  }
+}

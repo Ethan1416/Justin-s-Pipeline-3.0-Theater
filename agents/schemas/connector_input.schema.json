@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "connector_input.schema.json",
+  "title": "Connector Drawer Input Schema",
+  "description": "Schema for connector_drawer agent input - draws connectors and arrows between visual elements",
+  "type": "object",
+  "required": ["metadata", "connections"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "connector_drawer"
+        },
+        "visual_id": {
+          "type": "string"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["flowchart", "decision_tree", "timeline", "hierarchy"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/connection_spec"
+      }
+    },
+    "style_defaults": {
+      "type": "object",
+      "properties": {
+        "line_color": {
+          "type": "string",
+          "default": "#333333"
+        },
+        "line_width": {
+          "type": "number",
+          "default": 1.5
+        },
+        "arrow_style": {
+          "type": "string",
+          "enum": ["none", "arrow", "stealth", "diamond", "oval"],
+          "default": "arrow"
+        },
+        "line_style": {
+          "type": "string",
+          "enum": ["solid", "dashed", "dotted"],
+          "default": "solid"
+        },
+        "routing": {
+          "type": "string",
+          "enum": ["straight", "orthogonal", "curved"],
+          "default": "orthogonal"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "connection_spec": {
+      "type": "object",
+      "required": ["connection_id", "from_element", "to_element"],
+      "properties": {
+        "connection_id": {
+          "type": "string"
+        },
+        "from_element": {
+          "type": "string",
+          "description": "ID of source element"
+        },
+        "to_element": {
+          "type": "string",
+          "description": "ID of target element"
+        },
+        "from_anchor": {
+          "type": "string",
+          "enum": ["top", "bottom", "left", "right", "center", "auto"],
+          "default": "auto"
+        },
+        "to_anchor": {
+          "type": "string",
+          "enum": ["top", "bottom", "left", "right", "center", "auto"],
+          "default": "auto"
+        },
+        "start_point": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "description": "Override start point (optional)"
+        },
+        "end_point": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "description": "Override end point (optional)"
+        },
+        "label": {
+          "type": "string",
+          "description": "Text label on connector (e.g., 'Yes', 'No')"
+        },
+        "style_override": {
+          "type": "object",
+          "properties": {
+            "line_color": { "type": "string" },
+            "line_width": { "type": "number" },
+            "arrow_style": { "type": "string" },
+            "line_style": { "type": "string" },
+            "routing": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

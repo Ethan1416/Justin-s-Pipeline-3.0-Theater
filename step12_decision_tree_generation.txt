@@ -1,0 +1,1012 @@
+================================================================================
+STEP 12: DECISION TREE GENERATION
+================================================================================
+Version: 1.0
+Last Updated: 2024-12-23
+Template: visual aid and graphic organizer template.pptx
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Decision trees are specialized visual aids that present hierarchical
+decision-making processes, diagnostic criteria, or classification systems.
+They guide viewers through a series of questions or conditions to reach
+specific outcomes.
+
+This document defines:
+- Conditions for identifying when content needs a decision tree
+- Multiple layout variations for different tree structures
+- Character limits and formatting requirements
+- Complete Python implementation
+
+================================================================================
+SECTION 1: IDENTIFICATION CONDITIONS
+================================================================================
+
+Content should be presented as a DECISION_TREE when ANY of these conditions
+are met:
+
+PRIMARY CONDITIONS (Strong indicators):
+-----------------------------------------------------------------------------
+1. DIAGNOSTIC CRITERIA DIFFERENTIATION
+   - Content distinguishes between similar diagnoses
+   - Multiple conditions share overlapping symptoms
+   - Key differentiating factors determine final diagnosis
+   - Examples: Mood disorders, anxiety disorders, psychotic disorders
+
+2. SEQUENTIAL DECISION PROCESS
+   - Content follows "if-then" logic paths
+   - One decision leads to another decision or outcome
+   - Clear branching based on yes/no or categorical choices
+   - Examples: Treatment selection, assessment procedures
+
+3. CLASSIFICATION SYSTEMS
+   - Content categorizes items into distinct groups
+   - Classification depends on specific criteria at each level
+   - Hierarchical organization from general to specific
+   - Examples: Drug classifications, disorder subtypes
+
+4. RULE-OUT PROCESSES
+   - Content describes eliminating possibilities
+   - Sequential criteria narrow down options
+   - Each step removes certain outcomes from consideration
+   - Examples: Differential diagnosis, exclusion criteria
+
+SECONDARY CONDITIONS (Supporting indicators):
+-----------------------------------------------------------------------------
+5. Content contains phrases like:
+   - "If [X], then [Y]"
+   - "First determine whether..."
+   - "Based on [criteria], classify as..."
+   - "Rule out [condition] by checking..."
+   - "Distinguish between [A] and [B] by..."
+
+6. Content has 3-15 distinct endpoints/outcomes
+
+7. Content can be reduced to 2-4 decision points
+
+EXCLUSION CONDITIONS (Do NOT use decision tree):
+-----------------------------------------------------------------------------
+- Content is purely definitional (use content slide)
+- Content is a simple list without decision logic (use content slide)
+- Content compares items without classification (use table)
+- Content has more than 15 endpoints (use table or split across slides)
+- Content has no clear branching logic (use content slide)
+
+================================================================================
+SECTION 2: LAYOUT VARIATIONS
+================================================================================
+
+LAYOUT A: THREE-LEVEL BINARY (Current Default)
+-----------------------------------------------------------------------------
+Structure: 1 initial decision → 2 secondary decisions → 4 outcomes
+Use when:
+- Content has exactly 4 final outcomes
+- Two main categories, each with two subcategories
+- Classic "2x2" diagnostic differentiation
+
+Visual:
+                    [Level 1]
+                   /         \
+            [Level 2A]    [Level 2B]
+             /    \        /    \
+          [O1]  [O2]    [O3]  [O4]
+
+Node Count: 7 (1 + 2 + 4)
+Example: Mood Disorder Decision Tree (Depressed/Elevated → subtypes)
+
+
+LAYOUT B: TWO-LEVEL BINARY
+-----------------------------------------------------------------------------
+Structure: 1 initial decision → 2 outcomes
+Use when:
+- Simple binary distinction
+- Single decision point with two clear paths
+- Quick differentiation needed
+
+Visual:
+                    [Level 1]
+                   /         \
+                [O1]        [O2]
+
+Node Count: 3 (1 + 2)
+Example: Psychotic vs Non-Psychotic features
+
+
+LAYOUT C: TWO-LEVEL TRIPLE
+-----------------------------------------------------------------------------
+Structure: 1 initial decision → 3 outcomes
+Use when:
+- Three distinct categories from one decision
+- Trichotomous classification
+
+Visual:
+                    [Level 1]
+                  /     |     \
+               [O1]   [O2]   [O3]
+
+Node Count: 4 (1 + 3)
+Example: Severity levels (Mild, Moderate, Severe)
+
+
+LAYOUT D: THREE-LEVEL ASYMMETRIC
+-----------------------------------------------------------------------------
+Structure: 1 initial → 2 secondary (one branches further, one is terminal)
+Use when:
+- One path requires further differentiation
+- One path leads directly to outcome
+- Uneven branching depth
+
+Visual:
+                    [Level 1]
+                   /         \
+            [Level 2A]       [O1]
+             /    \
+          [O2]   [O3]
+
+Node Count: 5 (1 + 1 + 1 + 2)
+Example: Rule-out processes where one path ends early
+
+
+LAYOUT E: THREE-LEVEL EXTENDED
+-----------------------------------------------------------------------------
+Structure: 1 initial → 2 secondary → 6 outcomes (3 each)
+Use when:
+- Each secondary decision has 3 outcomes
+- More detailed differentiation needed
+- Content naturally groups into 2 categories with 3 subtypes each
+
+Visual:
+                    [Level 1]
+                   /         \
+            [Level 2A]    [Level 2B]
+            /   |   \      /   |   \
+         [O1] [O2] [O3] [O4] [O5] [O6]
+
+Node Count: 9 (1 + 2 + 6)
+Example: Anxiety disorders by trigger type and severity
+
+
+LAYOUT F: FOUR-LEVEL BINARY
+-----------------------------------------------------------------------------
+Structure: 1 → 2 → 4 → 8 outcomes (maximum depth)
+Use when:
+- Complex multi-step differentiation
+- Each level adds meaningful distinction
+- Content requires fine-grained classification
+
+Visual:
+                         [Level 1]
+                        /         \
+                  [L2A]           [L2B]
+                 /     \         /     \
+              [L3A]  [L3B]    [L3C]  [L3D]
+              / \     / \      / \     / \
+            [O1-O2] [O3-O4] [O5-O6] [O7-O8]
+
+Node Count: 15 (1 + 2 + 4 + 8) - maximum allowed
+Note: Only use if absolutely necessary; prefer splitting across slides
+
+
+LAYOUT SELECTION LOGIC:
+-----------------------------------------------------------------------------
+1. Count total outcomes needed
+2. Determine branching pattern (binary, triple, asymmetric)
+3. Calculate depth required
+4. Select layout that fits with minimum nodes
+5. If nodes > 15, fall back to TABLE or split content
+
+Pseudocode:
+```
+outcomes = count_outcomes(content)
+if outcomes > 15:
+    return FALLBACK_TO_TABLE
+elif outcomes == 2:
+    return LAYOUT_B
+elif outcomes == 3:
+    return LAYOUT_C
+elif outcomes == 4:
+    if symmetric_branching:
+        return LAYOUT_A
+    else:
+        return LAYOUT_D
+elif outcomes <= 6:
+    return LAYOUT_E
+else:
+    return LAYOUT_A_EXTENDED or SPLIT_SLIDES
+```
+
+================================================================================
+SECTION 3: CHARACTER LIMITS
+================================================================================
+
+All text must fit within nodes without overflow. Enforce these limits:
+
+DECISION NODES (Questions):
+- Header text: 20 characters max per line, 1 line
+- Body text: 25 characters max per line, 2 lines max
+- Examples:
+  - Header: "INITIAL ASSESSMENT" (18 chars) ✓
+  - Body: "Depressed or\nElevated Mood?" (12 + 14 = 26 total) ✓
+
+OUTCOME NODES (Diagnoses/Results):
+- Header text: 20 characters max per line, 1 line
+- Body text: 20 characters max per line, 2 lines max
+- Examples:
+  - Header: "DIAGNOSIS" (9 chars) ✓
+  - Body: "Major Depressive\nDisorder" (16 + 8 = 24 total) ✓
+
+PATH LABELS:
+- Text: 12 characters max, 1 line
+- Examples: "Depressed", "YES", "Mania", "Hypo" ✓
+
+TITLE:
+- Standard slide title rules apply (32 chars per line, 2 lines max)
+
+================================================================================
+SECTION 4: COLOR SCHEME
+================================================================================
+
+Fixed professional color palette (do not modify):
+
+DECISION NODES:
+- Header background: RGB(0, 51, 102) - Dark Navy
+- Body background: RGB(240, 244, 248) - Light Gray-Blue
+- Border: RGB(0, 51, 102) - Dark Navy
+- Header text: RGB(255, 255, 255) - White
+- Body text: RGB(33, 37, 41) - Dark Gray
+
+OUTCOME NODES (rotate based on path/meaning):
+- Green: RGB(0, 102, 68) - For positive/YES paths
+- Red: RGB(153, 0, 0) - For negative/NO paths
+- Blue: RGB(0, 71, 133) - For neutral/alternative paths
+- Purple: RGB(75, 0, 110) - For additional distinctions
+
+PATH LABELS:
+- Use same colors as their destination outcomes
+- White text on colored background
+
+CONNECTORS:
+- Color: RGB(100, 100, 100) - Medium Gray
+- Width: 2.5pt
+- Arrow head: Triangle, medium size
+
+================================================================================
+SECTION 5: BLUEPRINT FORMAT
+================================================================================
+
+In Step 9 (Visual Identification), mark as:
+```
+Visual: Yes - DECISION_TREE
+```
+
+In Step 10 (Integrated Blueprint), use this format:
+```
+VISUAL SPECIFICATION:
+Type: DECISION_TREE
+Layout: [A/B/C/D/E/F or AUTO]
+
+LEVEL 1:
+- Header: "[Category name]"
+- Question: "[Decision question]"
+- Paths: [Path1Label], [Path2Label]
+
+LEVEL 2A:
+- Header: "[Category name]"
+- Question: "[Decision question]"
+- Paths: [Path1Label], [Path2Label]
+- Parent Path: [Which L1 path leads here]
+
+LEVEL 2B:
+- Header: "[Category name]"
+- Question: "[Decision question]"
+- Paths: [Path1Label], [Path2Label]
+- Parent Path: [Which L1 path leads here]
+
+OUTCOMES:
+- O1: "[Diagnosis/Result name]" | Color: [green/red/blue/purple] | Parent: [L2A-Path1]
+- O2: "[Diagnosis/Result name]" | Color: [green/red/blue/purple] | Parent: [L2A-Path2]
+- O3: "[Diagnosis/Result name]" | Color: [green/red/blue/purple] | Parent: [L2B-Path1]
+- O4: "[Diagnosis/Result name]" | Color: [green/red/blue/purple] | Parent: [L2B-Path2]
+```
+
+EXAMPLE (Mood Disorder Tree):
+```
+VISUAL SPECIFICATION:
+Type: DECISION_TREE
+Layout: A
+
+LEVEL 1:
+- Header: "INITIAL ASSESSMENT"
+- Question: "Depressed or Elevated Mood?"
+- Paths: Depressed, Elevated
+
+LEVEL 2A:
+- Header: "DURATION CHECK"
+- Question: "Symptoms 2+ Weeks?"
+- Paths: YES, NO
+- Parent Path: Depressed
+
+LEVEL 2B:
+- Header: "SEVERITY CHECK"
+- Question: "Mania or Hypomania?"
+- Paths: Mania, Hypo
+- Parent Path: Elevated
+
+OUTCOMES:
+- O1: "Major Depressive Disorder" | Color: green | Parent: L2A-YES
+- O2: "Adjustment Disorder" | Color: red | Parent: L2A-NO
+- O3: "Bipolar I Disorder" | Color: blue | Parent: L2B-Mania
+- O4: "Bipolar II Disorder" | Color: purple | Parent: L2B-Hypo
+```
+
+================================================================================
+SECTION 6: PYTHON IMPLEMENTATION
+================================================================================
+
+```python
+"""
+Decision Tree Generator for NCLEX Pipeline
+Generates professional decision tree slides from blueprint specifications
+"""
+
+import shutil
+from pathlib import Path
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
+from pptx.enum.text import PP_ALIGN
+from pptx.oxml.ns import qn
+from lxml import etree
+
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+# Template (always use this)
+DECISION_TREE_TEMPLATE = "visual aid and graphic organizer template.pptx"
+
+# Color palette
+COLORS = {
+    'decision_header': RGBColor(0, 51, 102),
+    'decision_body': RGBColor(240, 244, 248),
+    'decision_border': RGBColor(0, 51, 102),
+    'decision_header_text': RGBColor(255, 255, 255),
+    'decision_body_text': RGBColor(33, 37, 41),
+    'outcome_green': RGBColor(0, 102, 68),
+    'outcome_red': RGBColor(153, 0, 0),
+    'outcome_blue': RGBColor(0, 71, 133),
+    'outcome_purple': RGBColor(75, 0, 110),
+    'connector': RGBColor(100, 100, 100),
+    'white': RGBColor(255, 255, 255),
+}
+
+# Font settings
+FONTS = {
+    'family': 'Aptos',
+    'decision_header': 18,
+    'decision_body': 22,
+    'outcome_header': 18,
+    'outcome_body': 20,
+    'path_label': 18,
+    'title': 36,
+}
+
+# Minimum font size
+MIN_FONT_SIZE = 18
+
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+def add_shadow(shape):
+    """Add a subtle drop shadow to a shape."""
+    spPr = shape._element.spPr
+    effectLst = etree.SubElement(spPr, qn('a:effectLst'))
+    outerShdw = etree.SubElement(effectLst, qn('a:outerShdw'))
+    outerShdw.set('blurRad', '50800')
+    outerShdw.set('dist', '25400')
+    outerShdw.set('dir', '2700000')
+    outerShdw.set('algn', 'tl')
+    srgbClr = etree.SubElement(outerShdw, qn('a:srgbClr'))
+    srgbClr.set('val', '000000')
+    alpha = etree.SubElement(srgbClr, qn('a:alpha'))
+    alpha.set('val', '25000')
+
+
+def get_outcome_color(color_name):
+    """Get RGB color for outcome nodes."""
+    color_map = {
+        'green': COLORS['outcome_green'],
+        'red': COLORS['outcome_red'],
+        'blue': COLORS['outcome_blue'],
+        'purple': COLORS['outcome_purple'],
+    }
+    return color_map.get(color_name.lower(), COLORS['outcome_blue'])
+
+
+def add_decision_panel(slide, left, top, width, height, header_text, body_text,
+                       header_size=None, body_size=None):
+    """Add a professional two-tone rectangular panel for decisions."""
+    header_size = header_size or FONTS['decision_header']
+    body_size = body_size or FONTS['decision_body']
+
+    # Ensure minimum font size
+    header_size = max(header_size, MIN_FONT_SIZE)
+    body_size = max(body_size, MIN_FONT_SIZE)
+
+    header_height = Inches(0.45)
+    body_height = height - header_height
+
+    # Header bar (dark)
+    header = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, header_height)
+    header.fill.solid()
+    header.fill.fore_color.rgb = COLORS['decision_header']
+    header.line.fill.background()
+
+    tf = header.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = header_text
+    run.font.name = FONTS['family']
+    run.font.size = Pt(header_size)
+    run.font.bold = True
+    run.font.color.rgb = COLORS['decision_header_text']
+
+    # Body area (light)
+    body = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top + header_height, width, body_height)
+    body.fill.solid()
+    body.fill.fore_color.rgb = COLORS['decision_body']
+    body.line.color.rgb = COLORS['decision_border']
+    body.line.width = Pt(2)
+
+    tf = body.text_frame
+    tf.word_wrap = True
+    tf.margin_top = Inches(0.15)
+    tf.margin_bottom = Inches(0.1)
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = body_text
+    run.font.name = FONTS['family']
+    run.font.size = Pt(body_size)
+    run.font.bold = True
+    run.font.color.rgb = COLORS['decision_body_text']
+
+    add_shadow(body)
+    return header, body
+
+
+def add_outcome_panel(slide, left, top, width, height, header_text, body_text,
+                      color_name, header_size=None, body_size=None):
+    """Add a professional outcome/diagnosis panel."""
+    header_size = header_size or FONTS['outcome_header']
+    body_size = body_size or FONTS['outcome_body']
+
+    # Ensure minimum font size
+    header_size = max(header_size, MIN_FONT_SIZE)
+    body_size = max(body_size, MIN_FONT_SIZE)
+
+    color = get_outcome_color(color_name)
+    header_height = Inches(0.35)
+    body_height = height - header_height
+
+    # Header bar
+    header = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, width, header_height)
+    header.fill.solid()
+    header.fill.fore_color.rgb = color
+    header.line.fill.background()
+
+    tf = header.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = header_text
+    run.font.name = FONTS['family']
+    run.font.size = Pt(header_size)
+    run.font.bold = True
+    run.font.color.rgb = COLORS['white']
+
+    # Body area
+    body = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top + header_height, width, body_height)
+    body.fill.solid()
+    body.fill.fore_color.rgb = COLORS['white']
+    body.line.color.rgb = color
+    body.line.width = Pt(2.5)
+
+    tf = body.text_frame
+    tf.word_wrap = True
+    tf.margin_top = Inches(0.08)
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = body_text
+    run.font.name = FONTS['family']
+    run.font.size = Pt(body_size)
+    run.font.bold = True
+    run.font.color.rgb = color
+
+    add_shadow(body)
+    return header, body
+
+
+def add_arrow_connector(slide, start_x, start_y, end_x, end_y):
+    """Add a connector with arrow."""
+    connector = slide.shapes.add_connector(
+        MSO_CONNECTOR.STRAIGHT,
+        Inches(start_x), Inches(start_y),
+        Inches(end_x), Inches(end_y)
+    )
+    connector.line.color.rgb = COLORS['connector']
+    connector.line.width = Pt(2.5)
+
+    ln = connector._element.spPr.ln
+    tailEnd = etree.SubElement(ln, qn('a:tailEnd'))
+    tailEnd.set('type', 'triangle')
+    tailEnd.set('w', 'med')
+    tailEnd.set('len', 'med')
+    return connector
+
+
+def add_path_label(slide, left, top, text, color_name, font_size=None):
+    """Add a colored label for pathways."""
+    font_size = font_size or FONTS['path_label']
+    font_size = max(font_size, MIN_FONT_SIZE)
+
+    color = get_outcome_color(color_name)
+    width = Inches(1.5)
+    height = Inches(0.4)
+
+    label = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+    label.adjustments[0] = 0.5
+    label.fill.solid()
+    label.fill.fore_color.rgb = color
+    label.line.fill.background()
+
+    tf = label.text_frame
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = text
+    run.font.name = FONTS['family']
+    run.font.size = Pt(font_size)
+    run.font.bold = True
+    run.font.color.rgb = COLORS['white']
+    return label
+
+
+# =============================================================================
+# LAYOUT GENERATORS
+# =============================================================================
+
+def generate_layout_a(slide, tree_data):
+    """
+    Generate Layout A: Three-Level Binary (1 → 2 → 4)
+    Standard layout for 4 outcomes with symmetric branching.
+    """
+    # Layout coordinates
+    L1_X, L1_Y = 4.4, 0.85
+    L1_W, L1_H = 4.5, 1.3
+
+    L2_Y = 2.9
+    L2_LEFT_X, L2_RIGHT_X = 1.0, 7.8
+    L2_W, L2_H = 4.5, 1.2
+
+    L3_Y = 5.0
+    L3_W, L3_H = 2.9, 1.0
+    L3_POSITIONS = [0.2, 3.4, 6.6, 9.9]
+
+    # Level 1
+    l1 = tree_data['level1']
+    add_decision_panel(
+        slide,
+        left=Inches(L1_X), top=Inches(L1_Y),
+        width=Inches(L1_W), height=Inches(L1_H),
+        header_text=l1['header'],
+        body_text=l1['question'],
+        header_size=18, body_size=24
+    )
+
+    # Level 2
+    l2a = tree_data['level2a']
+    add_decision_panel(
+        slide,
+        left=Inches(L2_LEFT_X), top=Inches(L2_Y),
+        width=Inches(L2_W), height=Inches(L2_H),
+        header_text=l2a['header'],
+        body_text=l2a['question'],
+        header_size=18, body_size=22
+    )
+
+    l2b = tree_data['level2b']
+    add_decision_panel(
+        slide,
+        left=Inches(L2_RIGHT_X), top=Inches(L2_Y),
+        width=Inches(L2_W), height=Inches(L2_H),
+        header_text=l2b['header'],
+        body_text=l2b['question'],
+        header_size=18, body_size=22
+    )
+
+    # Outcomes
+    outcomes = tree_data['outcomes']
+    for i, outcome in enumerate(outcomes[:4]):
+        add_outcome_panel(
+            slide,
+            left=Inches(L3_POSITIONS[i]), top=Inches(L3_Y),
+            width=Inches(L3_W), height=Inches(L3_H),
+            header_text="DIAGNOSIS",
+            body_text=outcome['name'],
+            color_name=outcome['color'],
+            header_size=18, body_size=20
+        )
+
+    # Connectors
+    add_arrow_connector(slide, L1_X + 0.8, L1_Y + L1_H, L2_LEFT_X + L2_W/2, L2_Y)
+    add_arrow_connector(slide, L1_X + L1_W - 0.8, L1_Y + L1_H, L2_RIGHT_X + L2_W/2, L2_Y)
+
+    add_arrow_connector(slide, L2_LEFT_X + L2_W*0.3, L2_Y + L2_H, L3_POSITIONS[0] + L3_W/2, L3_Y)
+    add_arrow_connector(slide, L2_LEFT_X + L2_W*0.7, L2_Y + L2_H, L3_POSITIONS[1] + L3_W/2, L3_Y)
+    add_arrow_connector(slide, L2_RIGHT_X + L2_W*0.3, L2_Y + L2_H, L3_POSITIONS[2] + L3_W/2, L3_Y)
+    add_arrow_connector(slide, L2_RIGHT_X + L2_W*0.7, L2_Y + L2_H, L3_POSITIONS[3] + L3_W/2, L3_Y)
+
+    # Path labels
+    paths = l1.get('paths', ['Left', 'Right'])
+    add_path_label(slide, Inches(2.6), Inches(2.35), paths[0], 'red')
+    add_path_label(slide, Inches(9.3), Inches(2.35), paths[1], 'green')
+
+    l2a_paths = l2a.get('paths', ['YES', 'NO'])
+    l2b_paths = l2b.get('paths', ['Option1', 'Option2'])
+    add_path_label(slide, Inches(0.9), Inches(4.5), l2a_paths[0], outcomes[0]['color'])
+    add_path_label(slide, Inches(4.3), Inches(4.5), l2a_paths[1], outcomes[1]['color'])
+    add_path_label(slide, Inches(7.2), Inches(4.5), l2b_paths[0], outcomes[2]['color'])
+    add_path_label(slide, Inches(10.6), Inches(4.5), l2b_paths[1], outcomes[3]['color'])
+
+
+def generate_layout_b(slide, tree_data):
+    """
+    Generate Layout B: Two-Level Binary (1 → 2)
+    Simple layout for 2 outcomes.
+    """
+    # Layout coordinates - centered, larger panels
+    L1_X, L1_Y = 4.4, 1.2
+    L1_W, L1_H = 4.5, 1.5
+
+    L2_Y = 4.0
+    L2_LEFT_X, L2_RIGHT_X = 1.5, 7.5
+    L2_W, L2_H = 4.0, 1.3
+
+    # Level 1
+    l1 = tree_data['level1']
+    add_decision_panel(
+        slide,
+        left=Inches(L1_X), top=Inches(L1_Y),
+        width=Inches(L1_W), height=Inches(L1_H),
+        header_text=l1['header'],
+        body_text=l1['question'],
+        header_size=20, body_size=26
+    )
+
+    # Outcomes (only 2)
+    outcomes = tree_data['outcomes']
+    for i, outcome in enumerate(outcomes[:2]):
+        x = L2_LEFT_X if i == 0 else L2_RIGHT_X
+        add_outcome_panel(
+            slide,
+            left=Inches(x), top=Inches(L2_Y),
+            width=Inches(L2_W), height=Inches(L2_H),
+            header_text="DIAGNOSIS",
+            body_text=outcome['name'],
+            color_name=outcome['color'],
+            header_size=18, body_size=22
+        )
+
+    # Connectors
+    add_arrow_connector(slide, L1_X + 0.8, L1_Y + L1_H, L2_LEFT_X + L2_W/2, L2_Y)
+    add_arrow_connector(slide, L1_X + L1_W - 0.8, L1_Y + L1_H, L2_RIGHT_X + L2_W/2, L2_Y)
+
+    # Path labels
+    paths = l1.get('paths', ['YES', 'NO'])
+    add_path_label(slide, Inches(2.5), Inches(3.3), paths[0], outcomes[0]['color'])
+    add_path_label(slide, Inches(8.5), Inches(3.3), paths[1], outcomes[1]['color'])
+
+
+def generate_layout_c(slide, tree_data):
+    """
+    Generate Layout C: Two-Level Triple (1 → 3)
+    Layout for 3 outcomes from single decision.
+    """
+    # Layout coordinates
+    L1_X, L1_Y = 4.4, 1.2
+    L1_W, L1_H = 4.5, 1.5
+
+    L2_Y = 4.0
+    L2_W, L2_H = 3.5, 1.3
+    L2_POSITIONS = [0.8, 4.9, 9.0]
+
+    # Level 1
+    l1 = tree_data['level1']
+    add_decision_panel(
+        slide,
+        left=Inches(L1_X), top=Inches(L1_Y),
+        width=Inches(L1_W), height=Inches(L1_H),
+        header_text=l1['header'],
+        body_text=l1['question'],
+        header_size=20, body_size=26
+    )
+
+    # Outcomes (3)
+    outcomes = tree_data['outcomes']
+    for i, outcome in enumerate(outcomes[:3]):
+        add_outcome_panel(
+            slide,
+            left=Inches(L2_POSITIONS[i]), top=Inches(L2_Y),
+            width=Inches(L2_W), height=Inches(L2_H),
+            header_text="DIAGNOSIS",
+            body_text=outcome['name'],
+            color_name=outcome['color'],
+            header_size=18, body_size=20
+        )
+
+    # Connectors
+    add_arrow_connector(slide, L1_X + L1_W*0.25, L1_Y + L1_H, L2_POSITIONS[0] + L2_W/2, L2_Y)
+    add_arrow_connector(slide, L1_X + L1_W*0.5, L1_Y + L1_H, L2_POSITIONS[1] + L2_W/2, L2_Y)
+    add_arrow_connector(slide, L1_X + L1_W*0.75, L1_Y + L1_H, L2_POSITIONS[2] + L2_W/2, L2_Y)
+
+    # Path labels
+    paths = l1.get('paths', ['Option1', 'Option2', 'Option3'])
+    add_path_label(slide, Inches(1.5), Inches(3.3), paths[0], outcomes[0]['color'])
+    add_path_label(slide, Inches(5.6), Inches(3.3), paths[1], outcomes[1]['color'])
+    add_path_label(slide, Inches(9.7), Inches(3.3), paths[2], outcomes[2]['color'])
+
+
+# =============================================================================
+# MAIN GENERATOR FUNCTION
+# =============================================================================
+
+def generate_decision_tree(blueprint_data, template_path, output_path):
+    """
+    Main function to generate a decision tree slide.
+
+    Args:
+        blueprint_data: Dict containing tree structure from integrated blueprint
+        template_path: Path to the visual aid template
+        output_path: Path for the output PowerPoint file
+
+    Returns:
+        Path to the generated file
+    """
+    # Copy template
+    shutil.copy2(template_path, output_path)
+    prs = Presentation(str(output_path))
+    slide = prs.slides[0]
+
+    # Set title
+    title = blueprint_data.get('title', 'Decision Tree')
+    for shape in slide.shapes:
+        if shape.name == "TextBox 2":
+            shape.text_frame.clear()
+            p = shape.text_frame.paragraphs[0]
+            run = p.add_run()
+            run.text = title
+            run.font.name = FONTS['family']
+            run.font.size = Pt(FONTS['title'])
+            run.font.bold = True
+            run.font.color.rgb = COLORS['white']
+
+    # Clear other text boxes
+    for shape in slide.shapes:
+        if shape.name in ["TextBox 3", "TextBox 19"]:
+            shape.text_frame.clear()
+            shape.text_frame.paragraphs[0].text = ""
+
+    # Determine layout
+    layout = blueprint_data.get('layout', 'AUTO')
+    outcomes = blueprint_data.get('outcomes', [])
+
+    if layout == 'AUTO':
+        # Auto-select based on outcome count
+        if len(outcomes) <= 2:
+            layout = 'B'
+        elif len(outcomes) == 3:
+            layout = 'C'
+        else:
+            layout = 'A'
+
+    # Generate based on layout
+    if layout == 'A':
+        generate_layout_a(slide, blueprint_data)
+    elif layout == 'B':
+        generate_layout_b(slide, blueprint_data)
+    elif layout == 'C':
+        generate_layout_c(slide, blueprint_data)
+    else:
+        # Default to Layout A
+        generate_layout_a(slide, blueprint_data)
+
+    # Add presenter notes if provided
+    notes = blueprint_data.get('presenter_notes', '')
+    if notes:
+        slide.notes_slide.notes_text_frame.text = notes
+
+    prs.save(str(output_path))
+    return output_path
+
+
+# =============================================================================
+# BLUEPRINT PARSER
+# =============================================================================
+
+def parse_decision_tree_blueprint(blueprint_text):
+    """
+    Parse decision tree specification from integrated blueprint text.
+
+    Returns dict with structure:
+    {
+        'title': str,
+        'layout': str,
+        'level1': {'header': str, 'question': str, 'paths': list},
+        'level2a': {'header': str, 'question': str, 'paths': list},
+        'level2b': {'header': str, 'question': str, 'paths': list},
+        'outcomes': [{'name': str, 'color': str}, ...],
+        'presenter_notes': str
+    }
+    """
+    # Implementation would parse the blueprint format
+    # This is a placeholder showing expected structure
+    pass
+```
+
+================================================================================
+SECTION 7: INTEGRATION WITH PIPELINE
+================================================================================
+
+The decision tree generator integrates with the pipeline at these points:
+
+STEP 9 (Visual Identification):
+- Claude evaluates content against identification conditions
+- If conditions met, marks slide as: Visual: Yes - DECISION_TREE
+- Provides initial tree structure outline
+
+STEP 10 (Integration):
+- Refines tree structure with exact text
+- Validates character limits
+- Selects or confirms layout
+- Adds to integrated blueprint in specified format
+
+STEP 12 (PowerPoint Population):
+- When DECISION_TREE visual type encountered:
+  1. Parse blueprint for tree structure
+  2. Load visual aid template
+  3. Call generate_decision_tree() function
+  4. Save to section PowerPoint
+
+FALLBACK BEHAVIOR:
+- If content exceeds 15 nodes: Convert to TABLE format
+- If structure doesn't fit any layout: Use closest match with warning
+- If character limits exceeded: Truncate with ellipsis and note in logs
+
+================================================================================
+SECTION 8: EXAMPLES
+================================================================================
+
+EXAMPLE 1: Anxiety Disorder Classification
+-----------------------------------------
+Layout: C (1 → 3)
+Level 1: "ANXIETY TYPE" / "What triggers the anxiety?"
+Outcomes:
+- "Generalized Anxiety Disorder" (blue) - No specific trigger
+- "Specific Phobia" (green) - Specific object/situation
+- "Social Anxiety Disorder" (purple) - Social situations
+
+EXAMPLE 2: Psychotic Features Assessment
+-----------------------------------------
+Layout: B (1 → 2)
+Level 1: "PSYCHOTIC FEATURES" / "Are psychotic features present?"
+Outcomes:
+- "With Psychotic Features" (red) - YES
+- "Without Psychotic Features" (green) - NO
+
+EXAMPLE 3: Sleep Disorder Differentiation
+-----------------------------------------
+Layout: A (1 → 2 → 4)
+Level 1: "INITIAL ASSESSMENT" / "Primary complaint?"
+Level 2A: "INSOMNIA TYPE" / "Difficulty falling or staying asleep?"
+Level 2B: "HYPERSOMNIA TYPE" / "Excessive sleepiness cause?"
+Outcomes:
+- "Sleep Onset Insomnia" (red)
+- "Sleep Maintenance Insomnia" (blue)
+- "Narcolepsy" (purple)
+- "Sleep Apnea" (green)
+
+================================================================================
+SECTION 9: VALIDATION CHECKLIST
+================================================================================
+
+Before completing decision tree generation:
+
+STRUCTURE:
+- [ ] Appropriate layout selected (A/B/C/D/E) for content
+- [ ] Node count within limits (max 15 nodes total)
+- [ ] All paths lead to valid outcomes
+- [ ] No orphaned or disconnected nodes
+
+DECISION PANELS:
+- [ ] Header text: 20 chars max
+- [ ] Body text: 25 chars/line max, 2 lines max
+- [ ] Header: Navy background (0,51,102), white text, bold
+- [ ] Body: Light gray-blue background (240,244,248), dark text
+- [ ] Border: 2pt navy around body
+
+OUTCOME PANELS:
+- [ ] Header text: 20 chars max
+- [ ] Body text: 20 chars/line max, 2 lines max
+- [ ] Distinct colors used (green, red, blue, purple)
+- [ ] Border: 2.5pt matching header color
+- [ ] "DIAGNOSIS" or appropriate label in header
+
+PATH LABELS:
+- [ ] Path label text: 12 chars max
+- [ ] Labels positioned correctly on connectors
+- [ ] Colors match destination outcomes
+- [ ] Rounded rectangle style with color fill
+
+CONNECTORS:
+- [ ] All arrows render with proper direction
+- [ ] Arrow heads visible (triangle style)
+- [ ] Gray color (100,100,100), 2.5pt width
+- [ ] No overlapping or crossing lines
+
+SHADOWS AND EFFECTS:
+- [ ] Drop shadows applied to panels
+- [ ] Shadow: 25% opacity, slight offset
+
+PRESENTER NOTES:
+- [ ] Notes walk through decision tree logic
+- [ ] Each path explained with clinical rationale
+- [ ] NCLEX relevance mentioned
+- [ ] 150-300 words total
+
+TEMPLATE COMPLIANCE:
+- [ ] Uses correct template (visual aid and graphic organizer)
+- [ ] Title in TextBox 2 (white text, 36pt, bold)
+- [ ] Template text boxes cleared
+
+================================================================================
+SECTION 10: COMMON ISSUES AND FIXES
+================================================================================
+
+ISSUE: Connectors not rendering properly
+FIX: Use MSO_CONNECTOR.STRAIGHT, ensure start/end coordinates are correct
+
+ISSUE: Arrow heads missing
+FIX: Add tailEnd element to connector line XML with type="triangle"
+
+ISSUE: Text overflow in nodes
+FIX: Check character limits, reduce font size to 18pt minimum if needed
+
+ISSUE: Panels overlapping
+FIX: Verify layout coordinates for selected layout type
+
+ISSUE: Path labels in wrong position
+FIX: Calculate label position based on connector midpoint
+
+ISSUE: Colors inconsistent
+FIX: Use exact RGB values from COLOR_SCHEME configuration
+
+ISSUE: Shadows not appearing
+FIX: Add effectLst with outerShdw element to shape spPr
+
+ISSUE: Presenter notes missing
+FIX: Access slide.notes_slide.notes_text_frame.text
+
+================================================================================
+END OF DOCUMENT
+================================================================================

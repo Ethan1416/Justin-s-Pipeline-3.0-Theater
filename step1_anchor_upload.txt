@@ -1,0 +1,77 @@
+# STEP 1: ANCHOR UPLOAD
+## NCLEX Lecture Development Pipeline
+
+---
+
+## PURPOSE
+
+This step initiates the lecture development pipeline by uploading the anchor point content summaries document.
+
+---
+
+## INSTRUCTIONS FOR USER
+
+1. Prepare your anchor point content summaries document
+2. Ensure the document includes:
+   - **Domain name** clearly indicated (e.g., "Fundamentals of Nursing" or "Pharmacology" or "Medical-Surgical Nursing")
+   - **Numbered anchor points** (1, 2, 3... or 1., 2., 3...)
+   - **One testable concept per anchor** - each anchor is a discrete piece of NCLEX-relevant content
+
+3. Upload the document as-is (no preprocessing required)
+
+---
+
+## EXPECTED INPUT FORMAT
+
+```
+[DOMAIN NAME] Anchor Point Summaries
+
+1. [Anchor point content summary - one testable concept]
+
+2. [Anchor point content summary - one testable concept]
+
+3. [Anchor point content summary - one testable concept]
+
+...
+
+N. [Final anchor point content summary]
+```
+
+---
+
+## APPLICABLE NCLEX DOMAINS
+
+This pipeline works for any NCLEX content domain, including:
+
+- Fundamentals of Nursing (core concepts, basic care, nursing process)
+- Pharmacology (drug classifications, mechanisms, interactions)
+- Medical-Surgical Nursing (adult health, chronic/acute conditions)
+- OB/Maternity Nursing (antepartum, intrapartum, postpartum, newborn)
+- Pediatric Nursing (growth/development, pediatric conditions)
+- Mental Health Nursing (psychiatric disorders, therapeutic communication)
+
+---
+
+## WHAT HAPPENS NEXT
+
+After uploading the anchor document:
+
+1. **Step 2: Lecture Mapping** - AI analyzes anchors across 5 phases to understand content and plan structure
+2. **Step 3: Official Sorting** - AI assigns each anchor to a section using sorting rules
+3. **Step 4: Outline Generation** - AI produces the final outline with sections, subsections, and slide counts
+
+---
+
+## OUTPUT
+
+This step produces no output file. The uploaded document serves as input for Step 2.
+
+---
+
+## PROMPT TO INITIATE STEP 2
+
+After uploading, use this prompt to begin Step 2:
+
+```
+Using the anchor point document I just uploaded, please execute Step 2: Lecture Mapping. Follow the 5-phase process to analyze content, discover clusters, map relationships, form sections, and generate arc planning iterations.
+```

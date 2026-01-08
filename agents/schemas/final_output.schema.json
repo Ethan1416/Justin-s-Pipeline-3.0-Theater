@@ -1,0 +1,176 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "final_output.schema.json",
+  "title": "Final Validator Output Schema",
+  "description": "Schema for final_validator agent output - final validation results and approval status",
+  "type": "object",
+  "required": ["metadata", "validation_results", "approval"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "final_validator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "validation_results": {
+      "type": "object",
+      "required": ["overall_status"],
+      "properties": {
+        "overall_status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "PASS_WITH_WARNINGS"]
+        },
+        "constraint_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "anchor_coverage_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "visual_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "presenter_notes_check": {
+          "$ref": "#/definitions/check_result"
+        },
+        "completeness_check": {
+          "$ref": "#/definitions/check_result"
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "required": ["approved", "decision"],
+      "properties": {
+        "approved": {
+          "type": "boolean"
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["approve_for_generation", "requires_revision", "blocked"]
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides_valid": {
+          "type": "integer"
+        },
+        "slides_with_issues": {
+          "type": "integer"
+        },
+        "anchors_covered": {
+          "type": "integer"
+        },
+        "anchors_total": {
+          "type": "integer"
+        },
+        "visuals_count": {
+          "type": "integer"
+        },
+        "error_count": {
+          "type": "integer"
+        },
+        "warning_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/validation_issue"
+      }
+    },
+    "ready_for_generation": {
+      "type": "object",
+      "properties": {
+        "ready": {
+          "type": "boolean"
+        },
+        "output_file": {
+          "type": "string",
+          "description": "Path to validated content file for PPTX generation"
+        },
+        "generation_notes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Notes for the PPTX generation step"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "check_result": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "WARNING", "SKIPPED"]
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "details": {
+          "type": "string"
+        },
+        "issue_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "validation_issue": {
+      "type": "object",
+      "required": ["severity", "category", "message"],
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["error", "warning", "info"]
+        },
+        "category": {
+          "type": "string",
+          "enum": ["constraint", "anchor", "visual", "notes", "completeness", "format"]
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "element": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "blocking": {
+          "type": "boolean",
+          "description": "Whether this issue blocks PPTX generation"
+        }
+      }
+    }
+  }
+}

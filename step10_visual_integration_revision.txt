@@ -1,0 +1,620 @@
+# STEP 10: VISUAL INTEGRATION REVISION
+## Contextual Integration of Visual Aids into Blueprint
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step integrates the visual aid specifications from Step 9 into the blueprint, revising surrounding content for seamless incorporation. This is the "third revision" that ensures visuals are contextually connected to the lecture flow.
+
+---
+
+## INPUT
+
+**Required:**
+1. Step 9 visual specifications (`step9_visual_specs_[domain]_[section]_[date].txt`)
+2. Step 7 revised blueprint (`step7_revised_[domain]_[section]_[date].txt`)
+3. Step 4 outline (for structure reference)
+4. Step 5 presentation standards (for delivery mode reference)
+
+---
+
+## OUTPUT
+
+**Primary Output:** `step10_integrated_blueprint_[domain]_[section]_[date].txt`
+- Complete blueprint with visuals integrated
+- All surrounding slides updated
+- Presenter notes revised
+- Ready for PowerPoint generation
+
+**Secondary Output:** `step10_revision_changelog_[domain]_[section]_[date].txt`
+- Detailed log of all changes made
+- Rationale for each modification
+
+---
+
+## INTEGRATION PHILOSOPHY
+
+### Seamless Flow
+
+Visual aids should feel like natural parts of the lecture, not interruptions. The revision must:
+- Create smooth transitions INTO visual content
+- Create smooth transitions OUT OF visual content
+- Reference visuals explicitly in presenter notes
+- Connect visuals to surrounding anchor points
+
+### Maintain Instructional Integrity
+
+While integrating visuals:
+- Preserve all anchor point coverage
+- Maintain section learning objectives
+- Respect delivery mode structure (Foundational, Full, Minor, One-and-Done)
+- Honor prerequisite relationships
+
+### Adhere to Existing Standards
+
+All revisions must comply with:
+- Character limits (Header: 32 chars, Body: 66×8, Tip: 66×2)
+- Presenter notes limits (180 seconds max)
+- Slide count constraints (Section: 12-35, Session: 72-90)
+- Fixed slide requirements (Intro, Vignette, Answer per section)
+
+---
+
+## REVISION CONDITIONS
+
+### Condition R1: Pre-Visual Transition
+**Trigger:** Slide immediately before a visual
+**Action:** Add transition language in presenter notes
+**Phrasing Examples:**
+- "Let's look at this visually to clarify the relationships..."
+- "The following diagram will help you see how these elements connect..."
+- "I want to show you a table that organizes what we just discussed..."
+
+### Condition R2: Post-Visual Connection
+**Trigger:** Slide immediately after a visual
+**Action:** Add connection language in presenter notes
+**Phrasing Examples:**
+- "As you saw in the table..."
+- "Building on that diagram..."
+- "Now that you can visualize the process..."
+
+### Condition R3: Visual Slide Presenter Notes
+**Trigger:** Slide containing the visual itself
+**Action:** Write presenter notes that WALK THROUGH the visual
+**Requirements:**
+- Verbatim monologue (not bullet points)
+- Reference specific elements of the visual
+- Explain how to read/interpret the visual
+- Connect to anchor point content
+- 130-150 words per minute, max 180 seconds
+
+### Condition R4: Redundancy Reduction
+**Trigger:** Visual replaces slide body (Integration Option A)
+**Action:** Ensure no redundant text remains
+**Guidelines:**
+- Remove body text that visual now conveys
+- Keep header if still relevant
+- Update presenter notes to teach from visual, not text
+
+### Condition R5: Cross-Reference Updates
+**Trigger:** Other slides in section reference content now in visual
+**Action:** Update references to point to visual
+**Phrasing Examples:**
+- "As shown in our earlier comparison table..."
+- "Referring back to the decision tree we reviewed..."
+- "Remember the diagram showing..."
+
+### Condition R6: NCLEX Tip Handling
+**Trigger:** Slide converted to visual slide
+**Action:** Remove NCLEX tip (visual slides don't need tips)
+**Note:** If tip contained critical testing insight, incorporate into presenter notes
+
+### Condition R7: Subsection Flow Preservation
+**Trigger:** Visual added within subsection
+**Action:** Verify subsection delivery mode structure intact
+**Check:**
+- Foundational mode: Overview → Scaffolding → Bridge (still present?)
+- Full mode: Connection → Core → Synthesis (still present?)
+- Minor mode: Connection → Core (still present?)
+- One-and-Done: Self-contained unit (still works?)
+
+### Condition R8: Section Fixed Slides Protection
+**Trigger:** Any revision near fixed slides
+**Action:** Ensure fixed slides remain intact
+**Fixed Slides:**
+- Section Intro (Slide 1)
+- Vignette (near section end)
+- Answer (after vignette)
+**Rule:** These slides should NOT be converted to visuals
+
+---
+
+## REVISION PROCESS
+
+### Phase 1: Visual Integration
+
+For each visual from Step 9:
+
+1. **Locate target slide** in Step 7 blueprint
+2. **Apply integration option** (A, B, or C from Step 9)
+3. **Insert/modify content** per visual specification
+4. **Update slide header** if needed
+5. **Write/revise presenter notes** per Condition R3
+6. **Handle NCLEX tip** per Condition R6
+
+### Phase 2: Surrounding Slide Updates
+
+For slides affected by visual integration:
+
+1. **Identify slides before visual** → Apply Condition R1
+2. **Identify slides after visual** → Apply Condition R2
+3. **Identify cross-references** → Apply Condition R5
+4. **Check for redundancies** → Apply Condition R4
+
+### Phase 3: Structure Validation
+
+Verify section structure remains sound:
+
+1. **Check subsection flow** → Condition R7
+2. **Verify fixed slides** → Condition R8
+3. **Count total slides** → Confirm within 12-35
+4. **Validate character limits** → All revised text compliant
+
+### Phase 4: Changelog Documentation
+
+Document every change made:
+- Slide number
+- Change type
+- Before/after content
+- Rationale
+
+---
+
+## PRESENTER NOTES FOR VISUAL SLIDES
+
+### Template: Table Slides
+
+```
+PRESENTER NOTES:
+
+Let me show you this information in a table format to make the relationships clearer. [PAUSE]
+
+Looking at our [table title], you'll see [number] [rows/columns] that organize [topic description].
+
+Starting with the first [column/row], [explanation of first element]. Notice how this [connects to/contrasts with] [related element]. [PAUSE]
+
+Moving to [next element], [explanation]. This is particularly important because [EMPHASIS: key point] directly relates to [anchor point reference].
+
+[Continue for remaining elements...]
+
+The key takeaway from this table is [synthesis statement]. When you see NCLEX questions about [topic], you can mentally reference this organization to [application guidance].
+
+[Transition to next slide]
+
+[Word count: 130-150 per minute, max 450 words]
+```
+
+### Template: Decision Tree Slides
+
+```
+PRESENTER NOTES:
+
+This decision tree will help you navigate [topic] systematically. [PAUSE]
+
+We start at the top with the question: [starting question]. This is your entry point for any [scenario type].
+
+If the answer is [YES/first option], we move to [next node]. Here, we ask [next question]. [Explain the logic behind this branch].
+
+If instead the answer is [NO/second option], we follow this path to [alternative node]. [EMPHASIS: key distinction] is what separates these two paths.
+
+[Continue walking through the tree...]
+
+Notice that all paths eventually lead to [terminal outcomes]. The NCLEX loves to test your ability to [application of decision process]. When you encounter [scenario type], mentally walk through this tree.
+
+[Transition to next slide]
+
+[Word count: 130-150 per minute, max 450 words]
+```
+
+### Template: Flowchart Slides
+
+```
+PRESENTER NOTES:
+
+Let's trace through this process step by step using this flowchart. [PAUSE]
+
+We begin with [starting point]. From here, the first step is [Step 1 description]. This is foundational because [rationale].
+
+Next, we move to [Step 2]. Notice the arrow indicating [direction/sequence]. [EMPHASIS: critical element] occurs at this stage.
+
+Now we reach a decision point: [decision question]. If [condition A], we proceed to [Path A]. If [condition B], we go to [Path B]. [Explain the distinction].
+
+[Continue through flowchart...]
+
+The endpoint shows us [final outcome]. Understanding this flow helps you [application to NCLEX or practice].
+
+[Transition to next slide]
+
+[Word count: 130-150 per minute, max 450 words]
+```
+
+### Template: Comparison Table Slides
+
+```
+PRESENTER NOTES:
+
+This comparison table will help you distinguish between [Item A] and [Item B]—a distinction NCLEX frequently tests. [PAUSE]
+
+Looking at the columns, we have [Item A] on the left and [Item B] on the right. Let's work through each row.
+
+First, [Dimension 1]: [Item A] shows [characteristic], while [Item B] shows [different characteristic]. [EMPHASIS: key discriminator] is the clearest difference here.
+
+For [Dimension 2]: [explanation of comparison]. This matters clinically because [application].
+
+[Continue through rows...]
+
+When you need to differentiate these on the exam, ask yourself: [discriminating question]. That will point you to the correct answer.
+
+[Transition to next slide]
+
+[Word count: 130-150 per minute, max 450 words]
+```
+
+---
+
+## TRANSITION LANGUAGE BANK
+
+### Pre-Visual Transitions (Condition R1)
+
+**For Tables:**
+- "Let me organize this information in a table so you can see the patterns clearly."
+- "The next slide presents this as a structured comparison."
+- "We'll use a table to systematically work through these elements."
+
+**For Decision Trees:**
+- "Now I want to give you a decision-making framework for this."
+- "Let's map out the clinical reasoning process visually."
+- "The following decision tree will guide your thinking."
+
+**For Flowcharts:**
+- "Let me show you how this process unfolds step by step."
+- "The next slide walks through this sequence visually."
+- "We'll trace this procedure using a flowchart."
+
+**For Concept Maps:**
+- "Let's see how these concepts connect to each other."
+- "The following diagram maps the relationships between these elements."
+- "I want to show you the bigger picture of how these ideas relate."
+
+### Post-Visual Connections (Condition R2)
+
+**Referring Back:**
+- "As that table showed..."
+- "Building on the diagram we just reviewed..."
+- "With that framework in mind..."
+- "Now that you can visualize the process..."
+- "Using that comparison as our foundation..."
+
+**Applying the Visual:**
+- "You can use that table when you encounter..."
+- "That decision tree applies whenever you face..."
+- "Keep that flowchart in mind as we discuss..."
+- "The relationships in that diagram will help you understand..."
+
+---
+
+## CHARACTER LIMIT COMPLIANCE
+
+### During Revision, Verify:
+
+| Element | Limit | Check |
+|---------|-------|-------|
+| Header | 32 chars/line, 2 lines max | Each revised header |
+| Body | 66 chars/line, 8 lines max | Any reduced text (Option C) |
+| NCLEX Tip | 66 chars/line, 2 lines max | N/A for visual slides |
+| Presenter Notes | 180 seconds (~450 words) | All new/revised notes |
+
+### If Limits Exceeded After Revision:
+
+1. **Condense language** using Step 7 techniques
+2. **Split content** if necessary
+3. **Adjust visual specification** to reduce complexity
+4. **Document in changelog** any constraint-driven modifications
+
+---
+
+## OUTPUT FORMAT
+
+### Integrated Blueprint Format
+
+```
+========================================
+STEP 10: INTEGRATED BLUEPRINT
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+Source Files:
+- step7_revised_[domain]_[section]_[date].txt
+- step9_visual_specs_[domain]_[section]_[date].txt
+
+========================================
+INTEGRATION SUMMARY
+========================================
+
+Visuals Integrated: [X]
+- Tables (native PowerPoint): [X]
+- Decision Trees (native PowerPoint shapes): [X]
+- Diagrams (Python-generated): [X]
+
+Decision Tree Reference: step12_decision_tree_generation.txt
+
+Slides Modified: [X]
+Slides Added: [X]
+Final Slide Count: [X]
+
+Section Limit Compliance: [PASS/FAIL]
+
+========================================
+BEGIN INTEGRATED SLIDE-BY-SLIDE BLUEPRINT
+========================================
+
+[Full blueprint with all slides, including integrated visuals]
+
+[Use same format as Step 7, with additions:]
+
+===========================================
+SLIDE [#]: [TITLE]
+===========================================
+Type: [Content/Visual/Section Intro/Vignette/Answer]
+Visual: [Yes - Table/Decision Tree/etc. / No]
+Subsection: [Subsection Name]
+Anchors Covered: [List or "N/A - Visual slide"]
+
+HEADER:
+[Header text]
+
+BODY:
+[For text slides: body text]
+[For visual slides: visual specification reference or inline spec]
+
+VISUAL SPECIFICATION:
+[If visual slide, include full specification from Step 9]
+[For tables: include markdown table]
+[For diagrams: include specification for Python generation]
+[For decision trees: use format below]
+
+---
+DECISION_TREE FORMAT (when Visual: Yes - DECISION_TREE):
+
+Type: DECISION_TREE
+Layout: [A/B/C/D/E or AUTO]
+
+LEVEL 1:
+- Header: "[Category - 20 chars max]"
+- Question: "[Decision question - 25 chars/line, 2 lines max]"
+- Paths: [Path1], [Path2]
+
+LEVEL 2A: (if applicable)
+- Header: "[Category]"
+- Question: "[Question]"
+- Paths: [Path1], [Path2]
+- Parent Path: [L1 path name]
+
+LEVEL 2B: (if applicable)
+- Header: "[Category]"
+- Question: "[Question]"
+- Paths: [Path1], [Path2]
+- Parent Path: [L1 path name]
+
+OUTCOMES:
+- O1: "[Result - 20 chars/line, 2 lines max]" | Color: green | Parent: [path]
+- O2: "[Result]" | Color: red | Parent: [path]
+- O3: "[Result]" | Color: blue | Parent: [path]
+- O4: "[Result]" | Color: purple | Parent: [path]
+
+Reference: step12_decision_tree_generation.txt for implementation
+---
+
+NCLEX TIP:
+[For content slides: tip text]
+[For visual slides: None]
+
+PRESENTER NOTES:
+[Full verbatim monologue]
+[For visual slides: walk-through of visual content]
+
+INTEGRATION NOTES:
+[Any notes about how this slide was modified for integration]
+[Reference to changelog entry if significant change]
+
+===========================================
+
+[Continue for all slides...]
+
+========================================
+END INTEGRATED BLUEPRINT
+========================================
+```
+
+---
+
+### Changelog Format
+
+```
+========================================
+STEP 10: REVISION CHANGELOG
+========================================
+Domain: [Domain Name]
+Section: [Section Name]
+Date: [Date]
+
+Source: step7_revised_[domain]_[section]_[date].txt
+Output: step10_integrated_blueprint_[domain]_[section]_[date].txt
+
+========================================
+REVISION SUMMARY
+========================================
+
+Total Changes: [X]
+- Visual integrations: [X]
+- Pre-visual transitions added: [X]
+- Post-visual connections added: [X]
+- Cross-references updated: [X]
+- Redundancies removed: [X]
+- NCLEX tips removed (visual slides): [X]
+- New slides added: [X]
+
+========================================
+DETAILED CHANGELOG
+========================================
+
+---
+CHANGE #1
+---
+Slide: [#]
+Change Type: [Visual Integration / Transition Added / Connection Added / etc.]
+Condition Applied: [R1/R2/R3/R4/R5/R6/R7/R8]
+
+Before:
+[Original content]
+
+After:
+[Revised content]
+
+Rationale:
+[Explanation of why this change was made]
+
+---
+CHANGE #2
+---
+[Continue for all changes...]
+
+========================================
+CONSTRAINT VALIDATION
+========================================
+
+Slide Count:
+- Before integration: [X]
+- After integration: [X]
+- Section limit (12-35): [PASS/FAIL]
+- Session limit (72-90): [PASS/FAIL]
+
+Character Limits:
+- Headers checked: [X] / [X] compliant
+- Bodies checked: [X] / [X] compliant
+- Presenter notes checked: [X] / [X] compliant
+
+Structure:
+- Fixed slides intact: [YES/NO]
+- Subsection modes preserved: [YES/NO]
+- Anchor coverage maintained: [YES/NO]
+
+========================================
+INTEGRATION COMPLETE
+========================================
+```
+
+---
+
+## VALIDATION CHECKLIST
+
+Before completing Step 10:
+
+### Visual Integration
+- [ ] All visuals from Step 9 integrated
+- [ ] Integration options (A/B/C) correctly applied
+- [ ] Visual specifications included in blueprint
+- [ ] Presenter notes written for all visual slides
+
+### Surrounding Content
+- [ ] Pre-visual transitions added (Condition R1)
+- [ ] Post-visual connections added (Condition R2)
+- [ ] Cross-references updated (Condition R5)
+- [ ] Redundancies removed (Condition R4)
+
+### Standards Compliance
+- [ ] Character limits met for all revised text
+- [ ] Presenter notes within 180 seconds
+- [ ] NCLEX tips removed from visual slides (R6)
+- [ ] 20pt font specified for all visual text
+
+### Structure Preservation
+- [ ] Subsection delivery modes intact (R7)
+- [ ] Fixed slides protected (R8)
+- [ ] Anchor points still covered
+- [ ] Slide count within limits
+
+### Documentation
+- [ ] Changelog complete
+- [ ] All changes documented with rationale
+- [ ] Constraint validation completed
+
+---
+
+## SAVE INSTRUCTIONS
+
+Save to the **production output folder** (not the pipeline folder):
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Subfolder:** `integrated/`
+
+**Integrated Blueprint:**
+`[Domain]_Production_[Date]/integrated/step10_integrated_blueprint_[domain]_[section]_[date].txt`
+
+**Revision Changelog:**
+`[Domain]_Production_[Date]/integrated/step10_revision_changelog_[domain]_[section]_[date].txt`
+
+**Examples:**
+- `Medical_Surgical_Nursing_Production_2024-12-16/integrated/step10_integrated_blueprint_clinical_cbt_2024-12-16.txt`
+- `Medical_Surgical_Nursing_Production_2024-12-16/integrated/step10_revision_changelog_clinical_cbt_2024-12-16.txt`
+
+---
+
+## NEXT STEP
+
+After completing visual integration, proceed to:
+
+**Step 11: Blueprint Organization**
+- Organize all integrated blueprints into production folder
+- Create master index
+- Prepare for PowerPoint generation
+
+---
+
+## COMPLETE PIPELINE REFERENCE
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision  ← YOU ARE HERE
+    ↓
+Step 11: Blueprint Organization
+    ↓
+Step 12: PowerPoint Population
+    ↓
+[Font Formatting - deferred]
+    ↓
+[PRODUCTION COMPLETE]
+```
+

@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quota_input.schema.json",
+  "title": "Visual Quota Checker Input Schema",
+  "description": "Schema for visual_quota_checker agent input - verifies minimum visual aid requirements",
+  "type": "object",
+  "required": ["metadata", "blueprint", "quota_rules"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "visual_quota_checker"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "blueprint": {
+      "type": "object",
+      "required": ["total_slides", "slides"],
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "total_slides": {
+          "type": "integer"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/slide_visual_info"
+          }
+        }
+      }
+    },
+    "quota_rules": {
+      "type": "object",
+      "properties": {
+        "minimum_visuals": {
+          "type": "integer",
+          "default": 2,
+          "description": "Absolute minimum visuals per section"
+        },
+        "target_ratio": {
+          "type": "number",
+          "default": 0.2,
+          "description": "Target ratio of visual slides to content slides"
+        },
+        "visual_types_required": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_diff"]
+          },
+          "description": "Specific visual types that should be represented"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "slide_visual_info": {
+      "type": "object",
+      "required": ["slide_number", "has_visual"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "has_visual": {
+          "type": "boolean"
+        },
+        "visual_type": {
+          "type": "string",
+          "enum": ["table", "flowchart", "decision_tree", "timeline", "hierarchy", "spectrum", "key_diff"]
+        },
+        "visual_id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

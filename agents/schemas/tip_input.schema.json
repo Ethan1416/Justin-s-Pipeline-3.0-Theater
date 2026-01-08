@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tip_input.schema.json",
+  "title": "Tip Generator Input Schema",
+  "description": "Schema for tip_generator agent input - generates NCLEX exam tips for slides",
+  "type": "object",
+  "required": ["metadata", "slide", "constraints"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "section_name", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "tip_generator"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "slide_number": {
+          "type": "integer"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "slide": {
+      "type": "object",
+      "required": ["slide_number", "slide_type", "header", "body"],
+      "properties": {
+        "slide_number": {
+          "type": "integer"
+        },
+        "slide_type": {
+          "type": "string",
+          "enum": ["section_intro", "content", "vignette", "answer"]
+        },
+        "header": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "anchors_covered": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "max_chars_per_line": {
+          "type": "integer",
+          "default": 66
+        },
+        "max_lines": {
+          "type": "integer",
+          "default": 2
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "anchor_details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "anchor_number": { "type": "integer" },
+              "anchor_text": { "type": "string" }
+            }
+          }
+        },
+        "previous_tips": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tips from previous slides to avoid repetition"
+        }
+      }
+    }
+  }
+}

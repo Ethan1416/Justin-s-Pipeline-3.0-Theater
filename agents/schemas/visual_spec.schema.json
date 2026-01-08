@@ -1,0 +1,290 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "visual_spec.schema.json",
+  "title": "Visual Specification Schema",
+  "description": "Schema for visual aid specifications in the NCLEX pipeline",
+  "type": "object",
+  "required": ["type", "layout", "title"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["TABLE", "FLOWCHART", "DECISION_TREE", "TIMELINE", "HIERARCHY", "SPECTRUM", "KEY_DIFFERENTIATORS"]
+    },
+    "layout": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E"]
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "slide_number": {
+      "type": "integer"
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Why this visual type was selected"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "type": { "const": "TABLE" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/table_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "FLOWCHART" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/flowchart_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "DECISION_TREE" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/decision_tree_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "TIMELINE" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/timeline_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "HIERARCHY" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/hierarchy_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "SPECTRUM" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/spectrum_data" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "KEY_DIFFERENTIATORS" } }
+      },
+      "then": {
+        "properties": {
+          "data": { "$ref": "#/definitions/key_diff_data" }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "table_data": {
+      "type": "object",
+      "required": ["headers", "rows"],
+      "properties": {
+        "headers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "maxLength": 25
+          }
+        },
+        "rows": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "flowchart_data": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "steps": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "required": ["header", "body"],
+            "properties": {
+              "step_number": { "type": "integer" },
+              "header": { "type": "string", "maxLength": 20 },
+              "body": { "type": "string" },
+              "is_start": { "type": "boolean" },
+              "is_end": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "decision_tree_data": {
+      "type": "object",
+      "required": ["root"],
+      "properties": {
+        "root": {
+          "$ref": "#/definitions/decision_node"
+        }
+      }
+    },
+    "decision_node": {
+      "type": "object",
+      "required": ["header"],
+      "properties": {
+        "header": { "type": "string", "maxLength": 20 },
+        "body": { "type": "string" },
+        "yes_path": {
+          "oneOf": [
+            { "$ref": "#/definitions/decision_node" },
+            { "$ref": "#/definitions/outcome_node" }
+          ]
+        },
+        "no_path": {
+          "oneOf": [
+            { "$ref": "#/definitions/decision_node" },
+            { "$ref": "#/definitions/outcome_node" }
+          ]
+        }
+      }
+    },
+    "outcome_node": {
+      "type": "object",
+      "required": ["header", "outcome_type"],
+      "properties": {
+        "header": { "type": "string", "maxLength": 20 },
+        "body": { "type": "string" },
+        "outcome_type": {
+          "type": "string",
+          "enum": ["positive", "negative", "neutral", "alternative"]
+        }
+      }
+    },
+    "timeline_data": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["date", "header"],
+            "properties": {
+              "date": { "type": "string", "maxLength": 15 },
+              "header": { "type": "string", "maxLength": 20 },
+              "body": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "hierarchy_data": {
+      "type": "object",
+      "required": ["root"],
+      "properties": {
+        "root": {
+          "$ref": "#/definitions/hierarchy_node"
+        }
+      }
+    },
+    "hierarchy_node": {
+      "type": "object",
+      "required": ["header"],
+      "properties": {
+        "header": { "type": "string", "maxLength": 25 },
+        "body": { "type": "string" },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hierarchy_node"
+          }
+        }
+      }
+    },
+    "spectrum_data": {
+      "type": "object",
+      "required": ["segments", "gradient_type"],
+      "properties": {
+        "gradient_type": {
+          "type": "string",
+          "enum": ["blue", "alert", "bipolar"]
+        },
+        "left_label": { "type": "string" },
+        "right_label": { "type": "string" },
+        "segments": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["label"],
+            "properties": {
+              "label": { "type": "string", "maxLength": 20 },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "key_diff_data": {
+      "type": "object",
+      "required": ["concepts", "key_differentiator"],
+      "properties": {
+        "concepts": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["name", "features"],
+            "properties": {
+              "name": { "type": "string", "maxLength": 25 },
+              "features": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "key_differentiator": {
+          "type": "object",
+          "required": ["title", "description"],
+          "properties": {
+            "title": { "type": "string" },
+            "description": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

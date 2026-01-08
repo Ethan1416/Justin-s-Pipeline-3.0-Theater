@@ -1,0 +1,282 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "org_output.schema.json",
+  "title": "Step 11 Blueprint Organization Output Schema",
+  "description": "Schema for blueprint_organizer agent output - organized production folder with master index",
+  "type": "object",
+  "required": ["metadata", "production_structure", "master_index", "visual_summary", "validation"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["step", "domain", "date", "production_folder"],
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 11: Blueprint Organization"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "production_folder": {
+          "type": "string",
+          "description": "Full path to production folder"
+        },
+        "total_sections": {
+          "type": "integer"
+        }
+      }
+    },
+    "production_structure": {
+      "type": "object",
+      "description": "Production folder structure and contents",
+      "required": ["folders", "files"],
+      "properties": {
+        "folders": {
+          "type": "object",
+          "properties": {
+            "mapping": {
+              "type": "string",
+              "description": "Step 2 outputs"
+            },
+            "sorting": {
+              "type": "string",
+              "description": "Step 3 outputs"
+            },
+            "outlines": {
+              "type": "string",
+              "description": "Step 4 outputs"
+            },
+            "blueprints": {
+              "type": "string",
+              "description": "Step 6 blueprints"
+            },
+            "revisions": {
+              "type": "string",
+              "description": "Step 7 revised blueprints"
+            },
+            "qa_reports": {
+              "type": "string",
+              "description": "Step 8 QA reports"
+            },
+            "visual_specs": {
+              "type": "string",
+              "description": "Step 9 visual specifications"
+            },
+            "integrated": {
+              "type": "string",
+              "description": "Step 10 integrated blueprints"
+            },
+            "diagrams": {
+              "type": "string",
+              "description": "Python-generated visual aids"
+            },
+            "powerpoints": {
+              "type": "string",
+              "description": "Final PowerPoint files (Step 12)"
+            },
+            "logs": {
+              "type": "string",
+              "description": "Processing logs"
+            }
+          }
+        },
+        "files": {
+          "type": "object",
+          "properties": {
+            "master_index": {
+              "type": "string",
+              "description": "Path to master_index.txt"
+            },
+            "integrated_blueprints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "master_index": {
+      "type": "object",
+      "required": ["sections", "session_breakdown"],
+      "properties": {
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/section_entry"
+          }
+        },
+        "session_breakdown": {
+          "type": "object",
+          "properties": {
+            "session_1": {
+              "type": "object",
+              "properties": {
+                "section_count": { "type": "integer" },
+                "total_slides": { "type": "integer" },
+                "section_numbers": {
+                  "type": "array",
+                  "items": { "type": "integer" }
+                }
+              }
+            },
+            "session_2": {
+              "type": "object",
+              "properties": {
+                "section_count": { "type": "integer" },
+                "total_slides": { "type": "integer" },
+                "section_numbers": {
+                  "type": "array",
+                  "items": { "type": "integer" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "visual_summary": {
+      "type": "object",
+      "required": ["total_visuals"],
+      "properties": {
+        "total_visuals": {
+          "type": "integer"
+        },
+        "native_powerpoint_tables": {
+          "type": "integer"
+        },
+        "python_generated_diagrams": {
+          "type": "integer"
+        },
+        "breakdown": {
+          "type": "object",
+          "properties": {
+            "tables": { "type": "integer" },
+            "decision_trees": { "type": "integer" },
+            "flowcharts": { "type": "integer" },
+            "hierarchies": { "type": "integer" },
+            "timelines": { "type": "integer" },
+            "spectrums": { "type": "integer" },
+            "key_differentiators": { "type": "integer" }
+          }
+        },
+        "diagrams_folder": {
+          "type": "string"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["status", "checklist"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["PASS", "FAIL"]
+        },
+        "checklist": {
+          "type": "object",
+          "properties": {
+            "production_folder_exists": {
+              "type": "boolean"
+            },
+            "all_subfolders_present": {
+              "type": "boolean"
+            },
+            "all_blueprints_present": {
+              "type": "boolean"
+            },
+            "master_index_created": {
+              "type": "boolean"
+            },
+            "sections_in_correct_order": {
+              "type": "boolean"
+            },
+            "visual_counts_accurate": {
+              "type": "boolean"
+            },
+            "ready_for_step12": {
+              "type": "boolean"
+            }
+          }
+        },
+        "missing_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "next_step": {
+      "type": "object",
+      "description": "Information for Step 12",
+      "properties": {
+        "step": {
+          "type": "string",
+          "const": "Step 12: PowerPoint Population"
+        },
+        "input_folder": {
+          "type": "string"
+        },
+        "output_folder": {
+          "type": "string"
+        },
+        "files_to_process": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "section_entry": {
+      "type": "object",
+      "required": ["section_number", "section_name", "session", "blueprint_file", "slide_count", "visual_count", "powerpoint_file"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "session": {
+          "type": "integer",
+          "enum": [1, 2]
+        },
+        "blueprint_file": {
+          "type": "string",
+          "description": "Relative path to integrated blueprint in integrated/ folder"
+        },
+        "slide_count": {
+          "type": "integer"
+        },
+        "visual_count": {
+          "type": "integer"
+        },
+        "table_count": {
+          "type": "integer"
+        },
+        "diagram_count": {
+          "type": "integer"
+        },
+        "powerpoint_file": {
+          "type": "string",
+          "description": "Expected output path in powerpoints/ folder"
+        }
+      }
+    }
+  }
+}

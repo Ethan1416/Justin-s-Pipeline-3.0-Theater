@@ -1,0 +1,497 @@
+# STEP 11: BLUEPRINT ORGANIZATION
+## Production Folder Setup and Master Index
+## Domain-Agnostic Version
+
+---
+
+## PURPOSE
+
+This step organizes all integrated blueprints (from Step 10) into a production folder on the Desktop, creates a master index, and prepares files for PowerPoint population in Step 12.
+
+---
+
+## INPUT
+
+**Required:**
+- All `step10_integrated_blueprint_[domain]_[section]_[date].txt` files
+- Step 4 output (for section order reference)
+- Step 8 validation scores (to confirm QA passed)
+
+---
+
+## OUTPUT
+
+**Production Folder:** `C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\`
+
+**Note:** By this step, the production folder should already exist with outputs from earlier steps. This step consolidates and prepares for final PowerPoint generation.
+
+**Contents:**
+1. Integrated blueprint files (from Step 10, in `integrated/` subfolder)
+2. Master index file (`master_index.txt`)
+3. Visual specifications and diagrams
+4. PowerPoint files (created in Step 12)
+
+---
+
+## OUTPUT FOLDER STRUCTURE
+
+The production folder follows a standardized structure. By Step 11, it should contain:
+
+```
+[Domain]_Production_[Date]/
+├── mapping/          # Step 2 outputs
+├── sorting/          # Step 3 outputs
+├── outlines/         # Step 4 outputs
+├── blueprints/       # Step 6 blueprints
+├── revisions/        # Step 7 revised blueprints
+├── qa_reports/       # Step 8 QA reports
+├── visual_specs/     # Step 9 visual specifications
+├── integrated/       # Step 10 integrated blueprints
+├── diagrams/         # Python-generated visual aids
+├── powerpoints/      # Final PowerPoint files (Step 12)
+├── logs/             # Processing logs
+└── master_index.txt  # Created in this step
+```
+
+---
+
+## PROCESS
+
+### Step 1: Verify Production Folder
+
+The production folder should already exist from earlier steps:
+```
+C:\Users\mcdan\Desktop\[Domain]_Production_[Date]\
+```
+
+**Naming Convention:**
+- Replace spaces with underscores
+- Use format: `[Domain]_Production_YYYY-MM-DD`
+
+**Examples:**
+- `Fundamentals_of_Nursing_Production_2024-01-15`
+- `Clinical_Assessment_Production_2024-01-15`
+- `Ethics_Legal_Production_2024-01-15`
+
+Verify that prior step outputs exist in their respective subfolders.
+
+---
+
+### Step 2: Create Remaining Subfolders
+
+If not already present, create remaining subfolders:
+```
+[Domain]_Production_[Date]/
+├── diagrams/             # Python-generated visual aids
+├── powerpoints/          # Final PowerPoint files
+└── logs/                 # Generation and processing logs
+```
+
+---
+
+### Step 3: Verify Integrated Blueprint Files
+
+Confirm all `step10_integrated_blueprint_[domain]_[section]_[date].txt` files are present in the `integrated/` subfolder.
+
+**Note:** These files were saved to `integrated/` during Step 10. No copying needed—they should already be in place.
+
+---
+
+### Step 4: Generate Master Index
+
+Create `master_index.txt` in production folder root with:
+- Domain name
+- Date
+- Total sections
+- Section list in session order (from Step 4)
+- File mapping
+- Visual aid counts per section
+
+---
+
+## MASTER INDEX FORMAT
+
+```
+========================================
+MASTER INDEX
+========================================
+Domain: [Domain Name]
+Production Date: [Date]
+Total Sections: [X]
+
+========================================
+SESSION 1 SECTIONS
+========================================
+
+Section 1: [Section Name]
+- Blueprint File: integrated/step10_integrated_blueprint_[domain]_[section]_[date].txt
+- Slides: [X]
+- Visual Aids: [X] tables, [X] diagrams
+- PowerPoint: powerpoints/section_1.pptx
+
+Section 2: [Section Name]
+- Blueprint File: integrated/step10_integrated_blueprint_[domain]_[section]_[date].txt
+- Slides: [X]
+- Visual Aids: [X] tables, [X] diagrams
+- PowerPoint: powerpoints/section_2.pptx
+
+[Continue for all Session 1 sections...]
+
+========================================
+SESSION 2 SECTIONS
+========================================
+
+Section [X]: [Section Name]
+- Blueprint File: integrated/step10_integrated_blueprint_[domain]_[section]_[date].txt
+- Slides: [X]
+- Visual Aids: [X] tables, [X] diagrams
+- PowerPoint: powerpoints/section_[X].pptx
+
+[Continue for all Session 2 sections...]
+
+========================================
+VISUAL AID SUMMARY
+========================================
+
+Total Visual Aids: [X]
+- Native PowerPoint Tables: [X]
+- Python-Generated Diagrams: [X]
+  - Decision Trees: [X]
+  - Flowcharts: [X]
+  - Hierarchies: [X]
+  - Concept Maps: [X]
+
+Diagram Files Location: diagrams/
+
+========================================
+PRODUCTION CHECKLIST
+========================================
+
+[X] Production folder verified with all subfolders
+[X] Integrated blueprints present in integrated/
+[X] Diagram folder created (empty until visuals generated)
+[X] Master index generated
+[ ] Ready for Step 12: PowerPoint Population
+
+========================================
+FILE LISTING
+========================================
+
+Integrated Blueprints (in integrated/):
+1. step10_integrated_blueprint_[domain]_[section1]_[date].txt
+2. step10_integrated_blueprint_[domain]_[section2]_[date].txt
+...
+
+To Be Generated (Step 12):
+1. powerpoints/section_1.pptx
+2. powerpoints/section_2.pptx
+...
+
+========================================
+```
+
+---
+
+## PYTHON SCRIPT: STEP 11
+
+Run this script to automate folder creation and file organization:
+
+```python
+"""
+Step 11: Blueprint Organization
+Creates production folder and organizes integrated blueprints
+"""
+
+import os
+import shutil
+import re
+from datetime import datetime
+from pathlib import Path
+
+# ============================================
+# CONFIGURATION - MODIFY THESE VALUES
+# ============================================
+
+# Domain name (from Step 4)
+DOMAIN = "Your_Domain_Name"  # e.g., "Medical_Surgical_Nursing"
+
+# Production folder (contains integrated/ subfolder with step10 blueprints)
+PRODUCTION_FOLDER = r"C:\Users\mcdan\Desktop\Your_Domain_Production_2024-01-15"
+
+# Date for production folder (or use today)
+PRODUCTION_DATE = datetime.now().strftime("%Y-%m-%d")
+
+# Section information from Step 4 (in session order)
+# Format: [(section_name, section_file_suffix), ...]
+SECTIONS = [
+    # Session 1
+    ("Section Name 1", "section_1"),
+    ("Section Name 2", "section_2"),
+    # Session 2
+    ("Section Name 3", "section_3"),
+    ("Section Name 4", "section_4"),
+    # Add all sections in order...
+]
+
+# Session divider (which section index starts Session 2)
+SESSION_2_START_INDEX = 2  # 0-indexed
+
+# ============================================
+# SCRIPT EXECUTION
+# ============================================
+
+def count_visuals(blueprint_content):
+    """Count visual aids in a blueprint."""
+    tables = len(re.findall(r'VISUAL TYPE:\s*TABLE', blueprint_content, re.IGNORECASE))
+    decision_trees = len(re.findall(r'VISUAL TYPE:\s*DECISION[_\s]TREE', blueprint_content, re.IGNORECASE))
+    flowcharts = len(re.findall(r'VISUAL TYPE:\s*FLOWCHART', blueprint_content, re.IGNORECASE))
+    hierarchies = len(re.findall(r'VISUAL TYPE:\s*HIERARCHY', blueprint_content, re.IGNORECASE))
+    concept_maps = len(re.findall(r'VISUAL TYPE:\s*CONCEPT[_\s]MAP', blueprint_content, re.IGNORECASE))
+
+    return {
+        'tables': tables,
+        'decision_trees': decision_trees,
+        'flowcharts': flowcharts,
+        'hierarchies': hierarchies,
+        'concept_maps': concept_maps,
+        'total_diagrams': decision_trees + flowcharts + hierarchies + concept_maps
+    }
+
+def main():
+    # Use existing production folder (created by earlier steps)
+    production_folder = Path(PRODUCTION_FOLDER)
+
+    if not production_folder.exists():
+        print(f"ERROR: Production folder not found: {production_folder}")
+        print("The production folder should have been created by earlier pipeline steps.")
+        return
+
+    # Verify/create final subfolders
+    integrated_folder = production_folder / "integrated"
+    diagrams_folder = production_folder / "diagrams"
+    powerpoints_folder = production_folder / "powerpoints"
+    logs_folder = production_folder / "logs"
+
+    for folder in [diagrams_folder, powerpoints_folder, logs_folder]:
+        folder.mkdir(parents=True, exist_ok=True)
+
+    print(f"Using production folder: {production_folder}")
+
+    # Track results
+    blueprint_files = []
+    section_data = []
+    total_visuals = {'tables': 0, 'decision_trees': 0, 'flowcharts': 0,
+                     'hierarchies': 0, 'concept_maps': 0}
+
+    # Process each section from integrated/ subfolder
+    for idx, (section_name, section_suffix) in enumerate(SECTIONS):
+        section_num = idx + 1
+
+        # Build expected filename pattern
+        blueprint_pattern = f"step10_integrated_blueprint_{DOMAIN.lower()}_{section_suffix}*.txt"
+
+        # Find matching file in integrated/ folder
+        matching_files = list(integrated_folder.glob(blueprint_pattern))
+
+        if not matching_files:
+            print(f"WARNING: No blueprint found for {section_name}")
+            continue
+
+        blueprint_path = matching_files[0]
+
+        # Read and analyze blueprint
+        with open(blueprint_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Count slides
+        slide_count = len(re.findall(r'SLIDE\s+\d+', content))
+
+        # Count visuals
+        visuals = count_visuals(content)
+        for key in total_visuals:
+            total_visuals[key] += visuals.get(key, 0)
+
+        # Note: Blueprints already in integrated/ folder - no copy needed
+        blueprint_files.append(blueprint_path.name)
+
+        section_data.append({
+            'num': section_num,
+            'name': section_name,
+            'file': blueprint_path.name,
+            'slides': slide_count,
+            'tables': visuals['tables'],
+            'diagrams': visuals['total_diagrams'],
+            'pptx': f"section_{section_num}.pptx"
+        })
+
+    # Generate master index
+    index_content = generate_master_index(
+        DOMAIN,
+        PRODUCTION_DATE,
+        section_data,
+        SESSION_2_START_INDEX,
+        blueprint_files,
+        total_visuals
+    )
+
+    index_path = production_folder / "master_index.txt"
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(index_content)
+
+    print(f"Master index created: {index_path}")
+
+    # Report results
+    print(f"\n=== STEP 11 COMPLETE ===")
+    print(f"Production folder: {production_folder}")
+    print(f"Integrated blueprints found: {len(blueprint_files)}")
+    print(f"Total visual aids: {sum(total_visuals.values())}")
+
+
+def generate_master_index(domain, date, sections, session2_start, files, visuals):
+    """Generate the master index content."""
+
+    lines = [
+        "========================================",
+        "MASTER INDEX",
+        "========================================",
+        f"Domain: {domain.replace('_', ' ')}",
+        f"Production Date: {date}",
+        f"Total Sections: {len(sections)}",
+        "",
+        "========================================",
+        "SESSION 1 SECTIONS",
+        "========================================",
+        ""
+    ]
+
+    for sec in sections:
+        if sec['num'] == session2_start + 1:
+            lines.extend([
+                "",
+                "========================================",
+                "SESSION 2 SECTIONS",
+                "========================================",
+                ""
+            ])
+
+        lines.extend([
+            f"Section {sec['num']}: {sec['name']}",
+            f"- Blueprint File: integrated/{sec['file']}",
+            f"- Slides: {sec['slides']}",
+            f"- Visual Aids: {sec['tables']} tables, {sec['diagrams']} diagrams",
+            f"- PowerPoint: powerpoints/{sec['pptx']}",
+            ""
+        ])
+
+    lines.extend([
+        "",
+        "========================================",
+        "VISUAL AID SUMMARY",
+        "========================================",
+        "",
+        f"Total Visual Aids: {sum(visuals.values())}",
+        f"- Native PowerPoint Tables: {visuals['tables']}",
+        f"- Python-Generated Diagrams: {visuals['decision_trees'] + visuals['flowcharts'] + visuals['hierarchies'] + visuals['concept_maps']}",
+        f"  - Decision Trees: {visuals['decision_trees']}",
+        f"  - Flowcharts: {visuals['flowcharts']}",
+        f"  - Hierarchies: {visuals['hierarchies']}",
+        f"  - Concept Maps: {visuals['concept_maps']}",
+        "",
+        "Diagram Files Location: diagrams/",
+        "",
+        "========================================",
+        "PRODUCTION CHECKLIST",
+        "========================================",
+        "",
+        "[X] Production folder verified with all subfolders",
+        "[X] Integrated blueprints present in integrated/",
+        "[X] Diagram folder created",
+        "[X] Master index generated",
+        "[ ] Ready for Step 12: PowerPoint Population",
+        "",
+        "========================================",
+        "FILE LISTING",
+        "========================================",
+        "",
+        "Integrated Blueprints (in integrated/):"
+    ])
+
+    for i, f in enumerate(files, 1):
+        lines.append(f"{i}. integrated/{f}")
+
+    lines.extend([
+        "",
+        "To Be Generated (Step 12):"
+    ])
+
+    for sec in sections:
+        lines.append(f"{sec['num']}. powerpoints/{sec['pptx']}")
+
+    lines.append("")
+    lines.append("========================================")
+
+    return '\n'.join(lines)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+## VALIDATION
+
+Before proceeding to Step 12, verify:
+
+- [ ] Production folder exists on Desktop with full structure
+- [ ] All subfolders present (mapping, sorting, outlines, blueprints, revisions, qa_reports, visual_specs, integrated, diagrams, powerpoints, logs)
+- [ ] All integrated blueprint files present in `integrated/` subfolder
+- [ ] Master index file created in production folder root
+- [ ] Master index lists all sections in correct session order
+- [ ] Visual aid counts are accurate
+
+---
+
+## NEXT STEP
+
+After completing organization, proceed to:
+
+**Step 12: PowerPoint Population**
+- Generate diagrams from visual specifications
+- Create native PowerPoint tables
+- Populate slides with content
+- Generate final presentation files
+
+---
+
+## COMPLETE PIPELINE REFERENCE (UPDATED)
+
+```
+Step 1: Anchor Upload
+    ↓
+Step 2: Lecture Mapping (5 Phases)
+    ↓
+Step 3: Official Sorting
+    ↓
+Step 4: Outline Generation
+    ↓
+Step 5: Presentation Standards (Reference)
+    ↓
+Step 6: Blueprint Generation (per section)
+    ↓
+Step 7: Formatting Revision
+    ↓
+Step 8: Quality Assurance
+    ↓
+Step 9: Visual Aid Identification & Design
+    ↓
+Step 10: Visual Integration Revision
+    ↓
+Step 11: Blueprint Organization  ← YOU ARE HERE
+    ↓
+Step 12: PowerPoint Population
+    ↓
+[Font Formatting - deferred]
+    ↓
+[PRODUCTION COMPLETE]
+```

@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "changelog_input.schema.json",
+  "title": "Changelog Writer Input Schema",
+  "description": "Schema for changelog_writer agent input - writes revision changelogs",
+  "type": "object",
+  "required": ["metadata", "changes"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "changelog_writer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "section_number": {
+          "type": "integer"
+        },
+        "revision_number": {
+          "type": "integer",
+          "description": "Which revision this changelog is for"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/change_item"
+      }
+    },
+    "before_state": {
+      "type": "object",
+      "properties": {
+        "source_file": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string"
+        }
+      }
+    },
+    "after_state": {
+      "type": "object",
+      "properties": {
+        "output_file": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string"
+        }
+      }
+    },
+    "changelog_options": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": ["detailed", "summary", "diff"],
+          "default": "detailed"
+        },
+        "include_rationale": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  "definitions": {
+    "change_item": {
+      "type": "object",
+      "required": ["change_type", "description"],
+      "properties": {
+        "change_type": {
+          "type": "string",
+          "enum": ["add", "modify", "delete", "reorder", "split", "merge", "fix"]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "slide_number": { "type": "integer" },
+            "element": { "type": "string" }
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "before_value": {
+          "type": "string"
+        },
+        "after_value": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "triggered_by": {
+          "type": "string",
+          "description": "What triggered this change (e.g., QA failure, constraint violation)"
+        }
+      }
+    }
+  }
+}

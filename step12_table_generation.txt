@@ -1,0 +1,938 @@
+================================================================================
+STEP 12: TABLE GENERATION
+================================================================================
+Version: 1.0
+Last Updated: 2024-12-23
+Template: table template.pptx
+
+================================================================================
+OVERVIEW
+================================================================================
+
+Tables are specialized visual aids that organize information into structured
+rows and columns for comparison, classification, or systematic presentation.
+They are native PowerPoint objects with professional styling.
+
+This document defines:
+- Conditions for identifying when content needs a table
+- Adaptive layout variations based on content
+- Character limits and formatting requirements
+- Complete Python implementation with borders
+
+================================================================================
+SECTION 1: IDENTIFICATION CONDITIONS
+================================================================================
+
+Content should be presented as a TABLE when ANY of these PRIMARY conditions
+are met:
+
+PRIMARY CONDITIONS (Strong indicators):
+-----------------------------------------------------------------------------
+1. COMPARISON CONTENT
+   - Content compares 2+ items across multiple dimensions
+   - Side-by-side feature comparison needed
+   - "versus" or "compared to" language present
+   - Examples: Drug comparisons, disorder comparisons, theory comparisons
+
+2. CATEGORICAL ORGANIZATION
+   - Content lists items with consistent attributes
+   - Information naturally fits rows and columns
+   - Each item has the same set of properties
+   - Examples: Neurotransmitter functions, brain regions, test characteristics
+
+3. MULTI-ATTRIBUTE LISTS
+   - Content describes multiple items with 2+ properties each
+   - Properties are parallel across items
+   - Examples: Medications with mechanisms and side effects
+
+4. STRUCTURED REFERENCE MATERIAL
+   - Content meant to be referenced/looked up
+   - Quick-scan format beneficial
+   - Examples: DSM criteria summaries, developmental milestones
+
+5. NUMERIC OR STATISTICAL DATA
+   - Content includes numbers, percentages, scores
+   - Data needs alignment for readability
+   - Examples: Test norms, research findings, dosage ranges
+
+SECONDARY CONDITIONS (Supporting indicators):
+-----------------------------------------------------------------------------
+6. Content contains phrases like:
+   - "compared to..."
+   - "differs from... in that..."
+   - "has the following characteristics..."
+   - "can be categorized as..."
+   - "[X] includes... while [Y] includes..."
+
+7. Content has 3+ items with 2+ consistent attributes each
+
+8. Content would benefit from visual alignment of related information
+
+EXCLUSION CONDITIONS (Do NOT use table):
+-----------------------------------------------------------------------------
+- Content is sequential/procedural (use flowchart or content slide)
+- Content requires decision logic (use decision tree)
+- Content is a simple 2-item comparison (may use content slide)
+- Content has only 1 attribute per item (use bullet list)
+- Content exceeds 6 rows x 4 columns (split across slides)
+- Content is purely narrative/explanatory (use content slide)
+
+================================================================================
+SECTION 2: ADAPTIVE LAYOUTS
+================================================================================
+
+Tables automatically adapt based on content. Claude should specify the
+optimal layout in the blueprint.
+
+================================================================================
+SECTION 2A: VARIABLE CELL COUNT
+================================================================================
+
+Tables support FULLY VARIABLE dimensions. The system adapts automatically:
+
+SUPPORTED DIMENSIONS:
+- Columns: 2 to 6 (auto-adjusts widths)
+- Rows: 2 to 10 (auto-adjusts heights and font if needed)
+
+COLUMN WIDTH AUTO-CALCULATION:
+| Columns | Width Each | Notes |
+|---------|------------|-------|
+| 2 cols  | 6.15"      | Wide cells for detailed text |
+| 3 cols  | 4.1"       | Standard width |
+| 4 cols  | 3.075"     | Moderate width |
+| 5 cols  | 2.46"      | Narrower cells |
+| 6 cols  | 2.05"      | Compact cells, shorter text |
+
+ROW HEIGHT AUTO-CALCULATION:
+| Rows | Row Height | Font Size |
+|------|------------|-----------|
+| 2-5  | 0.6"       | 20pt      |
+| 6-7  | 0.5"       | 20pt      |
+| 8-10 | 0.45"      | 18pt      |
+
+FONT SIZE ADAPTATION:
+- Default: 20pt for all cells
+- Dense tables (8+ rows or 5+ cols): 18pt minimum
+- Very dense: Consider splitting across slides
+
+================================================================================
+SECTION 2B: ADAPTIVE LAYOUTS
+================================================================================
+
+Tables automatically adapt based on content. Claude specifies dimensions
+in the blueprint; the system renders accordingly.
+
+LAYOUT A: STANDARD COMPARISON (2-4 columns, 3-6 rows)
+-----------------------------------------------------------------------------
+Use when:
+- Comparing 2-3 items across multiple dimensions
+- Standard header row with data rows below
+- Most common table format
+
+Visual:
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Data     | Data     | Data     |
+| Data     | Data     | Data     |
+| Data     | Data     | Data     |
+
+Cell width: Auto-distributed across 12.3" table width
+
+
+LAYOUT B: WIDE COMPARISON (2 columns, 4-8 rows)
+-----------------------------------------------------------------------------
+Use when:
+- Detailed comparison of 2 items
+- More space needed per column
+- Longer text in cells
+
+Visual:
+| Item A           | Item B           |
+|------------------|------------------|
+| Feature detail   | Feature detail   |
+| (longer text)    | (longer text)    |
+
+Cell width: ~6" per column
+
+
+LAYOUT C: CATEGORY LIST (3 columns, 4-6 rows)
+-----------------------------------------------------------------------------
+Use when:
+- Listing items with 2 attributes each
+- First column is category/item name
+- Other columns are properties
+
+Visual:
+| Item      | Property 1 | Property 2 |
+|-----------|------------|------------|
+| Category  | Value      | Value      |
+| Category  | Value      | Value      |
+
+Cell width: 3" / 4.5" / 4.5"
+
+
+LAYOUT D: COMPACT REFERENCE (4-6 columns, 4-5 rows)
+-----------------------------------------------------------------------------
+Use when:
+- Quick reference format needed
+- Short text in each cell
+- Maximum information density
+
+Visual:
+| Col 1 | Col 2 | Col 3 | Col 4 |
+|-------|-------|-------|-------|
+| Data  | Data  | Data  | Data  |
+
+Cell width: Auto-distributed
+
+
+LAYOUT E: TALL COMPARISON (2 columns, 6-10 rows)
+-----------------------------------------------------------------------------
+Use when:
+- Extensive side-by-side comparison
+- Many comparison points
+- Two-item deep dive
+
+Visual:
+| Item A    | Item B    |
+|-----------|-----------|
+| Point 1   | Point 1   |
+| Point 2   | Point 2   |
+| ...       | ...       |
+| Point 8   | Point 8   |
+
+Cell width: ~6" per column
+Font: Reduces to 18pt for 8+ rows
+
+
+LAYOUT SELECTION LOGIC:
+-----------------------------------------------------------------------------
+1. Count columns needed (based on attributes)
+2. Count rows needed (based on items)
+3. Estimate text length per cell
+4. Select layout that fits content without overflow
+
+Pseudocode:
+```
+cols = count_attributes(content)
+rows = count_items(content)
+avg_cell_length = estimate_cell_length(content)
+
+if cols == 2 and rows >= 6:
+    return LAYOUT_E  # Tall comparison
+elif cols == 2 and avg_cell_length > 40:
+    return LAYOUT_B  # Wide comparison
+elif cols <= 3 and rows <= 6:
+    return LAYOUT_C  # Category list
+elif cols >= 4 and avg_cell_length < 25:
+    return LAYOUT_D  # Compact reference
+else:
+    return LAYOUT_A  # Standard comparison
+```
+
+================================================================================
+SECTION 3: ADAPTIVE SIZING
+================================================================================
+
+Tables are FULLY ADAPTIVE - they scale to fit content. The limits below are
+RECOMMENDED GUIDELINES for optimal readability, not hard constraints.
+
+ROW GUIDELINES:
+- Minimum: 2 rows (1 header + 1 data)
+- Recommended maximum: 7 rows (1 header + 6 data)
+- Adaptive behavior: More rows allowed if content requires
+- If content very long: Consider splitting across multiple slides
+
+COLUMN GUIDELINES:
+- Minimum: 2 columns
+- Recommended maximum: 4 columns
+- Adaptive behavior: More columns allowed with narrower widths
+- Font size reduces to 18pt minimum for dense tables
+
+ADAPTIVE LIMITS ARE NOT HARD CAPS:
+- Tables adapt to whatever dimensions the content requires
+- Font size scales down (minimum 18pt) for larger tables
+- Column widths auto-adjust based on column count
+- Row heights expand for multi-line cells
+
+CELL CHARACTER LIMITS:
+- Header cells: 25 characters max per line, 1 line
+- Data cells: 30 characters max per line, 2 lines max
+- Total cell text: 60 characters max
+
+COLUMN WIDTH DISTRIBUTION:
+Based on content analysis:
+```
+2 columns: 50% / 50% (6.15" each)
+3 columns: 25% / 37.5% / 37.5% (3" / 4.5" / 4.5")
+4 columns: 25% / 25% / 25% / 25% (3" each)
+```
+
+ROW HEIGHT:
+- Header row: 0.6" fixed
+- Data rows: 0.5" minimum, auto-expand for 2-line cells
+- Maximum row height: 0.8"
+
+FONT SIZE ADAPTATION:
+- Standard: 20pt for all cells
+- If text tight: 18pt (minimum allowed)
+- Header always bold, data not bold
+
+================================================================================
+SECTION 4: VISUAL SPECIFICATIONS
+================================================================================
+
+Fixed professional styling (do not modify):
+
+COLORS:
+- Header background: RGB(0, 51, 102) - Dark Navy
+- Header text: RGB(255, 255, 255) - White
+- Data cell background: RGB(255, 255, 255) - White
+- Data cell text: RGB(0, 0, 0) - Black
+- Border color: RGB(0, 51, 102) - Dark Navy
+- Alternating row (optional): RGB(240, 244, 248) - Light Gray-Blue
+
+BORDERS:
+- All cells have borders
+- Border width: 1pt
+- Border color: Dark Navy (matches header)
+- Style: Solid lines on all sides
+
+FONTS:
+- Font family: Aptos
+- Header size: 20pt, Bold
+- Data size: 20pt, Regular
+- Minimum size: 18pt
+
+ALIGNMENT:
+- Header text: Center aligned
+- First column data: Left aligned
+- Other columns data: Center aligned
+- Vertical: Middle aligned
+
+POSITION ON SLIDE:
+- Left margin: 0.5"
+- Top: 1.8" (below title)
+- Width: 12.3"
+- Height: Adaptive (based on rows)
+- Bottom margin: Maintain 0.7" above footer
+
+================================================================================
+SECTION 5: BLUEPRINT FORMAT
+================================================================================
+
+In Step 9 (Visual Identification), mark as:
+```
+Visual: Yes - TABLE
+```
+
+In Step 10 (Integrated Blueprint), use this format:
+```
+VISUAL SPECIFICATION:
+Type: TABLE
+Layout: [A/B/C/D or AUTO]
+Rows: [number]
+Columns: [number]
+
+TABLE CONTENT:
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
+```
+
+EXAMPLE (Neurotransmitter Comparison):
+```
+VISUAL SPECIFICATION:
+Type: TABLE
+Layout: A
+Rows: 5
+Columns: 3
+
+TABLE CONTENT:
+| Neurotransmitter | Primary Function | Related Disorders |
+|------------------|------------------|-------------------|
+| Dopamine | Reward, motivation | Schizophrenia, Parkinson's |
+| Serotonin | Mood regulation | Depression, OCD |
+| Norepinephrine | Alertness, arousal | ADHD, Depression |
+| GABA | Inhibition | Anxiety disorders |
+```
+
+================================================================================
+SECTION 6: PYTHON IMPLEMENTATION
+================================================================================
+
+```python
+"""
+Table Generator for NCLEX Pipeline
+Generates professional tables with borders and adaptive sizing
+"""
+
+from pptx import Presentation
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+from pptx.oxml.ns import qn
+from pptx.oxml import parse_xml
+
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+# Color palette
+COLORS = {
+    'header_bg': RGBColor(0, 51, 102),
+    'header_text': RGBColor(255, 255, 255),
+    'data_bg': RGBColor(255, 255, 255),
+    'data_text': RGBColor(0, 0, 0),
+    'border': RGBColor(0, 51, 102),
+    'alt_row': RGBColor(240, 244, 248),
+}
+
+# Font settings
+FONTS = {
+    'family': 'Aptos',
+    'header_size': 20,
+    'data_size': 20,
+    'min_size': 18,
+}
+
+# Table dimensions
+TABLE_DIMS = {
+    'left': 0.5,      # inches
+    'top': 1.8,       # inches
+    'width': 12.3,    # inches
+    'max_height': 4.5, # inches
+    'row_height': 0.55, # inches per row
+    'header_height': 0.6, # inches
+}
+
+# Adaptive dimension ranges
+DIMENSIONS = {
+    'min_rows': 2,
+    'max_rows': 10,
+    'min_cols': 2,
+    'max_cols': 6,
+}
+
+# Character limits
+CHAR_LIMITS = {
+    'header_chars': 25,
+    'cell_chars_per_line': 30,
+    'cell_max_lines': 2,
+}
+
+
+# =============================================================================
+# ADAPTIVE SIZING FUNCTIONS
+# =============================================================================
+
+def get_adaptive_font_size(rows, cols):
+    """
+    Calculate adaptive font size based on table dimensions.
+    Dense tables get smaller font for better fit.
+
+    Args:
+        rows: Total number of rows (including header)
+        cols: Number of columns
+
+    Returns:
+        Font size in points
+    """
+    if rows >= 8 or cols >= 5:
+        return FONTS['min_size']  # 18pt for dense tables
+    return FONTS['data_size']  # 20pt default
+
+
+def get_adaptive_row_height(rows):
+    """
+    Calculate adaptive row height based on row count.
+
+    Args:
+        rows: Total number of rows (including header)
+
+    Returns:
+        Row height in inches
+    """
+    if rows <= 5:
+        return 0.6
+    elif rows <= 7:
+        return 0.5
+    else:
+        return 0.45
+
+
+# =============================================================================
+# BORDER HELPER FUNCTIONS
+# =============================================================================
+
+def set_cell_borders(cell, border_color_rgb=(0, 51, 102), width_emu=12700):
+    """
+    Set all four borders on a cell using proper OOXML.
+    This ensures internal cell-to-cell borders are visible.
+
+    Args:
+        cell: PowerPoint table cell object
+        border_color_rgb: Tuple of (R, G, B) values 0-255
+        width_emu: Border width in EMUs (12700 = 1pt)
+    """
+    tc = cell._tc
+    tcPr = tc.get_or_add_tcPr()
+
+    # Convert RGB to hex
+    hex_color = '{:02X}{:02X}{:02X}'.format(*border_color_rgb)
+
+    # Define all four borders
+    for border_name in ['lnL', 'lnR', 'lnT', 'lnB']:
+        # Remove existing border element if present
+        for existing in tcPr.findall(qn(f'a:{border_name}')):
+            tcPr.remove(existing)
+
+        # Create border element with solid fill - FULL OOXML STRUCTURE
+        border_xml = (
+            f'<a:{border_name} xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
+            f'w="{width_emu}" cap="flat" cmpd="sng" algn="ctr">'
+            f'<a:solidFill><a:srgbClr val="{hex_color}"/></a:solidFill>'
+            f'<a:prstDash val="solid"/>'
+            f'<a:round/>'
+            f'<a:headEnd type="none" w="med" len="med"/>'
+            f'<a:tailEnd type="none" w="med" len="med"/>'
+            f'</a:{border_name}>'
+        )
+        border_elem = parse_xml(border_xml)
+        tcPr.append(border_elem)
+
+
+def set_all_table_borders(table, border_color_rgb=(0, 51, 102), width_emu=12700):
+    """
+    Set borders on all cells in a table.
+    IMPORTANT: Must disable table banding to prevent style interference.
+
+    Args:
+        table: PowerPoint table object
+        border_color_rgb: Tuple of (R, G, B) values 0-255
+        width_emu: Border width in EMUs (12700 = 1pt)
+    """
+    # Disable table banding which can interfere with explicit borders
+    tbl = table._tbl
+    tblPr = tbl.tblPr
+    if tblPr is not None:
+        tblPr.set('bandRow', '0')
+        tblPr.set('bandCol', '0')
+        tblPr.set('firstRow', '0')
+        tblPr.set('firstCol', '0')
+        tblPr.set('lastRow', '0')
+        tblPr.set('lastCol', '0')
+
+    # Apply borders to every cell
+    for row_idx in range(len(table.rows)):
+        for col_idx in range(len(table.columns)):
+            cell = table.cell(row_idx, col_idx)
+            set_cell_borders(cell, border_color_rgb, width_emu)
+
+
+# =============================================================================
+# TABLE GENERATION
+# =============================================================================
+
+def create_table_on_slide(slide, table_data, use_alt_rows=False):
+    """
+    Create a native PowerPoint table with professional styling and borders.
+    Supports variable dimensions with adaptive font sizing and row heights.
+
+    Args:
+        slide: PowerPoint slide object
+        table_data: List of lists - first row is headers, rest are data
+        use_alt_rows: Whether to use alternating row colors
+
+    Returns:
+        table: The created table object
+    """
+    if not table_data or len(table_data) < 2:
+        return None
+
+    rows = len(table_data)
+    cols = len(table_data[0]) if table_data else 0
+
+    # Validate dimensions (2-10 rows, 2-6 cols)
+    if cols < DIMENSIONS['min_cols'] or cols > DIMENSIONS['max_cols']:
+        return None
+    if rows > DIMENSIONS['max_rows']:
+        rows = DIMENSIONS['max_rows']  # Truncate if needed
+
+    # Get adaptive sizing based on dimensions
+    font_size = get_adaptive_font_size(rows, cols)
+    row_height = get_adaptive_row_height(rows)
+
+    # Calculate dimensions
+    left = Inches(TABLE_DIMS['left'])
+    top = Inches(TABLE_DIMS['top'])
+    width = Inches(TABLE_DIMS['width'])
+    height = Inches(TABLE_DIMS['header_height'] + (rows - 1) * row_height)
+
+    # Cap height at maximum
+    if height > Inches(TABLE_DIMS['max_height']):
+        height = Inches(TABLE_DIMS['max_height'])
+
+    # Create table
+    table_shape = slide.shapes.add_table(rows, cols, left, top, width, height)
+    table = table_shape.table
+
+    # Set column widths (equal distribution)
+    col_width = int(width / cols)
+    for i in range(cols):
+        table.columns[i].width = col_width
+
+    # Populate and format cells
+    for row_idx, row_data in enumerate(table_data[:rows]):
+        for col_idx, cell_text in enumerate(row_data[:cols]):
+            cell = table.cell(row_idx, col_idx)
+            cell.text = str(cell_text)
+
+            # Get paragraph for formatting
+            paragraph = cell.text_frame.paragraphs[0]
+            paragraph.font.name = FONTS['family']
+
+            if row_idx == 0:
+                # Header row formatting (uses adaptive font size)
+                paragraph.font.size = Pt(font_size)
+                paragraph.font.bold = True
+                paragraph.font.color.rgb = COLORS['header_text']
+                paragraph.alignment = PP_ALIGN.CENTER
+                cell.fill.solid()
+                cell.fill.fore_color.rgb = COLORS['header_bg']
+            else:
+                # Data row formatting (uses adaptive font size)
+                paragraph.font.size = Pt(font_size)
+                paragraph.font.bold = False
+                paragraph.font.color.rgb = COLORS['data_text']
+
+                # Alignment: first column left, others center
+                if col_idx == 0:
+                    paragraph.alignment = PP_ALIGN.LEFT
+                else:
+                    paragraph.alignment = PP_ALIGN.CENTER
+
+                # Background color
+                cell.fill.solid()
+                if use_alt_rows and row_idx % 2 == 0:
+                    cell.fill.fore_color.rgb = COLORS['alt_row']
+                else:
+                    cell.fill.fore_color.rgb = COLORS['data_bg']
+
+    # Apply borders to all cells (using RGB tuple and EMU width)
+    set_all_table_borders(table, (0, 51, 102), 12700)  # 12700 EMU = 1pt
+
+    return table
+
+
+def parse_markdown_table(spec_text):
+    """
+    Parse markdown table from visual specification.
+
+    Args:
+        spec_text: String containing markdown table
+
+    Returns:
+        List of lists representing table data
+    """
+    lines = spec_text.strip().split('\n')
+    table_data = []
+
+    for line in lines:
+        # Skip separator lines (|---|---|)
+        if '|' in line and not line.strip().replace('|', '').replace('-', '').strip() == '':
+            # Check if it's not just dashes
+            cleaned = line.replace('|', '').replace('-', '').replace(' ', '')
+            if cleaned:  # Has actual content
+                cells = [c.strip() for c in line.split('|') if c.strip()]
+                if cells:
+                    table_data.append(cells)
+
+    return table_data if len(table_data) >= 2 else None
+
+
+def estimate_layout(table_data):
+    """
+    Estimate the best layout based on table content.
+
+    Args:
+        table_data: List of lists representing table
+
+    Returns:
+        str: Layout identifier ('A', 'B', 'C', or 'D')
+    """
+    if not table_data:
+        return 'A'
+
+    cols = len(table_data[0])
+    rows = len(table_data)
+
+    # Calculate average cell length
+    total_chars = 0
+    cell_count = 0
+    for row in table_data:
+        for cell in row:
+            total_chars += len(str(cell))
+            cell_count += 1
+
+    avg_cell_length = total_chars / cell_count if cell_count > 0 else 0
+
+    # Select layout
+    if cols == 2 and avg_cell_length > 40:
+        return 'B'  # Wide comparison
+    elif cols <= 3 and rows <= 6:
+        return 'C'  # Category list
+    elif cols == 4 and avg_cell_length < 25:
+        return 'D'  # Compact reference
+    else:
+        return 'A'  # Standard comparison
+
+
+# =============================================================================
+# INTEGRATION WITH SLIDE GENERATION
+# =============================================================================
+
+def create_table_slide(prs, slide_data, template_slide=None):
+    """
+    Create a complete table slide with title, table, and presenter notes.
+
+    Args:
+        prs: Presentation object
+        slide_data: Dictionary with slide content
+        template_slide: Optional template slide for styling
+
+    Returns:
+        slide: The created slide
+    """
+    # Get blank layout
+    blank_layout = None
+    for layout in prs.slide_layouts:
+        if layout.name == "Blank":
+            blank_layout = layout
+            break
+    if not blank_layout:
+        blank_layout = prs.slide_layouts[-1]
+
+    slide = prs.slides.add_slide(blank_layout)
+
+    # Add title
+    title_left = Inches(0.5)
+    title_top = Inches(0.3)
+    title_width = Inches(12)
+    title_height = Inches(1.0)
+
+    title_box = slide.shapes.add_textbox(title_left, title_top, title_width, title_height)
+    title_frame = title_box.text_frame
+    title_para = title_frame.paragraphs[0]
+    title_para.text = slide_data.get('header', slide_data.get('title', 'Table'))
+    title_para.font.size = Pt(36)
+    title_para.font.bold = True
+    title_para.font.name = FONTS['family']
+    title_para.font.color.rgb = RGBColor(255, 255, 255)  # White for dark backgrounds
+
+    # Parse and create table
+    table_data = slide_data.get('table_data')
+    if not table_data and slide_data.get('visual_spec'):
+        table_data = parse_markdown_table(slide_data['visual_spec'])
+
+    if table_data:
+        create_table_on_slide(slide, table_data)
+
+    # Add presenter notes
+    notes = slide_data.get('notes', slide_data.get('presenter_notes', ''))
+    if notes:
+        notes_slide = slide.notes_slide
+        notes_slide.notes_text_frame.text = notes
+
+    return slide
+```
+
+================================================================================
+SECTION 7: INTEGRATION WITH PIPELINE
+================================================================================
+
+The table generator integrates with the pipeline at these points:
+
+STEP 9 (Visual Identification):
+- Claude evaluates content against identification conditions
+- If conditions met, marks slide as: Visual: Yes - TABLE
+- Provides markdown table in specification
+
+STEP 10 (Integration):
+- Refines table content with exact text
+- Validates character limits
+- Selects or confirms layout (A/B/C/D)
+- Adds to integrated blueprint in specified format
+
+STEP 12 (PowerPoint Population):
+- When TABLE visual type encountered:
+  1. Parse markdown table from blueprint
+  2. Calculate adaptive dimensions
+  3. Create native PowerPoint table with borders
+  4. Apply professional styling
+  5. Add presenter notes
+
+FALLBACK BEHAVIOR:
+- If content exceeds limits: Split across slides
+- If markdown malformed: Log warning, skip table
+- If text too long: Truncate with ellipsis
+
+================================================================================
+SECTION 8: PRESENTER NOTES FOR TABLE SLIDES
+================================================================================
+
+Table slides require presenter notes that walk through the table content:
+
+TEMPLATE:
+```
+PRESENTER NOTES:
+
+Let me show you this information organized as a table to make the
+comparisons clearer. [PAUSE]
+
+Looking at our [number] rows, we're comparing [description of what's
+being compared].
+
+Starting with [first item in column 1], notice that [key observation
+from row 1]. This is particularly important because [relevance to NCLEX].
+
+Moving to [second item], we see [comparison or contrast]. [EMPHASIS:
+key distinguishing feature].
+
+[Continue for remaining rows...]
+
+The key takeaway from this table is [synthesis statement]. When you
+see NCLEX questions about [topic], remember [memorable comparison point].
+
+[Transition to next slide]
+
+[Word count: 150-300 words, 90-180 seconds delivery]
+```
+
+================================================================================
+SECTION 9: EXAMPLES
+================================================================================
+
+EXAMPLE 1: Drug Comparison Table
+---------------------------------
+Layout: A (Standard Comparison)
+Rows: 5, Columns: 3
+
+| Class | Mechanism | Examples |
+|-------|-----------|----------|
+| SSRIs | Block serotonin reuptake | Prozac, Zoloft |
+| SNRIs | Block 5-HT and NE reuptake | Effexor, Cymbalta |
+| TCAs | Block multiple reuptake | Amitriptyline |
+| MAOIs | Inhibit MAO enzyme | Nardil, Parnate |
+
+Presenter Notes: "This table organizes the four major antidepressant
+classes. Notice how the mechanism becomes progressively less selective
+as we move down..."
+
+
+EXAMPLE 2: Brain Lobes Reference
+---------------------------------
+Layout: C (Category List)
+Rows: 5, Columns: 3
+
+| Lobe | Location | Primary Functions |
+|------|----------|-------------------|
+| Frontal | Front | Planning, judgment, motor |
+| Parietal | Top-back | Sensation, spatial awareness |
+| Temporal | Sides | Hearing, language, memory |
+| Occipital | Back | Vision processing |
+
+
+EXAMPLE 3: Sleep Stages
+---------------------------------
+Layout: D (Compact Reference)
+Rows: 5, Columns: 4
+
+| Stage | Waves | Duration | Features |
+|-------|-------|----------|----------|
+| N1 | Theta | 5% | Light sleep |
+| N2 | Spindles | 45% | Body temp drops |
+| N3 | Delta | 25% | Deep/restorative |
+| REM | Beta-like | 25% | Dreaming |
+
+================================================================================
+SECTION 10: VALIDATION CHECKLIST
+================================================================================
+
+Before completing table generation:
+
+TABLE STRUCTURE:
+- [ ] Table has header row
+- [ ] Rows: 2-10 (including header)
+- [ ] Columns: 2-6
+- [ ] All cells have content
+- [ ] Appropriate layout selected (A/B/C/D/E)
+
+ADAPTIVE SIZING:
+- [ ] Font size: 20pt (default) or 18pt (8+ rows or 5+ cols)
+- [ ] Row heights adjust based on row count
+- [ ] Column widths auto-distributed
+
+CHARACTER LIMITS:
+- [ ] Header cells: 25 chars max
+- [ ] Data cells: 30 chars/line, 2 lines max
+- [ ] No cell exceeds 60 total chars
+
+VISUAL STYLING:
+- [ ] Header: Navy background (0,51,102), white text, bold
+- [ ] Data: White background, black text, regular
+- [ ] All borders visible (1pt navy)
+- [ ] First column left-aligned, others centered
+
+PRESENTER NOTES:
+- [ ] Notes walk through table content
+- [ ] Key comparisons highlighted
+- [ ] NCLEX relevance mentioned
+- [ ] 150-300 words
+
+TEMPLATE COMPLIANCE:
+- [ ] Uses correct template (table template.pptx)
+- [ ] Title in TextBox 2 (white text, 36pt, bold)
+- [ ] Template text boxes cleared
+
+================================================================================
+SECTION 11: COMMON ISSUES AND FIXES
+================================================================================
+
+ISSUE: Internal cell-to-cell borders not visible
+FIX: Use full OOXML structure with <a:round/>, <a:headEnd/>, <a:tailEnd/>
+     Disable table banding (bandRow, bandCol, firstRow, etc. = '0')
+
+ISSUE: Borders only showing on outer edges
+FIX: Apply set_cell_borders() to EVERY cell, not just outer cells
+     Use findall() not find() when removing existing border elements
+
+ISSUE: Presenter notes missing
+FIX: Access slide.notes_slide.notes_text_frame.text after table creation
+
+ISSUE: Font too large for cell content
+FIX: Use get_adaptive_font_size() - returns 18pt for dense tables
+
+ISSUE: Table too tall for slide
+FIX: Use get_adaptive_row_height() - reduces row height for 6+ rows
+
+ISSUE: Column widths uneven
+FIX: Calculate col_width = table_width / num_cols, apply to all columns
+
+ISSUE: Text alignment incorrect
+FIX: First column PP_ALIGN.LEFT, others PP_ALIGN.CENTER
+
+ISSUE: Header row not styled
+FIX: Apply fill.solid(), fill.fore_color.rgb = COLORS['header_bg']
+     Set font.bold = True, font.color.rgb = COLORS['header_text']
+
+ISSUE: Table banding interfering with custom styles
+FIX: After creating table, set tblPr attributes:
+     bandRow='0', bandCol='0', firstRow='0', firstCol='0',
+     lastRow='0', lastCol='0'
+
+================================================================================
+END OF DOCUMENT
+================================================================================

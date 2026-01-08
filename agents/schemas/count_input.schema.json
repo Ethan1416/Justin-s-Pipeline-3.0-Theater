@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "count_input.schema.json",
+  "title": "Section Counter Input Schema",
+  "description": "Schema for section_counter agent input - counts sections and slides in blueprints",
+  "type": "object",
+  "required": ["metadata", "content"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["agent", "date"],
+      "properties": {
+        "agent": {
+          "type": "string",
+          "const": "section_counter"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"]
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "source_files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Paths to blueprint files to count"
+        },
+        "blueprints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/blueprint_summary"
+          },
+          "description": "Blueprint data to count"
+        }
+      }
+    },
+    "count_options": {
+      "type": "object",
+      "properties": {
+        "count_by_type": {
+          "type": "boolean",
+          "default": true,
+          "description": "Break down counts by slide type"
+        },
+        "count_by_subsection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Break down counts by subsection"
+        },
+        "count_visuals": {
+          "type": "boolean",
+          "default": true,
+          "description": "Count visual slides separately"
+        },
+        "count_anchors": {
+          "type": "boolean",
+          "default": true,
+          "description": "Count anchors covered"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blueprint_summary": {
+      "type": "object",
+      "required": ["section_name", "slides"],
+      "properties": {
+        "section_number": {
+          "type": "integer"
+        },
+        "section_name": {
+          "type": "string"
+        },
+        "slides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "slide_number": { "type": "integer" },
+              "slide_type": { "type": "string" },
+              "subsection": { "type": "string" },
+              "has_visual": { "type": "boolean" },
+              "anchors_covered": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

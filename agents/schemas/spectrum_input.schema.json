@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "spectrum_input.schema.json",
+  "title": "Spectrum Generator Input Schema",
+  "description": "Input schema for the spectrum_generator agent in the NCLEX pipeline",
+  "type": "object",
+  "required": ["slide_context", "spectrum_data"],
+  "properties": {
+    "slide_context": {
+      "type": "object",
+      "required": ["slide_number", "section_name", "title"],
+      "properties": {
+        "slide_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Slide number within the section"
+        },
+        "section_name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Name of the section this slide belongs to"
+        },
+        "section_number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Section number"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Slide title"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["fundamentals", "pharmacology", "medical_surgical", "ob_maternity", "pediatric", "mental_health"],
+          "description": "NCLEX content domain"
+        }
+      }
+    },
+    "spectrum_data": {
+      "type": "object",
+      "required": ["spectrum_type", "dimension", "segments"],
+      "properties": {
+        "spectrum_type": {
+          "type": "string",
+          "enum": ["severity", "bipolar", "progressive", "dual_axis"],
+          "description": "Type of spectrum"
+        },
+        "dimension": {
+          "type": "string",
+          "maxLength": 30,
+          "description": "Name of what is being scaled (e.g., Severity, Intensity)"
+        },
+        "gradient_type": {
+          "type": "string",
+          "enum": ["blue", "alert", "bipolar"],
+          "default": "blue",
+          "description": "Color gradient: blue=intensity, alert=green-yellow-red, bipolar=cool-warm"
+        },
+        "endpoints": {
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "string",
+              "maxLength": 15,
+              "description": "Label for low/left end"
+            },
+            "high": {
+              "type": "string",
+              "maxLength": 15,
+              "description": "Label for high/right end"
+            }
+          }
+        },
+        "center_label": {
+          "type": "string",
+          "maxLength": 15,
+          "description": "Center label for bipolar spectrums (Layout C)"
+        },
+        "segments": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "description": "Segments/points on the spectrum",
+          "items": {
+            "type": "object",
+            "required": ["label"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 12,
+                "description": "Segment label"
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 40,
+                "description": "Segment description (20 chars/line, 2 lines)"
+              }
+            }
+          }
+        },
+        "axes": {
+          "type": "object",
+          "description": "For Layout E (dual-axis)",
+          "properties": {
+            "x": {
+              "type": "string",
+              "maxLength": 25,
+              "description": "X-axis dimension name"
+            },
+            "y": {
+              "type": "string",
+              "maxLength": 25,
+              "description": "Y-axis dimension name"
+            }
+          }
+        },
+        "quadrants": {
+          "type": "array",
+          "maxItems": 4,
+          "description": "For Layout E (dual-axis)",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 36,
+                "description": "Quadrant label (18 chars/line, 2 lines)"
+              },
+              "position": {
+                "type": "string",
+                "enum": ["high_high", "low_high", "low_low", "high_low"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout_preference": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "AUTO"],
+      "default": "AUTO",
+      "description": "Preferred layout: A=Horizontal Bar, B=Vertical Bar, C=Bipolar with Center, D=Segmented, E=Dual-Axis, AUTO=auto-select"
+    }
+  }
+}
