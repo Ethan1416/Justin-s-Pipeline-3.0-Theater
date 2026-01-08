@@ -43,6 +43,20 @@ from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
+# Import orchestrators
+try:
+    from orchestrators.orchestrators import (
+        UnitPlanningOrchestrator,
+        DailyGenerationOrchestrator,
+        ValidationGateOrchestrator,
+        AssemblyOrchestrator,
+        AgentContext,
+        create_orchestrator
+    )
+    ORCHESTRATORS_AVAILABLE = True
+except ImportError:
+    ORCHESTRATORS_AVAILABLE = False
+
 # Pipeline root directory
 PIPELINE_ROOT = Path(__file__).parent
 
@@ -647,13 +661,21 @@ class OutputGenerator:
 class TheaterPipeline:
     """Main pipeline orchestration class."""
 
-    def __init__(self, verbose: bool = False):
+    def __init__(self, verbose: bool = False, use_orchestrators: bool = True):
         self.config = ConfigLoader()
         self.input_loader = InputLoader()
         self.orchestrator = OrchestratorManager(self.config)
         self.output_generator = OutputGenerator()
         self.verbose = verbose
+        self.use_orchestrators = use_orchestrators and ORCHESTRATORS_AVAILABLE
         self._setup_logging()
+
+        # Initialize orchestrators if available
+        if self.use_orchestrators:
+            self.unit_planning_orch = UnitPlanningOrchestrator()
+            self.daily_gen_orch = DailyGenerationOrchestrator()
+            self.validation_orch = ValidationGateOrchestrator()
+            self.assembly_orch = AssemblyOrchestrator()
 
     def _setup_logging(self):
         """Configure logging."""
@@ -672,6 +694,7 @@ class TheaterPipeline:
         self.logger.info("=" * 60)
         self.logger.info(f"Unit: {unit}, Day: {day}")
         self.logger.info(f"Dry Run: {dry_run}")
+        self.logger.info(f"Using Orchestrators: {self.use_orchestrators}")
         self.logger.info("")
 
         # Load input
@@ -683,6 +706,10 @@ class TheaterPipeline:
 
         lesson_context = self.input_loader.create_lesson_context(lesson_data)
         self.logger.info(f"Topic: {lesson_context.topic}")
+
+        # Use enhanced orchestrators if available
+        if self.use_orchestrators:
+            return self._run_with_orchestrators(unit, day, lesson_context, lesson_data, dry_run)
 
         # Create execution context
         context = {
@@ -796,6 +823,132 @@ class TheaterPipeline:
             "failed": sum(1 for r in results if r.status == AgentStatus.FAILED),
             "skipped": sum(1 for r in results if r.status == AgentStatus.SKIPPED),
             "total_duration": sum(r.duration_seconds for r in results)
+        }
+
+    def _run_with_orchestrators(
+        self,
+        unit: int,
+        day: int,
+        lesson_context: LessonContext,
+        lesson_data: Dict,
+        dry_run: bool
+    ) -> Dict[str, Any]:
+        """Run pipeline using enhanced orchestrators with retry logic."""
+        from datetime import datetime
+        start_time = datetime.now()
+
+        # Get unit name mapping
+        unit_names = {
+            1: "Greek Theater",
+            2: "Commedia dell'Arte",
+            3: "Shakespeare",
+            4: "Student-Directed One Acts"
+        }
+
+        # Create agent context
+        agent_context = AgentContext(
+            unit_number=unit,
+            unit_name=unit_names.get(unit, "Unknown"),
+            day=day,
+            topic=lesson_context.topic
+        )
+
+        all_results = []
+        phase_outputs = {}
+
+        # Phase 1: Unit Planning
+        self.logger.info("\n" + "-" * 40)
+        self.logger.info("PHASE 1: UNIT PLANNING (with orchestrator)")
+        self.logger.info("-" * 40)
+
+        unit_result = self.unit_planning_orch.run(agent_context)
+        all_results.append(("unit_planning", unit_result))
+        phase_outputs["unit_planning"] = unit_result.outputs
+
+        if unit_result.status == "escalated":
+            self.logger.error("Unit planning failed after max retries")
+            return {"status": "FAILED", "error": "Unit planning escalated", "results": all_results}
+
+        # Phase 2: Daily Generation
+        self.logger.info("\n" + "-" * 40)
+        self.logger.info("PHASE 2: DAILY GENERATION (with orchestrator)")
+        self.logger.info("-" * 40)
+
+        daily_result = self.daily_gen_orch.run(agent_context, daily_input=lesson_data)
+        all_results.append(("daily_generation", daily_result))
+        phase_outputs["daily_generation"] = daily_result.outputs
+
+        if daily_result.status == "failed":
+            self.logger.warning(f"Daily generation had failures: {daily_result.errors}")
+
+        # Phase 3: Validation
+        self.logger.info("\n" + "-" * 40)
+        self.logger.info("PHASE 3: VALIDATION (with orchestrator)")
+        self.logger.info("-" * 40)
+
+        validation_result = self.validation_orch.run(agent_context, daily_output=daily_result.outputs)
+        all_results.append(("validation", validation_result))
+        phase_outputs["validation"] = validation_result.outputs
+
+        validation_passed = validation_result.outputs.get("overall_status") == "PASSED"
+
+        if not validation_passed:
+            self.logger.warning("Validation failed - check results for retry instructions")
+            rejection = validation_result.outputs.get("rejection_details", {})
+            self.logger.warning(f"  Failed gate: {rejection.get('failed_gate', 'unknown')}")
+            self.logger.warning(f"  Reason: {rejection.get('reason', 'unknown')}")
+
+        # Phase 4: Assembly (if not dry run and validation passed)
+        if not dry_run and validation_passed:
+            self.logger.info("\n" + "-" * 40)
+            self.logger.info("PHASE 4: ASSEMBLY (with orchestrator)")
+            self.logger.info("-" * 40)
+
+            assembly_result = self.assembly_orch.run(
+                agent_context,
+                validated_output=validation_result.outputs.get("validated_output", daily_result.outputs)
+            )
+            all_results.append(("assembly", assembly_result))
+            phase_outputs["assembly"] = assembly_result.outputs
+
+            self.logger.info(f"Output directory: {assembly_result.outputs.get('output_directory', 'N/A')}")
+
+        # Calculate summary
+        total_duration = (datetime.now() - start_time).total_seconds()
+        total_agents = sum(len(r[1].agents_run) for r in all_results)
+        failed_agents = sum(len(r[1].agents_failed) for r in all_results)
+        total_retries = sum(r[1].retry_count for r in all_results)
+
+        self.logger.info("\n" + "=" * 60)
+        self.logger.info("PIPELINE COMPLETE (Orchestrator Mode)")
+        self.logger.info("=" * 60)
+        self.logger.info(f"Total Agents: {total_agents}")
+        self.logger.info(f"Failed: {failed_agents}")
+        self.logger.info(f"Retries: {total_retries}")
+        self.logger.info(f"Duration: {total_duration:.1f}s")
+        self.logger.info(f"Validation: {'PASSED' if validation_passed else 'FAILED'}")
+
+        return {
+            "status": "SUCCESS" if failed_agents == 0 and validation_passed else "PARTIAL",
+            "validation_passed": validation_passed,
+            "summary": {
+                "total_agents": total_agents,
+                "completed": total_agents - failed_agents,
+                "failed": failed_agents,
+                "retries": total_retries,
+                "total_duration": total_duration
+            },
+            "phase_outputs": phase_outputs,
+            "results": [
+                {
+                    "phase": phase,
+                    "status": result.status,
+                    "agents_run": result.agents_run,
+                    "agents_failed": result.agents_failed,
+                    "duration": result.duration_seconds
+                }
+                for phase, result in all_results
+            ]
         }
 
 
