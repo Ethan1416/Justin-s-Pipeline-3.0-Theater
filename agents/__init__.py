@@ -39,6 +39,7 @@ from .assembly import (
     LessonAssemblerAgent,
     PowerPointAssemblerAgent,
     UnitFolderOrganizerAgent,
+    FinalQAReporterAgent,
 )
 
 
@@ -82,6 +83,7 @@ def create_agent(agent_name: str, prompt_path=None):
         "lesson_assembler": LessonAssemblerAgent,
         "powerpoint_assembler": PowerPointAssemblerAgent,
         "unit_folder_organizer": UnitFolderOrganizerAgent,
+        "final_qa_reporter": FinalQAReporterAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -127,4 +129,5 @@ __all__ = [
     "LessonAssemblerAgent",
     "PowerPointAssemblerAgent",
     "UnitFolderOrganizerAgent",
+    "FinalQAReporterAgent",
 ]
