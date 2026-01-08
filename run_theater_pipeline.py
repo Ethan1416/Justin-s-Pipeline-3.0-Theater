@@ -806,14 +806,46 @@ class TheaterPipeline:
             self.output_generator.generate_lesson_plan_md(lesson_plan, lesson_path)
             self.logger.info(f"Generated: {lesson_path}")
 
-        # Note: PowerPoint generation would require python-pptx
-        # For now, create a placeholder
-        pptx_placeholder = output_dir / "powerpoint_placeholder.txt"
-        with open(pptx_placeholder, 'w') as f:
-            f.write("PowerPoint generation requires python-pptx library.\n")
-            f.write(f"Topic: {lesson_context.topic}\n")
-            f.write(f"Slides needed: 16 (12 content + 4 auxiliary)\n")
-        self.logger.info(f"Generated: {pptx_placeholder}")
+        # Generate PowerPoint using Theater PPTX Generator
+        try:
+            from skills.generation.theater_pptx_generator import generate_pptx
+
+            # Build lesson data from context
+            lesson_data = {
+                "topic": lesson_context.topic,
+                "day": lesson_context.day,
+                "learning_objectives": lesson_context.learning_objectives,
+                "vocabulary": lesson_context.vocabulary,
+                "warmup": lesson_context.warmup,
+                "activity": lesson_context.activity,
+                "journal_prompt": lesson_context.journal_prompt,
+                "exit_tickets": lesson_context.exit_tickets,
+                "content_points": lesson_context.content_points,
+                "presenter_notes": context.get('presenter_notes_writer_output', {})
+            }
+
+            result = generate_pptx(
+                lesson_data=lesson_data,
+                output_dir=output_dir,
+                unit_number=lesson_context.unit_number,
+                day=lesson_context.day
+            )
+
+            if result['status'] == 'success':
+                self.logger.info(f"Generated: {result['file_path']}")
+            else:
+                self.logger.error(f"PowerPoint generation failed: {result.get('error', 'Unknown error')}")
+
+        except ImportError as e:
+            self.logger.warning(f"PowerPoint generation unavailable: {e}")
+            # Create placeholder
+            pptx_placeholder = output_dir / "powerpoint_placeholder.txt"
+            with open(pptx_placeholder, 'w') as f:
+                f.write("PowerPoint generation requires python-pptx library.\n")
+                f.write(f"Install with: pip install python-pptx\n")
+                f.write(f"Topic: {lesson_context.topic}\n")
+                f.write(f"Slides needed: 16 (12 content + 4 auxiliary)\n")
+            self.logger.info(f"Generated placeholder: {pptx_placeholder}")
 
     def _generate_summary(self, results: List[AgentResult]) -> Dict:
         """Generate execution summary."""
