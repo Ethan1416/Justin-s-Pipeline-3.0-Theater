@@ -1564,26 +1564,36 @@ class ValidationGateOrchestrator(BaseOrchestrator):
         - Required files present (PowerPoint, lesson_plan, exit_ticket, journal_prompts)
         - File sizes valid (not empty)
         - PowerPoint has 16 slides
+
+        NOTE: During validation phase (before assembly), this gate PASSES if
+        the production folder doesn't exist yet. Full validation happens after
+        files are actually generated and copied to production.
         """
         from skills.enforcement import (
             validate_production_output,
-            has_valid_production,
+            production_folder_exists,
             REQUIRED_SLIDE_COUNT
         )
-
-        issues = []
 
         # Get context info
         unit_number = context.unit_number
         day = context.day
 
-        # Run production folder validation
+        # If production folder doesn't exist yet, skip validation
+        # (files are generated during assembly phase, after validation)
+        if not production_folder_exists(unit_number, day):
+            return ValidationResult(
+                gate_name="production_folder_validator",
+                status=GateStatus.PASSED,
+                issues=[{"type": "info", "message": f"Production folder not yet created for Unit {unit_number} Day {day} - will be created during assembly"}]
+            )
+
+        # Run production folder validation on existing folder
         result = validate_production_output(unit_number, day)
 
         if not result["valid"]:
             # Collect all issues
-            issues.extend(result.get("issues", []))
-
+            issues = result.get("issues", [])
             critical_issues = [i for i in issues if i.get("severity") == "CRITICAL"]
 
             if critical_issues:
