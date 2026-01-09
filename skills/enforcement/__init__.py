@@ -139,6 +139,38 @@ from .production_folder_validator import (
     REQUIRED_SLIDE_COUNT,
     MIN_FILE_SIZES
 )
+from .english_standards_integrator import (
+    get_standard_text,
+    suggest_standards_for_activity,
+    format_standards_citation,
+    format_activity_standards_citation,
+    integrate_standards_into_lesson_plan,
+    integrate_standards_into_exit_tickets,
+    generate_standards_summary,
+    integrate_all_standards,
+    format_lesson_plan_with_standards,
+    MIN_STANDARDS_PER_LESSON,
+    MAX_STANDARDS_PER_LESSON,
+    CA_ELA_STANDARDS,
+    ACTIVITY_STANDARDS_MAP
+)
+from .english_standards_validator import (
+    is_valid_standard_code,
+    validate_standard,
+    validate_standards_count,
+    validate_lesson_plan_citations,
+    validate_exit_ticket_alignment,
+    validate_activity_standards_reference,
+    validate_lesson_standards,
+    has_valid_standards,
+    get_standards_issues,
+    count_standards,
+    standards_in_range,
+    generate_validation_report as generate_standards_report,
+    MIN_STANDARDS,
+    MAX_STANDARDS,
+    VALID_STANDARD_PATTERNS
+)
 
 __all__ = [
     # Slide numbering (R15)
@@ -260,4 +292,34 @@ __all__ = [
     'production_folder_exists',
     'REQUIRED_SLIDE_COUNT',
     'MIN_FILE_SIZES',
+    # English standards integration (HARDCODED)
+    'get_standard_text',
+    'suggest_standards_for_activity',
+    'format_standards_citation',
+    'format_activity_standards_citation',
+    'integrate_standards_into_lesson_plan',
+    'integrate_standards_into_exit_tickets',
+    'generate_standards_summary',
+    'integrate_all_standards',
+    'format_lesson_plan_with_standards',
+    'MIN_STANDARDS_PER_LESSON',
+    'MAX_STANDARDS_PER_LESSON',
+    'CA_ELA_STANDARDS',
+    'ACTIVITY_STANDARDS_MAP',
+    # English standards validation (HARDCODED)
+    'is_valid_standard_code',
+    'validate_standard',
+    'validate_standards_count',
+    'validate_lesson_plan_citations',
+    'validate_exit_ticket_alignment',
+    'validate_activity_standards_reference',
+    'validate_lesson_standards',
+    'has_valid_standards',
+    'get_standards_issues',
+    'count_standards',
+    'standards_in_range',
+    'generate_standards_report',
+    'MIN_STANDARDS',
+    'MAX_STANDARDS',
+    'VALID_STANDARD_PATTERNS',
 ]

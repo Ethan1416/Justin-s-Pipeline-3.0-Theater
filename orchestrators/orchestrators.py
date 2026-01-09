@@ -608,7 +608,8 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             # Gate 4: HARDCODED Content Validators (cannot be bypassed)
             "monologue_validator",
             "handout_validator",
-            "production_folder_validator"
+            "production_folder_validator",
+            "english_standards_validator"
         ]
 
     def run(
@@ -719,6 +720,8 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             return self._validate_handout(daily_output)
         elif gate_name == "production_folder_validator":
             return self._validate_production_folder(daily_output, context)
+        elif gate_name == "english_standards_validator":
+            return self._validate_english_standards(daily_output, context)
         else:
             return ValidationResult(
                 gate_name=gate_name,
@@ -1615,6 +1618,82 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             issues=[{"type": "info", "message": f"Production folder validated for Unit {unit_number} Day {day}"}]
         )
 
+    def _validate_english_standards(self, daily_output: Dict, context: AgentContext) -> ValidationResult:
+        """
+        Gate 12: English Standards Validator (HARDCODED - cannot be bypassed)
+
+        Validates English/Language Arts standards in lesson materials:
+        - R1: Each lesson must have 1-3 English standards
+        - R2: Standards must have valid codes
+        - R3: Standards must include full text
+        - R4: Lesson plan must cite standards
+        - R5: Exit tickets must align with at least one standard
+        - R6: Activities must reference applicable standards
+        """
+        from skills.enforcement import (
+            validate_lesson_standards,
+            has_valid_standards,
+            MIN_STANDARDS,
+            MAX_STANDARDS
+        )
+
+        # Get lesson data from context or daily_output
+        lesson_data = daily_output.get("lesson_data", {})
+        if not lesson_data:
+            lesson_data = {
+                "standards": daily_output.get("standards", []),
+                "exit_tickets": daily_output.get("exit_tickets", []),
+                "activity": daily_output.get("activity", {})
+            }
+
+        # Get standards from lesson_data
+        standards = lesson_data.get("standards", [])
+
+        # If no standards found in daily_output, check context
+        if not standards and hasattr(context, "lesson_input"):
+            standards = context.lesson_input.get("standards", [])
+            lesson_data["standards"] = standards
+            lesson_data["exit_tickets"] = context.lesson_input.get("exit_tickets", [])
+            lesson_data["activity"] = context.lesson_input.get("activity", {})
+
+        # Skip validation if no standards data available
+        if not standards:
+            return ValidationResult(
+                gate_name="english_standards_validator",
+                status=GateStatus.PASSED,
+                issues=[{"type": "warning", "message": "No standards data found - skipping validation"}]
+            )
+
+        # Run standards validation
+        result = validate_lesson_standards(lesson_data)
+
+        if not result.valid:
+            # Collect issues
+            issues = []
+            for issue in result.issues:
+                issues.append({
+                    "rule": issue.rule,
+                    "severity": issue.severity,
+                    "message": issue.message
+                })
+
+            return ValidationResult(
+                gate_name="english_standards_validator",
+                status=GateStatus.FAILED,
+                issues=issues,
+                fix_instructions=f"English standards validation failed: {len(result.issues)} issues. Each lesson requires {MIN_STANDARDS}-{MAX_STANDARDS} valid standards."
+            )
+
+        # Log warnings if present
+        if result.warnings:
+            self.logger.warning(f"English standards has {len(result.warnings)} warnings")
+
+        return ValidationResult(
+            gate_name="english_standards_validator",
+            status=GateStatus.PASSED,
+            issues=[{"type": "info", "message": f"English standards validated: {result.standards_count} standards ({', '.join(result.valid_codes)})"}]
+        )
+
     def _get_retry_instruction(self, failure: ValidationResult, context: AgentContext) -> Dict:
         """Get retry instructions based on failure type."""
         gate_strategies = {
@@ -1628,7 +1707,8 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             "content_accuracy_validator": RetryStrategy.TARGETED_FIX,
             "monologue_validator": RetryStrategy.TARGETED_FIX,
             "handout_validator": RetryStrategy.COMPONENT_REGEN,
-            "production_folder_validator": RetryStrategy.COMPONENT_REGEN
+            "production_folder_validator": RetryStrategy.COMPONENT_REGEN,
+            "english_standards_validator": RetryStrategy.TARGETED_FIX
         }
 
         strategy = gate_strategies.get(failure.gate_name, RetryStrategy.TARGETED_FIX)
