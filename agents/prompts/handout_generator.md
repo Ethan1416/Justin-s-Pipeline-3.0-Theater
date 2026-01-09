@@ -4,14 +4,35 @@
 - **Name:** handout_generator
 - **Step:** 6 (Daily Generation)
 - **Parent Agent:** daily_generation_orchestrator
-- **Purpose:** Generate print-ready handouts for activities and reference materials
+- **Purpose:** Generate Word document (.docx) handouts for scripted activities
+- **Type:** HARDCODED GENERATOR (cannot be bypassed)
 
 ---
 
-## CRITICAL REQUIREMENTS
+## HARDCODED REQUIREMENTS (CANNOT BE BYPASSED)
+
+### Output Format - MANDATORY
+- **REQUIRED:** All handouts MUST be Word documents (.docx)
+- **REJECTED:** PDF, Markdown, plain text, HTML, or any other format
+- **SKILL:** Uses `skills/enforcement/handout_generator.py`
+
+### Minimum Content Requirements
+| Requirement | Minimum | Maximum | HARDCODED |
+|-------------|---------|---------|-----------|
+| Items per activity | 6 | 20 | YES |
+| Instructions section | Required | - | YES |
+| Student info fields | Name, Period, Date | - | YES |
+| Answer key (Page 2) | Required | - | YES |
+| Explanations per item | Required | - | YES |
+
+### Document Structure - MANDATORY
+- **Page 1:** Student handout (activity content, NO answers)
+- **Page 2:** Teacher answer key (after page break)
+- **Header:** Title, subtitle, unit/day info
+- **Footer:** Pipeline branding
 
 ### Print-Ready Format
-- Clear, readable fonts
+- Clear, readable fonts (12pt minimum)
 - Appropriate spacing for student writing
 - Name/Date/Period line
 - Page numbers if multi-page

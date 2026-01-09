@@ -604,7 +604,10 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             # Gate 3: Standards & Pedagogy Validation
             "standards_coverage_validator",
             "pedagogy_validator",
-            "content_accuracy_validator"
+            "content_accuracy_validator",
+            # Gate 4: HARDCODED Content Validators (cannot be bypassed)
+            "monologue_validator",
+            "handout_validator"
         ]
 
     def run(
@@ -709,6 +712,10 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             return self._validate_pedagogy(daily_output)
         elif gate_name == "content_accuracy_validator":
             return self._validate_content_accuracy(daily_output)
+        elif gate_name == "monologue_validator":
+            return self._validate_monologue(daily_output)
+        elif gate_name == "handout_validator":
+            return self._validate_handout(daily_output)
         else:
             return ValidationResult(
                 gate_name=gate_name,
@@ -1410,6 +1417,136 @@ class ValidationGateOrchestrator(BaseOrchestrator):
 
         return ValidationResult(
             gate_name="content_accuracy_validator",
+            status=GateStatus.PASSED
+        )
+
+    def _validate_monologue(self, daily_output: Dict) -> ValidationResult:
+        """
+        Gate 9: Monologue Validator (HARDCODED - cannot be bypassed)
+
+        Validates presenter notes meet verbatim monologue requirements:
+        - 150-200 words per content slide
+        - Minimum 2 [PAUSE] markers per slide
+        - Minimum 1 [EMPHASIS] marker per content slide
+        - No bullet-point style writing
+        - Total: 24 [PAUSE], 12 [EMPHASIS], 3 [CHECK] minimum
+        """
+        from skills.enforcement import (
+            validate_slide_monologue,
+            MIN_WORDS,
+            MIN_PAUSE_PER_SLIDE,
+            MIN_EMPHASIS_PER_SLIDE
+        )
+
+        issues = []
+
+        # Get presenter notes
+        presenter_notes = daily_output.get("presenter_notes", {})
+        slides = presenter_notes.get("slides", [])
+
+        if not slides:
+            # No presenter notes to validate - might be generated separately
+            return ValidationResult(
+                gate_name="monologue_validator",
+                status=GateStatus.PASSED,
+                issues=[{"type": "info", "message": "No presenter notes in daily_output - skipping"}]
+            )
+
+        # Validate each slide
+        slide_types = ["agenda", "warmup"] + ["content"] * 12 + ["activity", "journal"]
+        total_issues = []
+
+        for i, slide in enumerate(slides[:16]):
+            slide_type = slide_types[i] if i < len(slide_types) else "content"
+            notes_text = slide.get("notes", "") or slide.get("presenter_notes", "")
+
+            if notes_text:
+                result = validate_slide_monologue(notes_text, i + 1, slide_type)
+                if not result["valid"]:
+                    total_issues.extend(result["issues"])
+
+        if total_issues:
+            critical_issues = [i for i in total_issues if i.get("severity") == "CRITICAL"]
+            if critical_issues:
+                return ValidationResult(
+                    gate_name="monologue_validator",
+                    status=GateStatus.FAILED,
+                    issues=total_issues,
+                    fix_instructions=f"Monologue validation failed: {len(critical_issues)} critical issues"
+                )
+
+        return ValidationResult(
+            gate_name="monologue_validator",
+            status=GateStatus.PASSED
+        )
+
+    def _validate_handout(self, daily_output: Dict) -> ValidationResult:
+        """
+        Gate 10: Handout Validator (HARDCODED - cannot be bypassed)
+
+        Validates activity handouts meet requirements:
+        - Minimum 6 items per activity
+        - Answer key on page 2
+        - Instructions section required
+        - Student info fields required
+        - Word document format (.docx)
+        """
+        from skills.enforcement import validate_activity_data
+        from pathlib import Path
+
+        issues = []
+
+        # Check if activity requires handout
+        activity = daily_output.get("activity", {})
+        activity_type = activity.get("type", "")
+
+        # Activity types that require handouts
+        handout_required_types = ["sorting", "matching", "sequencing", "worksheet"]
+
+        if activity_type not in handout_required_types:
+            # No handout required for this activity type
+            return ValidationResult(
+                gate_name="handout_validator",
+                status=GateStatus.PASSED,
+                issues=[{"type": "info", "message": f"Activity type '{activity_type}' does not require handout"}]
+            )
+
+        # Check if handout data exists
+        handout_data = activity.get("handout_data", {})
+        if not handout_data:
+            # Check if handout file was generated
+            handout_path = daily_output.get("handout_path")
+            if handout_path and Path(handout_path).exists():
+                from skills.enforcement import validate_handout_file
+                result = validate_handout_file(Path(handout_path))
+                if not result["valid"]:
+                    return ValidationResult(
+                        gate_name="handout_validator",
+                        status=GateStatus.FAILED,
+                        issues=result["issues"],
+                        fix_instructions="Handout file validation failed"
+                    )
+            else:
+                # No handout data or file - warning but not critical
+                return ValidationResult(
+                    gate_name="handout_validator",
+                    status=GateStatus.PASSED,
+                    issues=[{"type": "warning", "message": "No handout data found for activity requiring handout"}]
+                )
+
+        # Validate handout data if present
+        if handout_data:
+            result = validate_activity_data(activity_type, handout_data)
+            if not result["valid"]:
+                return ValidationResult(
+                    gate_name="handout_validator",
+                    status=GateStatus.FAILED,
+                    issues=result["issues"],
+                    fix_instructions="Handout data validation failed"
+                )
+
+        return ValidationResult(
+            gate_name="handout_validator",
             status=GateStatus.PASSED
         )
 

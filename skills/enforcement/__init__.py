@@ -90,6 +90,30 @@ from .monologue_validator import (
     MIN_TOTAL_CHECK,
     MARKER_PATTERNS
 )
+from .handout_generator import (
+    generate_activity_handout,
+    generate_sorting_handout,
+    generate_matching_handout,
+    generate_sequencing_handout,
+    generate_discussion_handout,
+    create_base_document,
+    add_instructions,
+    add_answer_key_page,
+    add_footer,
+    ACTIVITY_TYPES_REQUIRING_HANDOUTS,
+    MIN_ITEMS_PER_ACTIVITY,
+    MAX_ITEMS_PER_ACTIVITY
+)
+from .handout_validator import (
+    validate_handout_file,
+    validate_activity_data,
+    validate_lesson_handouts,
+    has_valid_handout,
+    get_handout_issues,
+    MIN_ITEMS,
+    MAX_ITEMS,
+    REQUIRED_SECTIONS
+)
 
 __all__ = [
     # Slide numbering (R15)
@@ -166,4 +190,26 @@ __all__ = [
     'MIN_TOTAL_EMPHASIS',
     'MIN_TOTAL_CHECK',
     'MARKER_PATTERNS',
+    # Handout generation (HARDCODED)
+    'generate_activity_handout',
+    'generate_sorting_handout',
+    'generate_matching_handout',
+    'generate_sequencing_handout',
+    'generate_discussion_handout',
+    'create_base_document',
+    'add_instructions',
+    'add_answer_key_page',
+    'add_footer',
+    'ACTIVITY_TYPES_REQUIRING_HANDOUTS',
+    'MIN_ITEMS_PER_ACTIVITY',
+    'MAX_ITEMS_PER_ACTIVITY',
+    # Handout validation (HARDCODED)
+    'validate_handout_file',
+    'validate_activity_data',
+    'validate_lesson_handouts',
+    'has_valid_handout',
+    'get_handout_issues',
+    'MIN_ITEMS',
+    'MAX_ITEMS',
+    'REQUIRED_SECTIONS',
 ]
