@@ -607,7 +607,8 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             "content_accuracy_validator",
             # Gate 4: HARDCODED Content Validators (cannot be bypassed)
             "monologue_validator",
-            "handout_validator"
+            "handout_validator",
+            "production_folder_validator"
         ]
 
     def run(
@@ -716,6 +717,8 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             return self._validate_monologue(daily_output)
         elif gate_name == "handout_validator":
             return self._validate_handout(daily_output)
+        elif gate_name == "production_folder_validator":
+            return self._validate_production_folder(daily_output, context)
         else:
             return ValidationResult(
                 gate_name=gate_name,
@@ -1550,6 +1553,58 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             status=GateStatus.PASSED
         )
 
+    def _validate_production_folder(self, daily_output: Dict, context: AgentContext) -> ValidationResult:
+        """
+        Gate 11: Production Folder Validator (HARDCODED - cannot be bypassed)
+
+        Validates production folder output:
+        - Production folder exists at ~/Desktop/Theater_Production
+        - Unit folder structure correct
+        - Day folder structure correct
+        - Required files present (PowerPoint, lesson_plan, exit_ticket, journal_prompts)
+        - File sizes valid (not empty)
+        - PowerPoint has 16 slides
+        """
+        from skills.enforcement import (
+            validate_production_output,
+            has_valid_production,
+            REQUIRED_SLIDE_COUNT
+        )
+
+        issues = []
+
+        # Get context info
+        unit_number = context.unit_number
+        day = context.day
+
+        # Run production folder validation
+        result = validate_production_output(unit_number, day)
+
+        if not result["valid"]:
+            # Collect all issues
+            issues.extend(result.get("issues", []))
+
+            critical_issues = [i for i in issues if i.get("severity") == "CRITICAL"]
+
+            if critical_issues:
+                return ValidationResult(
+                    gate_name="production_folder_validator",
+                    status=GateStatus.FAILED,
+                    issues=issues,
+                    fix_instructions=f"Production folder validation failed: {len(critical_issues)} critical issues. {result.get('summary', '')}"
+                )
+
+        # Log warnings if present
+        warnings = result.get("warnings", [])
+        if warnings:
+            self.logger.warning(f"Production folder has {len(warnings)} warnings")
+
+        return ValidationResult(
+            gate_name="production_folder_validator",
+            status=GateStatus.PASSED,
+            issues=[{"type": "info", "message": f"Production folder validated for Unit {unit_number} Day {day}"}]
+        )
+
     def _get_retry_instruction(self, failure: ValidationResult, context: AgentContext) -> Dict:
         """Get retry instructions based on failure type."""
         gate_strategies = {
@@ -1560,7 +1615,10 @@ class ValidationGateOrchestrator(BaseOrchestrator):
             "coherence_validator": RetryStrategy.ENRICHMENT_PASS,
             "standards_coverage_validator": RetryStrategy.COMPONENT_REGEN,
             "pedagogy_validator": RetryStrategy.ENRICHMENT_PASS,
-            "content_accuracy_validator": RetryStrategy.TARGETED_FIX
+            "content_accuracy_validator": RetryStrategy.TARGETED_FIX,
+            "monologue_validator": RetryStrategy.TARGETED_FIX,
+            "handout_validator": RetryStrategy.COMPONENT_REGEN,
+            "production_folder_validator": RetryStrategy.COMPONENT_REGEN
         }
 
         strategy = gate_strategies.get(failure.gate_name, RetryStrategy.TARGETED_FIX)

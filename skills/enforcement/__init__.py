@@ -114,6 +114,31 @@ from .handout_validator import (
     MAX_ITEMS,
     REQUIRED_SECTIONS
 )
+from .production_folder_generator import (
+    create_production_structure,
+    copy_to_production,
+    copy_all_lesson_files,
+    export_lesson_to_production,
+    get_production_path,
+    list_production_contents,
+    open_production_folder,
+    PRODUCTION_ROOT,
+    DESKTOP_PATH,
+    REQUIRED_FILES as PRODUCTION_REQUIRED_FILES,
+    UNIT_NAMES
+)
+from .production_folder_validator import (
+    validate_production_root,
+    validate_unit_folder,
+    validate_day_folder,
+    validate_powerpoint_slides,
+    validate_production_output,
+    has_valid_production,
+    get_production_issues,
+    production_folder_exists,
+    REQUIRED_SLIDE_COUNT,
+    MIN_FILE_SIZES
+)
 
 __all__ = [
     # Slide numbering (R15)
@@ -212,4 +237,27 @@ __all__ = [
     'MIN_ITEMS',
     'MAX_ITEMS',
     'REQUIRED_SECTIONS',
+    # Production folder generation (HARDCODED)
+    'create_production_structure',
+    'copy_to_production',
+    'copy_all_lesson_files',
+    'export_lesson_to_production',
+    'get_production_path',
+    'list_production_contents',
+    'open_production_folder',
+    'PRODUCTION_ROOT',
+    'DESKTOP_PATH',
+    'PRODUCTION_REQUIRED_FILES',
+    'UNIT_NAMES',
+    # Production folder validation (HARDCODED)
+    'validate_production_root',
+    'validate_unit_folder',
+    'validate_day_folder',
+    'validate_powerpoint_slides',
+    'validate_production_output',
+    'has_valid_production',
+    'get_production_issues',
+    'production_folder_exists',
+    'REQUIRED_SLIDE_COUNT',
+    'MIN_FILE_SIZES',
 ]
