@@ -40,6 +40,16 @@ def extract_lesson_data(context: Dict[str, Any]) -> Optional[LessonData]:
     1. lesson_context object (from pipeline runner)
     2. Orchestrator format: {unit: {}, day: N, topic: str, daily_input: {}}
     """
+    def normalize_content_points(raw_points):
+        """Normalize content_points to handle both string and dict formats."""
+        normalized = []
+        for cp in (raw_points or []):
+            if isinstance(cp, dict):
+                normalized.append(cp.get('point', ''))
+            else:
+                normalized.append(str(cp))
+        return normalized
+
     # Try lesson_context first
     lesson_ctx = context.get('lesson_context')
     if lesson_ctx:
@@ -50,7 +60,7 @@ def extract_lesson_data(context: Dict[str, Any]) -> Optional[LessonData]:
             topic=getattr(lesson_ctx, 'topic', ''),
             learning_objectives=getattr(lesson_ctx, 'learning_objectives', []),
             vocabulary=getattr(lesson_ctx, 'vocabulary', []),
-            content_points=getattr(lesson_ctx, 'content_points', []),
+            content_points=normalize_content_points(getattr(lesson_ctx, 'content_points', [])),
             warmup=getattr(lesson_ctx, 'warmup', {}),
             activity=getattr(lesson_ctx, 'activity', {}),
             journal_prompt=getattr(lesson_ctx, 'journal_prompt', ''),
@@ -71,7 +81,7 @@ def extract_lesson_data(context: Dict[str, Any]) -> Optional[LessonData]:
             topic=context.get('topic', daily_input.get('topic', '')),
             learning_objectives=daily_input.get('learning_objectives', []),
             vocabulary=daily_input.get('vocabulary', []),
-            content_points=daily_input.get('content_points', []),
+            content_points=normalize_content_points(daily_input.get('content_points', [])),
             warmup=daily_input.get('warmup', {}),
             activity=daily_input.get('activity', {}),
             journal_prompt=daily_input.get('journal_prompt', ''),
@@ -622,7 +632,15 @@ class PowerPointGeneratorAgent(Agent):
         day = context.get('day', 1)
         learning_objectives = daily_input.get('learning_objectives', [])
         vocabulary = daily_input.get('vocabulary', [])
-        content_points = daily_input.get('content_points', [])
+
+        # Normalize content_points - handle both string and dict formats
+        raw_content_points = daily_input.get('content_points', [])
+        content_points = []
+        for cp in raw_content_points:
+            if isinstance(cp, dict):
+                content_points.append(cp.get('point', ''))
+            else:
+                content_points.append(str(cp))
 
         # Helper to ensure punctuation
         def ensure_punctuation(text):

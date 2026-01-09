@@ -215,19 +215,41 @@ class InputLoader:
         if not unit_key:
             return None
 
-        # Look for sample input file
-        filename = f"sample_{unit_key}_day{day}.json"
-        filepath = self.inputs_dir / filename
+        # Check multiple possible locations (prefer Romeo and Juliet inputs first for Unit 3)
+        possible_paths = []
 
-        if filepath.exists():
-            with open(filepath, 'r', encoding='utf-8') as f:
-                return json.load(f)
+        # For Unit 3 (Shakespeare), prefer Romeo and Juliet inputs
+        if unit == 3:
+            possible_paths.extend([
+                PIPELINE_ROOT / "inputs" / "romeo_and_juliet" / f"day{day:02d}_meet_the_bard.json",
+                PIPELINE_ROOT / "inputs" / "romeo_and_juliet" / f"day{day:02d}.json",
+            ])
+
+        # Standard sample_theater location (fallback)
+        possible_paths.append(self.inputs_dir / f"sample_{unit_key}_day{day}.json")
+
+        for filepath in possible_paths:
+            if filepath.exists():
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    return json.load(f)
 
         return None
 
     def create_lesson_context(self, data: Dict) -> LessonContext:
         """Create LessonContext from input data."""
         unit_info = data.get('unit', {})
+
+        # Normalize content_points to handle both formats:
+        # Old format: ["string1", "string2", ...]
+        # New format: [{"point": "...", "expanded": [...]}, ...]
+        raw_points = data.get('content_points', [])
+        normalized_points = []
+        for cp in raw_points:
+            if isinstance(cp, dict):
+                normalized_points.append(cp.get('point', ''))
+            else:
+                normalized_points.append(cp)
+
         return LessonContext(
             unit_number=unit_info.get('number', 1),
             unit_name=unit_info.get('name', 'Unknown Unit'),
@@ -241,7 +263,7 @@ class InputLoader:
             activity=data.get('activity', {}),
             journal_prompt=data.get('journal_prompt', ''),
             exit_tickets=data.get('exit_tickets', []),
-            content_points=data.get('content_points', []),
+            content_points=normalized_points,
             materials_list=data.get('materials_list', [])
         )
 
@@ -847,7 +869,10 @@ class TheaterPipeline:
         try:
             from skills.generation.theater_pptx_generator import generate_pptx
 
-            # Build lesson data from context
+            # Use raw lesson data if available (preserves expanded content)
+            # Otherwise fall back to lesson_context
+            raw_data = context.get('raw_lesson_data', {})
+
             lesson_data = {
                 "topic": lesson_context.topic,
                 "day": lesson_context.day,
@@ -857,7 +882,8 @@ class TheaterPipeline:
                 "activity": lesson_context.activity,
                 "journal_prompt": lesson_context.journal_prompt,
                 "exit_tickets": lesson_context.exit_tickets,
-                "content_points": lesson_context.content_points,
+                # Use raw content_points with expanded content if available
+                "content_points": raw_data.get('content_points', lesson_context.content_points),
                 "presenter_notes": context.get('presenter_notes_writer_output', {})
             }
 
@@ -981,6 +1007,15 @@ class TheaterPipeline:
             phase_outputs["assembly"] = assembly_result.outputs
 
             self.logger.info(f"Output directory: {assembly_result.outputs.get('output_directory', 'N/A')}")
+
+            # Generate actual output files (pass raw lesson_data for expanded content)
+            context = {
+                "lesson_context": lesson_context,
+                "lesson_plan_generator_output": daily_result.outputs.get("lesson_plan", {}),
+                "presenter_notes_writer_output": daily_result.outputs.get("presenter_notes", {}),
+                "raw_lesson_data": lesson_data  # Pass raw data with expanded content
+            }
+            self._generate_outputs(context, lesson_context)
 
         # Calculate summary
         total_duration = (datetime.now() - start_time).total_seconds()

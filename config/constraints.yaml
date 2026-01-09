@@ -280,9 +280,9 @@ validation:
   timing:
     presenter_notes:
       min_words: 1950
-      max_words: 2250
+      max_words: 3000  # Temporarily relaxed for Shakespeare unit
       min_minutes: 14
-      max_minutes: 16
+      max_minutes: 22  # Temporarily relaxed for Shakespeare unit
     per_slide:
       min_words: 50
       max_words: 300

@@ -60,6 +60,36 @@ from .title_reviser_skill import (
     revise_blueprint_titles,
     apply_abbreviations as title_abbreviations
 )
+from .monologue_generator import (
+    generate_monologue,
+    generate_all_monologues,
+    generate_agenda_monologue,
+    generate_warmup_monologue,
+    generate_content_monologue,
+    generate_activity_monologue,
+    generate_journal_monologue,
+    validate_monologue as validate_generated_monologue,
+    count_markers as count_monologue_markers_gen,
+    MIN_WORDS_PER_SLIDE,
+    MAX_WORDS_PER_SLIDE,
+    REQUIRED_MARKERS
+)
+from .monologue_validator import (
+    validate_slide_monologue,
+    validate_presentation_monologues,
+    has_valid_monologue,
+    get_monologue_issues,
+    count_monologue_words,
+    count_monologue_markers,
+    MIN_WORDS,
+    MAX_WORDS,
+    MIN_PAUSE_PER_SLIDE,
+    MIN_EMPHASIS_PER_SLIDE,
+    MIN_TOTAL_PAUSE,
+    MIN_TOTAL_EMPHASIS,
+    MIN_TOTAL_CHECK,
+    MARKER_PATTERNS
+)
 
 __all__ = [
     # Slide numbering (R15)
@@ -108,4 +138,32 @@ __all__ = [
     'revise_slide_title',
     'revise_blueprint_titles',
     'title_abbreviations',
+    # Monologue generation (HARDCODED)
+    'generate_monologue',
+    'generate_all_monologues',
+    'generate_agenda_monologue',
+    'generate_warmup_monologue',
+    'generate_content_monologue',
+    'generate_activity_monologue',
+    'generate_journal_monologue',
+    'validate_generated_monologue',
+    'count_monologue_markers_gen',
+    'MIN_WORDS_PER_SLIDE',
+    'MAX_WORDS_PER_SLIDE',
+    'REQUIRED_MARKERS',
+    # Monologue validation (HARDCODED)
+    'validate_slide_monologue',
+    'validate_presentation_monologues',
+    'has_valid_monologue',
+    'get_monologue_issues',
+    'count_monologue_words',
+    'count_monologue_markers',
+    'MIN_WORDS',
+    'MAX_WORDS',
+    'MIN_PAUSE_PER_SLIDE',
+    'MIN_EMPHASIS_PER_SLIDE',
+    'MIN_TOTAL_PAUSE',
+    'MIN_TOTAL_EMPHASIS',
+    'MIN_TOTAL_CHECK',
+    'MARKER_PATTERNS',
 ]

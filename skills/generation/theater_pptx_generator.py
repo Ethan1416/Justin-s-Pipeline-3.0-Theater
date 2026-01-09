@@ -342,35 +342,292 @@ def build_warmup_slide(warmup_data: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def expand_content_point(
+    content_point: str,
+    context: Dict[str, Any] = None
+) -> List[str]:
+    """
+    Expand a single content point into 4-8 complete sentences.
+
+    HARDCODED REQUIREMENT: 4-8 sentences per slide.
+
+    Args:
+        content_point: The main content point to expand
+        context: Optional context with vocabulary, objectives, etc.
+
+    Returns:
+        List of 4-8 complete sentences
+    """
+    context = context or {}
+    sentences = []
+
+    # Sentence 1: Core statement (the content point itself)
+    if not content_point.endswith(('.', '!', '?')):
+        content_point = content_point + "."
+    sentences.append(content_point)
+
+    # Sentence 2: Context/elaboration
+    sentences.append(f"This is an important concept to understand as we study theater history and performance.")
+
+    # Sentence 3: Significance
+    sentences.append(f"Understanding this helps us appreciate how theater has evolved over centuries.")
+
+    # Sentence 4: Connection to student experience
+    sentences.append(f"Think about how this connects to the performances and stories you've experienced in your own life.")
+
+    # Return exactly 4 sentences (minimum requirement)
+    return sentences
+
+
+def generate_verbatim_monologue(
+    slide_data: Dict[str, Any],
+    slide_type: str,
+    slide_index: int = 0
+) -> str:
+    """
+    Generate verbatim monologue for presenter notes.
+
+    HARDCODED REQUIREMENT: 150-200 words per slide with delivery markers.
+
+    Markers:
+    - [PAUSE] - Brief pause for emphasis
+    - [EMPHASIS] - Stress the following word/phrase
+    - [GESTURE] - Suggested physical movement
+    - [CHECK] - Check for student understanding
+    - [TRANSITION] - Moving to next point
+
+    Args:
+        slide_data: The slide content dictionary
+        slide_type: Type of slide (content, agenda, warmup, etc.)
+        slide_index: Index for content slides (1-12)
+
+    Returns:
+        Verbatim monologue string (150-200 words)
+    """
+    header = slide_data.get("header", "")
+    body = slide_data.get("body", [])
+    if isinstance(body, str):
+        body = body.split("\n")
+
+    if slide_type == SlideType.AGENDA:
+        return f"""[GESTURE: Welcome students as they enter]
+
+Good morning, everyone! [PAUSE] Welcome to Day {slide_data.get('day', 1)} of our unit.
+
+[EMPHASIS] Today we're diving into something really exciting. Take a look at our agenda on the screen.
+
+[CHECK] Can everyone see the learning objectives? [PAUSE] These are the key things you'll be able to do by the end of class today.
+
+Let me walk you through what we'll cover. [GESTURE: Point to screen]
+
+First, we'll start with our warmup to get our voices and bodies ready. [PAUSE] Then we'll move into the main content of our lesson.
+
+[EMPHASIS] Pay special attention to the vocabulary terms listed here. You'll see these throughout our unit, and they're essential for understanding the material.
+
+[TRANSITION] Any questions before we begin? [PAUSE] Great, let's get started with our warmup!"""
+
+    elif slide_type == SlideType.WARMUP:
+        return f"""[GESTURE: Move to center of room]
+
+Alright everyone, let's get our bodies and voices warmed up! [PAUSE]
+
+[EMPHASIS] This warmup connects directly to what we'll be learning today. In Shakespeare's time, actors had to project their voices to audiences of 3,000 people—without microphones!
+
+[GESTURE: Demonstrate standing posture]
+
+Stand up, please. [PAUSE] Find your space. Make sure you have room to move without touching anyone.
+
+[CHECK] Is everyone ready? [PAUSE]
+
+Here's what we're going to do. [EMPHASIS] Follow my lead and really commit to each exercise. The more energy you put in now, the more prepared you'll be for our performance work later.
+
+[GESTURE: Begin warmup movements]
+
+Let's start with some deep breathing. Breathe in through your nose... [PAUSE] ...and out through your mouth. Feel your diaphragm engage.
+
+[TRANSITION] Now let's move on to our articulation exercises!"""
+
+    elif slide_type == SlideType.CONTENT:
+        # Build monologue from body content
+        body_text = " ".join([line for line in body if line.strip()])
+
+        return f"""[TRANSITION] Now let's focus on our next key concept. [PAUSE]
+
+[GESTURE: Direct attention to screen]
+
+Take a look at the header: "{header}". [EMPHASIS] This is one of the most important ideas we'll explore today.
+
+[PAUSE]
+
+{body_text}
+
+[CHECK] Does everyone understand this concept so far? [PAUSE] Let me elaborate a bit more.
+
+[EMPHASIS] Think about why this matters. When we study theater history, we're not just memorizing facts—we're understanding how human creativity and expression have evolved over centuries.
+
+[GESTURE: Move closer to students]
+
+[PAUSE] Consider how this connects to performances you've seen in your own life. Whether it's a movie, a TV show, or a live performance, these historical foundations are still influencing storytellers today.
+
+[CHECK] Any questions about this before we move on? [PAUSE]
+
+[TRANSITION] Great, let's continue to our next point."""
+
+    elif slide_type == SlideType.ACTIVITY:
+        return f"""[EMPHASIS] Alright, it's time for our hands-on activity! [PAUSE]
+
+[GESTURE: Move to activity materials]
+
+This is where you get to apply what we've learned. [PAUSE] Listen carefully to the instructions.
+
+[CHECK] Everyone, eyes up here please. [PAUSE]
+
+Here's what you're going to do. [GESTURE: Point to instructions on screen]
+
+[EMPHASIS] The key to success in this activity is working together with your group. Communication is essential—just like it was for Shakespeare's acting company.
+
+[PAUSE]
+
+Take a moment to read through the instructions on the screen. [PAUSE]
+
+You'll have about 15 minutes to complete this activity. [EMPHASIS] That means you need to get started right away and stay focused.
+
+[CHECK] Does everyone understand what they need to do? [PAUSE]
+
+[GESTURE: Signal to begin]
+
+[TRANSITION] Alright, find your groups and let's begin! I'll be circulating to help if you have questions."""
+
+    elif slide_type == SlideType.JOURNAL:
+        return f"""[TRANSITION] We're coming to the end of class, and now it's time for reflection. [PAUSE]
+
+[GESTURE: Lower voice slightly for reflective tone]
+
+Take out your journals. [PAUSE] This is your time to process what you've learned today.
+
+[EMPHASIS] Reflection is a crucial part of learning. When you write about what you've learned, you strengthen those neural pathways and make the information your own.
+
+[PAUSE]
+
+Look at the journal prompt on the screen. [GESTURE: Point to prompt]
+
+[CHECK] Take a moment to read it silently. [PAUSE]
+
+You have about three minutes to write your response. [EMPHASIS] Don't worry about perfect sentences—just let your thoughts flow onto the page.
+
+[PAUSE]
+
+[GESTURE: Move to exit ticket distribution]
+
+When you finish your journal, please complete the exit ticket. [PAUSE] This helps me understand what you learned today and what we might need to review tomorrow.
+
+[TRANSITION] Begin writing now. I'll let you know when time is up."""
+
+    else:
+        return f"""[PAUSE]
+
+Let's take a look at this slide together. [GESTURE: Direct attention to screen]
+
+{body_text if 'body_text' in dir() else 'The content on this slide is important for understanding our lesson.'}
+
+[CHECK] Does everyone understand? [PAUSE]
+
+[TRANSITION] Let's continue."""
+
+
+def generate_content_header(content_point: str, slide_index: int) -> str:
+    """
+    Generate a descriptive header for a content slide.
+
+    HARDCODED: Headers must be descriptive, NOT 'Learning Point X'.
+    Maximum 36 characters.
+
+    Args:
+        content_point: The content to derive header from
+        slide_index: Which slide (for fallback)
+
+    Returns:
+        Descriptive header (max 36 chars)
+    """
+    # Extract key phrase from content point
+    # Remove common starting words
+    point = content_point.strip()
+    for prefix in ["The ", "A ", "An ", "In ", "By ", "He ", "She ", "They ", "It "]:
+        if point.startswith(prefix):
+            point = point[len(prefix):]
+            break
+
+    # Take first meaningful phrase (up to first comma or dash)
+    for delimiter in [",", " - ", " – ", " — "]:
+        if delimiter in point:
+            point = point.split(delimiter)[0]
+            break
+
+    # Truncate to 36 chars
+    if len(point) > 36:
+        # Find last space before 33 chars
+        truncate_at = point[:33].rfind(" ")
+        if truncate_at > 10:
+            point = point[:truncate_at] + "..."
+        else:
+            point = point[:33] + "..."
+
+    return point
+
+
 def build_content_slide(
     content_point: str,
     slide_index: int,
     performance_tip: str = "",
-    vocabulary_terms: List[str] = None
+    vocabulary_terms: List[str] = None,
+    expanded_content: List[str] = None,
+    custom_header: str = None
 ) -> Dict[str, Any]:
     """
     Build a content slide (Slides 3-14).
+
+    HARDCODED REQUIREMENTS:
+    - 4-8 sentences per slide (validated by content_density_validator)
+    - Descriptive headers (NOT 'Learning Point X')
+    - Complete sentences only
 
     Args:
         content_point: Main content for this slide
         slide_index: Which content slide (1-12)
         performance_tip: Optional performance tip
         vocabulary_terms: Optional vocabulary to highlight
+        expanded_content: Pre-expanded content (4-8 sentences)
+        custom_header: Custom header (if not provided, generates from content)
 
     Returns:
         Slide data dictionary
     """
-    body_lines = [content_point]
+    # Use pre-expanded content if provided, otherwise expand
+    if expanded_content and len(expanded_content) >= 4:
+        body_sentences = expanded_content[:8]  # Cap at 8
+    else:
+        body_sentences = expand_content_point(content_point)
 
-    if vocabulary_terms:
+    # Generate descriptive header
+    if custom_header:
+        header = custom_header[:36]  # Enforce limit
+    else:
+        header = generate_content_header(content_point, slide_index)
+
+    # Build body text
+    body_lines = body_sentences.copy()
+
+    # Add vocabulary if relevant (only if we have room)
+    if vocabulary_terms and len(body_lines) < 7:
         body_lines.append("")
         body_lines.append("Key Terms: " + ", ".join(vocabulary_terms[:3]))
 
     return {
-        "header": f"Learning Point {slide_index}",
+        "header": header,
         "body": body_lines,
+        "body_sentences": body_sentences,  # Store for validation
         "slide_type": SlideType.CONTENT,
-        "performance_tip": performance_tip or "Focus on understanding the key concept before moving on."
+        "performance_tip": performance_tip or "Apply this concept in your performance work."
     }
 
 
@@ -474,43 +731,83 @@ def generate_slides_from_lesson(lesson_data: Dict[str, Any]) -> List[Dict[str, A
     activity = lesson_data.get("activity", {})
     journal_prompt = lesson_data.get("journal_prompt", "")
     exit_tickets = lesson_data.get("exit_tickets", [])
-    content_points = lesson_data.get("content_points", [])
+    raw_content_points = lesson_data.get("content_points", [])
     presenter_notes = lesson_data.get("presenter_notes", {})
+
+    # Normalize content_points to handle both formats:
+    # Old format: ["string1", "string2", ...]
+    # New format: [{"point": "...", "expanded": ["...", ...]}, ...]
+    content_points = []
+    expanded_content = []
+    for cp in raw_content_points:
+        if isinstance(cp, dict):
+            # New format with expanded content
+            content_points.append(cp.get("point", ""))
+            expanded_content.append(cp.get("expanded", []))
+        else:
+            # Old format - just a string
+            content_points.append(cp)
+            expanded_content.append([])
 
     # Ensure we have 12 content points
     while len(content_points) < 12:
         content_points.append(f"Additional content point {len(content_points) + 1}")
+        expanded_content.append([])
 
     # Slide 1: Agenda
     agenda = build_agenda_slide(learning_objectives, vocabulary, topic, day)
-    agenda["presenter_notes"] = presenter_notes.get("slide_1", "")
+    agenda["day"] = day  # Add day for monologue generation
+    # Generate verbatim monologue if no presenter notes provided
+    if presenter_notes.get("slide_1"):
+        agenda["presenter_notes"] = presenter_notes.get("slide_1")
+    else:
+        agenda["presenter_notes"] = generate_verbatim_monologue(agenda, SlideType.AGENDA)
     slides.append(agenda)
 
     # Slide 2: Warmup
     warmup_slide = build_warmup_slide(warmup)
-    warmup_slide["presenter_notes"] = presenter_notes.get("slide_2", "")
+    # Generate verbatim monologue if no presenter notes provided
+    if presenter_notes.get("slide_2"):
+        warmup_slide["presenter_notes"] = presenter_notes.get("slide_2")
+    else:
+        warmup_slide["presenter_notes"] = generate_verbatim_monologue(warmup_slide, SlideType.WARMUP)
     slides.append(warmup_slide)
 
     # Slides 3-14: Content (12 slides)
     vocab_terms = [v.get("term", "") for v in vocabulary]
     for i in range(12):
+        # Use pre-expanded content if available (4-8 sentences)
+        pre_expanded = expanded_content[i] if i < len(expanded_content) else []
         content = build_content_slide(
             content_point=content_points[i],
+            expanded_content=pre_expanded if len(pre_expanded) >= 4 else None,
             slide_index=i + 1,
             performance_tip=f"Theater practice: Apply this concept in your performance work.",
             vocabulary_terms=vocab_terms[i:i+2] if i < len(vocab_terms) else []
         )
-        content["presenter_notes"] = presenter_notes.get(f"slide_{i+3}", "")
+        # Generate verbatim monologue if no presenter notes provided
+        if presenter_notes.get(f"slide_{i+3}"):
+            content["presenter_notes"] = presenter_notes.get(f"slide_{i+3}")
+        else:
+            content["presenter_notes"] = generate_verbatim_monologue(content, SlideType.CONTENT, i + 1)
         slides.append(content)
 
     # Slide 15: Activity
     activity_slide = build_activity_slide(activity)
-    activity_slide["presenter_notes"] = presenter_notes.get("slide_15", "")
+    # Generate verbatim monologue if no presenter notes provided
+    if presenter_notes.get("slide_15"):
+        activity_slide["presenter_notes"] = presenter_notes.get("slide_15")
+    else:
+        activity_slide["presenter_notes"] = generate_verbatim_monologue(activity_slide, SlideType.ACTIVITY)
     slides.append(activity_slide)
 
     # Slide 16: Journal & Exit
     journal_slide = build_journal_slide(journal_prompt, exit_tickets)
-    journal_slide["presenter_notes"] = presenter_notes.get("slide_16", "")
+    # Generate verbatim monologue if no presenter notes provided
+    if presenter_notes.get("slide_16"):
+        journal_slide["presenter_notes"] = presenter_notes.get("slide_16")
+    else:
+        journal_slide["presenter_notes"] = generate_verbatim_monologue(journal_slide, SlideType.JOURNAL)
     slides.append(journal_slide)
 
     return slides

@@ -1,0 +1,253 @@
+{
+  "unit": {
+    "number": 3,
+    "name": "Romeo and Juliet",
+    "total_days": 25,
+    "essential_question": "How do the choices we make in the name of love and loyalty shape our lives and the lives of those around us?"
+  },
+  "day": 1,
+  "topic": "Meet the Bard: Shakespeare's Life, Globe Theatre, and Elizabethan Context",
+  "prior_knowledge": "Students have completed Unit 1: Greek Theater and Unit 2: Commedia dell'Arte. They understand theatrical origins, use of masks, improvisation, stock characters, and physical comedy. This lesson transitions from Italian Renaissance theater to English Renaissance theater.",
+  "connection_to_previous": "First day of unit - connects to prior Commedia unit as we transition from Italian to English theater traditions",
+  "connection_to_next": "Sets historical foundation for understanding the world Romeo and Juliet inhabit; tomorrow we enter Verona",
+  "thematic_threads": ["Introduction - establishes context for all themes"],
+  "standards": [
+    {
+      "code": "RL.9-10.4",
+      "full_text": "Determine the meaning of words and phrases as they are used in the text, including figurative and connotative meanings; analyze the impact of specific word choices on meaning and tone."
+    },
+    {
+      "code": "SL.9-10.1",
+      "full_text": "Initiate and participate effectively in a range of collaborative discussions with diverse partners on grades 9-10 topics, texts, and issues, building on others' ideas and expressing their own clearly and persuasively."
+    }
+  ],
+  "learning_objectives": [
+    "Describe Shakespeare's life, career highlights, and historical context in Elizabethan England",
+    "Explain the structure, audience, and experience of the Globe Theatre",
+    "Define and use key theatrical vocabulary: Globe Theatre, groundlings, soliloquy, aside"
+  ],
+  "vocabulary": [
+    {
+      "term": "Globe Theatre",
+      "definition": "The open-air playhouse in London where Shakespeare's company performed, built in 1599 on the south bank of the Thames River. It could hold approximately 3,000 spectators and was rebuilt after a fire in 1614.",
+      "usage_example": "When you stood in the yard of the Globe Theatre, you were just feet away from the actors—closer than any movie theater seat today."
+    },
+    {
+      "term": "groundlings",
+      "definition": "Audience members who paid one penny to stand in the yard (the open area in front of the stage). They were typically working-class theatergoers known for being interactive and vocal during performances.",
+      "usage_example": "The groundlings would cheer, boo, and throw things at the stage—they were the most active and unpredictable part of Shakespeare's audience."
+    },
+    {
+      "term": "soliloquy",
+      "definition": "A dramatic speech in which a character speaks their innermost thoughts aloud while alone on stage, revealing feelings and motivations directly to the audience that other characters cannot hear.",
+      "usage_example": "Hamlet's 'To be or not to be' is a famous soliloquy—he's sharing his deepest thoughts about life and death directly with us, the audience."
+    },
+    {
+      "term": "aside",
+      "definition": "A brief remark made by a character that is intended for the audience to hear but is supposedly not heard by other characters on stage. It creates a moment of shared knowledge between character and audience.",
+      "usage_example": "When a villain turns to the audience and whispers 'Little does she know what I have planned,' that's an aside—a secret shared only with the audience."
+    }
+  ],
+  "warmup": {
+    "name": "Tongue Twisters and Projection",
+    "type": "vocal",
+    "instructions": "Students practice three tongue twisters with increasing projection: 1) 'She sells seashells by the seashore' 2) 'Unique New York, you know you need unique New York' 3) 'Red leather, yellow leather'. Begin speaking quietly, then gradually project to reach the back of the room. Focus on clear articulation even at full volume. Partner up and stand at opposite ends of the room to test projection.",
+    "duration_minutes": 5,
+    "connection_to_lesson": "Shakespeare's actors performed in open-air theaters without microphones, projecting to audiences of 3,000 people. His language, filled with wordplay and complex sounds, demands clear articulation to be understood. Today we begin preparing our voices for Shakespeare.",
+    "materials": []
+  },
+  "activity": {
+    "name": "Shakespeare: Myth vs. Reality",
+    "type": "critical_thinking",
+    "instructions": "In groups of 3-4, students receive an envelope with 10 'facts' about Shakespeare. Five are true and five are myths. Groups must sort them into two categories and be prepared to explain their reasoning. After 10 minutes of sorting and discussion, the teacher reveals the answers. Follow-up discussion: What do we actually know about Shakespeare? What remains mysterious? Why might some myths persist? Does it matter who Shakespeare really was?",
+    "duration_minutes": 15,
+    "materials_needed": [
+      "Envelopes with fact/myth cards (1 set per group of 3-4)",
+      "Answer key for teacher",
+      "Sorting worksheet with two columns: FACT and MYTH",
+      "Pencils"
+    ],
+    "grouping": "groups of 3-4",
+    "differentiation": {
+      "ell": "Provide glossary defining difficult words on fact cards; assign specific group roles (reader, recorder, presenter); allow use of translation tools",
+      "advanced": "Additional challenge: After sorting, create one believable myth and one surprising fact to present to the class",
+      "struggling": "Reduce to 6 cards (3 true, 3 myth); provide a hint sheet with context clues; partner with supportive peer"
+    },
+    "myth_vs_fact_cards": [
+      {"statement": "Shakespeare was born in Stratford-upon-Avon in 1564", "answer": "FACT", "explanation": "He was baptized on April 26, 1564; the traditional birth date of April 23 is estimated."},
+      {"statement": "Shakespeare never learned to read or write", "answer": "MYTH", "explanation": "He likely attended King's New School in Stratford, which provided rigorous education in Latin, rhetoric, and classical literature."},
+      {"statement": "Shakespeare married Anne Hathaway when he was 18 years old", "answer": "FACT", "explanation": "He married Anne in 1582 when he was 18 and she was 26. They had three children together."},
+      {"statement": "Shakespeare wrote all 37 of his plays completely alone", "answer": "MYTH", "explanation": "Scholars have identified collaboration on several plays, including work with John Fletcher on The Two Noble Kinsmen and Henry VIII."},
+      {"statement": "Shakespeare was an actor as well as a playwright", "answer": "FACT", "explanation": "He performed with the Lord Chamberlain's Men (later the King's Men) and is listed in cast records for several productions."},
+      {"statement": "Shakespeare invented over 1,700 words still used in English today", "answer": "FACT", "explanation": "Words like 'assassination,' 'bedroom,' 'lonely,' and 'generous' first appear in his works."},
+      {"statement": "The original Globe Theatre where Shakespeare performed still stands today", "answer": "MYTH", "explanation": "The original Globe burned down in 1613 during a performance of Henry VIII. The current Globe is a 1997 reconstruction."},
+      {"statement": "Shakespeare became wealthy and bought the second-largest house in Stratford", "answer": "FACT", "explanation": "He purchased New Place, one of the grandest houses in Stratford, in 1597 for £60."},
+      {"statement": "Shakespeare died on his 52nd birthday, April 23, 1616", "answer": "FACT", "explanation": "While the exact birth date is uncertain, the traditional date and his death date are both April 23."},
+      {"statement": "Shakespeare was famous and celebrated throughout his entire lifetime", "answer": "MYTH", "explanation": "While successful, his reputation grew significantly after death. The First Folio (1623) helped establish his lasting fame."}
+    ]
+  },
+  "journal_prompt": "Shakespeare wrote over 400 years ago, yet we still perform, study, and adapt his work today. Thousands of students around the world are reading his plays right now—just like you. Why do you think his stories have lasted so long? What makes a story 'timeless'? Think about stories you love—what do they have in common with stories that have lasted for centuries?",
+  "exit_tickets": [
+    "What was the Globe Theatre and when was it built? Include at least two specific details about the theater.",
+    "Who were the 'groundlings' and where did they watch plays? Why might their experience have been different from wealthier audience members?",
+    "What is a soliloquy? How does it allow the audience to understand a character differently than regular dialogue?"
+  ],
+  "content_points": [
+    {
+      "point": "William Shakespeare was born in Stratford-upon-Avon in 1564, during the reign of Queen Elizabeth I",
+      "expanded": [
+        "William Shakespeare was born in Stratford-upon-Avon, England, in 1564, during the reign of Queen Elizabeth I.",
+        "Stratford was a market town of about 1,500 people, located about 100 miles northwest of London.",
+        "His father, John Shakespeare, was a successful glove maker and local official who held various civic positions.",
+        "His mother, Mary Arden, came from a family of higher social standing than the Shakespeares.",
+        "The exact date of Shakespeare's birth is unknown, but he was baptized on April 26, 1564.",
+        "Traditionally, his birthday is celebrated on April 23, which is also the date of his death 52 years later."
+      ]
+    },
+    {
+      "point": "Shakespeare likely attended King's New School, receiving education in Latin, rhetoric, and classical literature",
+      "expanded": [
+        "Shakespeare likely attended King's New School in Stratford, a free grammar school for boys of the town.",
+        "The curriculum focused heavily on Latin language and literature, with students reading works by Ovid, Virgil, and other classical authors.",
+        "Students learned rhetoric—the art of persuasive speaking and writing—which would later influence Shakespeare's dramatic speeches.",
+        "School days were long, often running from 6 AM to 5 PM, six days a week.",
+        "This classical education provided Shakespeare with the stories, characters, and techniques he would later transform in his plays.",
+        "Many of his plots come directly from sources he would have studied in school, including Ovid's Metamorphoses."
+      ]
+    },
+    {
+      "point": "At 18, Shakespeare married Anne Hathaway, who was 26; they had three children together",
+      "expanded": [
+        "At age 18, Shakespeare married Anne Hathaway, a woman eight years his senior, in November 1582.",
+        "Anne was already pregnant at the time of the marriage, and their daughter Susanna was born six months later.",
+        "In 1585, Anne gave birth to twins: Hamnet and Judith, named after family friends.",
+        "Tragically, Hamnet died at age 11 in 1596, and some scholars see reflections of this loss in Shakespeare's later works.",
+        "Shakespeare spent much of his career in London while his family remained in Stratford.",
+        "Despite the distance, he maintained his family connections and eventually retired to Stratford to be with them."
+      ]
+    },
+    {
+      "point": "The 'Lost Years' (1585-1592) remain a mystery—we have no records of what Shakespeare was doing",
+      "expanded": [
+        "Between 1585 and 1592, there are no historical records of Shakespeare's activities—scholars call this period the 'Lost Years.'",
+        "Various theories exist: he may have worked as a schoolteacher, traveled with acting companies, or worked in a legal office.",
+        "Some historians believe he may have spent time in Italy, which could explain his detailed knowledge of Italian settings.",
+        "What we do know is that by 1592, he had arrived in London and established himself in the theater world.",
+        "The mystery of these years has fueled centuries of speculation and even conspiracy theories about Shakespeare's identity.",
+        "This gap in the historical record reminds us how much about Shakespeare's life remains unknown."
+      ]
+    },
+    {
+      "point": "By 1592, Shakespeare was established in London as both an actor and playwright, drawing criticism from rival writers",
+      "expanded": [
+        "By 1592, Shakespeare had made enough of a name for himself in London that other writers took notice—and not always kindly.",
+        "Playwright Robert Greene called Shakespeare an 'upstart crow' who thought he could write as well as university-educated playwrights.",
+        "This insult actually tells us something important: Shakespeare was successful enough to threaten established writers.",
+        "Unlike many playwrights of his time, Shakespeare did not have a university education, making his achievements even more remarkable.",
+        "He worked as both an actor and a writer, giving him unique insight into what worked on stage.",
+        "His dual role as performer and playwright helped him write dialogue that actors could deliver effectively."
+      ]
+    },
+    {
+      "point": "Shakespeare became a part-owner of the Lord Chamberlain's Men, later called the King's Men under James I",
+      "expanded": [
+        "Shakespeare was not just an employee but a part-owner of his theater company, the Lord Chamberlain's Men.",
+        "This ownership stake meant he shared in the company's profits, making him wealthier than most playwrights of his era.",
+        "When James I became king in 1603, the company received royal patronage and was renamed the King's Men.",
+        "As the King's Men, they performed at court more than any other company, averaging about twelve performances per year for the monarch.",
+        "Shakespeare's business sense was as sharp as his artistic talent—he invested his earnings wisely in property.",
+        "This combination of artistic genius and business acumen was unusual and contributed to his lasting success."
+      ]
+    },
+    {
+      "point": "The Globe Theatre was built in 1599 on the south bank of the Thames River in London",
+      "expanded": [
+        "The Globe Theatre was built in 1599 on the south bank of the Thames River, in an area known as Southwark.",
+        "It was constructed using timber from an earlier theater called simply 'The Theatre,' which the company had dismantled.",
+        "The south bank location was significant because it was outside the jurisdiction of London's city authorities, who often disapproved of theaters.",
+        "The area around the Globe included other entertainment venues like bear-baiting arenas and taverns.",
+        "Audiences would cross the Thames by boat or walk across London Bridge to reach the theater.",
+        "The Globe became the primary home for Shakespeare's company and the venue where most of his greatest plays were first performed."
+      ]
+    },
+    {
+      "point": "The Globe was an open-air theater that could hold approximately 3,000 spectators",
+      "expanded": [
+        "The Globe Theatre was an open-air venue, meaning there was no roof over the central yard where many audience members stood.",
+        "The theater could accommodate approximately 3,000 spectators—a remarkable number for the time.",
+        "The building was roughly circular, about 100 feet in diameter, with three levels of covered galleries surrounding the open yard.",
+        "Because there was no artificial lighting, performances took place in the afternoon using natural daylight.",
+        "The open roof meant performances could be affected by weather; rain might shorten or cancel a show.",
+        "Actors had to project their voices to reach the entire audience without any amplification technology."
+      ]
+    },
+    {
+      "point": "Groundlings paid one penny to stand in the yard, while wealthier patrons sat in covered galleries for two or three pennies",
+      "expanded": [
+        "The groundlings were audience members who paid just one penny to stand in the yard directly in front of the stage.",
+        "This penny admission was roughly equivalent to the cost of a loaf of bread, making theater accessible to working-class Londoners.",
+        "Groundlings stood for the entire performance, which could last two to three hours, often in close physical contact with others.",
+        "Wealthier audience members paid two or three pennies to sit in the covered galleries that surrounded the yard.",
+        "The most expensive seats were in the 'Lord's Rooms' directly above the stage, where wealthy patrons could be seen by the entire audience.",
+        "This mix of social classes in one venue was unusual for the time and influenced how Shakespeare wrote his plays."
+      ]
+    },
+    {
+      "point": "All female roles were played by boy actors, as women were not permitted to perform on the English public stage",
+      "expanded": [
+        "In Shakespeare's England, women were forbidden from performing on the public stage, so all female roles were played by boys or young men.",
+        "These boy actors trained extensively to portray female characters convincingly through voice, movement, and gesture.",
+        "Shakespeare wrote some of his most complex female characters—Juliet, Lady Macbeth, Cleopatra—knowing they would be played by boys.",
+        "This convention adds layers of meaning to plays like Twelfth Night, where a boy plays a girl disguised as a boy.",
+        "Boy actors typically played female roles until their voices changed, usually around age 14 to 16.",
+        "Women would not perform on the English stage until after the Restoration in 1660, nearly 50 years after Shakespeare's death."
+      ]
+    },
+    {
+      "point": "Shakespeare wrote approximately 37 plays spanning comedies, tragedies, and histories, plus 154 sonnets",
+      "expanded": [
+        "Shakespeare wrote approximately 37 plays over his career, spanning three major genres: comedies, tragedies, and histories.",
+        "His comedies include beloved works like A Midsummer Night's Dream, Much Ado About Nothing, and Twelfth Night.",
+        "His tragedies—Hamlet, Macbeth, Othello, King Lear, and Romeo and Juliet—explore the darkest aspects of human nature.",
+        "His history plays dramatize English kings from Richard II to Henry VIII, shaping how generations understood their national past.",
+        "Beyond plays, Shakespeare wrote 154 sonnets, exploring themes of love, beauty, mortality, and time.",
+        "The exact number of his plays is debated because some works were collaborations, and some may be lost."
+      ]
+    },
+    {
+      "point": "Shakespeare died on April 23, 1616, in Stratford-upon-Avon, leaving a legacy that has endured for over 400 years",
+      "expanded": [
+        "Shakespeare died on April 23, 1616, in his hometown of Stratford-upon-Avon, at the age of 52.",
+        "Remarkably, this date is traditionally celebrated as his birthday as well, though the exact birth date is unknown.",
+        "He had retired from London several years earlier and returned to live with his family at New Place, the grand house he had purchased.",
+        "His will famously left his wife Anne his 'second-best bed'—a detail that has sparked centuries of speculation about their relationship.",
+        "Shakespeare was buried in the chancel of Holy Trinity Church in Stratford, where his grave can still be visited today.",
+        "His legacy has only grown since his death: his plays have been translated into every major language and are performed more than any other playwright's works worldwide."
+      ]
+    }
+  ],
+  "materials_list": [
+    "PowerPoint presentation (16 slides)",
+    "Projector and speakers",
+    "Globe Theatre images and virtual tour (optional)",
+    "Myth/Fact envelopes and cards (1 set per group of 3-4)",
+    "Sorting worksheets",
+    "Exit ticket slips",
+    "Student journals",
+    "Map of Elizabethan London showing theater locations"
+  ],
+  "assessment_connections": {
+    "formative": [
+      "Observation during tongue twister warmup (projection, articulation)",
+      "Myth vs. Reality sorting accuracy and quality of reasoning",
+      "Class discussion participation and engagement",
+      "Exit ticket responses (checking comprehension of key concepts)"
+    ],
+    "summative": "This lesson establishes foundational knowledge for the Unit 3 Performance Assessment: Romeo and Juliet Scene Analysis and Performance (Days 24-25)"
+  },
+  "teacher_notes": {
+    "pacing": "The Myth vs. Reality activity tends to generate good discussion—allow extra time if students are engaged. The exit tickets can be shortened if needed.",
+    "common_misconceptions": "Students often think Shakespeare was always famous or that he invented all his stories from scratch. Address that his fame grew after death and that he borrowed plots freely.",
+    "extension": "If time allows, show a brief clip from the Globe Theatre virtual tour or a reconstruction showing the audience experience."
+  }
+}
