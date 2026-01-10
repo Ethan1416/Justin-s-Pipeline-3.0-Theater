@@ -250,6 +250,96 @@ from .instruction_integrator import (
     MAX_LECTURE_DURATION,
     DEFAULT_LECTURE_DURATION
 )
+from .warmup_card_generator import (
+    generate_warmup_card,
+    validate_warmup_card,
+    generate_warmup_card_markdown,
+    generate_all_warmup_cards,
+    WARMUP_EXERCISES,
+    SCENE_WARMUP_MAPPING,
+    WarmupCard
+)
+from .activity_instructions_generator import (
+    generate_activity_instructions,
+    validate_activity_instructions,
+    generate_activity_instructions_markdown,
+    generate_all_activity_instructions,
+    ACTIVITY_TEMPLATES,
+    DAY_ACTIVITY_MAPPING,
+    ActivityInstructions
+)
+from .vocabulary_cards_generator import (
+    generate_vocabulary_cards,
+    validate_vocabulary_cards,
+    generate_vocabulary_cards_markdown,
+    generate_vocabulary_for_day,
+    generate_all_vocabulary_cards,
+    VOCABULARY_DATABASE,
+    DAY_VOCABULARY_MAPPING,
+    VocabularyCard
+)
+from .rubric_generator import (
+    generate_rubric,
+    validate_rubric,
+    generate_rubric_markdown,
+    generate_all_rubrics,
+    RUBRIC_TEMPLATES,
+    ACTIVITY_TO_RUBRIC,
+    Rubric,
+    RubricCriterion
+)
+from .reading_guide_generator import (
+    generate_reading_guide,
+    validate_reading_guide,
+    generate_reading_guide_markdown,
+    generate_all_reading_guides,
+    READING_GUIDE_DATABASE,
+    READING_TYPES,
+    ReadingGuide,
+    AnnotationPrompt
+)
+from .differentiation_generator import (
+    generate_differentiation_sheet,
+    validate_differentiation_sheet,
+    generate_differentiation_markdown,
+    generate_all_differentiation_sheets,
+    DIFFERENTIATION_TEMPLATES,
+    DAY_ACTIVITY_TYPES,
+    DAY_VOCABULARY,
+    DifferentiationSheet
+)
+from .answer_key_generator import (
+    generate_answer_key,
+    validate_answer_key,
+    generate_answer_key_markdown,
+    generate_all_answer_keys,
+    EXIT_TICKET_ANSWERS,
+    HANDOUT_ANSWER_TEMPLATES,
+    AnswerKeyEntry
+)
+from .materials_checklist_generator import (
+    generate_materials_checklist,
+    validate_materials_checklist,
+    generate_materials_checklist_markdown,
+    generate_all_materials_checklists,
+    ACTIVITY_MATERIALS,
+    DAY_ACTIVITIES,
+    STANDARD_DAILY_MATERIALS,
+    MaterialsChecklist
+)
+from .unit_components_generator import (
+    generate_unit_calendar,
+    generate_sub_folder,
+    generate_parent_letter,
+    generate_character_tracker,
+    generate_standards_alignment,
+    generate_assessment_tracker,
+    generate_all_unit_components,
+    generate_unit_calendar_markdown,
+    ROMEO_JULIET_CALENDAR,
+    CHARACTERS,
+    STANDARDS_ALIGNMENT
+)
 
 __all__ = [
     # Slide numbering (R15)
@@ -475,4 +565,85 @@ __all__ = [
     'MIN_LECTURE_DURATION',
     'MAX_LECTURE_DURATION',
     'DEFAULT_LECTURE_DURATION',
+    # Warm-up card generation (HARDCODED)
+    'generate_warmup_card',
+    'validate_warmup_card',
+    'generate_warmup_card_markdown',
+    'generate_all_warmup_cards',
+    'WARMUP_EXERCISES',
+    'SCENE_WARMUP_MAPPING',
+    'WarmupCard',
+    # Activity instructions generation (HARDCODED)
+    'generate_activity_instructions',
+    'validate_activity_instructions',
+    'generate_activity_instructions_markdown',
+    'generate_all_activity_instructions',
+    'ACTIVITY_TEMPLATES',
+    'DAY_ACTIVITY_MAPPING',
+    'ActivityInstructions',
+    # Vocabulary cards generation (HARDCODED)
+    'generate_vocabulary_cards',
+    'validate_vocabulary_cards',
+    'generate_vocabulary_cards_markdown',
+    'generate_vocabulary_for_day',
+    'generate_all_vocabulary_cards',
+    'VOCABULARY_DATABASE',
+    'DAY_VOCABULARY_MAPPING',
+    'VocabularyCard',
+    # Rubric generation (HARDCODED)
+    'generate_rubric',
+    'validate_rubric',
+    'generate_rubric_markdown',
+    'generate_all_rubrics',
+    'RUBRIC_TEMPLATES',
+    'ACTIVITY_TO_RUBRIC',
+    'Rubric',
+    'RubricCriterion',
+    # Reading guide generation (HARDCODED)
+    'generate_reading_guide',
+    'validate_reading_guide',
+    'generate_reading_guide_markdown',
+    'generate_all_reading_guides',
+    'READING_GUIDE_DATABASE',
+    'READING_TYPES',
+    'ReadingGuide',
+    'AnnotationPrompt',
+    # Differentiation sheet generation (HARDCODED)
+    'generate_differentiation_sheet',
+    'validate_differentiation_sheet',
+    'generate_differentiation_markdown',
+    'generate_all_differentiation_sheets',
+    'DIFFERENTIATION_TEMPLATES',
+    'DAY_ACTIVITY_TYPES',
+    'DAY_VOCABULARY',
+    'DifferentiationSheet',
+    # Answer key generation (HARDCODED)
+    'generate_answer_key',
+    'validate_answer_key',
+    'generate_answer_key_markdown',
+    'generate_all_answer_keys',
+    'EXIT_TICKET_ANSWERS',
+    'HANDOUT_ANSWER_TEMPLATES',
+    'AnswerKeyEntry',
+    # Materials checklist generation (HARDCODED)
+    'generate_materials_checklist',
+    'validate_materials_checklist',
+    'generate_materials_checklist_markdown',
+    'generate_all_materials_checklists',
+    'ACTIVITY_MATERIALS',
+    'DAY_ACTIVITIES',
+    'STANDARD_DAILY_MATERIALS',
+    'MaterialsChecklist',
+    # Unit-level components generation (HARDCODED)
+    'generate_unit_calendar',
+    'generate_sub_folder',
+    'generate_parent_letter',
+    'generate_character_tracker',
+    'generate_standards_alignment',
+    'generate_assessment_tracker',
+    'generate_all_unit_components',
+    'generate_unit_calendar_markdown',
+    'ROMEO_JULIET_CALENDAR',
+    'CHARACTERS',
+    'STANDARDS_ALIGNMENT',
 ]
