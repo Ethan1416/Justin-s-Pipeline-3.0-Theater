@@ -1,0 +1,804 @@
+================================================================================
+COMPONENT GENERATION INSTRUCTIONS
+Theater Education Pipeline - Production Folder Enhancements
+================================================================================
+
+This document defines specifications for all recommended production folder
+components. Use this as a reference for generating hardcoded agents.
+
+================================================================================
+SECTION 1: HIGH PRIORITY DAILY COMPONENTS
+================================================================================
+
+--------------------------------------------------------------------------------
+1.1 WARM-UP INSTRUCTION CARD
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Warmup_Card.docx
+REQUIRED: Yes (generate for every lesson)
+PURPOSE: Ready-to-project instructions so teacher can facilitate without prep
+
+CONTENT STRUCTURE:
+```
+[HEADER]
+- Day number and warm-up name
+- Duration: 5 minutes
+- Connection to today's lesson (1 sentence)
+
+[SETUP] (30 seconds)
+- Space requirements (circle, scattered, pairs)
+- Any props/materials needed
+- Safety reminders if physical
+
+[INSTRUCTIONS] (numbered steps)
+1. Step one instruction (clear, student-facing language)
+2. Step two instruction
+3. Step three instruction
+(Maximum 5 steps)
+
+[TEACHER CUES]
+- "Begin" signal
+- Midpoint check-in prompt
+- "30 seconds remaining" warning
+- Transition phrase to next activity
+
+[VARIATIONS]
+- Simplified version (for struggling students)
+- Advanced version (for early finishers)
+- Seated version (for limited space)
+
+[CONTENT CONNECTION]
+- How this warm-up connects to today's scene/skill
+- Vocabulary to emphasize during warm-up
+```
+
+FORMATTING:
+- Large font (18pt minimum) for projection
+- Clear section headers
+- Numbered steps
+- Box around timer cues
+- 1 page maximum
+
+GENERATION RULES:
+- R1: Warm-up must connect to day's topic (not generic)
+- R2: Must include timing cues
+- R3: Must include at least one variation
+- R4: Instructions must be student-facing (not teacher notes)
+- R5: Must fit on one page when projected
+
+--------------------------------------------------------------------------------
+1.2 ACTIVITY INSTRUCTION SLIDES
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Activity_Instructions.docx (or .pptx)
+REQUIRED: Yes (generate for every lesson)
+PURPOSE: Step-by-step student instructions separate from lecture slides
+
+CONTENT STRUCTURE:
+```
+[SLIDE 1: TITLE]
+- Activity name
+- Duration: 15 minutes
+- Group size (individual, pairs, groups of 4, etc.)
+
+[SLIDE 2: OBJECTIVE]
+- "By the end of this activity, you will..."
+- Clear, measurable outcome
+- Connection to learning objective
+
+[SLIDE 3-6: STEPS]
+- One step per slide
+- Step number prominently displayed
+- Time allocation for each step
+- Example or model if applicable
+
+[SLIDE 7: SUCCESS CRITERIA]
+- "You're successful when..."
+- 3-4 bullet points
+- Observable behaviors
+
+[SLIDE 8: SHARING/WRAP-UP]
+- How groups will share out
+- What to do when finished early
+- Transition instructions
+```
+
+FORMATTING:
+- Large font (24pt minimum)
+- One instruction per slide
+- Visual icons for step numbers
+- Timer graphic on each step slide
+- Maximum 8 slides
+
+GENERATION RULES:
+- R1: Instructions must be student-facing (imperative verbs)
+- R2: Each step must have time allocation
+- R3: Must include success criteria
+- R4: Must include early finisher instructions
+- R5: Must include sharing/debrief protocol
+
+--------------------------------------------------------------------------------
+1.3 VOCABULARY CARDS
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Vocabulary_Cards.docx
+REQUIRED: Yes for days with new vocabulary (most days)
+PURPOSE: Printable flashcards for word wall or student sets
+
+CONTENT STRUCTURE:
+```
+[CARD FRONT]
+- Term in large font
+- Part of speech
+- Pronunciation guide (for Shakespeare terms)
+
+[CARD BACK]
+- Definition (student-friendly)
+- Example sentence from the play (with act/scene citation)
+- Modern equivalent or synonym
+- Visual/icon if applicable
+
+[BONUS: SHAKESPEARE TRANSLATION CARDS]
+For archaic terms:
+- Original term: "Wherefore"
+- Modern meaning: "Why" (NOT "where")
+- Example: "Wherefore art thou Romeo?" = "Why are you Romeo?"
+- Common misconception note if applicable
+```
+
+FORMAT PER PAGE:
+- 4 cards per page (2x2 grid)
+- Cut lines indicated
+- Front and back aligned for double-sided printing
+- Card size: 4" x 3"
+
+GENERATION RULES:
+- R1: 3-6 vocabulary terms per day
+- R2: All Shakespeare terms must include pronunciation
+- R3: All terms must have play-specific example
+- R4: Common misconceptions must be flagged
+- R5: Terms must appear in that day's reading
+
+VOCABULARY DATABASE (Romeo and Juliet):
+Include terms like:
+- Act 1: wherefore, thee/thou, art, hath, doth, bite thumb, Montague, Capulet
+- Act 2: balcony, soliloquy, aside, iambic pentameter, sonnet
+- Act 3: banishment, exile, fray, plague, curse
+- Act 4: potion, vial, vault, charnel house
+- Act 5: apothecary, poison, dagger, reconcile
+
+--------------------------------------------------------------------------------
+1.4 RUBRIC
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Rubric.docx
+REQUIRED: Yes (generate for every activity)
+PURPOSE: Assessment criteria aligned to objectives
+
+CONTENT STRUCTURE:
+```
+[HEADER]
+- Activity name
+- Date
+- Student name line
+
+[CRITERIA TABLE]
+| Criterion | Exemplary (4) | Proficient (3) | Developing (2) | Beginning (1) |
+|-----------|--------------|----------------|----------------|---------------|
+| [Criterion 1 from objective] | description | description | description | description |
+| [Criterion 2 from objective] | description | description | description | description |
+| [Criterion 3: Collaboration/Participation] | description | description | description | description |
+
+[TOTAL SCORE]
+- Points: ___/12
+- Grade equivalent
+
+[FEEDBACK SECTION]
+- Strengths:
+- Areas for growth:
+- Next steps:
+
+[STUDENT REFLECTION]
+- What I did well:
+- What I would improve:
+```
+
+RUBRIC TYPES BY ACTIVITY:
+- Analysis activities: Content accuracy, textual evidence, insight depth
+- Performance activities: Character commitment, blocking, vocal clarity
+- Discussion activities: Participation, evidence use, listening
+- Writing activities: Thesis, evidence, organization, conventions
+
+GENERATION RULES:
+- R1: Criteria must align to day's learning objectives
+- R2: Must use 4-point scale (not percentages)
+- R3: Descriptors must be specific and observable
+- R4: Must include student self-reflection section
+- R5: Must fit on one page
+
+--------------------------------------------------------------------------------
+1.5 READING GUIDE
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Reading_Guide.docx
+REQUIRED: Yes for all days with reading (Days 1-25)
+PURPOSE: Annotation guide with embedded questions
+
+CONTENT STRUCTURE:
+```
+[HEADER]
+- Day and scene being read
+- Page/line numbers in textbook
+- Reading type (shared, close, partner, etc.)
+
+[PRE-READING]
+- Context reminder (1-2 sentences of what happened before)
+- Vocabulary preview (3-5 terms to watch for)
+- Focus question: "As you read, look for..."
+
+[DURING READING: ANNOTATION GUIDE]
+Section 1 (Lines X-Y):
+- Key quote to mark: "____________"
+- Annotation prompt: What does this reveal about...?
+- Margin note suggestion
+
+Section 2 (Lines X-Y):
+- Key quote to mark: "____________"
+- Annotation prompt: How does this connect to...?
+- Margin note suggestion
+
+Section 3 (Lines X-Y):
+- Key quote to mark: "____________"
+- Annotation prompt: What technique is Shakespeare using?
+- Margin note suggestion
+
+[DISCUSSION QUESTIONS] (for after reading)
+1. Literal: What happened in this scene?
+2. Interpretive: Why did [character] choose to...?
+3. Evaluative: Do you agree with [character]'s decision? Why?
+
+[MODERN TRANSLATION BOX]
+Most challenging passage:
+Original: "________________"
+Modern: "________________"
+```
+
+GENERATION RULES:
+- R1: Must include specific line numbers from actual play
+- R2: Must have 3 annotation prompts minimum
+- R3: Must include at least one modern translation
+- R4: Questions must scaffold (literal → interpretive → evaluative)
+- R5: Must connect to day's learning objectives
+
+--------------------------------------------------------------------------------
+1.6 DIFFERENTIATION QUICK-SHEET
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Differentiation.md
+REQUIRED: Yes (generate for every lesson)
+PURPOSE: At-a-glance modifications for diverse learners
+
+CONTENT STRUCTURE:
+```
+# Day {XX} Differentiation Guide
+
+## ELL SUPPORTS
+**Vocabulary:**
+- Pre-teach: [3 key terms with translations if available]
+- Sentence frames:
+  - "I notice that..."
+  - "This reminds me of..."
+  - "The character feels ___ because ___."
+
+**Reading Modifications:**
+- Pair with fluent reader
+- Provide modern translation side-by-side
+- Allow audio recording of text
+
+**Activity Modifications:**
+- [Specific modification for today's activity]
+- Extended time: +5 minutes
+- Visual supports provided
+
+## STRUGGLING LEARNERS
+**Scaffolds:**
+- Graphic organizer provided
+- Reduced text passage (focus on lines X-Y only)
+- Teacher check-in at minute 5
+
+**Modified Expectations:**
+- [What success looks like for this group]
+- Focus on [primary objective only]
+
+## ADVANCED LEARNERS
+**Extensions:**
+- [Extension question or task]
+- Compare to [related text/production]
+- Create [additional product]
+
+**Leadership Roles:**
+- Discussion facilitator
+- Peer tutor pairing
+- Research extension
+
+## IEP/504 CONSIDERATIONS
+**Common Accommodations:**
+- Extended time: Add 5 minutes to activity
+- Preferential seating: Near board/teacher
+- Reduced written output: Oral response option
+- Movement breaks: Built into warm-up
+
+**Check with individual IEPs for:**
+- Specific reading accommodations
+- Assessment modifications
+- Behavioral supports
+```
+
+GENERATION RULES:
+- R1: Must include specific modifications for today's activity
+- R2: Sentence frames must relate to day's objective
+- R3: Extension must be genuinely challenging (not just "more")
+- R4: Must be scannable (bullet points, not paragraphs)
+- R5: Must fit on one page
+
+================================================================================
+SECTION 2: MEDIUM PRIORITY DAILY COMPONENTS
+================================================================================
+
+--------------------------------------------------------------------------------
+2.1 ANSWER KEY
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Answer_Key.md
+REQUIRED: Yes for days with handouts or exit tickets
+PURPOSE: Speed up grading, ensure consistency
+
+CONTENT STRUCTURE:
+```
+# Day {XX} Answer Key
+
+## Exit Ticket Answers
+
+**Question 1:** [Question text]
+- Correct answer: [Answer]
+- Acceptable variations: [Other valid responses]
+- Common misconceptions to watch for: [Incorrect thinking]
+
+**Question 2:** [Question text]
+- Exemplar response: [Full model answer]
+- Key elements to look for:
+  - [ ] Uses textual evidence
+  - [ ] Explains reasoning
+  - [ ] Connects to objective
+- Partial credit guidance: [When to give 1/2 credit]
+
+## Handout Answers (if applicable)
+
+**Section 1:**
+1. [Answer]
+2. [Answer]
+3. [Answer]
+
+**Open-ended questions:**
+- Look for: [Key concepts that should appear]
+- Exemplar: [Model response]
+```
+
+GENERATION RULES:
+- R1: Must include exemplar for open-ended questions
+- R2: Must note common misconceptions
+- R3: Must include partial credit guidance
+- R4: Must list acceptable variations for interpretation questions
+
+--------------------------------------------------------------------------------
+2.2 MATERIALS CHECKLIST
+--------------------------------------------------------------------------------
+
+FILE: Day{XX}_Materials_Checklist.md
+REQUIRED: Yes (generate for every lesson)
+PURPOSE: 5-minute "grab list" for teacher prep
+
+CONTENT STRUCTURE:
+```
+# Day {XX} Materials Checklist
+
+## COPIES NEEDED
+- [ ] Handout: ___ copies (1 per student)
+- [ ] Reading guide: ___ copies (1 per student OR 1 per pair)
+- [ ] Exit ticket: ___ copies (1 per student)
+- [ ] Vocabulary cards: ___ sets (for word wall OR student sets)
+- [ ] Rubric: ___ copies (if peer assessment)
+
+## TECHNOLOGY
+- [ ] PowerPoint loaded and tested
+- [ ] Projector/screen ready
+- [ ] Timer visible (phone/online/slide)
+- [ ] Video cued to timestamp (if applicable)
+
+## PHYSICAL MATERIALS
+- [ ] Markers/chart paper (for [specific activity])
+- [ ] Props: [list any needed]
+- [ ] Seating arranged for [circle/groups/pairs]
+
+## BEFORE STUDENTS ARRIVE
+- [ ] Warm-up instructions projected
+- [ ] Handouts at stations OR ready to distribute
+- [ ] Word wall updated with new terms
+- [ ] [Day-specific prep task]
+
+## DURING CLASS REMINDERS
+- [ ] Collect: [what to collect]
+- [ ] Note: [observations to make]
+- [ ] Prep for tomorrow: [quick note]
+```
+
+GENERATION RULES:
+- R1: Must be checkable (checkbox format)
+- R2: Must include copy counts
+- R3: Must include technology checks
+- R4: Must include "before students arrive" section
+
+================================================================================
+SECTION 3: UNIT-LEVEL COMPONENTS (Generate Once)
+================================================================================
+
+--------------------------------------------------------------------------------
+3.1 UNIT OVERVIEW CALENDAR
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Calendar.docx
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Visual overview for teacher, subs, admin
+
+CONTENT STRUCTURE:
+```
+[UNIT HEADER]
+- Unit name and number
+- Date range
+- Total days
+- Essential question
+
+[CALENDAR GRID - 6 weeks x 5 days]
+Each cell contains:
+- Day number
+- Scene/Focus (abbreviated)
+- Activity type icon (discussion, performance, writing, etc.)
+- Assessment indicator if applicable (★ for graded)
+
+[KEY]
+- Icons explained
+- Color coding (by act or activity type)
+- Assessment days marked
+
+[STANDARDS COVERED]
+- List of CA ELA standards
+- Check marks for which week addresses each
+```
+
+--------------------------------------------------------------------------------
+3.2 SUBSTITUTE FOLDER
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Sub_Folder.docx
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Emergency plans for any absence
+
+CONTENT STRUCTURE:
+```
+[CLASSROOM INFO]
+- Room procedures
+- Seating chart location
+- Emergency contacts
+- Where to find materials
+
+[GENERIC ACTIVITIES - Choose One]
+
+OPTION A: Film Study (any day)
+- Show: [Specific R&J film version, timestamp]
+- Student task: Comparison chart (film vs. text)
+- Handout included
+
+OPTION B: Silent Reading + Response
+- Read assigned scene independently
+- Complete reading response questions
+- Handout included
+
+OPTION C: Vocabulary Review
+- Flashcard study in pairs
+- Vocabulary quiz (included)
+- Self-check answer key
+
+OPTION D: Character Journal
+- Write diary entry from assigned character
+- Prompt sheet included
+- Share in pairs last 10 min
+
+[SPECIFIC DAY PLANS]
+If sub knows which day:
+- Day 1-5: [Quick summary of what to do]
+- Day 6-10: [Quick summary]
+... etc
+
+[WHAT NOT TO DO]
+- No stage combat without trained teacher
+- No full performances without supervision
+- No scene work without teacher present
+```
+
+--------------------------------------------------------------------------------
+3.3 PARENT LETTER
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Parent_Letter.docx
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Family communication about unit content
+
+CONTENT STRUCTURE:
+```
+[HEADER]
+- School letterhead template space
+- Date
+- Teacher contact info
+
+[GREETING]
+Dear Families,
+
+[UNIT OVERVIEW]
+- What we're studying (Romeo and Juliet)
+- Why it matters (standards, skills)
+- Timeline (6 weeks)
+
+[CONTENT ADVISORY]
+This unit includes:
+- Stage combat (choreographed, safe)
+- Themes of death and suicide (contextual discussion)
+- Romantic content (age-appropriate)
+- Archaic language requiring translation
+
+[HOW TO SUPPORT AT HOME]
+- Watch film versions together
+- Discuss themes
+- Practice lines if student brings script home
+- Ask about daily journal prompts
+
+[KEY DATES]
+- Performance week: [dates]
+- Major assessments: [dates]
+
+[QUESTIONS?]
+Contact information
+Office hours
+
+Signature line
+```
+
+--------------------------------------------------------------------------------
+3.4 CHARACTER TRACKING SHEET
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Character_Tracker.docx
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Running document students update throughout unit
+
+CONTENT STRUCTURE:
+```
+[HEADER]
+- Student name
+- Romeo and Juliet Character Tracker
+
+[CHARACTER GRID]
+For each major character (Romeo, Juliet, Mercutio, Tybalt, Nurse, Friar, Capulet, Lady Capulet):
+
+| Character | Act 1 | Act 2 | Act 3 | Act 4 | Act 5 |
+|-----------|-------|-------|-------|-------|-------|
+| Motivation|       |       |       |       |       |
+| Key quote |       |       |       |       |       |
+| Relationships |   |       |       |       |       |
+| Change/growth |   |       |       |       |       |
+
+[RELATIONSHIP MAP]
+- Blank template for character connections
+- Update as relationships shift
+
+[FINAL REFLECTION]
+- Which character changed most?
+- Which character do you sympathize with?
+- Evidence for your choice
+```
+
+--------------------------------------------------------------------------------
+3.5 STANDARDS ALIGNMENT DOCUMENT
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Standards_Alignment.md
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Documentation for admin/evaluation
+
+CONTENT STRUCTURE:
+```
+# Unit {X}: Romeo and Juliet
+## California ELA Standards Alignment
+
+### Reading Literature (RL)
+
+**RL.9-10.3** - Analyze how complex characters develop...
+- Addressed on Days: 2, 3, 7, 13, 16, 17
+- Key Activities: Character Motivation Chart, Hot Seat, Power Dynamics Map
+- Assessment: Exit tickets, Character Tracker, Final performance
+
+**RL.9-10.4** - Determine meaning of words and phrases...
+- Addressed on Days: 4, 7, 8, 13, 15
+- Key Activities: Language Analysis, Oxymoron Hunt, Aubade Analysis
+- Assessment: Vocabulary checks, Reading guides
+
+[Continue for all standards...]
+
+### Speaking & Listening (SL)
+
+**SL.9-10.1** - Collaborative discussions...
+- Addressed on Days: 3, 9, 14, 21, 22
+- Key Activities: Fishbowl, Hot Seat, Debate, Socratic Seminar
+- Assessment: Discussion rubrics
+
+[Continue...]
+
+### Writing (W)
+
+[Continue...]
+
+## Coverage Summary
+| Standard | Days Addressed | Primary | Secondary |
+|----------|---------------|---------|-----------|
+| RL.9-10.3 | 6 | Days 2, 13 | Days 3, 7, 16, 17 |
+...
+
+## Assessment Map
+| Assessment Type | Standards | Days |
+|-----------------|-----------|------|
+| Exit Tickets | All | Daily |
+| Rubric-scored activities | RL.3, SL.1 | Days 9, 12, 19, 23 |
+| Final Performance | All | Days 29-30 |
+```
+
+--------------------------------------------------------------------------------
+3.6 ASSESSMENT TRACKER TEMPLATE
+--------------------------------------------------------------------------------
+
+FILE: Unit{X}_Assessment_Tracker.xlsx (or .csv for generation)
+REQUIRED: Yes (generate once per unit)
+PURPOSE: Gradebook template with objective mastery
+
+CONTENT STRUCTURE:
+```
+[COLUMNS]
+A: Student Name
+B-F: Exit Ticket scores (5 per week × 5 weeks = 25)
+G-L: Activity Rubric scores (select days)
+M: Character Tracker (completion)
+N: Final Performance score
+O: Unit Total
+P: Percentage
+Q-Z: Objective Mastery checkboxes
+
+[ROWS]
+Row 1: Headers
+Row 2: Point values
+Row 3-35: Student names (space for 32 students)
+Row 36: Class average formulas
+
+[OBJECTIVE MASTERY COLUMNS]
+- Obj 1: Analyze character development
+- Obj 2: Interpret figurative language
+- Obj 3: Apply performance techniques
+- Obj 4: Evaluate themes
+- Obj 5: Create original interpretation
+
+[FORMULAS TO INCLUDE]
+- Auto-sum for unit total
+- Percentage calculation
+- Conditional formatting (red if <70%, yellow 70-80%, green >80%)
+- Class average row
+```
+
+================================================================================
+SECTION 4: IMPLEMENTATION PRIORITY
+================================================================================
+
+PHASE 1 - Implement First (Biggest Impact):
+1. Warm-up Instruction Card generator
+2. Activity Instructions generator
+3. Rubric generator
+4. Reading Guide generator
+
+PHASE 2 - Implement Second:
+5. Vocabulary Cards generator
+6. Differentiation Quick-Sheet generator
+7. Answer Key generator
+8. Materials Checklist generator
+
+PHASE 3 - Unit Level:
+9. Unit Calendar generator
+10. Sub Folder generator
+11. Parent Letter generator
+12. Character Tracker generator
+13. Standards Alignment generator
+14. Assessment Tracker generator
+
+================================================================================
+SECTION 5: FILE NAMING CONVENTIONS
+================================================================================
+
+Daily files:
+  Day{XX}_{ComponentName}.{ext}
+  Examples:
+    Day01_Warmup_Card.docx
+    Day01_Activity_Instructions.docx
+    Day01_Vocabulary_Cards.docx
+    Day01_Rubric.docx
+    Day01_Reading_Guide.docx
+    Day01_Differentiation.md
+    Day01_Answer_Key.md
+    Day01_Materials_Checklist.md
+
+Unit files:
+  Unit{X}_{ComponentName}.{ext}
+  Examples:
+    Unit3_Calendar.docx
+    Unit3_Sub_Folder.docx
+    Unit3_Parent_Letter.docx
+    Unit3_Character_Tracker.docx
+    Unit3_Standards_Alignment.md
+    Unit3_Assessment_Tracker.xlsx
+
+================================================================================
+SECTION 6: VALIDATION REQUIREMENTS
+================================================================================
+
+Each generator must have a corresponding validator that checks:
+
+1. WARM-UP CARD VALIDATOR
+   - Has connection to day's topic
+   - Has timing cues
+   - Has at least one variation
+   - Fits on one page
+
+2. ACTIVITY INSTRUCTIONS VALIDATOR
+   - Has clear steps (3-6)
+   - Each step has time allocation
+   - Has success criteria
+   - Has early finisher instructions
+
+3. VOCABULARY CARDS VALIDATOR
+   - 3-6 terms per day
+   - Each term has definition + example
+   - Shakespeare terms have pronunciation
+   - Terms appear in day's reading
+
+4. RUBRIC VALIDATOR
+   - Criteria align to objectives
+   - Uses 4-point scale
+   - Has specific descriptors
+   - Includes self-reflection section
+
+5. READING GUIDE VALIDATOR
+   - Has correct line numbers
+   - Has 3+ annotation prompts
+   - Has modern translation
+   - Questions scaffold properly
+
+6. DIFFERENTIATION VALIDATOR
+   - Has ELL supports
+   - Has struggling learner modifications
+   - Has advanced extensions
+   - Fits on one page
+
+================================================================================
+END OF INSTRUCTIONS
+================================================================================
+
+Document Version: 1.0
+Created: 2026-01-09
+Pipeline: Theater Education v2.3
+Unit: Romeo and Juliet (6 weeks)
+
+================================================================================
