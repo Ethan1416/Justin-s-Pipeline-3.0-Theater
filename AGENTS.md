@@ -382,8 +382,74 @@ See `THEATER_PIPELINE_ARCHITECTURE.md` for:
 
 ---
 
+## HARDCODED Lesson Generation Agents (NEW)
+
+These agents are hardcoded and cannot be bypassed:
+
+### Instructional Framework Agents
+
+| Agent | File | Purpose | Hardcoded Rules |
+|-------|------|---------|-----------------|
+| scaffolding_generator | `skills/enforcement/scaffolding_generator.py` | Generate scaffolding (I Do/We Do/You Do) | R1: 2-4 scaffolds per lesson |
+| formative_activities | `skills/enforcement/formative_activities_generator.py` | Generate formative checks | R1: 2+ checks per lesson |
+| blooms_taxonomy | `skills/enforcement/blooms_taxonomy_integrator.py` | Bloom's level integration | R1: 3+ levels per lesson |
+| webbs_dok | `skills/enforcement/webbs_dok_integrator.py` | Webb's DOK integration | R1: 2+ levels per lesson |
+| instruction_integrator | `skills/enforcement/instruction_integrator.py` | Full lesson integration | R1: Lecture frontloads activity |
+
+### Component Orchestrators
+
+| Orchestrator | File | Purpose |
+|--------------|------|---------|
+| ScaffoldingOrchestrator | `orchestrators/component_orchestrators.py` | Manages scaffolding generation |
+| FormativeAssessmentOrchestrator | `orchestrators/component_orchestrators.py` | Manages formative assessment |
+| CognitiveFrameworkOrchestrator | `orchestrators/component_orchestrators.py` | Integrates Bloom's and DOK |
+| ReadingActivityOrchestrator | `orchestrators/component_orchestrators.py` | Generates reading activities |
+| LectureFrontloadOrchestrator | `orchestrators/component_orchestrators.py` | Ensures lecture frontloading |
+| LessonGenerationOrchestrator | `orchestrators/component_orchestrators.py` | Master lesson orchestrator |
+
+---
+
+## Romeo and Juliet 6-Week Unit (HARDCODED)
+
+The Shakespeare unit includes complete Romeo and Juliet coverage:
+
+| Week | Act | Days | Focus |
+|------|-----|------|-------|
+| 1 | 1 | 5 | Prologue through ball scene |
+| 2 | 2 | 5 | Balcony scene and marriage |
+| 3 | 3 | 6 | Fight scene and banishment |
+| 4 | 4 | 5 | Friar's plan and potion |
+| 5 | 5 | 5 | Tomb scene and resolution |
+| 6 | Performance | 4 | Scene performances |
+
+**Required Reading Activities:** Every lesson includes reading (shared, close, partner, independent, or choral).
+
+---
+
+## Lecture Duration Configuration
+
+| Setting | Value | Notes |
+|---------|-------|-------|
+| Minimum | 5 minutes | Hardcoded minimum |
+| Default | 15 minutes | Standard lecture length |
+| Maximum | 20 minutes | Hardcoded maximum |
+| Frontloading | Required | Lecture MUST frontload activity content |
+
+---
+
 ## Version History
 
+- **v2.3** (2026-01-09): Instructional Framework Integration
+  - Added scaffolding generator with gradual release model
+  - Added formative activities generator with objective alignment
+  - Added Bloom's Taxonomy integrator (action verbs, 6 levels)
+  - Added Webb's DOK integrator (4 levels with theater activities)
+  - Added instruction integrator for full lesson integration
+  - Added component orchestrators for each pipeline element
+  - Updated lecture duration to 5-20 minutes range
+  - Added Romeo and Juliet 6-week unit plan (30 days)
+  - Added reading activities as required component
+  - Implemented lecture frontloading for activities
 - **v2.2** (2026-01-08): Phase 1 Unit Planning complete
   - Created unit_scope_validator agent
   - Created standards_mapper agent (CA ELA standards)
@@ -406,5 +472,5 @@ See `THEATER_PIPELINE_ARCHITECTURE.md` for:
 
 ---
 
-**Last Updated:** 2026-01-08
+**Last Updated:** 2026-01-09
 **Pipeline Owner:** Theater Education Department

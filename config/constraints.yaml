@@ -26,8 +26,11 @@ daily_structure:
 
     lecture:
       duration_minutes: 15
+      min_duration_minutes: 5   # HARDCODED minimum
+      max_duration_minutes: 20  # HARDCODED maximum
       tolerance_minutes: 1
       description: "PowerPoint presentation with verbatim notes"
+      frontloading_required: true  # Lecture MUST frontload activity content
 
     activity:
       duration_minutes: 15
@@ -400,13 +403,168 @@ units:
 
     - number: 3
       name: "Shakespeare"
-      days: 25
-      focus: ["language", "verse", "staging", "character_analysis"]
+      days: 30  # Updated for Romeo and Juliet full coverage
+      focus: ["language", "verse", "staging", "character_analysis", "romeo_and_juliet"]
 
     - number: 4
       name: "Student-Directed One Acts"
       days: 17
       focus: ["directing", "blocking", "rehearsal", "production"]
+
+# =============================================================================
+# ROMEO AND JULIET 6-WEEK UNIT (HARDCODED)
+# =============================================================================
+
+romeo_and_juliet:
+  total_weeks: 6
+  total_days: 30  # 5 days per week
+  text: "Romeo and Juliet by William Shakespeare"
+
+  # Coverage structure by act
+  coverage:
+    week_1:
+      act: 1
+      days: 5
+      focus:
+        - "Prologue and exposition"
+        - "Act 1 Scene 1: Street brawl"
+        - "Act 1 Scene 2-3: Ball preparations"
+        - "Act 1 Scene 4: Queen Mab speech"
+        - "Act 1 Scene 5: The ball and meeting"
+      reading_required: true
+      reading_type: "shared_reading_with_annotation"
+
+    week_2:
+      act: 2
+      days: 5
+      focus:
+        - "Act 2 Scene 1: After the ball"
+        - "Act 2 Scene 2: Balcony scene (Part 1)"
+        - "Act 2 Scene 2: Balcony scene (Part 2)"
+        - "Act 2 Scene 3-4: Friar Lawrence and Nurse"
+        - "Act 2 Scene 5-6: Marriage"
+      reading_required: true
+      reading_type: "close_reading_with_discussion"
+
+    week_3:
+      act: 3
+      days: 6
+      focus:
+        - "Act 3 Scene 1: Mercutio and Tybalt fight"
+        - "Act 3 Scene 1: Romeo kills Tybalt"
+        - "Act 3 Scene 2: Juliet learns news"
+        - "Act 3 Scene 3: Romeo's banishment"
+        - "Act 3 Scene 4-5: Capulet's ultimatum"
+        - "Act 3 Scene 5: Juliet's farewell"
+      reading_required: true
+      reading_type: "partner_reading_with_roles"
+
+    week_4:
+      act: 4
+      days: 5
+      focus:
+        - "Act 4 Scene 1: Friar's plan"
+        - "Act 4 Scene 2-3: Juliet's decision"
+        - "Act 4 Scene 3: Potion soliloquy"
+        - "Act 4 Scene 4-5: Discovery"
+        - "Act 4 Review and analysis"
+      reading_required: true
+      reading_type: "independent_reading_with_response"
+
+    week_5:
+      act: 5
+      days: 5
+      focus:
+        - "Act 5 Scene 1: Romeo in Mantua"
+        - "Act 5 Scene 2: Friar John's failure"
+        - "Act 5 Scene 3: Tomb scene (Part 1)"
+        - "Act 5 Scene 3: Deaths and resolution"
+        - "Full play review and themes"
+      reading_required: true
+      reading_type: "choral_reading_for_verse"
+
+    week_6:
+      act: "performance"
+      days: 4
+      focus:
+        - "Scene selection and rehearsal"
+        - "Scene blocking and staging"
+        - "Final rehearsal"
+        - "Scene performances"
+      reading_required: false
+      reading_type: null
+
+  # Required reading activities
+  reading_activities:
+    - name: "Shared Reading with Annotation"
+      description: "Teacher reads aloud while students follow with text annotations"
+      duration_minutes: 10
+      supports: ["vocabulary preview", "modern translation", "character chart"]
+
+    - name: "Close Reading with Discussion"
+      description: "Focused reading of key passages with guided discussion"
+      duration_minutes: 12
+      supports: ["guiding questions", "annotation guide", "partner discussion"]
+
+    - name: "Partner Reading with Roles"
+      description: "Students read aloud in pairs, switching roles"
+      duration_minutes: 10
+      supports: ["role cards", "pronunciation guide", "character motivation"]
+
+    - name: "Independent Reading with Response"
+      description: "Silent reading followed by written response"
+      duration_minutes: 8
+      supports: ["reading guide", "response prompts", "vocabulary glossary"]
+
+    - name: "Choral Reading for Verse"
+      description: "Whole class reads verse passages in unison"
+      duration_minutes: 5
+      supports: ["rhythm guide", "emphasis markers", "verse structure"]
+
+    - name: "Readers Theater Performance"
+      description: "Dramatic reading with assigned parts"
+      duration_minutes: 15
+      supports: ["script excerpts", "character blocking", "vocal coaching"]
+
+# =============================================================================
+# INSTRUCTIONAL FRAMEWORKS (HARDCODED)
+# =============================================================================
+
+instructional_frameworks:
+  # Scaffolding requirements
+  scaffolding:
+    min_scaffolds_per_lesson: 2
+    max_scaffolds_per_lesson: 4
+    required_progression: "high_to_low_support"  # Modeled -> Guided -> Collaborative -> Independent
+    gradual_release_model: true  # I Do, We Do, You Do
+
+  # Formative assessment requirements
+  formative_assessment:
+    min_checks_per_lesson: 2
+    max_checks_per_lesson: 5
+    variety_required: true  # Must use different types
+    objective_alignment_required: true
+
+  # Bloom's Taxonomy requirements
+  blooms_taxonomy:
+    min_levels_per_lesson: 3
+    required_lower_order: 1  # At least 1 Remember/Understand/Apply
+    required_higher_order: 1  # At least 1 Analyze/Evaluate/Create
+    progression_required: true  # Lower before higher
+
+  # Webb's DOK requirements
+  webbs_dok:
+    min_levels_per_lesson: 2
+    foundation_required: true  # DOK 1-2 before DOK 3-4
+    extended_encouraged: true  # DOK 4 when time allows
+
+  # Lecture frontloading
+  lecture_frontloading:
+    required: true
+    must_introduce_vocabulary: true
+    must_connect_to_activity: true
+    min_duration_minutes: 5
+    max_duration_minutes: 20
 
 # =============================================================================
 # CALIFORNIA STANDARDS ALIGNMENT
