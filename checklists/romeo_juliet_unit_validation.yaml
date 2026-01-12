@@ -1,0 +1,374 @@
+# Romeo and Juliet Unit Validation Checklist
+# ===========================================
+# Extracted from config/constraints.yaml and agents/romeo_juliet_generation.py
+#
+# This checklist validates all HARDCODED requirements for the R&J unit.
+
+version: "1.0"
+created: "2026-01-12"
+unit: "Romeo and Juliet (6-Week)"
+
+# =============================================================================
+# SCENE CUTTING REQUIREMENTS
+# =============================================================================
+
+scene_cutting:
+  id: "REQ-SC"
+  description: "Scene cutting and trimming requirements"
+
+  requirements:
+    - id: "REQ-SC-001"
+      name: "Cut Scene - Act 2 Scene 1"
+      description: "Act 2 Scene 1 (Mercutio searching) must be CUT, not read"
+      validation_rule: "Scene 2.1 not present in reading days"
+      agent: "SceneCutterAgent"
+      severity: "critical"
+
+    - id: "REQ-SC-002"
+      name: "Cut Scene - Act 4 Scene 2"
+      description: "Act 4 Scene 2 (Capulet preparations) must be CUT"
+      validation_rule: "Scene 4.2 not present in reading days"
+      agent: "SceneCutterAgent"
+      severity: "critical"
+
+    - id: "REQ-SC-003"
+      name: "Cut Scene - Act 4 Scene 4"
+      description: "Act 4 Scene 4 (Wedding morning) must be CUT entirely"
+      validation_rule: "Scene 4.4 not present anywhere in unit"
+      agent: "SceneCutterAgent"
+      severity: "critical"
+
+    - id: "REQ-SC-004"
+      name: "Cut Scene - Act 5 Scene 2"
+      description: "Act 5 Scene 2 (Friar John) must be CUT with summary"
+      validation_rule: "Scene 5.2 not present in reading days, summary provided"
+      agent: "SceneCutterAgent"
+      severity: "critical"
+
+    - id: "REQ-SC-005"
+      name: "Trim Scene - Act 1 Scene 2"
+      description: "Act 1 Scene 2 must be trimmed to 3 minutes (from 8)"
+      validation_rule: "Scene 1.2 marked as trimmed, key lines specified"
+      agent: "TextExcerptSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-SC-006"
+      name: "Trim Scene - Act 2 Scene 4"
+      description: "Act 2 Scene 4 must be trimmed to 5 minutes (from 12)"
+      validation_rule: "Scene 2.4 marked as trimmed, key lines specified"
+      agent: "TextExcerptSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-SC-007"
+      name: "Trim Scene - Act 3 Scene 4"
+      description: "Act 3 Scene 4 must be trimmed to 2 minutes (from 6)"
+      validation_rule: "Scene 3.4 marked as trimmed, key lines specified"
+      agent: "TextExcerptSelectorAgent"
+      severity: "high"
+
+# =============================================================================
+# MUST-KEEP SCENE REQUIREMENTS
+# =============================================================================
+
+must_keep_scenes:
+  id: "REQ-MK"
+  description: "Scenes that MUST be kept in full"
+
+  requirements:
+    - id: "REQ-MK-001"
+      name: "Must Keep - Act 3 Scene 1"
+      description: "Mercutio/Tybalt fight scene must be preserved in full"
+      validation_rule: "Scene 3.1 present as full reading, not trimmed or cut"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+    - id: "REQ-MK-002"
+      name: "Must Keep - Act 5 Scene 3"
+      description: "Tomb scene must be preserved in full"
+      validation_rule: "Scene 5.3 present as full reading, not trimmed or cut"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+# =============================================================================
+# WEEK STRUCTURE REQUIREMENTS
+# =============================================================================
+
+week_structure:
+  id: "REQ-WS"
+  description: "Weekly structure requirements for reading/activity balance"
+
+  requirements:
+    - id: "REQ-WS-001"
+      name: "Week 1 Structure"
+      description: "Week 1 must have 3 reading days and 2 activity days"
+      validation_rule: "week_1.reading_days == 3 AND week_1.activity_days == 2"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-002"
+      name: "Week 2 Structure"
+      description: "Week 2 must have 3 reading days and 2 activity days"
+      validation_rule: "week_2.reading_days == 3 AND week_2.activity_days == 2"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-003"
+      name: "Week 3 Structure"
+      description: "Week 3 must have 4 reading days and 1 activity day"
+      validation_rule: "week_3.reading_days == 4 AND week_3.activity_days == 1"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-004"
+      name: "Week 4 Structure"
+      description: "Week 4 must have 2 reading days and 3 activity days"
+      validation_rule: "week_4.reading_days == 2 AND week_4.activity_days == 3"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-005"
+      name: "Week 5 Structure"
+      description: "Week 5 must have 3 reading days and 2 activity days"
+      validation_rule: "week_5.reading_days == 3 AND week_5.activity_days == 2"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-006"
+      name: "Week 6 Structure"
+      description: "Week 6 must have 0 reading days and 5 activity days (performance)"
+      validation_rule: "week_6.reading_days == 0 AND week_6.activity_days == 5"
+      agent: "WeekPlannerAgent"
+      severity: "high"
+
+    - id: "REQ-WS-007"
+      name: "Overall Day Balance"
+      description: "Total must be 15 reading days and 15 activity days (50/50)"
+      validation_rule: "total_reading_days == 15 AND total_activity_days == 15"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+# =============================================================================
+# DIFFERENTIATION REQUIREMENTS
+# =============================================================================
+
+differentiation:
+  id: "REQ-DF"
+  description: "Differentiated activity requirements"
+
+  requirements:
+    - id: "REQ-DF-001"
+      name: "Activity Category Coverage"
+      description: "Each activity day must offer options from multiple categories"
+      validation_rule: "activity_day.categories.count >= 3"
+      agent: "ActivityDayGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-DF-002"
+      name: "Bloom's Lower Order"
+      description: "At least 1 activity at Remember/Understand/Apply level per day"
+      validation_rule: "blooms_coverage.lower_order_count >= 1"
+      agent: "DifferentiationSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-DF-003"
+      name: "Bloom's Higher Order"
+      description: "At least 1 activity at Analyze/Evaluate/Create level per day"
+      validation_rule: "blooms_coverage.higher_order_count >= 1"
+      agent: "DifferentiationSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-DF-004"
+      name: "Webb's DOK Foundation"
+      description: "At least 1 activity at DOK 1-2 per activity day"
+      validation_rule: "dok_coverage.foundation_present == true"
+      agent: "DifferentiationSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-DF-005"
+      name: "Webb's DOK Extended"
+      description: "At least 1 activity at DOK 3-4 encouraged per activity day"
+      validation_rule: "dok_coverage.extended_present == true"
+      agent: "DifferentiationSelectorAgent"
+      severity: "medium"
+
+    - id: "REQ-DF-006"
+      name: "ELL Supports Present"
+      description: "Every lesson must include ELL support options"
+      validation_rule: "ell_supports.length >= 3"
+      agent: "DifferentiationSelectorAgent"
+      severity: "critical"
+
+    - id: "REQ-DF-007"
+      name: "Advanced Extensions Present"
+      description: "Every lesson must include advanced learner extensions"
+      validation_rule: "advanced_extensions.length >= 2"
+      agent: "DifferentiationSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-DF-008"
+      name: "Struggling Modifications Present"
+      description: "Every lesson must include modifications for struggling learners"
+      validation_rule: "struggling_modifications.length >= 2"
+      agent: "DifferentiationSelectorAgent"
+      severity: "high"
+
+# =============================================================================
+# SCENE SUMMARY REQUIREMENTS
+# =============================================================================
+
+scene_summaries:
+  id: "REQ-SS"
+  description: "Teacher summary requirements for cut scenes"
+
+  requirements:
+    - id: "REQ-SS-001"
+      name: "Summary Duration Appropriate"
+      description: "Each cut scene summary must match specified duration"
+      validation_rule: "summary_duration matches scenes_to_cut specification"
+      agent: "SceneSummaryGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-SS-002"
+      name: "Summary Script Present"
+      description: "Each cut scene (except 4.4) must have a teacher script"
+      validation_rule: "summary_script is not null for required scenes"
+      agent: "SceneSummaryGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-SS-003"
+      name: "Summary Word Count"
+      description: "Summary word count must match 2 words per second of duration"
+      validation_rule: "word_count approximately equals duration_seconds * 2"
+      agent: "SceneSummaryGeneratorAgent"
+      severity: "medium"
+
+# =============================================================================
+# READING DAY REQUIREMENTS
+# =============================================================================
+
+reading_days:
+  id: "REQ-RD"
+  description: "Reading day structure requirements"
+
+  requirements:
+    - id: "REQ-RD-001"
+      name: "Reading Type Matches Week"
+      description: "Each week must use its designated reading type"
+      validation_rule: "reading_type matches READING_TYPES[week]"
+      agent: "ReadingDayGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-RD-002"
+      name: "Reading Structure Complete"
+      description: "Each reading day must have all required phases"
+      validation_rule: "structure.phases includes all required components"
+      agent: "ReadingDayGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-RD-003"
+      name: "Comprehension Checks Present"
+      description: "Each reading day must have comprehension checks"
+      validation_rule: "comprehension_checks.length >= 2"
+      agent: "ReadingDayGeneratorAgent"
+      severity: "high"
+
+    - id: "REQ-RD-004"
+      name: "Scene Handling Determined"
+      description: "Each scene must have determined handling (full/trim/cut)"
+      validation_rule: "scene_handling defined for all scenes"
+      agent: "ReadingDayGeneratorAgent"
+      severity: "critical"
+
+# =============================================================================
+# TEXT EXCERPT REQUIREMENTS
+# =============================================================================
+
+text_excerpts:
+  id: "REQ-TE"
+  description: "Key line selection for trimmed scenes"
+
+  requirements:
+    - id: "REQ-TE-001"
+      name: "Key Lines Specified"
+      description: "Each trimmed scene must have key lines identified"
+      validation_rule: "key_lines.length >= 2 for trimmed scenes"
+      agent: "TextExcerptSelectorAgent"
+      severity: "critical"
+
+    - id: "REQ-TE-002"
+      name: "Teaching Note Present"
+      description: "Each trimmed scene must have a teaching note"
+      validation_rule: "teaching_note is not null for trimmed scenes"
+      agent: "TextExcerptSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-TE-003"
+      name: "Context Script Generated"
+      description: "Context to provide before excerpts must be generated"
+      validation_rule: "context_to_provide is not empty"
+      agent: "TextExcerptSelectorAgent"
+      severity: "high"
+
+    - id: "REQ-TE-004"
+      name: "Transition Script Generated"
+      description: "Transition script after excerpts must be generated"
+      validation_rule: "transition_script is not empty"
+      agent: "TextExcerptSelectorAgent"
+      severity: "medium"
+
+# =============================================================================
+# UNIT VALIDATION REQUIREMENTS
+# =============================================================================
+
+unit_validation:
+  id: "REQ-UV"
+  description: "Overall unit validation requirements"
+
+  requirements:
+    - id: "REQ-UV-001"
+      name: "All Must-Keep Scenes Preserved"
+      description: "No must-keep scene can be missing from the plan"
+      validation_rule: "must_keep_check.missing.length == 0"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+    - id: "REQ-UV-002"
+      name: "All Cut Scenes Removed"
+      description: "No cut scene can appear as reading material"
+      validation_rule: "cut_check.incorrectly_included.length == 0"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+    - id: "REQ-UV-003"
+      name: "Day Balance Within Tolerance"
+      description: "Reading percentage must be 45-55%"
+      validation_rule: "45 <= reading_percentage <= 55"
+      agent: "RJUnitValidatorAgent"
+      severity: "high"
+
+    - id: "REQ-UV-004"
+      name: "Total Days Correct"
+      description: "Unit must total exactly 30 instructional days"
+      validation_rule: "total_days == 30"
+      agent: "RJUnitValidatorAgent"
+      severity: "critical"
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+
+summary:
+  total_requirements: 35
+  critical_count: 12
+  high_count: 18
+  medium_count: 5
+
+  by_agent:
+    SceneCutterAgent: 4
+    TextExcerptSelectorAgent: 6
+    RJUnitValidatorAgent: 6
+    WeekPlannerAgent: 7
+    ActivityDayGeneratorAgent: 1
+    DifferentiationSelectorAgent: 7
+    SceneSummaryGeneratorAgent: 3
+    ReadingDayGeneratorAgent: 4

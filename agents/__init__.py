@@ -41,6 +41,16 @@ from .assembly import (
     UnitFolderOrganizerAgent,
     FinalQAReporterAgent,
 )
+from .romeo_juliet_generation import (
+    SceneCutterAgent,
+    SceneSummaryGeneratorAgent,
+    ReadingDayGeneratorAgent,
+    ActivityDayGeneratorAgent,
+    DifferentiationSelectorAgent,
+    WeekPlannerAgent,
+    TextExcerptSelectorAgent,
+    RJUnitValidatorAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -84,6 +94,16 @@ def create_agent(agent_name: str, prompt_path=None):
         "powerpoint_assembler": PowerPointAssemblerAgent,
         "unit_folder_organizer": UnitFolderOrganizerAgent,
         "final_qa_reporter": FinalQAReporterAgent,
+
+        # Romeo & Juliet Unit Generation (HARDCODED)
+        "scene_cutter": SceneCutterAgent,
+        "scene_summary_generator": SceneSummaryGeneratorAgent,
+        "reading_day_generator": ReadingDayGeneratorAgent,
+        "activity_day_generator": ActivityDayGeneratorAgent,
+        "differentiation_selector": DifferentiationSelectorAgent,
+        "week_planner": WeekPlannerAgent,
+        "text_excerpt_selector": TextExcerptSelectorAgent,
+        "rj_unit_validator": RJUnitValidatorAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -130,4 +150,14 @@ __all__ = [
     "PowerPointAssemblerAgent",
     "UnitFolderOrganizerAgent",
     "FinalQAReporterAgent",
+
+    # Romeo & Juliet Unit Generation
+    "SceneCutterAgent",
+    "SceneSummaryGeneratorAgent",
+    "ReadingDayGeneratorAgent",
+    "ActivityDayGeneratorAgent",
+    "DifferentiationSelectorAgent",
+    "WeekPlannerAgent",
+    "TextExcerptSelectorAgent",
+    "RJUnitValidatorAgent",
 ]

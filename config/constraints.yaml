@@ -412,89 +412,441 @@ units:
       focus: ["directing", "blocking", "rehearsal", "production"]
 
 # =============================================================================
-# ROMEO AND JULIET 6-WEEK UNIT (HARDCODED)
+# ROMEO AND JULIET 6-WEEK UNIT (HARDCODED - LIGHT TRIM VERSION)
 # =============================================================================
 
 romeo_and_juliet:
   total_weeks: 6
   total_days: 30  # 5 days per week
   text: "Romeo and Juliet by William Shakespeare"
+  version: "light_trim"  # ~20% reduction for activity differentiation
 
-  # Coverage structure by act
+  # ==========================================================================
+  # SCENES TO CUT (Teacher summary only - no reading)
+  # ==========================================================================
+  scenes_to_cut:
+    - scene: "Act 2 Scene 1"
+      title: "Mercutio searching for Romeo"
+      reason: "Brief transitional scene, no plot advancement"
+      summary_duration_seconds: 30
+      summary_script: "After the party, Mercutio and Benvolio search for Romeo, not knowing he has stayed behind. Romeo hides, listening to Mercutio joke about love."
+
+    - scene: "Act 4 Scene 2"
+      title: "Capulet household preparations"
+      reason: "Domestic scene, plot covered in surrounding scenes"
+      summary_duration_seconds: 30
+      summary_script: "The Capulet household prepares for Juliet's wedding to Paris, unaware of her secret plan."
+
+    - scene: "Act 4 Scene 4"
+      title: "Wedding morning preparations"
+      reason: "Entirely transitional, creates dramatic irony already established"
+      summary_duration_seconds: 0
+      summary_script: null  # Cut entirely, context provided in Scene 5
+
+    - scene: "Act 5 Scene 2"
+      title: "Friar John's failed delivery"
+      reason: "Can be summarized in Friar Lawrence's Act 5 Scene 3 explanation"
+      summary_duration_seconds: 60
+      summary_script: "Friar John was quarantined due to plague fears and could not deliver the letter to Romeo explaining Juliet's fake death. This is why Romeo believes Juliet is truly dead."
+
+  # ==========================================================================
+  # SCENES TO TRIM (Excerpts and key lines only)
+  # ==========================================================================
+  scenes_to_trim:
+    - scene: "Act 1 Scene 2"
+      title: "Capulet and Paris discuss Juliet"
+      original_length_minutes: 8
+      trimmed_length_minutes: 3
+      keep_lines:
+        - "She hath not seen the change of fourteen years"
+        - "My will to her consent is but a part"
+        - "At my poor house look to behold this night / Earth-treading stars"
+      cut_content: "Servant's illiteracy subplot, extended guest list reading"
+      teaching_note: "Focus on Capulet's initial protectiveness and invitation to the ball"
+
+    - scene: "Act 2 Scene 4"
+      title: "Mercutio and Romeo banter"
+      original_length_minutes: 12
+      trimmed_length_minutes: 5
+      keep_lines:
+        - "Alas poor Romeo! he is already dead"
+        - "Now art thou sociable, now art thou Romeo"
+        - Nurse entrance and Mercutio's teasing
+      cut_content: "Extended wordplay, repeated Queen Mab references"
+      teaching_note: "Highlight Romeo's changed mood and Nurse as messenger"
+
+    - scene: "Act 3 Scene 4"
+      title: "Capulet arranges Paris marriage"
+      original_length_minutes: 6
+      trimmed_length_minutes: 2
+      keep_lines:
+        - "Things have fall'n out, sir, so unluckily"
+        - "I think she will be ruled in all respects by me"
+        - "Thursday let it be"
+      cut_content: "Extended discussion of grief, politeness exchanges"
+      teaching_note: "Focus on the forced timeline creating tragedy"
+
+  # ==========================================================================
+  # REVISED COVERAGE STRUCTURE (Reading + Activity Days)
+  # ==========================================================================
   coverage:
     week_1:
       act: 1
-      days: 5
+      total_days: 5
+      reading_days: 3
+      activity_days: 2
       focus:
-        - "Prologue and exposition"
-        - "Act 1 Scene 1: Street brawl"
-        - "Act 1 Scene 2-3: Ball preparations"
-        - "Act 1 Scene 4: Queen Mab speech"
-        - "Act 1 Scene 5: The ball and meeting"
-      reading_required: true
+        - day: 1
+          type: "reading"
+          content: "Prologue and Act 1 Scene 1: Street brawl"
+          scenes: ["Prologue", "1.1"]
+        - day: 2
+          type: "reading"
+          content: "Act 1 Scene 3-4: Capulet household and Queen Mab"
+          scenes: ["1.3", "1.4"]
+          note: "Scene 2 trimmed - key lines only in intro"
+        - day: 3
+          type: "reading"
+          content: "Act 1 Scene 5: The ball and first meeting"
+          scenes: ["1.5"]
+        - day: 4
+          type: "activity"
+          content: "Differentiated Activity: Character Analysis"
+          activity_options: ["character_chart", "monologue_creation", "staging_tableau"]
+        - day: 5
+          type: "activity"
+          content: "Differentiated Activity: Language Exploration"
+          activity_options: ["sonnet_analysis", "modern_translation", "verse_performance"]
       reading_type: "shared_reading_with_annotation"
 
     week_2:
       act: 2
-      days: 5
+      total_days: 5
+      reading_days: 3
+      activity_days: 2
       focus:
-        - "Act 2 Scene 1: After the ball"
-        - "Act 2 Scene 2: Balcony scene (Part 1)"
-        - "Act 2 Scene 2: Balcony scene (Part 2)"
-        - "Act 2 Scene 3-4: Friar Lawrence and Nurse"
-        - "Act 2 Scene 5-6: Marriage"
-      reading_required: true
+        - day: 1
+          type: "reading"
+          content: "Act 2 Scene 2: Balcony scene"
+          scenes: ["2.2"]
+          note: "Scene 1 cut - 30 sec summary"
+        - day: 2
+          type: "reading"
+          content: "Act 2 Scene 3: Friar Lawrence"
+          scenes: ["2.3"]
+          note: "Scene 4 trimmed - highlight reel"
+        - day: 3
+          type: "reading"
+          content: "Act 2 Scene 5-6: Nurse's message and marriage"
+          scenes: ["2.5", "2.6"]
+        - day: 4
+          type: "activity"
+          content: "Differentiated Activity: Balcony Scene Performance"
+          activity_options: ["blocking_design", "duet_performance", "modern_adaptation"]
+        - day: 5
+          type: "activity"
+          content: "Differentiated Activity: Relationship Mapping"
+          activity_options: ["character_web", "letter_writing", "advice_column"]
       reading_type: "close_reading_with_discussion"
 
     week_3:
       act: 3
-      days: 6
+      total_days: 5
+      reading_days: 4
+      activity_days: 1
+      must_keep_scenes: ["3.1"]  # Mercutio/Tybalt fight - HARDCODED MUST KEEP
       focus:
-        - "Act 3 Scene 1: Mercutio and Tybalt fight"
-        - "Act 3 Scene 1: Romeo kills Tybalt"
-        - "Act 3 Scene 2: Juliet learns news"
-        - "Act 3 Scene 3: Romeo's banishment"
-        - "Act 3 Scene 4-5: Capulet's ultimatum"
-        - "Act 3 Scene 5: Juliet's farewell"
-      reading_required: true
+        - day: 1
+          type: "reading"
+          content: "Act 3 Scene 1: Mercutio and Tybalt fight (Part 1)"
+          scenes: ["3.1a"]
+          highlight: "MUST KEEP - Major turning point"
+        - day: 2
+          type: "reading"
+          content: "Act 3 Scene 1: Romeo kills Tybalt (Part 2)"
+          scenes: ["3.1b"]
+          highlight: "MUST KEEP - Consequence and banishment"
+        - day: 3
+          type: "reading"
+          content: "Act 3 Scene 2-3: Reactions to banishment"
+          scenes: ["3.2", "3.3"]
+        - day: 4
+          type: "reading"
+          content: "Act 3 Scene 5: Morning farewell and Capulet ultimatum"
+          scenes: ["3.5"]
+          note: "Scene 4 trimmed - key lines in intro"
+        - day: 5
+          type: "activity"
+          content: "Differentiated Activity: Stage Combat and Conflict"
+          activity_options: ["fight_choreography", "conflict_analysis", "news_report"]
       reading_type: "partner_reading_with_roles"
 
     week_4:
       act: 4
-      days: 5
+      total_days: 5
+      reading_days: 2
+      activity_days: 3
       focus:
-        - "Act 4 Scene 1: Friar's plan"
-        - "Act 4 Scene 2-3: Juliet's decision"
-        - "Act 4 Scene 3: Potion soliloquy"
-        - "Act 4 Scene 4-5: Discovery"
-        - "Act 4 Review and analysis"
-      reading_required: true
+        - day: 1
+          type: "reading"
+          content: "Act 4 Scene 1: Friar's desperate plan"
+          scenes: ["4.1"]
+          note: "Scenes 2 and 4 cut entirely"
+        - day: 2
+          type: "reading"
+          content: "Act 4 Scene 3 and 5: Potion soliloquy and discovery"
+          scenes: ["4.3", "4.5"]
+        - day: 3
+          type: "activity"
+          content: "Differentiated Activity: Soliloquy Deep Dive"
+          activity_options: ["soliloquy_performance", "fear_mapping", "artistic_interpretation"]
+        - day: 4
+          type: "activity"
+          content: "Differentiated Activity: Plot Analysis"
+          activity_options: ["timeline_creation", "what_if_scenarios", "dramatic_irony_hunt"]
+        - day: 5
+          type: "activity"
+          content: "Differentiated Activity: Mid-Unit Synthesis"
+          activity_options: ["theme_collage", "character_trial", "prediction_debate"]
       reading_type: "independent_reading_with_response"
 
     week_5:
       act: 5
-      days: 5
+      total_days: 5
+      reading_days: 3
+      activity_days: 2
+      must_keep_scenes: ["5.3"]  # Tomb scene - HARDCODED MUST KEEP
       focus:
-        - "Act 5 Scene 1: Romeo in Mantua"
-        - "Act 5 Scene 2: Friar John's failure"
-        - "Act 5 Scene 3: Tomb scene (Part 1)"
-        - "Act 5 Scene 3: Deaths and resolution"
-        - "Full play review and themes"
-      reading_required: true
+        - day: 1
+          type: "reading"
+          content: "Act 5 Scene 1: Romeo in Mantua receives news"
+          scenes: ["5.1"]
+          note: "Scene 2 cut - 60 sec summary"
+        - day: 2
+          type: "reading"
+          content: "Act 5 Scene 3: Tomb scene (Part 1)"
+          scenes: ["5.3a"]
+          highlight: "MUST KEEP - Climax begins"
+        - day: 3
+          type: "reading"
+          content: "Act 5 Scene 3: Deaths and resolution (Part 2)"
+          scenes: ["5.3b"]
+          highlight: "MUST KEEP - Tragedy resolution"
+        - day: 4
+          type: "activity"
+          content: "Differentiated Activity: Tomb Scene Performance"
+          activity_options: ["death_scene_staging", "eulogy_writing", "director_notes"]
+        - day: 5
+          type: "activity"
+          content: "Differentiated Activity: Play Synthesis"
+          activity_options: ["theme_essay", "alternate_ending", "courtroom_trial"]
       reading_type: "choral_reading_for_verse"
 
     week_6:
       act: "performance"
-      days: 4
+      total_days: 5
+      reading_days: 0
+      activity_days: 5
       focus:
-        - "Scene selection and rehearsal"
-        - "Scene blocking and staging"
-        - "Final rehearsal"
-        - "Scene performances"
-      reading_required: false
+        - day: 1
+          type: "activity"
+          content: "Scene selection and ensemble formation"
+          activity_options: ["audition_workshop", "scene_selection", "role_assignment"]
+        - day: 2
+          type: "activity"
+          content: "Blocking and staging workshop"
+          activity_options: ["blocking_rehearsal", "staging_design", "prop_creation"]
+        - day: 3
+          type: "activity"
+          content: "Character and vocal work"
+          activity_options: ["character_hot_seat", "vocal_coaching", "costume_design"]
+        - day: 4
+          type: "activity"
+          content: "Final rehearsal and polish"
+          activity_options: ["dress_rehearsal", "peer_feedback", "tech_integration"]
+        - day: 5
+          type: "activity"
+          content: "Scene performances"
+          activity_options: ["performance", "audience_talkback", "reflection_writing"]
       reading_type: null
 
-  # Required reading activities
+  # ==========================================================================
+  # DIFFERENTIATED ACTIVITY OPTIONS (By Learning Style)
+  # ==========================================================================
+  differentiation_activities:
+    # Performance-based (Kinesthetic/Interpersonal)
+    performance_based:
+      - id: "fight_choreography"
+        name: "Stage Combat Workshop"
+        description: "Design and rehearse safe stage combat for Act 3 Scene 1"
+        blooms_level: "create"
+        webb_dok: 4
+        grouping: "pairs_or_small_groups"
+        materials: ["foam swords", "blocking diagrams"]
+
+      - id: "blocking_design"
+        name: "Scene Blocking Designer"
+        description: "Create blocking diagrams for a selected scene"
+        blooms_level: "create"
+        webb_dok: 3
+        grouping: "pairs"
+        materials: ["blocking templates", "stage diagram"]
+
+      - id: "duet_performance"
+        name: "Duet Scene Performance"
+        description: "Rehearse and perform a two-character scene"
+        blooms_level: "apply"
+        webb_dok: 3
+        grouping: "pairs"
+        materials: ["script excerpts", "performance rubric"]
+
+      - id: "soliloquy_performance"
+        name: "Soliloquy Showcase"
+        description: "Memorize and perform a soliloquy with interpretation"
+        blooms_level: "evaluate"
+        webb_dok: 4
+        grouping: "individual"
+        materials: ["soliloquy texts", "performance notes"]
+
+    # Analysis-based (Logical/Verbal)
+    analysis_based:
+      - id: "character_chart"
+        name: "Character Analysis Chart"
+        description: "Create detailed character profiles with textual evidence"
+        blooms_level: "analyze"
+        webb_dok: 3
+        grouping: "individual_or_pairs"
+        materials: ["character template", "text access"]
+
+      - id: "conflict_analysis"
+        name: "Conflict Mapping"
+        description: "Analyze and diagram the layers of conflict in the play"
+        blooms_level: "analyze"
+        webb_dok: 3
+        grouping: "small_groups"
+        materials: ["conflict diagram template"]
+
+      - id: "dramatic_irony_hunt"
+        name: "Dramatic Irony Investigation"
+        description: "Identify and analyze instances of dramatic irony"
+        blooms_level: "analyze"
+        webb_dok: 3
+        grouping: "pairs"
+        materials: ["irony tracker worksheet"]
+
+      - id: "theme_essay"
+        name: "Thematic Analysis Essay"
+        description: "Write analytical essay on a central theme"
+        blooms_level: "evaluate"
+        webb_dok: 4
+        grouping: "individual"
+        materials: ["essay prompt", "rubric"]
+
+    # Creative-based (Visual/Creative)
+    creative_based:
+      - id: "modern_adaptation"
+        name: "Modern Scene Adaptation"
+        description: "Rewrite a scene in modern language and setting"
+        blooms_level: "create"
+        webb_dok: 4
+        grouping: "small_groups"
+        materials: ["adaptation guidelines"]
+
+      - id: "artistic_interpretation"
+        name: "Visual Art Response"
+        description: "Create artwork representing a key scene or theme"
+        blooms_level: "create"
+        webb_dok: 3
+        grouping: "individual"
+        materials: ["art supplies", "scene images"]
+
+      - id: "alternate_ending"
+        name: "What If? Alternate Ending"
+        description: "Write an alternate ending with textual justification"
+        blooms_level: "create"
+        webb_dok: 4
+        grouping: "individual_or_pairs"
+        materials: ["writing template"]
+
+      - id: "theme_collage"
+        name: "Theme Collage"
+        description: "Create visual collage representing play themes"
+        blooms_level: "analyze"
+        webb_dok: 2
+        grouping: "individual"
+        materials: ["magazines", "poster board", "quotes"]
+
+    # Discussion-based (Verbal/Interpersonal)
+    discussion_based:
+      - id: "character_trial"
+        name: "Character on Trial"
+        description: "Conduct mock trial for a character's actions"
+        blooms_level: "evaluate"
+        webb_dok: 4
+        grouping: "whole_class"
+        materials: ["trial roles", "evidence sheets"]
+
+      - id: "prediction_debate"
+        name: "Prediction Debate"
+        description: "Debate predictions for upcoming events with evidence"
+        blooms_level: "evaluate"
+        webb_dok: 3
+        grouping: "teams"
+        materials: ["debate structure"]
+
+      - id: "character_hot_seat"
+        name: "Character Hot Seat"
+        description: "Interview characters in role with class questions"
+        blooms_level: "apply"
+        webb_dok: 3
+        grouping: "whole_class"
+        materials: ["question prompts"]
+
+      - id: "courtroom_trial"
+        name: "Who's to Blame? Trial"
+        description: "Full courtroom trial determining responsibility for deaths"
+        blooms_level: "evaluate"
+        webb_dok: 4
+        grouping: "whole_class"
+        materials: ["trial packet", "role cards"]
+
+    # Writing-based (Verbal/Intrapersonal)
+    writing_based:
+      - id: "letter_writing"
+        name: "Character Letters"
+        description: "Write in-character letters between characters"
+        blooms_level: "apply"
+        webb_dok: 3
+        grouping: "individual"
+        materials: ["letter template", "character notes"]
+
+      - id: "advice_column"
+        name: "Dear Friar Lawrence"
+        description: "Write advice column letters and responses in character"
+        blooms_level: "apply"
+        webb_dok: 3
+        grouping: "pairs"
+        materials: ["advice column template"]
+
+      - id: "eulogy_writing"
+        name: "Character Eulogy"
+        description: "Write and deliver eulogy for a deceased character"
+        blooms_level: "evaluate"
+        webb_dok: 4
+        grouping: "individual"
+        materials: ["eulogy guidelines"]
+
+      - id: "news_report"
+        name: "Verona News Report"
+        description: "Write news article covering events of the play"
+        blooms_level: "apply"
+        webb_dok: 3
+        grouping: "pairs_or_small_groups"
+        materials: ["news article template"]
+
+  # ==========================================================================
+  # READING ACTIVITIES (Kept from original)
+  # ==========================================================================
   reading_activities:
     - name: "Shared Reading with Annotation"
       description: "Teacher reads aloud while students follow with text annotations"
@@ -525,6 +877,18 @@ romeo_and_juliet:
       description: "Dramatic reading with assigned parts"
       duration_minutes: 15
       supports: ["script excerpts", "character blocking", "vocal coaching"]
+
+  # ==========================================================================
+  # TIME SAVINGS SUMMARY
+  # ==========================================================================
+  time_savings:
+    scenes_cut_count: 4
+    scenes_trimmed_count: 3
+    estimated_reading_time_saved_minutes: 45
+    activity_days_gained: 11
+    total_activity_days: 15
+    total_reading_days: 15
+    balance: "50% reading / 50% activities"
 
 # =============================================================================
 # INSTRUCTIONAL FRAMEWORKS (HARDCODED)

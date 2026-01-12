@@ -1,0 +1,460 @@
+# Romeo and Juliet Unit Test Samples
+# ===================================
+# 3 sample inputs per agent for validation testing
+
+version: "1.0"
+created: "2026-01-12"
+
+# =============================================================================
+# SceneCutterAgent Test Samples
+# =============================================================================
+
+scene_cutter_agent:
+  agent_name: "SceneCutterAgent"
+  test_samples:
+    - id: "SC-SAMPLE-001"
+      name: "Act 2 scenes with cut scene"
+      description: "Tests that Act 2 Scene 1 is correctly identified as CUT"
+      input:
+        act: 2
+        scenes: [1, 2, 3, 4, 5, 6]
+      expected_output:
+        cut_scenes:
+          - scene: "2.1"
+            title: "Mercutio searching for Romeo"
+        trimmed_scenes:
+          - scene: "2.4"
+        full_scenes: ["2.2", "2.3", "2.5", "2.6"]
+      validates: ["REQ-SC-001"]
+
+    - id: "SC-SAMPLE-002"
+      name: "Act 4 scenes with multiple cuts"
+      description: "Tests that Act 4 Scenes 2 and 4 are correctly identified as CUT"
+      input:
+        act: 4
+        scenes: [1, 2, 3, 4, 5]
+      expected_output:
+        cut_scenes:
+          - scene: "4.2"
+          - scene: "4.4"
+        full_scenes: ["4.1", "4.3", "4.5"]
+      validates: ["REQ-SC-002", "REQ-SC-003"]
+
+    - id: "SC-SAMPLE-003"
+      name: "Act 3 with must-keep scene"
+      description: "Tests that Act 3 Scene 1 is preserved as MUST_KEEP"
+      input:
+        act: 3
+        scenes: [1, 2, 3, 4, 5]
+      expected_output:
+        must_keep_scenes:
+          - scene: "3.1"
+            status: "MUST_KEEP"
+        trimmed_scenes:
+          - scene: "3.4"
+        full_scenes: ["3.1", "3.2", "3.3", "3.5"]
+      validates: ["REQ-MK-001", "REQ-SC-007"]
+
+# =============================================================================
+# SceneSummaryGeneratorAgent Test Samples
+# =============================================================================
+
+scene_summary_generator_agent:
+  agent_name: "SceneSummaryGeneratorAgent"
+  test_samples:
+    - id: "SS-SAMPLE-001"
+      name: "Standard cut scene summary"
+      description: "Tests summary generation for Act 2 Scene 1"
+      input:
+        scene_id: "Act 2 Scene 1"
+        lesson_context:
+          topic: "The Balcony Scene"
+      expected_output:
+        scene: "Act 2 Scene 1"
+        duration_seconds: 30
+        script: "contains: Mercutio and Benvolio search"
+        delivery_notes: "length >= 2"
+      validates: ["REQ-SS-001", "REQ-SS-002"]
+
+    - id: "SS-SAMPLE-002"
+      name: "Longer cut scene summary"
+      description: "Tests summary generation for Act 5 Scene 2 (60 seconds)"
+      input:
+        scene_id: "Act 5 Scene 2"
+        lesson_context:
+          topic: "The Tomb Scene"
+      expected_output:
+        scene: "Act 5 Scene 2"
+        duration_seconds: 60
+        target_word_count: 120
+        script: "contains: quarantined"
+      validates: ["REQ-SS-001", "REQ-SS-003"]
+
+    - id: "SS-SAMPLE-003"
+      name: "Scene to skip entirely"
+      description: "Tests that Act 4 Scene 4 returns SKIP_ENTIRELY"
+      input:
+        scene_id: "Act 4 Scene 4"
+      expected_output:
+        action: "SKIP_ENTIRELY"
+        note: "contains: no unique plot"
+      validates: ["REQ-SC-003"]
+
+# =============================================================================
+# ReadingDayGeneratorAgent Test Samples
+# =============================================================================
+
+reading_day_generator_agent:
+  agent_name: "ReadingDayGeneratorAgent"
+  test_samples:
+    - id: "RD-SAMPLE-001"
+      name: "Week 1 reading day"
+      description: "Tests shared reading with annotation structure"
+      input:
+        week: 1
+        day: 1
+        scenes: ["Prologue", "1.1"]
+        topic: "Prologue and Street Brawl"
+        vocabulary: ["prologue", "civil", "grudge", "mutiny", "foe"]
+      expected_output:
+        reading_type: "shared_reading_with_annotation"
+        structure:
+          total_minutes: 15
+          phases: "length == 4"
+        vocabulary_preview: "length == 5"
+        comprehension_checks: "length >= 2"
+      validates: ["REQ-RD-001", "REQ-RD-002", "REQ-RD-003"]
+
+    - id: "RD-SAMPLE-002"
+      name: "Week 3 reading day with must-keep scene"
+      description: "Tests partner reading with roles for fight scene"
+      input:
+        week: 3
+        day: 1
+        scenes: ["3.1"]
+        topic: "Mercutio and Tybalt Fight"
+        vocabulary: ["villain", "consort", "plague", "mercurial"]
+      expected_output:
+        reading_type: "partner_reading_with_roles"
+        scene_handling:
+          - scene: "3.1"
+            status: "FULL_READ"
+            priority: "HIGH"
+      validates: ["REQ-RD-001", "REQ-RD-004", "REQ-MK-001"]
+
+    - id: "RD-SAMPLE-003"
+      name: "Week 5 reading day with choral verse"
+      description: "Tests choral reading structure for tomb scene"
+      input:
+        week: 5
+        day: 2
+        scenes: ["5.3"]
+        topic: "The Tomb Scene"
+        vocabulary: ["vault", "sepulchre", "triumphant", "inauspicious"]
+      expected_output:
+        reading_type: "choral_reading_for_verse"
+        scene_handling:
+          - scene: "5.3"
+            status: "FULL_READ"
+            priority: "HIGH"
+      validates: ["REQ-RD-001", "REQ-MK-002"]
+
+# =============================================================================
+# ActivityDayGeneratorAgent Test Samples
+# =============================================================================
+
+activity_day_generator_agent:
+  agent_name: "ActivityDayGeneratorAgent"
+  test_samples:
+    - id: "AD-SAMPLE-001"
+      name: "Week 1 character analysis activity day"
+      description: "Tests activity generation with multiple categories"
+      input:
+        week: 1
+        day: 4
+        focus: "Character Analysis"
+        act_content:
+          act: 1
+          completed_scenes: ["Prologue", "1.1", "1.3", "1.4", "1.5"]
+        student_levels: ["mixed"]
+      expected_output:
+        day_type: "activity"
+        activity_stations: "length >= 3"
+        differentiation_matrix:
+          by_learning_style: "has keys: visual, auditory, kinesthetic, reading_writing"
+          by_complexity: "has keys: foundational, intermediate, advanced"
+        blooms_coverage:
+          meets_requirement: true
+        webb_dok_coverage:
+          meets_requirement: true
+      validates: ["REQ-DF-001", "REQ-DF-002", "REQ-DF-003", "REQ-DF-004"]
+
+    - id: "AD-SAMPLE-002"
+      name: "Week 3 stage combat activity day"
+      description: "Tests fight choreography focused activities"
+      input:
+        week: 3
+        day: 5
+        focus: "Stage Combat and Conflict"
+        act_content:
+          act: 3
+          completed_scenes: ["3.1", "3.2", "3.3", "3.5"]
+        student_levels: ["mixed"]
+      expected_output:
+        focus: "Stage Combat and Conflict"
+        activity_stations: "length >= 3"
+        materials_needed: "length >= 3"
+      validates: ["REQ-DF-001"]
+
+    - id: "AD-SAMPLE-003"
+      name: "Week 6 performance day"
+      description: "Tests performance week activity structure"
+      input:
+        week: 6
+        day: 5
+        focus: "Scene Performances"
+        act_content:
+          act: "performance"
+        student_levels: ["mixed"]
+      expected_output:
+        day_type: "activity"
+        time_allocation:
+          total: 50
+      validates: ["REQ-WS-006"]
+
+# =============================================================================
+# DifferentiationSelectorAgent Test Samples
+# =============================================================================
+
+differentiation_selector_agent:
+  agent_name: "DifferentiationSelectorAgent"
+  test_samples:
+    - id: "DS-SAMPLE-001"
+      name: "Balanced differentiation selection"
+      description: "Tests selection of activities across Bloom's levels"
+      input:
+        learning_objectives:
+          - "Analyze character motivation in Act 1"
+          - "Identify literary devices in the Prologue"
+        student_needs:
+          ell_count: 5
+          advanced_count: 3
+          struggling_count: 4
+        week: 1
+        required_blooms: ["apply", "analyze"]
+        required_dok: [2, 3]
+      expected_output:
+        required_activities: "length >= 2"
+        ell_supports: "length >= 5"
+        advanced_extensions: "length >= 2"
+        struggling_modifications: "length >= 2"
+      validates: ["REQ-DF-006", "REQ-DF-007", "REQ-DF-008"]
+
+    - id: "DS-SAMPLE-002"
+      name: "Higher-order thinking focus"
+      description: "Tests selection emphasizing Analyze/Evaluate/Create"
+      input:
+        learning_objectives:
+          - "Evaluate the consequences of Romeo's actions"
+        required_blooms: ["analyze", "evaluate", "create"]
+        required_dok: [3, 4]
+      expected_output:
+        required_activities:
+          - reason: "contains: Analyze OR Evaluate OR Create"
+      validates: ["REQ-DF-003", "REQ-DF-005"]
+
+    - id: "DS-SAMPLE-003"
+      name: "Foundation-focused selection"
+      description: "Tests selection for struggling learners"
+      input:
+        learning_objectives:
+          - "Identify main characters in Act 1"
+        student_needs:
+          struggling_count: 10
+        required_blooms: ["remember", "understand"]
+        required_dok: [1, 2]
+      expected_output:
+        required_activities:
+          - reason: "contains: DOK 1 OR DOK 2"
+        struggling_modifications: "length >= 4"
+      validates: ["REQ-DF-004", "REQ-DF-008"]
+
+# =============================================================================
+# WeekPlannerAgent Test Samples
+# =============================================================================
+
+week_planner_agent:
+  agent_name: "WeekPlannerAgent"
+  test_samples:
+    - id: "WP-SAMPLE-001"
+      name: "Week 1 plan"
+      description: "Tests Act 1 week structure (3 reading, 2 activity)"
+      input:
+        week: 1
+      expected_output:
+        week: 1
+        act: 1
+        reading_days: 3
+        activity_days: 2
+        total_days: 5
+        reading_type: "shared_reading_with_annotation"
+        daily_breakdown: "length == 5"
+      validates: ["REQ-WS-001"]
+
+    - id: "WP-SAMPLE-002"
+      name: "Week 4 plan"
+      description: "Tests Act 4 week structure (2 reading, 3 activity)"
+      input:
+        week: 4
+      expected_output:
+        week: 4
+        act: 4
+        reading_days: 2
+        activity_days: 3
+        total_days: 5
+      validates: ["REQ-WS-004"]
+
+    - id: "WP-SAMPLE-003"
+      name: "Week 6 performance plan"
+      description: "Tests performance week structure (0 reading, 5 activity)"
+      input:
+        week: 6
+      expected_output:
+        week: 6
+        act: "performance"
+        reading_days: 0
+        activity_days: 5
+        total_days: 5
+        reading_type: null
+      validates: ["REQ-WS-006"]
+
+# =============================================================================
+# TextExcerptSelectorAgent Test Samples
+# =============================================================================
+
+text_excerpt_selector_agent:
+  agent_name: "TextExcerptSelectorAgent"
+  test_samples:
+    - id: "TE-SAMPLE-001"
+      name: "Act 1 Scene 2 excerpts"
+      description: "Tests key line selection for Capulet/Paris scene"
+      input:
+        scene_id: "Act 1 Scene 2"
+        teaching_focus: "Capulet's protectiveness"
+      expected_output:
+        scene: "Act 1 Scene 2"
+        status: "not FULL_SCENE"
+        original_duration: 8
+        trimmed_duration: 3
+        key_lines: "length >= 3"
+        teaching_note: "contains: protectiveness"
+        context_to_provide: "not empty"
+        transition_script: "not empty"
+      validates: ["REQ-TE-001", "REQ-TE-002", "REQ-TE-003", "REQ-TE-004"]
+
+    - id: "TE-SAMPLE-002"
+      name: "Act 2 Scene 4 excerpts"
+      description: "Tests key line selection for Mercutio banter"
+      input:
+        scene_id: "Act 2 Scene 4"
+        teaching_focus: "Romeo's changed mood"
+      expected_output:
+        original_duration: 12
+        trimmed_duration: 5
+        time_saved: 7
+        key_lines:
+          - "contains: sociable"
+        reading_strategy: "popcorn_reading"
+      validates: ["REQ-SC-006", "REQ-TE-001"]
+
+    - id: "TE-SAMPLE-003"
+      name: "Non-trimmed scene handling"
+      description: "Tests that full scenes return appropriate status"
+      input:
+        scene_id: "Act 1 Scene 5"
+        teaching_focus: "Romeo and Juliet meet"
+      expected_output:
+        status: "FULL_SCENE"
+        note: "contains: read in full"
+      validates: ["REQ-TE-001"]
+
+# =============================================================================
+# RJUnitValidatorAgent Test Samples
+# =============================================================================
+
+rj_unit_validator_agent:
+  agent_name: "RJUnitValidatorAgent"
+  test_samples:
+    - id: "UV-SAMPLE-001"
+      name: "Valid complete unit"
+      description: "Tests validation of properly structured unit"
+      input:
+        unit_plan:
+          weeks:
+            - week: 1
+              reading_days: 3
+              activity_days: 2
+              scenes: ["Prologue", "1.1", "1.3", "1.4", "1.5"]
+            - week: 2
+              reading_days: 3
+              activity_days: 2
+              scenes: ["2.2", "2.3", "2.5", "2.6"]
+            - week: 3
+              reading_days: 4
+              activity_days: 1
+              scenes: ["3.1", "3.2", "3.3", "3.5"]
+            - week: 4
+              reading_days: 2
+              activity_days: 3
+              scenes: ["4.1", "4.3", "4.5"]
+            - week: 5
+              reading_days: 3
+              activity_days: 2
+              scenes: ["5.1", "5.3"]
+            - week: 6
+              reading_days: 0
+              activity_days: 5
+              scenes: []
+      expected_output:
+        passed: true
+        checks: "length >= 5"
+        errors: "length == 0"
+      validates: ["REQ-UV-001", "REQ-UV-002", "REQ-UV-003", "REQ-UV-004"]
+
+    - id: "UV-SAMPLE-002"
+      name: "Unit missing must-keep scene"
+      description: "Tests detection of missing 3.1 fight scene"
+      input:
+        unit_plan:
+          weeks:
+            - week: 3
+              scenes: ["3.2", "3.3", "3.5"]  # Missing 3.1!
+      expected_output:
+        passed: false
+        errors:
+          - "contains: MUST-KEEP scene 3.1"
+      validates: ["REQ-UV-001", "REQ-MK-001"]
+
+    - id: "UV-SAMPLE-003"
+      name: "Unit with incorrectly included cut scene"
+      description: "Tests detection of cut scene included as reading"
+      input:
+        unit_plan:
+          weeks:
+            - week: 2
+              scenes: ["2.1", "2.2", "2.3"]  # 2.1 should be cut!
+      expected_output:
+        passed: false
+        errors:
+          - "contains: should be CUT"
+      validates: ["REQ-UV-002", "REQ-SC-001"]
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+
+summary:
+  total_samples: 24
+  samples_per_agent: 3
+  agents_covered: 8
+  requirements_tested: 35
