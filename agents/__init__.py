@@ -75,6 +75,13 @@ from .slide_enhancement import (
     SlideEnhancementFormatterAgent,
     SlideEnhancementValidatorAgent,
 )
+from .presenter_notes_extraction import (
+    PresenterNotesExtractorAgent,
+    MonologueFormatterAgent,
+    NotesToWordGeneratorAgent,
+    NotesExtractionValidatorAgent,
+    PresentationNotesOrchestratorAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -152,6 +159,13 @@ def create_agent(agent_name: str, prompt_path=None):
         "slide_enhancement_report": SlideEnhancementReportAgent,
         "slide_enhancement_formatter": SlideEnhancementFormatterAgent,
         "slide_enhancement_validator": SlideEnhancementValidatorAgent,
+
+        # Presenter Notes Extraction (HARDCODED)
+        "presenter_notes_extractor": PresenterNotesExtractorAgent,
+        "monologue_formatter": MonologueFormatterAgent,
+        "notes_to_word_generator": NotesToWordGeneratorAgent,
+        "notes_extraction_validator": NotesExtractionValidatorAgent,
+        "presentation_notes_orchestrator": PresentationNotesOrchestratorAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -232,4 +246,11 @@ __all__ = [
     "SlideEnhancementReportAgent",
     "SlideEnhancementFormatterAgent",
     "SlideEnhancementValidatorAgent",
+
+    # Presenter Notes Extraction
+    "PresenterNotesExtractorAgent",
+    "MonologueFormatterAgent",
+    "NotesToWordGeneratorAgent",
+    "NotesExtractionValidatorAgent",
+    "PresentationNotesOrchestratorAgent",
 ]

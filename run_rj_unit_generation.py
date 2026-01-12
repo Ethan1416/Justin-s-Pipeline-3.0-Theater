@@ -581,21 +581,25 @@ _Use this space to take notes during class:_
         # Slide 1: Title
         slide = prs.slides.add_slide(prs.slide_layouts[6])  # Blank
         self._add_title_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_title_notes(day_data))
         slides_data.append({"title": day_data['topic'], "content": day_data['topic']})
 
         # Slide 2: Learning Objectives
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         self._add_objectives_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_objectives_notes(day_data))
         slides_data.append({"title": "Learning Objectives", "content": " ".join(day_data['learning_objectives'])})
 
         # Slide 3: Vocabulary
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         self._add_vocabulary_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_vocabulary_notes(day_data))
         slides_data.append({"title": "Vocabulary", "content": " ".join([v['term'] for v in day_data['vocabulary']])})
 
         # Slide 4: Warmup
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         self._add_warmup_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_warmup_notes(day_data))
         slides_data.append({"title": "Warmup", "content": day_data['warmup']['instructions']})
 
         # Content slides
@@ -604,16 +608,19 @@ _Use this space to take notes during class:_
             point = cp['point'] if isinstance(cp, dict) else cp
             expanded = cp.get('expanded', []) if isinstance(cp, dict) else []
             self._add_content_slide(slide, point, expanded, i + 5)
+            self._add_presenter_notes(slide, self._generate_content_notes(point, expanded, day_data))
             slides_data.append({"title": point[:30], "content": point + " " + " ".join(expanded)})
 
         # Activity slide
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         self._add_activity_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_activity_notes(day_data))
         slides_data.append({"title": "Activity", "content": day_data['activity']['instructions']})
 
         # Exit ticket slide
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         self._add_exit_slide(slide, day_data)
+        self._add_presenter_notes(slide, self._generate_exit_notes(day_data))
         slides_data.append({"title": "Exit Ticket", "content": " ".join(day_data['exit_tickets'])})
 
         # Add trivia banners if enabled
@@ -838,6 +845,192 @@ _Use this space to take notes during class:_
         run2.font.color.rgb = RGBColor(content_rgb[0], content_rgb[1], content_rgb[2])
 
         self.stats["trivia_added"] += 1
+
+    # =========================================================================
+    # PRESENTER NOTES GENERATION METHODS
+    # =========================================================================
+
+    def _add_presenter_notes(self, slide, notes_text: str):
+        """Add presenter notes to a slide."""
+        if not notes_text:
+            return
+
+        notes_slide = slide.notes_slide
+        text_frame = notes_slide.notes_text_frame
+        text_frame.text = notes_text
+
+    def _generate_title_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for title slide."""
+        notes = f"""PRESENTER NOTES - Day {day_data['day']}: {day_data['topic']}
+
+Welcome everyone to Day {day_data['day']} of our Romeo and Juliet unit.
+
+Today's focus: {day_data['topic']}
+
+This is Week {day_data['week']}, and our theme is: {day_data['theme']}
+
+[PAUSE] Take a moment to let students settle in and get their materials ready.
+
+Before we begin, remind students that all our work today connects to our larger exploration of Shakespeare's tragic love story and what it teaches us about the human experience.
+
+[TRANSITION] When ready, advance to the learning objectives slide.
+"""
+        return notes
+
+    def _generate_objectives_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for learning objectives slide."""
+        objectives_list = "\n".join([f"  - {obj}" for obj in day_data['learning_objectives']])
+        notes = f"""LEARNING OBJECTIVES
+
+Read through each objective with the class. [PAUSE between each]
+
+Today's objectives:
+{objectives_list}
+
+[CHECK FOR UNDERSTANDING] Ask: "Based on these objectives, what do you think we'll be doing today?"
+
+Call on 2-3 students to share their predictions. This activates prior knowledge and builds anticipation.
+
+[TRANSITION] "Before we dive in, let's review some key vocabulary that will help us today."
+"""
+        return notes
+
+    def _generate_vocabulary_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for vocabulary slide."""
+        vocab_script = ""
+        for vocab in day_data['vocabulary']:
+            vocab_script += f"""
+{vocab['term'].upper()}:
+Say the word with me: "{vocab['term']}"
+Definition: {vocab['definition']}
+[PAUSE] Can anyone use this word in a sentence related to what we've read so far?
+"""
+
+        notes = f"""KEY VOCABULARY
+
+Introduce each term using the "Say-Define-Use" method:
+
+{vocab_script}
+
+[ASSESSMENT] Quick check - Have students give a thumbs up if they feel confident with these terms, thumbs sideways if they need more practice.
+
+[TRANSITION] "Now let's warm up our minds and bodies for today's work."
+"""
+        return notes
+
+    def _generate_warmup_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for warmup slide."""
+        warmup = day_data['warmup']
+        notes = f"""WARMUP: {warmup['name']}
+
+Duration: {warmup.get('duration_minutes', 5)} minutes
+
+Instructions for students:
+{warmup['instructions']}
+
+[TEACHER ACTIONS]
+1. Give clear, step-by-step directions
+2. Set a visible timer
+3. Circulate and observe student engagement
+4. Note interesting responses to share in discussion
+
+Connection to today's lesson:
+{warmup.get('connection_to_lesson', 'This warmup prepares students for the main content.')}
+
+[DEBRIEF] After time is up, ask 2-3 students to share. Validate responses and connect to today's topic.
+
+[TRANSITION] "Excellent work! Now let's dig into our main content for today."
+"""
+        return notes
+
+    def _generate_content_notes(self, point: str, expanded: List[str], day_data: Dict) -> str:
+        """Generate presenter notes for content slides."""
+        expanded_text = "\n".join([f"  - {exp}" for exp in expanded]) if expanded else "  - Discuss this point in depth with students"
+
+        notes = f"""CONTENT: {point}
+
+Key Points to Cover:
+{expanded_text}
+
+[DELIVERY TIPS]
+- Speak clearly and check for understanding frequently
+- Use specific examples from the text when possible
+- Encourage students to take notes
+- Pause for questions
+
+[ENGAGEMENT STRATEGIES]
+- "Turn and talk to your neighbor about this for 30 seconds"
+- "Can someone give me an example of this from what we've read?"
+- "Why do you think Shakespeare chose to include this?"
+
+[CONNECTION] Relate this content to:
+- Previous scenes/events in the play
+- Students' own experiences
+- Broader themes of love, fate, and conflict
+
+[PACING] Don't rush - ensure students grasp this before moving on.
+"""
+        return notes
+
+    def _generate_activity_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for activity slide."""
+        activity = day_data['activity']
+        notes = f"""ACTIVITY: {activity['name']}
+
+Duration: {activity.get('duration_minutes', 20)} minutes
+
+Instructions:
+{activity['instructions']}
+
+[SETUP]
+1. Ensure all materials are ready before beginning
+2. Group students strategically if working in teams
+3. Post/display clear expectations
+
+[DURING THE ACTIVITY]
+- Circulate and provide support
+- Ask probing questions to deepen thinking
+- Keep track of time and give warnings (10 min, 5 min, 2 min)
+- Note exemplary work to highlight later
+
+[DIFFERENTIATION TIPS]
+- For struggling students: Provide sentence starters or graphic organizers
+- For advanced students: Add complexity or leadership roles
+- For ELL students: Pair with supportive partners, provide visuals
+
+[CLOSURE] Save 3-5 minutes at the end for sharing and reflection.
+"""
+        return notes
+
+    def _generate_exit_notes(self, day_data: Dict) -> str:
+        """Generate presenter notes for exit ticket slide."""
+        questions = "\n".join([f"  {i+1}. {q}" for i, q in enumerate(day_data['exit_tickets'])])
+        notes = f"""EXIT TICKET
+
+Questions:
+{questions}
+
+[INSTRUCTIONS]
+1. Distribute exit tickets or have students use their journals
+2. Give students 3-5 minutes of quiet writing time
+3. Remind them: "This is not graded for correctness - I want to see your genuine thinking"
+
+[COLLECTION]
+- Collect exit tickets as students leave
+- Or have students submit digitally
+
+[TEACHER FOLLOW-UP]
+After class:
+- Review responses to gauge understanding
+- Identify misconceptions to address next class
+- Note students who may need additional support
+
+[CLOSING]
+"Thank you for your hard work today. Tomorrow we'll build on what we learned about {day_data['topic']}. Don't forget to [any homework/reminder]."
+
+[DISMISS] Students may pack up and prepare to leave when the bell rings.
+"""
+        return notes
 
     def _validate_day(self, day_data: Dict) -> Dict:
         """Validate a day's generated content."""
