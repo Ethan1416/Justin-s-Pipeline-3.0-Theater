@@ -348,38 +348,50 @@ FUN_FACTS_DATABASE = {
     ],
 }
 
-# HARDCODED: Performance tips for theater-relevant content
-PERFORMANCE_TIPS = {
+# HARDCODED: Performance/theater trivia (formerly "tips" - now presented as trivia)
+PERFORMANCE_TRIVIA = {
     "blocking": [
-        "When blocking a scene, always know where your light source is - never turn your back to it!",
-        "Stage movement should have purpose. Every step should mean something to your character.",
-        "Cross downstage (toward audience) on important lines to draw focus.",
+        {"fact": "Actors never turn their backs to the light source - that's why blocking rehearsals map every movement!", "header": "Stage Secrets"},
+        {"fact": "Every step on stage should mean something. Random movement distracts the audience!", "header": "Pro Tip"},
+        {"fact": "Crossing downstage (toward audience) on important lines is a trick directors use to draw focus.", "header": "Director's Secret"},
     ],
     "voice": [
-        "Project from your diaphragm, not your throat. Your voice should fill the space!",
-        "Vary your pace - slow down for emotional moments, speed up for excitement.",
-        "The last word of a line often carries the most meaning. Land it with intention.",
+        {"fact": "Professional actors project from their diaphragm, not their throat - that's how they perform 8 shows a week!", "header": "Actor's Secret"},
+        {"fact": "Slowing down for emotional moments and speeding up for excitement keeps audiences engaged.", "header": "Pacing Trick"},
+        {"fact": "The last word of a Shakespeare line often carries the most meaning - listen for it!", "header": "Language Tip"},
     ],
     "character": [
-        "Your character exists even when not speaking. React to everything happening on stage.",
-        "Find your character's 'center' - where do they hold tension in their body?",
-        "Ask yourself: What does my character want in this scene? What's stopping them?",
+        {"fact": "Great actors stay in character even when not speaking - they react to everything on stage!", "header": "Acting Secret"},
+        {"fact": "Actors find their character's 'center' - where they hold tension in their body tells you who they are.", "header": "Character Clue"},
+        {"fact": "Every character wants something and something is stopping them - that's the engine of drama!", "header": "Drama 101"},
     ],
     "verse_speaking": [
-        "In iambic pentameter, stressed syllables often carry the emotional weight of the line.",
-        "Don't pause at the end of every line - follow the punctuation, not the line breaks.",
-        "Antithesis (opposing ideas) should be physically and vocally contrasted.",
+        {"fact": "In iambic pentameter, the stressed syllables carry the emotional weight - like a heartbeat of meaning!", "header": "Verse Secret"},
+        {"fact": "Don't pause at the end of every line - follow the punctuation, not the line breaks!", "header": "Speaking Tip"},
+        {"fact": "Antithesis (opposing ideas) should be physically and vocally contrasted for maximum impact.", "header": "Rhetoric Trick"},
     ],
     "fight_scenes": [
-        "Stage combat is choreographed like a dance. Safety first, drama second!",
-        "The 'victim' controls the fight - they react to make hits look real.",
-        "Eye contact with your scene partner keeps stage combat safe and connected.",
+        {"fact": "Stage combat is choreographed like a dance - every 'hit' is precisely timed for safety!", "header": "Stage Combat"},
+        {"fact": "In stage fights, the 'victim' actually controls the action - their reactions make it look real!", "header": "Fight Secret"},
+        {"fact": "Eye contact between actors keeps stage combat safe and emotionally connected.", "header": "Safety First"},
     ],
     "emotion": [
-        "Don't 'play' an emotion - play an action. Emotions come from pursuing objectives.",
-        "Shakespeare's characters often say the opposite of what they feel. Look for the subtext!",
-        "Physical actions can unlock emotional truth. Try the gesture, feel the feeling.",
+        {"fact": "Actors don't 'play' emotions - they play actions. The emotions follow naturally!", "header": "Acting Trick"},
+        {"fact": "Shakespeare's characters often say the opposite of what they feel - that's called subtext!", "header": "Subtext Alert"},
+        {"fact": "Physical actions can unlock emotional truth - try the gesture, feel the feeling!", "header": "Body & Mind"},
     ],
+}
+
+# HARDCODED: Trivia headers based on content type
+TRIVIA_HEADERS = {
+    "shakespeare_general": ["Shakespeare Trivia", "Bard Fact", "Did You Know?", "Shakespeare Secrets"],
+    "romeo_juliet": ["R&J Trivia", "Play Fact", "Did You Know?", "Story Secret"],
+    "elizabethan_theater": ["Theater History", "Globe Fact", "Stage History", "Playhouse Trivia"],
+    "language_wordplay": ["Word Nerd", "Language Fact", "Poetry Corner", "Wordplay"],
+    "performance_acting": ["Stage Secrets", "Actor's Tip", "Theater Trick", "Pro Tip"],
+    "themes_symbols": ["Symbol Spotlight", "Theme Insight", "Hidden Meaning", "Deep Dive"],
+    "general_theater": ["Theater Trivia", "Stage Fact", "Drama 101", "Curtain Call"],
+    "default": ["Trivia", "Did You Know?", "Fun Fact", "Quick Fact"]
 }
 
 # HARDCODED: Slide content keywords for matching
@@ -444,9 +456,12 @@ class FunFactGeneratorAgent(Agent):
         fact = self._select_fact(categories, preferred_tone, exclude_facts)
 
         if fact:
+            # Select appropriate header based on category
+            header = self._select_header(fact.get("_category", "default"))
             return {
                 "success": True,
                 "fact": fact["fact"],
+                "header": header,
                 "tone": fact["tone"],
                 "tags": fact.get("tags", []),
                 "category": fact.get("_category", "general"),
@@ -459,9 +474,11 @@ class FunFactGeneratorAgent(Agent):
 
             if all_facts:
                 fact = random.choice(all_facts)
+                header = random.choice(TRIVIA_HEADERS["default"])
                 return {
                     "success": True,
                     "fact": fact["fact"],
+                    "header": header,
                     "tone": fact["tone"],
                     "tags": fact.get("tags", []),
                     "category": "general",
@@ -471,6 +488,11 @@ class FunFactGeneratorAgent(Agent):
                 "success": False,
                 "error": "No facts available"
             }
+
+    def _select_header(self, category: str) -> str:
+        """Select an appropriate header for the category."""
+        headers = TRIVIA_HEADERS.get(category, TRIVIA_HEADERS["default"])
+        return random.choice(headers)
 
     def _determine_categories(self, content: str) -> List[str]:
         """Determine which fact categories are relevant to the content."""
@@ -547,25 +569,27 @@ class FunFactGeneratorAgent(Agent):
 
 class PerformanceTipGeneratorAgent(Agent):
     """
-    HARDCODED agent for generating performance tips.
+    HARDCODED agent for generating performance trivia.
 
-    Provides relevant tips for slides with performance applications.
+    Provides relevant theater/performance trivia for slides with
+    performance applications. Now returns trivia-style content with
+    contextual headers instead of "Performance Tip".
     """
 
     def __init__(self):
         super().__init__(name="PerformanceTipGeneratorAgent")
-        self._used_tips = set()
+        self._used_trivia = set()
 
     def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate a performance tip based on slide content."""
+        """Generate performance trivia based on slide content."""
         slide_content = context.get("slide_content", "")
         slide_title = context.get("slide_title", "")
-        exclude_tips = context.get("exclude_tips", [])
+        exclude_trivia = context.get("exclude_trivia", [])
 
         full_content = f"{slide_title} {slide_content}".lower()
 
-        # Determine relevant tip categories
-        categories = self._determine_tip_categories(full_content)
+        # Determine relevant trivia categories
+        categories = self._determine_trivia_categories(full_content)
 
         if not categories:
             return {
@@ -574,25 +598,26 @@ class PerformanceTipGeneratorAgent(Agent):
                 "reason": "No performance application for this content"
             }
 
-        # Select a tip
-        tip = self._select_tip(categories, exclude_tips)
+        # Select trivia
+        trivia = self._select_trivia(categories, exclude_trivia)
 
-        if tip:
+        if trivia:
             return {
                 "success": True,
                 "has_performance_application": True,
-                "tip": tip["tip"],
-                "category": tip["category"],
+                "fact": trivia["fact"],
+                "header": trivia["header"],
+                "category": trivia["category"],
             }
 
         return {
             "success": False,
             "has_performance_application": True,
-            "reason": "All tips exhausted for this category"
+            "reason": "All trivia exhausted for this category"
         }
 
-    def _determine_tip_categories(self, content: str) -> List[str]:
-        """Determine which performance tip categories are relevant."""
+    def _determine_trivia_categories(self, content: str) -> List[str]:
+        """Determine which performance trivia categories are relevant."""
         categories = []
 
         # Check for blocking/staging content
@@ -627,29 +652,30 @@ class PerformanceTipGeneratorAgent(Agent):
 
         return categories
 
-    def _select_tip(self, categories: List[str], exclude_tips: List[str]) -> Optional[Dict]:
-        """Select a performance tip from relevant categories."""
+    def _select_trivia(self, categories: List[str], exclude_trivia: List[str]) -> Optional[Dict]:
+        """Select performance trivia from relevant categories."""
         candidates = []
 
         for category in categories:
-            if category in PERFORMANCE_TIPS:
-                for tip in PERFORMANCE_TIPS[category]:
-                    if tip not in exclude_tips and tip not in self._used_tips:
+            if category in PERFORMANCE_TRIVIA:
+                for item in PERFORMANCE_TRIVIA[category]:
+                    if item["fact"] not in exclude_trivia and item["fact"] not in self._used_trivia:
                         candidates.append({
-                            "tip": tip,
+                            "fact": item["fact"],
+                            "header": item["header"],
                             "category": category
                         })
 
         if candidates:
             selected = random.choice(candidates)
-            self._used_tips.add(selected["tip"])
+            self._used_trivia.add(selected["fact"])
             return selected
 
         return None
 
-    def reset_used_tips(self):
-        """Reset used tips tracker."""
-        self._used_tips.clear()
+    def reset_used_trivia(self):
+        """Reset used trivia tracker."""
+        self._used_trivia.clear()
 
 
 # =============================================================================
@@ -672,29 +698,29 @@ class SlideContentEnhancerAgent(Agent):
         self.tip_generator = PerformanceTipGeneratorAgent()
 
     def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Enhance slide with either performance tip or fun fact."""
+        """Enhance slide with either performance trivia or fun fact."""
         slide_content = context.get("slide_content", "")
         slide_title = context.get("slide_title", "")
         force_fact = context.get("force_fact", False)  # Always use fact
-        force_tip = context.get("force_tip", False)    # Always use tip
+        force_tip = context.get("force_tip", False)    # Always use tip/trivia
 
-        # First, try to get a performance tip (unless forced to use fact)
+        # First, try to get a performance trivia (unless forced to use fact)
         if not force_fact:
-            tip_result = self.tip_generator.execute({
+            trivia_result = self.tip_generator.execute({
                 "slide_content": slide_content,
                 "slide_title": slide_title,
             })
 
-            if tip_result.output.get("has_performance_application") and tip_result.output.get("success"):
+            if trivia_result.output.get("has_performance_application") and trivia_result.output.get("success"):
                 return {
                     "success": True,
-                    "enhancement_type": "performance_tip",
-                    "content": tip_result.output["tip"],
-                    "category": tip_result.output.get("category"),
-                    "label": "Performance Tip"
+                    "enhancement_type": "performance_trivia",
+                    "content": trivia_result.output["fact"],
+                    "category": trivia_result.output.get("category"),
+                    "label": trivia_result.output.get("header", "Stage Secrets")
                 }
 
-        # If no performance tip applicable (or forced), use fun fact
+        # If no performance trivia applicable (or forced), use fun fact
         if not force_tip:
             fact_result = self.fact_generator.execute({
                 "slide_content": slide_content,
@@ -708,7 +734,7 @@ class SlideContentEnhancerAgent(Agent):
                     "content": fact_result.output["fact"],
                     "tone": fact_result.output.get("tone"),
                     "category": fact_result.output.get("category"),
-                    "label": "Did You Know?"
+                    "label": fact_result.output.get("header", "Did You Know?")
                 }
 
         return {
@@ -728,7 +754,7 @@ class SlideContentEnhancerAgent(Agent):
         """
         # Reset trackers for fresh presentation
         self.fact_generator.reset_used_facts()
-        self.tip_generator.reset_used_tips()
+        self.tip_generator.reset_used_trivia()
 
         enhanced_slides = []
 
@@ -753,7 +779,7 @@ class SlideContentEnhancerAgent(Agent):
     def reset(self):
         """Reset all trackers for a new presentation."""
         self.fact_generator.reset_used_facts()
-        self.tip_generator.reset_used_tips()
+        self.tip_generator.reset_used_trivia()
 
 
 # =============================================================================
