@@ -72,6 +72,8 @@ from .slide_enhancement import (
     PerformanceTipGeneratorAgent,
     SlideContentEnhancerAgent,
     SlideEnhancementReportAgent,
+    SlideEnhancementFormatterAgent,
+    SlideEnhancementValidatorAgent,
 )
 
 
@@ -148,6 +150,8 @@ def create_agent(agent_name: str, prompt_path=None):
         "performance_tip_generator": PerformanceTipGeneratorAgent,
         "slide_content_enhancer": SlideContentEnhancerAgent,
         "slide_enhancement_report": SlideEnhancementReportAgent,
+        "slide_enhancement_formatter": SlideEnhancementFormatterAgent,
+        "slide_enhancement_validator": SlideEnhancementValidatorAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -226,4 +230,6 @@ __all__ = [
     "PerformanceTipGeneratorAgent",
     "SlideContentEnhancerAgent",
     "SlideEnhancementReportAgent",
+    "SlideEnhancementFormatterAgent",
+    "SlideEnhancementValidatorAgent",
 ]

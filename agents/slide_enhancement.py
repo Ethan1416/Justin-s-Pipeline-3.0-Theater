@@ -837,3 +837,193 @@ class SlideEnhancementReportAgent(Agent):
             "fact_percentage": round(fact_count / total_slides * 100, 1) if total_slides else 0,
             "tip_percentage": round(tip_count / total_slides * 100, 1) if total_slides else 0,
         }
+
+
+# =============================================================================
+# SlideEnhancementFormatterAgent
+# =============================================================================
+
+# HARDCODED: Font configuration for slide enhancements
+ENHANCEMENT_FONT_CONFIG = {
+    "label_font_size": 20,          # Font size for header labels (points)
+    "content_font_size": 20,        # Font size for trivia content (points)
+    "label_bold": True,             # Bold for labels
+    "content_bold": False,          # Regular weight for content
+    "label_color": (75, 0, 130),    # Indigo RGB
+    "content_color": (51, 51, 51),  # Dark gray RGB
+    "box_fill_color": (245, 240, 255),   # Light purple RGB
+    "box_border_color": (128, 0, 128),   # Purple RGB
+    "box_border_width": 2,          # Border width in points
+    "emoji": "🎭",                   # Theater emoji prefix
+    "position": {
+        "left": 0.5,    # inches from left
+        "top": 6.3,     # inches from top (adjusted for larger font)
+        "width": 9,     # inches
+        "height": 1.0,  # inches (increased for 20pt font)
+    }
+}
+
+
+class SlideEnhancementFormatterAgent(Agent):
+    """
+    HARDCODED agent for formatting slide enhancements.
+
+    Applies consistent formatting to trivia banners including:
+    - 20 point font size for all text
+    - Theater-themed purple styling
+    - Proper positioning at slide bottom
+    """
+
+    def __init__(self):
+        super().__init__(name="SlideEnhancementFormatterAgent")
+        self.config = ENHANCEMENT_FONT_CONFIG
+
+    def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Format enhancement content for slide insertion."""
+        label = context.get("label", "Did You Know?")
+        content = context.get("content", "")
+
+        if not content:
+            return {
+                "success": False,
+                "error": "No content provided to format"
+            }
+
+        # Build formatted output
+        formatted = {
+            "success": True,
+            "label": {
+                "text": f"{self.config['emoji']} {label}: ",
+                "font_size": self.config["label_font_size"],
+                "bold": self.config["label_bold"],
+                "color_rgb": self.config["label_color"],
+            },
+            "content": {
+                "text": content,
+                "font_size": self.config["content_font_size"],
+                "bold": self.config["content_bold"],
+                "color_rgb": self.config["content_color"],
+            },
+            "box": {
+                "fill_color_rgb": self.config["box_fill_color"],
+                "border_color_rgb": self.config["box_border_color"],
+                "border_width": self.config["box_border_width"],
+                "position": self.config["position"].copy(),
+            },
+            "full_text": f"{self.config['emoji']} {label}: {content}",
+            "font_size_pt": self.config["content_font_size"],
+        }
+
+        return formatted
+
+    def get_config(self) -> Dict[str, Any]:
+        """Return the current font configuration."""
+        return self.config.copy()
+
+
+# =============================================================================
+# SlideEnhancementValidatorAgent
+# =============================================================================
+
+class SlideEnhancementValidatorAgent(Agent):
+    """
+    HARDCODED validator agent for slide enhancements.
+
+    Validates that enhancements meet requirements:
+    - Font size is exactly 20 points
+    - Content is not truncated
+    - Box dimensions accommodate the text
+    - All required fields are present
+    """
+
+    # HARDCODED: Validation requirements
+    REQUIRED_FONT_SIZE = 20
+    MAX_CONTENT_LENGTH = 200  # Characters before warning
+    REQUIRED_FIELDS = ["label", "content", "box", "font_size_pt"]
+
+    def __init__(self):
+        super().__init__(name="SlideEnhancementValidatorAgent")
+
+    def _process(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate formatted enhancement data."""
+        formatted_data = context.get("formatted_data", {})
+
+        errors = []
+        warnings = []
+
+        # Check required fields
+        for field in self.REQUIRED_FIELDS:
+            if field not in formatted_data:
+                errors.append(f"Missing required field: {field}")
+
+        if errors:
+            return {
+                "valid": False,
+                "errors": errors,
+                "warnings": warnings,
+            }
+
+        # Validate font size
+        font_size = formatted_data.get("font_size_pt", 0)
+        if font_size != self.REQUIRED_FONT_SIZE:
+            errors.append(f"Font size must be {self.REQUIRED_FONT_SIZE}pt, got {font_size}pt")
+
+        # Validate label font size
+        label_data = formatted_data.get("label", {})
+        if label_data.get("font_size") != self.REQUIRED_FONT_SIZE:
+            errors.append(f"Label font size must be {self.REQUIRED_FONT_SIZE}pt")
+
+        # Validate content font size
+        content_data = formatted_data.get("content", {})
+        if content_data.get("font_size") != self.REQUIRED_FONT_SIZE:
+            errors.append(f"Content font size must be {self.REQUIRED_FONT_SIZE}pt")
+
+        # Check content length
+        content_text = content_data.get("text", "")
+        if len(content_text) > self.MAX_CONTENT_LENGTH:
+            warnings.append(f"Content length ({len(content_text)} chars) may cause text overflow")
+
+        # Validate box configuration
+        box_data = formatted_data.get("box", {})
+        if not box_data.get("position"):
+            errors.append("Box position not specified")
+        if not box_data.get("fill_color_rgb"):
+            errors.append("Box fill color not specified")
+
+        # Check color values are valid RGB tuples
+        for color_field in ["fill_color_rgb", "border_color_rgb"]:
+            color = box_data.get(color_field)
+            if color:
+                if not isinstance(color, (list, tuple)) or len(color) != 3:
+                    errors.append(f"Invalid {color_field}: must be RGB tuple")
+                elif not all(0 <= c <= 255 for c in color):
+                    errors.append(f"Invalid {color_field}: RGB values must be 0-255")
+
+        return {
+            "valid": len(errors) == 0,
+            "errors": errors,
+            "warnings": warnings,
+            "validated_font_size": font_size,
+            "content_length": len(content_text),
+        }
+
+    def validate_slide_enhancement(self, label: str, content: str) -> Dict[str, Any]:
+        """
+        Convenience method to validate a label/content pair.
+
+        Creates formatted data and validates it in one step.
+        """
+        formatter = SlideEnhancementFormatterAgent()
+        formatted = formatter.execute({
+            "label": label,
+            "content": content,
+        })
+
+        if not formatted.output.get("success"):
+            return {
+                "valid": False,
+                "errors": [formatted.output.get("error", "Formatting failed")],
+                "warnings": [],
+            }
+
+        return self.execute({"formatted_data": formatted.output})
