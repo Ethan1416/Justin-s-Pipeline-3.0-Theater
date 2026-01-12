@@ -6,6 +6,8 @@ Romeo and Juliet Complete Unit Generator
 Generates the complete 6-week Romeo and Juliet unit (30 days) from scratch
 using hardcoded agents for all generation, formatting, and validation.
 
+Uses pipeline_config_theater.json for Theater-specific template configuration.
+
 Usage:
     python run_rj_unit_generation.py                    # Generate all 30 days
     python run_rj_unit_generation.py --week 1           # Generate Week 1 only
@@ -16,9 +18,17 @@ Usage:
 import sys
 import json
 import argparse
+import logging
 from pathlib import Path
 from datetime import datetime
 from typing import Any, Dict, List, Optional
+
+# Configure logging for shape validation
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(levelname)s: %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Add project to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -53,6 +63,9 @@ from agents import (
     SlideContentCondensationAgent,
 )
 
+# Import content database for real educational content
+from rj_content_database import get_day_content, RJ_CONTENT_DATABASE
+
 # Import PowerPoint generator
 try:
     from pptx import Presentation
@@ -66,6 +79,76 @@ except ImportError:
 # Pipeline root
 PIPELINE_ROOT = Path(__file__).parent
 PRODUCTION_DIR = PIPELINE_ROOT / "production" / "Unit_3_Romeo_and_Juliet"
+
+
+# =============================================================================
+# THEATER CONFIG AND SHAPE VALIDATION
+# =============================================================================
+
+def load_theater_config() -> Dict:
+    """Load the theater-specific pipeline configuration."""
+    config_path = PIPELINE_ROOT / "pipeline_config_theater.json"
+    if config_path.exists():
+        with open(config_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        logger.warning(f"Theater config not found at {config_path}, using defaults")
+        return {}
+
+def validate_template_shapes(template_path: Path, required_shapes: List[str]) -> Dict[str, bool]:
+    """
+    Validate that all required shapes exist in the template.
+    Returns a dict mapping shape names to whether they were found.
+    """
+    if not PPTX_AVAILABLE:
+        logger.error("python-pptx not available, cannot validate template")
+        return {}
+
+    if not template_path.exists():
+        logger.error(f"Template not found: {template_path}")
+        return {}
+
+    prs = Presentation(str(template_path))
+    if len(prs.slides) == 0:
+        logger.error(f"Template has no slides: {template_path}")
+        return {}
+
+    # Get all shape names from first slide
+    template_slide = prs.slides[0]
+    found_shapes = {shape.name for shape in template_slide.shapes}
+
+    # Check each required shape
+    validation_results = {}
+    missing_shapes = []
+    for shape_name in required_shapes:
+        found = shape_name in found_shapes
+        validation_results[shape_name] = found
+        if not found:
+            missing_shapes.append(shape_name)
+
+    # Log results
+    if missing_shapes:
+        logger.warning(f"Template validation: {len(missing_shapes)} shapes not found:")
+        for name in missing_shapes:
+            logger.warning(f"  - {name}")
+    else:
+        logger.info(f"Template validation: All {len(required_shapes)} required shapes found")
+
+    return validation_results
+
+def get_shape_config() -> Dict:
+    """Get shape configuration from theater config."""
+    config = load_theater_config()
+    template_req = config.get('template_requirements', {})
+    return {
+        'shape_mappings': template_req.get('shape_mappings', {}),
+        'shape_purposes': template_req.get('shape_purposes', {}),
+        'required_shapes': template_req.get('required_shapes', []),
+        'decorative_shapes': template_req.get('decorative_shapes', [])
+    }
+
+# Load theater config at module level
+THEATER_CONFIG = load_theater_config()
 
 
 # =============================================================================
@@ -576,76 +659,256 @@ _Use this space to take notes during class:_
             f.write(content)
 
     def _generate_pptx(self, day_data: Dict, output_path: Path):
-        """Generate PowerPoint presentation with trivia banners."""
+        """Generate PowerPoint using step12 approach: duplicate template slide, populate shapes."""
         from pptx import Presentation
         from pptx.util import Inches, Pt
         from pptx.dml.color import RGBColor
         from pptx.enum.text import PP_ALIGN
+        from copy import deepcopy
 
-        prs = Presentation()
-        prs.slide_width = Inches(10)
-        prs.slide_height = Inches(7.5)
+        # =====================================================================
+        # LOAD CONFIG AND VALIDATE TEMPLATE
+        # =====================================================================
 
-        # Reset enhancer for new presentation
+        # Get template path from config or use default
+        theater_config = THEATER_CONFIG.get('templates', {})
+        template_name = theater_config.get('theater', 'templates/template_theater.pptx')
+        template_path = PIPELINE_ROOT / template_name
+        if not template_path.exists():
+            # Fallback to hardcoded path
+            template_path = PIPELINE_ROOT / "templates" / "template_theater.pptx"
+
+        if not template_path.exists():
+            raise FileNotFoundError(f"Template not found: {template_path}")
+
+        # Get shape configuration from config
+        shape_config = get_shape_config()
+        shape_mappings = shape_config.get('shape_mappings', {})
+        required_shapes = shape_config.get('required_shapes', [])
+
+        # SHAPE NAMES: Use config if available, otherwise hardcoded defaults
+        # These are verified against template_theater.pptx
+        SHAPE_TITLE = next((k for k, v in shape_mappings.items() if v == 'title'), "TextBox 6")
+        SHAPE_BODY = next((k for k, v in shape_mappings.items() if v == 'body'), "TextBox Body")
+        SHAPE_TIP_LABEL = next((k for k, v in shape_mappings.items() if v == 'tip_label'), "TextBox 20")
+        SHAPE_TIP = next((k for k, v in shape_mappings.items() if v == 'tip_content'), "TextBox 24")
+        SHAPE_FOOTER = next((k for k, v in shape_mappings.items() if v == 'footer'), "TextBox 30")
+
+        # Get theater-specific text from config
+        theater_specific = THEATER_CONFIG.get('theater_specific', {})
+        THEATER_TIP_LABEL = theater_specific.get('tip_label', 'PERFORMANCE TIP')
+        footer_template = theater_specific.get('footer_template', '© {year} THEATER EDUCATION | {subject}')
+        THEATER_FOOTER = footer_template.format(
+            year=datetime.now().year,
+            subject=THEATER_CONFIG.get('domain', {}).get('subject', 'Shakespeare')
+        )
+
+        # Validate template on first use (only log once per session)
+        if not hasattr(self, '_template_validated'):
+            if required_shapes:
+                validation = validate_template_shapes(template_path, required_shapes)
+                self._template_validated = all(validation.values()) if validation else False
+            else:
+                # Validate with default shape names
+                default_shapes = [SHAPE_TITLE, SHAPE_BODY, SHAPE_TIP_LABEL, SHAPE_TIP, SHAPE_FOOTER]
+                validation = validate_template_shapes(template_path, default_shapes)
+                self._template_validated = all(validation.values()) if validation else False
+
+        # =====================================================================
+        # STEP12-STYLE HELPER FUNCTIONS (proven to work)
+        # =====================================================================
+
+        def duplicate_slide(prs, slide_index):
+            """Duplicate a slide within the same presentation by cloning its XML.
+            This is the exact approach from step12_powerpoint_population.py."""
+            template_slide = prs.slides[slide_index]
+            blank_layout = template_slide.slide_layout
+            new_slide = prs.slides.add_slide(blank_layout)
+
+            # Copy all shapes from template slide to new slide
+            for shape in template_slide.shapes:
+                el = shape.element
+                newel = deepcopy(el)
+                new_slide.shapes._spTree.insert_element_before(newel, 'p:extLst')
+
+            return new_slide
+
+        def find_shape_by_name(slide, shape_name):
+            """Find a shape by its exact name."""
+            for shape in slide.shapes:
+                if shape.name == shape_name:
+                    return shape
+            return None
+
+        def set_shape_text(shape, text, shape_name=None):
+            """Set text in a shape, preserving template formatting."""
+            if not shape or not shape.has_text_frame:
+                return False
+
+            tf = shape.text_frame
+            # Clear existing text while preserving formatting
+            if tf.paragraphs:
+                p = tf.paragraphs[0]
+                # If there are runs, update the first run's text
+                if p.runs:
+                    p.runs[0].text = text
+                    # Clear any additional runs
+                    while len(p.runs) > 1:
+                        p._p.remove(p.runs[-1]._r)
+                else:
+                    p.text = text
+            return True
+
+        def populate_slide(slide, title, body_text, tip_label, tip_text, footer, notes=""):
+            """Populate all text shapes on a slide."""
+            # Find and set each shape
+            title_shape = find_shape_by_name(slide, SHAPE_TITLE)
+            body_shape = find_shape_by_name(slide, SHAPE_BODY)
+            tip_label_shape = find_shape_by_name(slide, SHAPE_TIP_LABEL)
+            tip_shape = find_shape_by_name(slide, SHAPE_TIP)
+            footer_shape = find_shape_by_name(slide, SHAPE_FOOTER)
+
+            set_shape_text(title_shape, title, SHAPE_TITLE)
+            set_shape_text(body_shape, body_text, SHAPE_BODY)
+            set_shape_text(tip_label_shape, tip_label, SHAPE_TIP_LABEL)
+            set_shape_text(tip_shape, tip_text, SHAPE_TIP)
+            set_shape_text(footer_shape, footer, SHAPE_FOOTER)
+
+            # Add presenter notes
+            if notes:
+                self._add_presenter_notes(slide, notes)
+
+        # =====================================================================
+        # LOAD TEMPLATE AND GENERATE SLIDES
+        # =====================================================================
+
+        # Load template - slide 0 is our content template with all design elements
+        prs = Presentation(str(template_path))
+
+        # Reset enhancer
         if self.enhance_pptx:
             self.slide_enhancer.reset()
 
         slides_data = []
 
-        # Slide 1: Title
-        slide = prs.slides.add_slide(prs.slide_layouts[6])  # Blank
-        self._add_title_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_title_notes(day_data))
-        slides_data.append({"title": day_data['topic'], "content": day_data['topic']})
+        # Get real educational content from database
+        day_num = day_data['day']
+        db_content = get_day_content(day_num)
+        db_slides = db_content.get('slides', [])
 
-        # Slide 2: Learning Objectives
-        slide = prs.slides.add_slide(prs.slide_layouts[6])
-        self._add_objectives_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_objectives_notes(day_data))
-        slides_data.append({"title": "Learning Objectives", "content": " ".join(day_data['learning_objectives'])})
+        # Build list of all slides to create
+        all_slides_content = []
 
-        # Slide 3: Vocabulary
-        slide = prs.slides.add_slide(prs.slide_layouts[6])
-        self._add_vocabulary_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_vocabulary_notes(day_data))
-        slides_data.append({"title": "Vocabulary", "content": " ".join([v['term'] for v in day_data['vocabulary']])})
+        # Slide 1: Agenda
+        agenda_body = f"Day {day_data['day']}: {day_data['topic']}"
+        all_slides_content.append({
+            "title": f"Today's Agenda - Day {day_data['day']}",
+            "body": agenda_body,
+            "tip": "Ask yourself: What does my character want in this scene?",
+            "notes": self._generate_title_notes(day_data)
+        })
 
-        # Slide 4: Warmup
-        slide = prs.slides.add_slide(prs.slide_layouts[6])
-        self._add_warmup_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_warmup_notes(day_data))
-        slides_data.append({"title": "Warmup", "content": day_data['warmup']['instructions']})
+        # Slide 2: Warmup
+        warmup_body = f"Activity: {day_data['warmup']['name']}\nInstructions: {day_data['warmup']['instructions']}"
+        all_slides_content.append({
+            "title": f"Warmup (5 minutes)",
+            "body": warmup_body,
+            "tip": "Vary your pace - slow down for emotional moments, speed up for energy.",
+            "notes": self._generate_warmup_notes(day_data)
+        })
 
-        # Content slides
-        for i, cp in enumerate(day_data['content_points']):
-            slide = prs.slides.add_slide(prs.slide_layouts[6])
-            point = cp['point'] if isinstance(cp, dict) else cp
-            expanded = cp.get('expanded', []) if isinstance(cp, dict) else []
-            self._add_content_slide(slide, point, expanded, i + 5)
-            self._add_presenter_notes(slide, self._generate_content_notes(point, expanded, day_data))
-            slides_data.append({"title": point[:30], "content": point + " " + " ".join(expanded)})
+        # Content slides from database
+        if db_slides:
+            for i, slide_content in enumerate(db_slides):
+                title = slide_content.get('title', f'Content Slide {i+1}')
+                bullets = slide_content.get('bullets', [])
+                notes = slide_content.get('notes', '')
+                body_text = "\n".join(f"• {b}" for b in bullets) if bullets else title
+                tip = self._get_performance_tip(title, i)
+
+                all_slides_content.append({
+                    "title": title,
+                    "body": body_text,
+                    "tip": tip,
+                    "notes": notes
+                })
+        else:
+            # Fallback content
+            for i, cp in enumerate(day_data['content_points']):
+                point = cp['point'] if isinstance(cp, dict) else cp
+                expanded = cp.get('expanded', []) if isinstance(cp, dict) else []
+                body_text = "\n".join(f"• {e}" for e in expanded) if expanded else point
+
+                all_slides_content.append({
+                    "title": point[:50],
+                    "body": body_text,
+                    "tip": self._get_performance_tip(point, i),
+                    "notes": self._generate_content_notes(point, expanded, day_data)
+                })
 
         # Activity slide
-        slide = prs.slides.add_slide(prs.slide_layouts[6])
-        self._add_activity_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_activity_notes(day_data))
-        slides_data.append({"title": "Activity", "content": day_data['activity']['instructions']})
+        activity_body = f"Activity: {day_data['activity']['name']}\n{day_data['activity']['instructions']}"
+        all_slides_content.append({
+            "title": "Activity Time",
+            "body": activity_body,
+            "tip": "Circulate and provide feedback during student work time.",
+            "notes": self._generate_activity_notes(day_data)
+        })
 
         # Exit ticket slide
-        slide = prs.slides.add_slide(prs.slide_layouts[6])
-        self._add_exit_slide(slide, day_data)
-        self._add_presenter_notes(slide, self._generate_exit_notes(day_data))
-        slides_data.append({"title": "Exit Ticket", "content": " ".join(day_data['exit_tickets'])})
+        exit_body = "\n".join(f"{i+1}. {q}" for i, q in enumerate(day_data['exit_tickets']))
+        all_slides_content.append({
+            "title": "Exit Ticket",
+            "body": exit_body,
+            "tip": "Collect exit tickets to assess understanding.",
+            "notes": self._generate_exit_notes(day_data)
+        })
 
-        # Add trivia banners if enabled
-        if self.enhance_pptx:
-            for i, slide in enumerate(prs.slides):
-                if i == 0:  # Skip title slide
-                    continue
-                slide_info = slides_data[i] if i < len(slides_data) else {"title": "", "content": ""}
-                self._add_trivia_banner(slide, slide_info)
+        # =====================================================================
+        # CREATE SLIDES BY DUPLICATING TEMPLATE (step12 approach)
+        # =====================================================================
 
+        # Use slide 0 (template) for first content, duplicate for rest
+        for idx, content in enumerate(all_slides_content):
+            if idx == 0:
+                # Use the existing template slide for first content
+                slide = prs.slides[0]
+            else:
+                # Duplicate slide 0 for subsequent slides
+                slide = duplicate_slide(prs, 0)
+
+            # Populate the slide
+            populate_slide(
+                slide,
+                content["title"],
+                content["body"],
+                THEATER_TIP_LABEL,
+                content["tip"],
+                THEATER_FOOTER,
+                content.get("notes", "")
+            )
+
+            slides_data.append({
+                "title": content["title"][:30],
+                "content": content["body"]
+            })
+
+        # Save the presentation
         prs.save(output_path)
+
+    def _get_performance_tip(self, content: str, index: int) -> str:
+        """Get a relevant performance tip based on content."""
+        tips = [
+            "Physical actions can unlock emotional truth. Try the gesture, feel the emotion.",
+            "Great actors stay in character even when not speaking - they react to everything.",
+            "Don't pause at the end of every line - follow the punctuation, not the line breaks.",
+            "Every step on stage should mean something. Random movement distracts the audience.",
+            "Project from your diaphragm, not your throat. Your voice should fill the space.",
+            "Actors don't 'play' emotions - they play actions. The emotions follow naturally.",
+            "Make eye contact with your scene partners. Real connection creates real moments.",
+            "Use the whole stage. Different areas have different energies.",
+        ]
+        return tips[index % len(tips)]
 
     def _add_title_slide(self, slide, day_data):
         """Add title slide content."""
@@ -793,6 +1056,38 @@ _Use this space to take notes during class:_
                 p.text = f"• {exp}"
                 p.font.size = Pt(22)
                 p.space_after = Pt(12)
+
+    def _add_database_content_slide(self, slide, title: str, bullets: list, slide_num: int):
+        """Add content slide with bullet points from database.
+
+        This creates slides with:
+        - Condensed, paraphrased bullet points for student note-taking
+        - Clear, readable formatting
+        """
+        from pptx.util import Inches, Pt
+
+        # Title/Header
+        header = slide.shapes.add_textbox(Inches(0.5), Inches(0.5), Inches(9), Inches(1))
+        tf = header.text_frame
+        p = tf.paragraphs[0]
+        p.text = title
+        p.font.size = Pt(32)
+        p.font.bold = True
+
+        # Bullet points - condensed for student note-taking
+        if bullets:
+            content_box = slide.shapes.add_textbox(Inches(0.5), Inches(1.8), Inches(9), Inches(4.5))
+            tf = content_box.text_frame
+            tf.word_wrap = True
+
+            for i, bullet in enumerate(bullets):
+                if i > 0:
+                    p = tf.add_paragraph()
+                else:
+                    p = tf.paragraphs[0]
+                p.text = f"• {bullet}"
+                p.font.size = Pt(22)
+                p.space_after = Pt(14)
 
     def _add_activity_slide(self, slide, day_data):
         """Add activity slide."""

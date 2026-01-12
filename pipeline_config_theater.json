@@ -1,0 +1,178 @@
+{
+  "pipeline_info": {
+    "version": "3.0",
+    "last_updated": "2026-01-12",
+    "description": "Theater Education Pipeline - Romeo and Juliet Unit Generation",
+    "repository": "https://github.com/Ethan1416/JustinPipeline"
+  },
+  "templates": {
+    "_comment": "Theater template for all slides. Uses PERFORMANCE TIP banner.",
+    "master": "templates/template_theater.pptx",
+    "theater": "templates/template_theater.pptx",
+    "canvas": "templates/template_canvas.pptx",
+    "config": "config/theater_template.yaml",
+    "generator_script": "templates/complete_template_system.py"
+  },
+  "domain": {
+    "_comment": "Theater Education - Shakespeare Unit",
+    "name": "Theater",
+    "display_name": "Theater Education",
+    "date": "2026-01-12",
+    "unit": "Romeo and Juliet",
+    "subject": "Shakespeare"
+  },
+  "paths": {
+    "_comment": "production_folder is set at runtime for output",
+    "production_folder": "/home/mcdanielmjustin/Justin-s-Pipeline-3.0-Theater/production"
+  },
+  "output_structure": {
+    "description": "All outputs organized by unit and day",
+    "root_pattern": "Unit_{unit_number}_{unit_name}",
+    "subfolders": {
+      "days": "Day_{day_number}",
+      "powerpoints": "powerpoints",
+      "handouts": "handouts",
+      "lesson_plans": "lesson_plans"
+    }
+  },
+  "template_requirements": {
+    "_comment": "Theater template shape mappings - VERIFIED against template_theater.pptx",
+    "template_file": "templates/template_theater.pptx",
+    "required_shapes": [
+      "TextBox 5",
+      "TextBox 6",
+      "TextBox 20",
+      "TextBox 23",
+      "TextBox 24",
+      "TextBox 30",
+      "TextBox Body"
+    ],
+    "shape_mappings": {
+      "TextBox 5": "plus_icon",
+      "TextBox 6": "title",
+      "TextBox 20": "tip_label",
+      "TextBox 23": "lightbulb_icon",
+      "TextBox 24": "tip_content",
+      "TextBox 30": "footer",
+      "TextBox Body": "body"
+    },
+    "shape_purposes": {
+      "title": {
+        "shape_name": "TextBox 6",
+        "description": "Slide title/header",
+        "max_chars": 50
+      },
+      "body": {
+        "shape_name": "TextBox Body",
+        "description": "Main content area with bullet points",
+        "max_lines": 8
+      },
+      "tip_label": {
+        "shape_name": "TextBox 20",
+        "description": "Performance tip label",
+        "default_text": "PERFORMANCE TIP"
+      },
+      "tip_content": {
+        "shape_name": "TextBox 24",
+        "description": "Performance tip content",
+        "max_chars": 120
+      },
+      "footer": {
+        "shape_name": "TextBox 30",
+        "description": "Slide footer with copyright",
+        "default_text": "© 2026 THEATER EDUCATION | Shakespeare"
+      }
+    },
+    "decorative_shapes": [
+      "Rounded Rectangle 1",
+      "Rounded Rectangle 2",
+      "Rounded Rectangle 3",
+      "Oval 4",
+      "Rectangle 7",
+      "Rectangle 8",
+      "Rectangle 9",
+      "Rounded Rectangle 10",
+      "Rectangle 11",
+      "Rounded Rectangle 15",
+      "Rounded Rectangle 16",
+      "Rectangle 17",
+      "Rounded Rectangle 18",
+      "Rounded Rectangle 19",
+      "Oval 21",
+      "Oval 22",
+      "Oval 25",
+      "Oval 26",
+      "Oval 27",
+      "Oval 28",
+      "Rectangle 29"
+    ],
+    "slide_dimensions": {
+      "width_inches": 13.33,
+      "height_inches": 7.5
+    },
+    "font_settings": {
+      "_comment": "Fonts are inherited from template - do not override",
+      "inherit_from_template": true,
+      "title": {
+        "font_name": "Aptos",
+        "font_size_pt": 32,
+        "bold": true
+      },
+      "body": {
+        "font_name": "Aptos",
+        "font_size_pt": 24,
+        "bold": false
+      },
+      "tip": {
+        "font_name": "Aptos",
+        "font_size_pt": 14,
+        "italic": true
+      },
+      "footer": {
+        "font_name": "Aptos",
+        "font_size_pt": 10,
+        "color_rgb": [128, 128, 128]
+      }
+    }
+  },
+  "theater_specific": {
+    "tip_label": "PERFORMANCE TIP",
+    "footer_template": "© {year} THEATER EDUCATION | {subject}",
+    "performance_tips": [
+      "Physical actions can unlock emotional truth. Try the gesture, feel the emotion.",
+      "Great actors stay in character even when not speaking - they react to everything.",
+      "Don't pause at the end of every line - follow the punctuation, not the line breaks.",
+      "Every step on stage should mean something. Random movement distracts the audience.",
+      "Project from your diaphragm, not your throat. Your voice should fill the space.",
+      "Actors don't 'play' emotions - they play actions. The emotions follow naturally.",
+      "Make eye contact with your scene partners. Real connection creates real moments.",
+      "Use the whole stage. Different areas have different energies."
+    ],
+    "trivia_categories": [
+      "Shakespeare Secrets",
+      "Acting Secret",
+      "Stage Fact",
+      "Bard Fact",
+      "Poetry Corner",
+      "Did You Know?"
+    ]
+  },
+  "constraints": {
+    "character_limits": {
+      "title_max_chars": 50,
+      "body_chars_per_line": 80,
+      "body_max_lines": 8,
+      "tip_max_chars": 120
+    },
+    "presenter_notes": {
+      "max_seconds": 180,
+      "words_per_minute": 150,
+      "max_words": 450
+    }
+  },
+  "validation_settings": {
+    "strict_mode": true,
+    "log_missing_shapes": true,
+    "warn_on_truncation": true
+  }
+}
