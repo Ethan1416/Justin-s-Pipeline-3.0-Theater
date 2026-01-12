@@ -51,6 +51,12 @@ from .romeo_juliet_generation import (
     TextExcerptSelectorAgent,
     RJUnitValidatorAgent,
 )
+from .document_generation import (
+    MarkdownParserAgent,
+    MarkdownToWordAgent,
+    ProductionDocGeneratorAgent,
+    FileScannerAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -104,6 +110,12 @@ def create_agent(agent_name: str, prompt_path=None):
         "week_planner": WeekPlannerAgent,
         "text_excerpt_selector": TextExcerptSelectorAgent,
         "rj_unit_validator": RJUnitValidatorAgent,
+
+        # Document Generation (HARDCODED)
+        "markdown_parser": MarkdownParserAgent,
+        "markdown_to_word": MarkdownToWordAgent,
+        "production_doc_generator": ProductionDocGeneratorAgent,
+        "file_scanner": FileScannerAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -160,4 +172,10 @@ __all__ = [
     "WeekPlannerAgent",
     "TextExcerptSelectorAgent",
     "RJUnitValidatorAgent",
+
+    # Document Generation
+    "MarkdownParserAgent",
+    "MarkdownToWordAgent",
+    "ProductionDocGeneratorAgent",
+    "FileScannerAgent",
 ]
