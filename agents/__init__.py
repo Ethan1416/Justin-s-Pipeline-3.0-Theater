@@ -82,6 +82,14 @@ from .presenter_notes_extraction import (
     NotesExtractionValidatorAgent,
     PresentationNotesOrchestratorAgent,
 )
+from .slide_content_optimization import (
+    TruncationDetectorAgent,
+    TruncationFixerAgent,
+    SlideContentCondensationAgent,
+    PresenterNotesElaboratorAgent,
+    SlideContentValidatorAgent,
+    ContentBalanceOrchestratorAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -166,6 +174,14 @@ def create_agent(agent_name: str, prompt_path=None):
         "notes_to_word_generator": NotesToWordGeneratorAgent,
         "notes_extraction_validator": NotesExtractionValidatorAgent,
         "presentation_notes_orchestrator": PresentationNotesOrchestratorAgent,
+
+        # Slide Content Optimization (HARDCODED)
+        "truncation_detector": TruncationDetectorAgent,
+        "truncation_fixer": TruncationFixerAgent,
+        "slide_content_condensation": SlideContentCondensationAgent,
+        "presenter_notes_elaborator": PresenterNotesElaboratorAgent,
+        "slide_content_validator": SlideContentValidatorAgent,
+        "content_balance_orchestrator": ContentBalanceOrchestratorAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -253,4 +269,12 @@ __all__ = [
     "NotesToWordGeneratorAgent",
     "NotesExtractionValidatorAgent",
     "PresentationNotesOrchestratorAgent",
+
+    # Slide Content Optimization
+    "TruncationDetectorAgent",
+    "TruncationFixerAgent",
+    "SlideContentCondensationAgent",
+    "PresenterNotesElaboratorAgent",
+    "SlideContentValidatorAgent",
+    "ContentBalanceOrchestratorAgent",
 ]

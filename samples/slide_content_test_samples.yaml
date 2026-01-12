@@ -1,0 +1,222 @@
+# Slide Content Optimization Test Samples
+# ========================================
+# Test samples for truncation detection, content condensation, and validation
+
+truncation_test_cases:
+  # CRITICAL: Ellipsis endings
+  - id: "truncation_ellipsis_001"
+    input: "Romeo falls in love with Juliet and..."
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with ellipsis - incomplete thought"
+
+  - id: "truncation_ellipsis_002"
+    input: "The characters demonstrate their feelings through…"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with unicode ellipsis"
+
+  # CRITICAL: Incomplete sentences
+  - id: "truncation_incomplete_001"
+    input: "Shakespeare uses this technique to"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with preposition - incomplete"
+
+  - id: "truncation_incomplete_002"
+    input: "The conflict between the Montagues and"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with conjunction - incomplete"
+
+  - id: "truncation_incomplete_003"
+    input: "This scene reveals the"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with article - incomplete"
+
+  - id: "truncation_comma_001"
+    input: "Romeo speaks to Juliet,"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with comma"
+
+  # CRITICAL: Cut-off words
+  - id: "truncation_cutoff_001"
+    input: "The dramatic irony in th"
+    expected_truncation: true
+    severity: "critical"
+    description: "Word cut off mid-spelling"
+
+  - id: "truncation_cutoff_002"
+    input: "Romeo declares his love--"
+    expected_truncation: true
+    severity: "critical"
+    description: "Ends with double dash"
+
+  # WARNING: Missing closing
+  - id: "truncation_bracket_001"
+    input: "Shakespeare (born 1564"
+    expected_truncation: true
+    severity: "warning"
+    description: "Missing closing parenthesis"
+
+  - id: "truncation_quote_001"
+    input: "Romeo says \"But soft, what light"
+    expected_truncation: true
+    severity: "warning"
+    description: "Missing closing quote"
+
+  # VALID: No truncation
+  - id: "valid_sentence_001"
+    input: "Romeo and Juliet meet at the Capulet ball."
+    expected_truncation: false
+    description: "Complete sentence with period"
+
+  - id: "valid_sentence_002"
+    input: "What happens next?"
+    expected_truncation: false
+    description: "Complete question"
+
+  - id: "valid_sentence_003"
+    input: "Love conquers all!"
+    expected_truncation: false
+    description: "Complete exclamation"
+
+condensation_test_cases:
+  # Verbose content that needs condensing
+  - id: "condense_verbose_001"
+    input: "It is important to note that Romeo basically demonstrates his feelings for Juliet essentially through the way he speaks to her."
+    expected_word_reduction: true
+    min_reduction_percentage: 30
+    description: "Contains multiple filler words"
+
+  - id: "condense_verbose_002"
+    input: "Due to the fact that the two families are in conflict, Romeo and Juliet are not able to be together in the way they want to."
+    expected_word_reduction: true
+    min_reduction_percentage: 25
+    description: "Contains wordy phrases"
+
+  - id: "condense_verbose_003"
+    input: "Shakespeare utilizes dramatic irony in order to demonstrate the tragic nature of the situation to the audience."
+    expected_word_reduction: true
+    min_reduction_percentage: 20
+    description: "Contains complex verbs and phrases"
+
+  # Content within limits
+  - id: "condense_short_001"
+    input: "Romeo loves Juliet."
+    expected_word_reduction: false
+    description: "Already concise - no changes needed"
+
+  - id: "condense_short_002"
+    input: "The Capulets and Montagues feud."
+    expected_word_reduction: false
+    description: "Already concise - no changes needed"
+
+slide_bullet_test_cases:
+  # Bullets that are too long
+  - id: "bullet_long_001"
+    input:
+      - "Romeo falls in love with Juliet at first sight when he sees her at the Capulet ball and immediately forgets about Rosaline"
+      - "Juliet reciprocates Romeo's feelings despite knowing he is a Montague which creates dramatic tension"
+      - "Friar Lawrence agrees to marry them secretly because he hopes it will end the feud"
+    expected_bullet_issues: 3
+    description: "All bullets exceed 12 word limit"
+
+  # Good bullets
+  - id: "bullet_good_001"
+    input:
+      - "Romeo sees Juliet at the ball"
+      - "They fall in love instantly"
+      - "Their families are enemies"
+    expected_bullet_issues: 0
+    description: "All bullets within 12 word limit"
+
+validation_test_cases:
+  # Should pass validation
+  - id: "validate_pass_001"
+    slide_content:
+      title: "Act 2 Scene 2"
+      bullets:
+        - "The balcony scene"
+        - "Romeo and Juliet confess love"
+        - "They plan to marry"
+    presenter_notes: |
+      CONTENT: The Balcony Scene
+
+      FULL EXPLANATION:
+      This is one of the most famous scenes in all of literature. Romeo has
+      snuck into the Capulet orchard and discovers Juliet on her balcony.
+
+      KEY POINTS:
+      - Romeo overhears Juliet expressing her love
+      - They exchange vows of love
+      - They make plans to marry the next day
+
+      [TEACHING CUES]
+      - Have students identify the metaphors used
+      - Discuss why this scene is so memorable
+      - Connect to modern interpretations
+    expected_valid: true
+    description: "Well-balanced slide with adequate presenter notes"
+
+  # Should fail validation - slide too wordy
+  - id: "validate_fail_001"
+    slide_content:
+      title: "Understanding Shakespeare's Use of Dramatic Irony in the Famous Balcony Scene"
+      bullets:
+        - "Romeo sneaks into the Capulet orchard after the ball and discovers Juliet standing on her balcony above him speaking her thoughts aloud"
+        - "Juliet does not know Romeo is listening as she expresses her feelings about him and questions why he must be a Montague"
+        - "This creates dramatic irony because the audience knows Romeo hears everything Juliet says privately"
+    presenter_notes: "Romeo and Juliet balcony scene."
+    expected_valid: false
+    description: "Title too long, bullets too wordy, notes too short"
+
+full_optimization_test_cases:
+  # Complete slide optimization test
+  - id: "optimize_full_001"
+    input:
+      type: "content"
+      title: "Understanding the Importance of the Opening Prologue"
+      content:
+        - "The Chorus basically tells the audience everything that is going to happen in the play from beginning to end..."
+        - "In order to understand the tragedy, we need to pay attention to the fact that the feud has been going on for"
+        - "Shakespeare utilizes this technique due to the fact that he wants the audience to focus on the journey rather than the destination"
+    expected_output:
+      truncation_fixed: true
+      content_condensed: true
+      notes_elaborated: true
+      validation_passed: true
+    description: "Full optimization with truncation, condensation, and elaboration"
+
+vocabulary_test_cases:
+  - id: "vocab_001"
+    term: "Soliloquy"
+    definition: "A dramatic speech in which a character speaks their thoughts aloud while alone on stage"
+    context:
+      example: "Romeo's speech in Act 2 Scene 2 beginning 'But soft, what light through yonder window breaks?'"
+    description: "Standard vocabulary term"
+
+  - id: "vocab_002"
+    term: "Dramatic Irony"
+    definition: "When the audience knows something that the characters do not know which creates tension"
+    context:
+      example: "The audience knows Juliet is not really dead, but Romeo does not."
+    description: "Key literary device"
+
+activity_test_cases:
+  - id: "activity_001"
+    title: "Character Analysis Group Work"
+    instructions: |
+      Students will work in small groups to analyze a character from Romeo and Juliet.
+      Each group will create a character map showing the character's motivations, relationships,
+      and key quotes. Groups will present their findings to the class.
+    duration: 20
+    description: "Standard group activity"
+
+expected_metrics:
+  truncation_detection_accuracy: 0.95
+  condensation_word_reduction: 0.30
+  validation_error_detection: 1.0
+  note_elaboration_ratio: 2.0

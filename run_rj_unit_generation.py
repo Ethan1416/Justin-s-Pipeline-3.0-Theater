@@ -47,6 +47,10 @@ from agents import (
     SlideContentEnhancerAgent,
     SlideEnhancementFormatterAgent,
     SlideEnhancementValidatorAgent,
+    # Content Optimization Agents
+    ContentBalanceOrchestratorAgent,
+    TruncationDetectorAgent,
+    SlideContentCondensationAgent,
 )
 
 # Import PowerPoint generator
@@ -204,8 +208,9 @@ class RomeoJulietUnitGenerator:
     Uses hardcoded agents for all generation, validation, and formatting.
     """
 
-    def __init__(self, enhance_pptx: bool = True, verbose: bool = False):
+    def __init__(self, enhance_pptx: bool = True, optimize_content: bool = True, verbose: bool = False):
         self.enhance_pptx = enhance_pptx
+        self.optimize_content = optimize_content
         self.verbose = verbose
 
         # Initialize agents
@@ -227,6 +232,12 @@ class RomeoJulietUnitGenerator:
             self.slide_formatter = SlideEnhancementFormatterAgent()
             self.slide_validator = SlideEnhancementValidatorAgent()
 
+        # Content optimization agents (for condensing slides and elaborating notes)
+        if optimize_content:
+            self.content_optimizer = ContentBalanceOrchestratorAgent()
+            self.truncation_detector = TruncationDetectorAgent()
+            self.content_condenser = SlideContentCondensationAgent()
+
         # Statistics
         self.stats = {
             "days_generated": 0,
@@ -235,6 +246,8 @@ class RomeoJulietUnitGenerator:
             "validation_passed": 0,
             "validation_failed": 0,
             "trivia_added": 0,
+            "content_optimized": 0,
+            "truncations_fixed": 0,
         }
 
     def generate_unit(self, weeks: List[int] = None, days: List[int] = None):
@@ -244,6 +257,7 @@ class RomeoJulietUnitGenerator:
         print("=" * 70)
         print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"Trivia Enhancement: {'Enabled (20pt font)' if self.enhance_pptx else 'Disabled'}")
+        print(f"Content Optimization: {'Enabled (condensed slides, elaborated notes)' if self.optimize_content else 'Disabled'}")
         print()
 
         # Determine what to generate
@@ -718,19 +732,60 @@ _Use this space to take notes during class:_
         p.text = day_data['warmup']['instructions']
         p.font.size = Pt(24)
 
+    def _optimize_content_for_slide(self, content: str, content_type: str = "bullet") -> tuple:
+        """Optimize content using content optimization agents.
+
+        Returns:
+            tuple: (condensed_content, elaborated_notes)
+        """
+        if not self.optimize_content:
+            return content, ""
+
+        result = self.content_optimizer.execute({
+            "content": content,
+            "slide_type": content_type,
+            "additional_context": {}
+        })
+
+        output = result.output
+        if output.get("success"):
+            self.stats["content_optimized"] += 1
+            if output.get("truncation_fixes_applied", 0) > 0:
+                self.stats["truncations_fixed"] += output["truncation_fixes_applied"]
+
+            return (
+                output.get("optimized_slide_content", content),
+                output.get("presenter_notes", "")
+            )
+
+        return content, ""
+
     def _add_content_slide(self, slide, point, expanded, slide_num):
-        """Add content slide."""
+        """Add content slide with optimized content."""
+        # Optimize the title/point
+        optimized_point, _ = self._optimize_content_for_slide(point, "title")
+        title_text = optimized_point if isinstance(optimized_point, str) else point
+        if len(title_text) > 50:
+            title_text = title_text[:50] + "..."
+
         header = slide.shapes.add_textbox(Inches(0.5), Inches(0.5), Inches(9), Inches(1))
         tf = header.text_frame
         p = tf.paragraphs[0]
-        p.text = point[:50] + "..." if len(point) > 50 else point
+        p.text = title_text
         p.font.size = Pt(32)
         p.font.bold = True
 
         if expanded:
+            # Optimize each bullet point for condensed display
+            optimized_bullets = []
+            for exp in expanded:
+                optimized, _ = self._optimize_content_for_slide(exp, "bullet")
+                optimized_text = optimized if isinstance(optimized, str) else exp
+                optimized_bullets.append(optimized_text)
+
             content_box = slide.shapes.add_textbox(Inches(0.5), Inches(1.8), Inches(9), Inches(4))
             tf = content_box.text_frame
-            for i, exp in enumerate(expanded):
+            for i, exp in enumerate(optimized_bullets):
                 if i > 0:
                     p = tf.add_paragraph()
                 else:
@@ -1077,6 +1132,8 @@ After class:
         print(f"Validation passed:  {self.stats['validation_passed']}")
         print(f"Validation failed:  {self.stats['validation_failed']}")
         print(f"Trivia banners:     {self.stats['trivia_added']} (20pt font)")
+        print(f"Content optimized:  {self.stats['content_optimized']} items")
+        print(f"Truncations fixed:  {self.stats['truncations_fixed']}")
         print(f"Output directory:   {PRODUCTION_DIR}")
         print()
 
@@ -1097,6 +1154,7 @@ Examples:
   %(prog)s --day 1              Generate Day 1 only
   %(prog)s --day 1 2 3          Generate Days 1, 2, and 3
   %(prog)s --no-enhance         Skip trivia banner enhancement
+  %(prog)s --no-optimize        Skip content optimization (condensation)
         """
     )
 
@@ -1106,6 +1164,8 @@ Examples:
                        help='Generate specific day(s) (1-30)')
     parser.add_argument('--no-enhance', action='store_true',
                        help='Skip trivia banner enhancement')
+    parser.add_argument('--no-optimize', action='store_true',
+                       help='Skip content optimization (slides will be verbose)')
     parser.add_argument('--verbose', '-v', action='store_true',
                        help='Verbose output')
 
@@ -1120,6 +1180,7 @@ Examples:
     # Run generator
     generator = RomeoJulietUnitGenerator(
         enhance_pptx=not args.no_enhance,
+        optimize_content=not args.no_optimize,
         verbose=args.verbose
     )
 
