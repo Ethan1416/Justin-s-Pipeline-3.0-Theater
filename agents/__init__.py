@@ -57,6 +57,16 @@ from .document_generation import (
     ProductionDocGeneratorAgent,
     FileScannerAgent,
 )
+from .format_generation import (
+    FormatAnalyzerAgent,
+    FormatCopierAgent,
+    FormatEnhancerAgent,
+    HTMLGeneratorAgent,
+    PDFGeneratorAgent,
+    AnswerKeyExtractorAgent,
+    AnswerKeyGeneratorAgent,
+    ProductionFormatterAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -116,6 +126,16 @@ def create_agent(agent_name: str, prompt_path=None):
         "markdown_to_word": MarkdownToWordAgent,
         "production_doc_generator": ProductionDocGeneratorAgent,
         "file_scanner": FileScannerAgent,
+
+        # Format Generation (HARDCODED)
+        "format_analyzer": FormatAnalyzerAgent,
+        "format_copier": FormatCopierAgent,
+        "format_enhancer": FormatEnhancerAgent,
+        "html_generator": HTMLGeneratorAgent,
+        "pdf_generator": PDFGeneratorAgent,
+        "answer_key_extractor": AnswerKeyExtractorAgent,
+        "answer_key_generator": AnswerKeyGeneratorAgent,
+        "production_formatter": ProductionFormatterAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -178,4 +198,14 @@ __all__ = [
     "MarkdownToWordAgent",
     "ProductionDocGeneratorAgent",
     "FileScannerAgent",
+
+    # Format Generation
+    "FormatAnalyzerAgent",
+    "FormatCopierAgent",
+    "FormatEnhancerAgent",
+    "HTMLGeneratorAgent",
+    "PDFGeneratorAgent",
+    "AnswerKeyExtractorAgent",
+    "AnswerKeyGeneratorAgent",
+    "ProductionFormatterAgent",
 ]
