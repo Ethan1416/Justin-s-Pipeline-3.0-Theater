@@ -67,6 +67,12 @@ from .format_generation import (
     AnswerKeyGeneratorAgent,
     ProductionFormatterAgent,
 )
+from .slide_enhancement import (
+    FunFactGeneratorAgent,
+    PerformanceTipGeneratorAgent,
+    SlideContentEnhancerAgent,
+    SlideEnhancementReportAgent,
+)
 
 
 def create_agent(agent_name: str, prompt_path=None):
@@ -136,6 +142,12 @@ def create_agent(agent_name: str, prompt_path=None):
         "answer_key_extractor": AnswerKeyExtractorAgent,
         "answer_key_generator": AnswerKeyGeneratorAgent,
         "production_formatter": ProductionFormatterAgent,
+
+        # Slide Enhancement (HARDCODED)
+        "fun_fact_generator": FunFactGeneratorAgent,
+        "performance_tip_generator": PerformanceTipGeneratorAgent,
+        "slide_content_enhancer": SlideContentEnhancerAgent,
+        "slide_enhancement_report": SlideEnhancementReportAgent,
     }
 
     agent_class = AGENT_REGISTRY.get(agent_name, Agent)
@@ -208,4 +220,10 @@ __all__ = [
     "AnswerKeyExtractorAgent",
     "AnswerKeyGeneratorAgent",
     "ProductionFormatterAgent",
+
+    # Slide Enhancement
+    "FunFactGeneratorAgent",
+    "PerformanceTipGeneratorAgent",
+    "SlideContentEnhancerAgent",
+    "SlideEnhancementReportAgent",
 ]
