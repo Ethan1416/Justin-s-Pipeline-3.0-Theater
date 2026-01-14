@@ -114,8 +114,7 @@ skills:
 
 ### Presenter Notes
 - Target words: 1,950-2,250 (total across all slides)
-- Per content slide: 160-190 words
-- Per auxiliary slide: 50-100 words
+- Per slide (ALL types): 30-180 words (use best judgment based on content needs)
 - Markers required: [PAUSE], [EMPHASIS: term], [CHECK FOR UNDERSTANDING]
 
 ## Slide Templates
@@ -221,15 +220,19 @@ Performance Tip: Ask students to share one thing they learned before dismissing.
 ## Presenter Notes Requirements
 
 ### Word Count Distribution
-| Slide Type | Word Target | Notes |
-|------------|-------------|-------|
-| Agenda (1) | 75-100 | Welcome, overview, expectations |
-| Warmup (2) | 75-100 | Instructions, safety, connection |
-| Activity (3) | 75-100 | Setup, monitoring, sharing |
-| Journal (4) | 50-75 | Prompts, circulation, collection |
-| Title (5) | 100-125 | Hook, objectives, context |
-| Content (6-15) | 160-190 each | Full delivery script |
-| Summary (16) | 150-175 | Wrap-up, preview, dismissal |
+| Slide Type | Word Range | Guidance |
+|------------|------------|----------|
+| ALL slides | 30-180 words | Use best judgment based on content needs |
+
+**Judgment Factors:**
+- Complexity of content (more complex = more words)
+- Need for examples or elaboration
+- Natural pacing and flow
+- Connection to previous/next slides
+- Student engagement moments
+- Vocabulary introduction needs
+
+**No rigid per-slide-type targets.** Let the content drive the length.
 
 ### Marker Requirements
 - `[PAUSE]` - Minimum 2 per content slide
@@ -250,6 +253,7 @@ Performance Tip: Ask students to share one thing they learned before dismissing.
 ## Validation Checklist
 - [ ] Exactly 16 slides (4 auxiliary + 12 content)
 - [ ] Total presenter notes: 1,950-2,250 words
+- [ ] Each slide: 30-180 words (flexible based on content)
 - [ ] All headers under 64 characters
 - [ ] All body text under 8 lines
 - [ ] Performance tips under 132 characters

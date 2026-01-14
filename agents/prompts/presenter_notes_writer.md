@@ -12,7 +12,7 @@
 
 ### Word Count Target
 - **Total:** 1,950-2,250 words (15 minutes at 130-150 WPM)
-- **Per Content Slide:** 160-190 words average (12 content slides)
+- **Per Slide (ALL types):** 30-180 words (use best judgment based on content needs)
 - **Format:** VERBATIM SCRIPT - Word-for-word what teacher says
 - **Markers:** [PAUSE], [EMPHASIS: term], [CHECK FOR UNDERSTANDING]
 
@@ -131,7 +131,7 @@ def embed_engagement(script: str) -> str:
         "properties": {
           "slide_number": {"type": "integer"},
           "slide_title": {"type": "string"},
-          "script": {"type": "string", "minLength": 100},
+          "script": {"type": "string", "minLength": 40},
           "word_count": {"type": "integer"},
           "estimated_seconds": {"type": "integer"}
         }
@@ -170,29 +170,34 @@ def embed_engagement(script: str) -> str:
 
 ## Script Structure Per Slide
 
-### Opening Content Slide (Slide 3)
-**Target:** 180-200 words
-**Structure:**
-1. Hook/Attention grabber (2-3 sentences)
-2. Topic introduction (2-3 sentences)
-3. Learning objectives preview (2-3 sentences)
-4. Transition to content
+### Dynamic & Adaptable Structure (ALL Slides)
+**Word Range:** 40-180 words per slide (flexible based on content needs)
 
-### Middle Content Slides (Slides 4-12)
-**Target:** 160-180 words each
-**Structure:**
-1. Transition from previous slide (1 sentence)
-2. Main point introduction (1-2 sentences)
-3. Explanation/elaboration (3-4 sentences)
-4. Example or illustration (2-3 sentences)
-5. Connection to objective (1-2 sentences)
+The script structure should be **dynamic and adaptable** to create natural flow and connections between slides. Rather than following a rigid formula, each slide's script should:
 
-### Closing Content Slide (Slide 14)
-**Target:** 150-170 words
-**Structure:**
-1. Summary of key points (3-4 sentences)
-2. Connection to activity (2-3 sentences)
-3. Transition to hands-on work
+**Core Principles:**
+- **Connect backward:** Reference what was just covered to build continuity
+- **Deliver content:** Present the current slide's key point(s) clearly
+- **Connect forward:** Set up what's coming next to maintain momentum
+- **Serve the whole:** Each slide contributes to the overall narrative arc
+
+**Adaptable Elements (use as needed):**
+- Transition/bridge from previous content
+- Hook or attention-grabbing statement
+- Main point introduction
+- Explanation or elaboration
+- Example, illustration, or analogy
+- Connection to student experience
+- Rhetorical or actual question
+- Summary or synthesis
+- Preview of upcoming content
+
+**Flow Considerations:**
+- Some slides need more setup, others more elaboration
+- Adjust depth based on concept complexity
+- Let natural teaching rhythm guide length
+- Prioritize clarity and engagement over word count targets
+- Build connections between topics, not just within slides
 
 ---
 
@@ -326,12 +331,12 @@ Third, there was the [EMPHASIS: skene]. This was a building behind the orchestra
 
 Before submission, verify:
 - [ ] Total word count: 1,950-2,250 words
-- [ ] Each content slide has 150-200 words
+- [ ] Each slide has 40-180 words (flexible based on content needs)
 - [ ] At least 2 [PAUSE] markers per slide
 - [ ] At least 3 [CHECK FOR UNDERSTANDING] total
 - [ ] All vocabulary terms have [EMPHASIS: term] marker
 - [ ] Natural spoken language throughout
-- [ ] Clear transitions between slides
+- [ ] Dynamic connections between slides (backward and forward references)
 - [ ] Learning objectives addressed
 - [ ] Activity preview included at end
 

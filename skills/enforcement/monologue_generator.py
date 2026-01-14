@@ -6,10 +6,11 @@ HARDCODED skill for generating verbatim presenter notes (monologues).
 This skill CANNOT be bypassed or modified at runtime.
 
 Requirements:
-- 150-200 words per slide
+- 40-180 words per slide (flexible based on content needs)
 - Required markers: [PAUSE], [EMPHASIS], [GESTURE], [CHECK], [TRANSITION]
 - Natural speech flow, no bullet-point style
 - First person, conversational tone
+- Dynamic structure that connects slides with backward/forward references
 
 Pipeline: Theater Education
 """
@@ -22,9 +23,9 @@ from typing import Dict, Any, List, Optional
 # HARDCODED CONSTANTS (CANNOT BE MODIFIED)
 # =============================================================================
 
-MIN_WORDS_PER_SLIDE = 150
-MAX_WORDS_PER_SLIDE = 200
-TARGET_WORDS_PER_SLIDE = 175
+MIN_WORDS_PER_SLIDE = 30
+MAX_WORDS_PER_SLIDE = 180
+TARGET_WORDS_PER_SLIDE = 105  # Midpoint for guidance, but use best judgment
 
 # Required markers
 REQUIRED_MARKERS = {

@@ -6,11 +6,11 @@ HARDCODED validator for presenter notes (monologues).
 This validator CANNOT be bypassed - all slides MUST pass validation.
 
 Validation Rules:
-- R1: 150-200 words per content slide (HARDCODED)
+- R1: 40-180 words per slide (flexible based on content needs)
 - R2: Minimum 2 [PAUSE] markers per slide (HARDCODED)
 - R3: Minimum 1 [EMPHASIS] marker per slide (HARDCODED)
 - R4: No bullet-point style writing
-- R5: Natural speech flow
+- R5: Natural speech flow with dynamic slide-to-slide connections
 - R6: Presentation-level minimums (24 [PAUSE], 12 [EMPHASIS], 3 [CHECK])
 
 Pipeline: Theater Education
@@ -24,15 +24,15 @@ from typing import Dict, Any, List, Tuple
 # HARDCODED VALIDATION THRESHOLDS (CANNOT BE MODIFIED)
 # =============================================================================
 
-# Per-slide requirements
-MIN_WORDS = 150
-MAX_WORDS = 200
+# Per-slide requirements (flexible range - use best judgment)
+MIN_WORDS = 30
+MAX_WORDS = 180
 MIN_PAUSE_PER_SLIDE = 2
 MIN_EMPHASIS_PER_SLIDE = 1
 
 # Presentation-level requirements (16 slides)
-MIN_TOTAL_WORDS = 2400  # 150 * 16
-MAX_TOTAL_WORDS = 3200  # 200 * 16
+MIN_TOTAL_WORDS = 480   # 30 * 16
+MAX_TOTAL_WORDS = 2880  # 180 * 16
 MIN_TOTAL_PAUSE = 24    # 2 * 12 content slides (auxiliary can have fewer)
 MIN_TOTAL_EMPHASIS = 12 # 1 * 12 content slides
 MIN_TOTAL_CHECK = 3     # At least 3 check-for-understanding

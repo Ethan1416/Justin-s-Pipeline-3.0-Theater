@@ -82,12 +82,11 @@ presenter_notes:
     target: 2100
     maximum: 2250
 
-  # Per-slide targets (12 content slides)
+  # Per-slide targets (ALL slide types - flexible range)
   per_slide:
-    minimum: 100
-    target_low: 160
-    target_high: 190
-    maximum: 250
+    minimum: 30
+    maximum: 180
+    note: "Use best judgment based on content needs - no rigid per-slide-type targets"
 
   # Duration estimates
   duration:
