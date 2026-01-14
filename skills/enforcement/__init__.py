@@ -253,30 +253,28 @@ from .instruction_integrator import (
 from .warmup_card_generator import (
     generate_warmup_card,
     validate_warmup_card,
-    generate_warmup_card_markdown,
-    generate_all_warmup_cards,
-    WARMUP_EXERCISES,
-    SCENE_WARMUP_MAPPING,
+    warmup_card_to_markdown as generate_warmup_card_markdown,
+    generate_warmup_cards_for_unit as generate_all_warmup_cards,
+    WARMUP_TYPES as WARMUP_EXERCISES,
+    SCENE_WARMUP_MAP as SCENE_WARMUP_MAPPING,
     WarmupCard
 )
 from .activity_instructions_generator import (
     generate_activity_instructions,
     validate_activity_instructions,
-    generate_activity_instructions_markdown,
-    generate_all_activity_instructions,
+    activity_instructions_to_markdown as generate_activity_instructions_markdown,
+    generate_activity_instructions_for_unit as generate_all_activity_instructions,
     ACTIVITY_TEMPLATES,
-    DAY_ACTIVITY_MAPPING,
-    ActivityInstructions
+    ActivityInstructions,
+    ActivityType
 )
 from .vocabulary_cards_generator import (
     generate_vocabulary_cards,
-    validate_vocabulary_cards,
-    generate_vocabulary_cards_markdown,
-    generate_vocabulary_for_day,
-    generate_all_vocabulary_cards,
-    VOCABULARY_DATABASE,
-    DAY_VOCABULARY_MAPPING,
-    VocabularyCard
+    validate_vocabulary_set as validate_vocabulary_cards,
+    vocabulary_set_to_markdown as generate_vocabulary_cards_markdown,
+    ROMEO_JULIET_VOCABULARY as VOCABULARY_DATABASE,
+    VocabularyCard,
+    VocabularySet
 )
 from .rubric_generator import (
     generate_rubric,
