@@ -73,6 +73,16 @@ from skills.enforcement.agenda_slide_generator import (
     agenda_to_slide_content,
 )
 
+# Import frontload generator (HARDCODED skill)
+from skills.enforcement.frontload_generator import (
+    generate_frontload_content,
+    generate_frontloaded_slide,
+    generate_frontloaded_presenter_notes,
+    determine_frontload_type,
+    FrontloadType,
+    PRESENTER_MARKERS,
+)
+
 # Import PowerPoint generator
 try:
     from pptx import Presentation
@@ -855,27 +865,94 @@ _Use this space to take notes during class:_
             "notes": self._generate_warmup_notes(day_data)
         })
 
-        # Content slides from database
+        # Content slides from database with FRONTLOADING (HARDCODED)
         if db_slides:
             for i, slide_content in enumerate(db_slides):
                 title = slide_content.get('title', f'Content Slide {i+1}')
                 bullets = slide_content.get('bullets', [])
                 notes = slide_content.get('notes', '')
-                body_text = "\n".join(f"• {b}" for b in bullets) if bullets else title
                 tip = self._get_performance_tip(title, i)
+
+                # Determine frontload type based on content
+                frontload_type = determine_frontload_type(title, day_data.get('day_type', 'reading'))
+
+                # Get scene reference for reading connection
+                scenes = day_data.get('scenes', [])
+                scene_ref = scenes[0] if scenes else None
+
+                # Generate frontload content using HARDCODED skill
+                frontload = generate_frontload_content(
+                    slide_title=title,
+                    raw_bullets=bullets,
+                    raw_notes=notes,
+                    frontload_type=frontload_type,
+                    scene_reference=scene_ref,
+                    upcoming_plot=day_data.get('topic', '')
+                )
+
+                # Build frontloaded slide body with structured sections
+                body_lines = []
+                body_lines.append("KEY FACTS:")
+                for fact in frontload.key_facts[:4]:  # Limit to 4 facts for space
+                    body_lines.append(f"• {fact}")
+                body_lines.append("")
+                body_lines.append("WHY THIS MATTERS:")
+                # Truncate significance if too long
+                significance = frontload.significance
+                if len(significance) > 120:
+                    significance = significance[:117] + "..."
+                body_lines.append(significance)
+                body_lines.append("")
+                body_lines.append("WATCH FOR:")
+                for watch_item in frontload.watch_for[:2]:  # Limit to 2 items
+                    body_lines.append(f"→ {watch_item}")
+
+                body_text = "\n".join(body_lines)
+
+                # Generate frontloaded presenter notes
+                frontloaded_notes = generate_frontloaded_presenter_notes(frontload, notes)
+                enhanced_notes = frontloaded_notes.to_full_script()
 
                 all_slides_content.append({
                     "title": title,
                     "body": body_text,
                     "tip": tip,
-                    "notes": notes
+                    "notes": enhanced_notes
                 })
         else:
-            # Fallback content
+            # Fallback content with frontloading
             for i, cp in enumerate(day_data['content_points']):
                 point = cp['point'] if isinstance(cp, dict) else cp
                 expanded = cp.get('expanded', []) if isinstance(cp, dict) else []
-                body_text = "\n".join(f"• {e}" for e in expanded) if expanded else point
+
+                # Determine frontload type
+                frontload_type = determine_frontload_type(point, day_data.get('day_type', 'reading'))
+
+                # Generate frontload content
+                frontload = generate_frontload_content(
+                    slide_title=point[:50],
+                    raw_bullets=expanded if expanded else [point],
+                    raw_notes="",
+                    frontload_type=frontload_type,
+                    scene_reference=None,
+                    upcoming_plot=day_data.get('topic', '')
+                )
+
+                # Build frontloaded body
+                body_lines = []
+                body_lines.append("KEY FACTS:")
+                for fact in frontload.key_facts[:4]:
+                    body_lines.append(f"• {fact}")
+                body_lines.append("")
+                body_lines.append("WHY THIS MATTERS:")
+                significance = frontload.significance[:117] + "..." if len(frontload.significance) > 120 else frontload.significance
+                body_lines.append(significance)
+                body_lines.append("")
+                body_lines.append("WATCH FOR:")
+                for watch_item in frontload.watch_for[:2]:
+                    body_lines.append(f"→ {watch_item}")
+
+                body_text = "\n".join(body_lines)
 
                 all_slides_content.append({
                     "title": point[:50],
