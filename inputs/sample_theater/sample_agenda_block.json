@@ -1,0 +1,45 @@
+{
+  "$schema": "../agents/schemas/agenda_input.schema.json",
+  "_description": "Sample agenda input for BLOCK 90-minute class period",
+  "_hardcoded_rules_applied": ["R1", "R2", "R3", "R4", "R5"],
+
+  "unit_number": 3,
+  "unit_name": "Romeo and Juliet",
+  "day_number": 12,
+  "total_days": 30,
+  "lesson_topic": "Act 3 Scene 1: Mercutio and Tybalt's Fight",
+
+  "learning_objectives": [
+    "Analyze dramatic tension buildup",
+    "Perform stage combat sequence",
+    "Evaluate character motivations"
+  ],
+
+  "warmup_type": "physical",
+  "warmup_connection": "Movement prep for stage combat choreography",
+
+  "activity_type": "scene_work",
+  "activity_topic": "Choreographing the fight scene with partners",
+
+  "additional_materials": [
+    "Stage combat safety guidelines",
+    "Prop swords (foam)",
+    "Fight choreography worksheet"
+  ],
+
+  "class_period": "block",
+
+  "_expected_output": {
+    "total_duration": 90,
+    "components": [
+      {"component": "Agenda & Objectives", "duration_minutes": 5, "time_marker": "0:00-5:00"},
+      {"component": "Warmup", "duration_minutes": 10, "time_marker": "5:00-15:00"},
+      {"component": "Lecture", "duration_minutes": 25, "time_marker": "15:00-40:00"},
+      {"component": "Activity", "duration_minutes": 30, "time_marker": "40:00-70:00"},
+      {"component": "Reflection & Exit Ticket", "duration_minutes": 15, "time_marker": "70:00-85:00"},
+      {"component": "Buffer/Transition", "duration_minutes": 5, "time_marker": "85:00-90:00"}
+    ]
+  },
+
+  "_notes": "Block schedule allows extended activity time for stage combat practice"
+}

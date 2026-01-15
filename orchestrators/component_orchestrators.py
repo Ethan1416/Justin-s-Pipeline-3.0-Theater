@@ -49,6 +49,17 @@ from skills.enforcement.instruction_integrator import (
     integrated_lesson_to_dict, generate_romeo_juliet_unit_plan,
     MIN_LECTURE_DURATION, MAX_LECTURE_DURATION
 )
+from skills.enforcement.agenda_slide_generator import (
+    AgendaSlide, generate_agenda_slide, generate_agenda_slide_visual,
+    validate_agenda_slide, has_valid_agenda, get_agenda_issues,
+    agenda_to_dict, agenda_to_slide_content,
+    CLASS_PERIODS, STANDARD_COMPONENTS, MAX_OBJECTIVES, MIN_OBJECTIVES
+)
+from skills.enforcement.agenda_slide_validator import (
+    validate_agenda_structure, is_valid_agenda, get_validation_issues,
+    get_validation_score, generate_validation_report as generate_agenda_report,
+    VALIDATION_RULES as AGENDA_VALIDATION_RULES
+)
 
 logger = logging.getLogger(__name__)
 
@@ -740,6 +751,188 @@ class LessonGenerationOrchestrator(BaseComponentOrchestrator):
 
 
 # =============================================================================
+# AGENDA ORCHESTRATOR (HARDCODED)
+# =============================================================================
+
+class AgendaOrchestrator(BaseComponentOrchestrator):
+    """
+    HARDCODED orchestrator for agenda slide generation.
+
+    Ensures consistent agenda generation with:
+    - Proper visual layout (Unit info, lesson title, components, objectives)
+    - Validation of timing, objectives, and materials
+    - Support for multiple class periods (standard, block, shortened, extended)
+
+    This orchestrator CANNOT be bypassed during pipeline execution.
+    """
+
+    COMPONENT_NAME = "agenda"
+
+    # HARDCODED validation rules
+    RULES = {
+        "R1": "Total duration must equal class period",
+        "R2": "All 6 components required (agenda, warmup, lecture, activity, reflection, buffer)",
+        "R3": "1-3 learning objectives required",
+        "R4": "3-5 materials required",
+        "R5": "Time markers must be sequential and non-overlapping",
+        "R6": "Descriptions must be under 60 characters",
+    }
+
+    def __init__(self, config: Dict = None):
+        super().__init__(config)
+        self.class_period = config.get("class_period", "standard") if config else "standard"
+
+    def generate(self, context: LessonContext) -> ComponentResult:
+        """
+        Generate agenda slide content.
+
+        Args:
+            context: LessonContext with unit/day information
+
+        Returns:
+            ComponentResult with agenda slide data
+        """
+        import time
+        start_time = time.time()
+        errors = []
+        warnings = []
+
+        try:
+            # Determine warmup and activity types based on context
+            warmup_type = "physical" if "performance" in context.topic.lower() else "mental"
+            activity_type = "scene_work" if context.include_reading else "group_discussion"
+
+            # Generate agenda using HARDCODED skill
+            agenda_slide = generate_agenda_slide(
+                unit_number=context.unit_number,
+                unit_name=context.unit_name,
+                day_number=context.day,
+                total_days=30,  # Default for theater units
+                lesson_topic=context.topic,
+                learning_objectives=context.learning_objectives,
+                warmup_type=warmup_type,
+                warmup_connection=f"Prepares students for {context.topic}",
+                activity_type=activity_type,
+                activity_topic=context.activity_description or context.topic,
+                additional_materials=[],
+                class_period=self.class_period,
+            )
+
+            # Generate visual representation
+            agenda_visual = generate_agenda_slide_visual(agenda_slide)
+
+            # Convert to output format
+            output = {
+                "agenda_data": agenda_to_dict(agenda_slide),
+                "slide_content": agenda_to_slide_content(agenda_slide),
+                "visual_markdown": agenda_visual.to_markdown(),
+                "class_period": self.class_period,
+                "total_duration": agenda_slide.total_duration,
+            }
+
+            # Validate
+            validation_result = self.validate(output)
+
+            duration = time.time() - start_time
+
+            if validation_result["valid"]:
+                status = ComponentStatus.COMPLETED
+            else:
+                status = ComponentStatus.VALIDATION_FAILED
+                errors.extend(validation_result.get("issues", []))
+
+            return ComponentResult(
+                component_name=self.COMPONENT_NAME,
+                status=status,
+                output=output,
+                validation_result=validation_result,
+                duration_seconds=duration,
+                errors=errors,
+                warnings=warnings
+            )
+
+        except Exception as e:
+            self.logger.error(f"Agenda generation failed: {str(e)}")
+            return ComponentResult(
+                component_name=self.COMPONENT_NAME,
+                status=ComponentStatus.FAILED,
+                output={},
+                validation_result={"valid": False, "errors": [str(e)]},
+                duration_seconds=time.time() - start_time,
+                errors=[str(e)]
+            )
+
+    def validate(self, output: Dict) -> Dict[str, Any]:
+        """
+        Validate agenda output against HARDCODED rules.
+
+        Args:
+            output: Generated agenda output
+
+        Returns:
+            Validation result with valid flag and issues
+        """
+        agenda_data = output.get("agenda_data", {})
+
+        # Use HARDCODED validator
+        result = validate_agenda_structure(agenda_data)
+
+        return {
+            "valid": result.valid,
+            "issues": result.issues,
+            "warnings": result.warnings,
+            "score": result.score,
+            "rules_checked": list(self.RULES.keys()),
+        }
+
+    def generate_for_unit(
+        self,
+        unit_number: int,
+        unit_name: str,
+        days: int,
+        topics: List[str],
+        objectives_per_day: List[List[str]],
+        class_period: str = "standard"
+    ) -> List[ComponentResult]:
+        """
+        Generate agenda slides for an entire unit.
+
+        Args:
+            unit_number: Unit number (1-4)
+            unit_name: Unit name
+            days: Number of days in unit
+            topics: List of topics per day
+            objectives_per_day: List of objectives per day
+            class_period: Class period type
+
+        Returns:
+            List of ComponentResult for each day
+        """
+        self.class_period = class_period
+        results = []
+
+        for day in range(1, days + 1):
+            topic = topics[day - 1] if day <= len(topics) else f"Day {day}"
+            objectives = objectives_per_day[day - 1] if day <= len(objectives_per_day) else [f"Objective for day {day}"]
+
+            context = LessonContext(
+                unit_number=unit_number,
+                unit_name=unit_name,
+                day=day,
+                topic=topic,
+                learning_objectives=objectives,
+                activity_description=topic,
+                lecture_duration_minutes=15,
+                include_reading=True
+            )
+
+            result = self.generate(context)
+            results.append(result)
+
+        return results
+
+
+# =============================================================================
 # FACTORY FUNCTION
 # =============================================================================
 
@@ -763,7 +956,8 @@ def create_component_orchestrator(
         "cognitive": CognitiveFrameworkOrchestrator,
         "reading": ReadingActivityOrchestrator,
         "frontload": LectureFrontloadOrchestrator,
-        "lesson": LessonGenerationOrchestrator
+        "lesson": LessonGenerationOrchestrator,
+        "agenda": AgendaOrchestrator,
     }
 
     orchestrator_class = orchestrators.get(component_type)

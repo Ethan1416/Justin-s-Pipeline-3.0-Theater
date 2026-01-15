@@ -1,0 +1,42 @@
+{
+  "$schema": "../agents/schemas/agenda_input.schema.json",
+  "_description": "Sample agenda input for STANDARD 56-minute class period",
+  "_hardcoded_rules_applied": ["R1", "R2", "R3", "R4", "R5"],
+
+  "unit_number": 3,
+  "unit_name": "Romeo and Juliet",
+  "day_number": 8,
+  "total_days": 30,
+  "lesson_topic": "Act 2 Scene 2: The Balcony Scene",
+
+  "learning_objectives": [
+    "Analyze Romeo's use of metaphor",
+    "Perform 10 lines with partner",
+    "Identify key themes of love"
+  ],
+
+  "warmup_type": "vocal",
+  "warmup_connection": "Breath work for iambic pentameter delivery",
+
+  "activity_type": "partner_work",
+  "activity_topic": "Balcony scene blocking and performance",
+
+  "additional_materials": [
+    "Balcony scene handout",
+    "Performance rubric"
+  ],
+
+  "class_period": "standard",
+
+  "_expected_output": {
+    "total_duration": 56,
+    "components": [
+      {"component": "Agenda & Objectives", "duration_minutes": 5, "time_marker": "0:00-5:00"},
+      {"component": "Warmup", "duration_minutes": 5, "time_marker": "5:00-10:00"},
+      {"component": "Lecture", "duration_minutes": 15, "time_marker": "10:00-25:00"},
+      {"component": "Activity", "duration_minutes": 15, "time_marker": "25:00-40:00"},
+      {"component": "Reflection & Exit Ticket", "duration_minutes": 10, "time_marker": "40:00-50:00"},
+      {"component": "Buffer/Transition", "duration_minutes": 6, "time_marker": "50:00-56:00"}
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "../agents/schemas/agenda_input.schema.json",
+  "_description": "Sample agenda input for SHORTENED 45-minute class period (assembly/pep rally day)",
+  "_hardcoded_rules_applied": ["R1", "R2", "R3", "R4", "R5"],
+
+  "unit_number": 3,
+  "unit_name": "Romeo and Juliet",
+  "day_number": 5,
+  "total_days": 30,
+  "lesson_topic": "Character Mapping & Predictions",
+
+  "learning_objectives": [
+    "Map character relationships",
+    "Predict plot developments"
+  ],
+
+  "warmup_type": "mental",
+  "warmup_connection": "Quick recall of characters introduced so far",
+
+  "activity_type": "group_discussion",
+  "activity_topic": "Creating character relationship diagram",
+
+  "additional_materials": [
+    "Character map template"
+  ],
+
+  "class_period": "shortened",
+
+  "_expected_output": {
+    "total_duration": 45,
+    "components": [
+      {"component": "Agenda & Objectives", "duration_minutes": 3, "time_marker": "0:00-3:00"},
+      {"component": "Warmup", "duration_minutes": 5, "time_marker": "3:00-8:00"},
+      {"component": "Lecture", "duration_minutes": 12, "time_marker": "8:00-20:00"},
+      {"component": "Activity", "duration_minutes": 12, "time_marker": "20:00-32:00"},
+      {"component": "Reflection & Exit Ticket", "duration_minutes": 8, "time_marker": "32:00-40:00"},
+      {"component": "Buffer/Transition", "duration_minutes": 5, "time_marker": "40:00-45:00"}
+    ]
+  },
+
+  "_notes": "Shortened schedule reduces all components proportionally while maintaining structure"
+}

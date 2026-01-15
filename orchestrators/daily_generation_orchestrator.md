@@ -14,15 +14,25 @@ The Daily Generation Orchestrator coordinates the creation of all lesson compone
 
 ## Agents Managed
 
-| Agent | Order | Purpose | Duration Target | Output |
-|-------|-------|---------|-----------------|--------|
-| lesson_plan_generator | 1 | Admin-friendly scripted lesson plan | N/A | lesson_plan.json |
-| warmup_generator | 2 | Content-connected theater warmup | 5 min | warmup.json |
-| powerpoint_generator | 3 | 16-slide PowerPoint structure | 15 min | powerpoint.json |
-| presenter_notes_writer | 4 | Verbatim presenter script | 15 min | presenter_notes.json |
-| activity_generator | 5 | Structured hands-on activity | 15 min | activity.json |
-| journal_exit_generator | 6 | Reflection prompts and assessments | 10 min | journal_exit.json |
-| handout_generator | 7 | Print-ready activity handouts | N/A | handout.json |
+| Agent | Order | Purpose | Duration Target | Output | HARDCODED |
+|-------|-------|---------|-----------------|--------|-----------|
+| **agenda_generator** | **0** | **Slide 1 agenda with timing structure** | **N/A** | **agenda.json** | **YES** |
+| lesson_plan_generator | 1 | Admin-friendly scripted lesson plan | N/A | lesson_plan.json | No |
+| warmup_generator | 2 | Content-connected theater warmup | 5 min | warmup.json | No |
+| powerpoint_generator | 3 | 16-slide PowerPoint structure | 15 min | powerpoint.json | No |
+| presenter_notes_writer | 4 | Verbatim presenter script | 15 min | presenter_notes.json | No |
+| activity_generator | 5 | Structured hands-on activity | 15 min | activity.json | No |
+| journal_exit_generator | 6 | Reflection prompts and assessments | 10 min | journal_exit.json | No |
+| handout_generator | 7 | Print-ready activity handouts | N/A | handout.json | No |
+
+### HARDCODED Agents
+
+The following agents use hardcoded skills that CANNOT be bypassed:
+
+| Agent | Skill | Rules Enforced |
+|-------|-------|----------------|
+| agenda_generator | `agenda_slide_generator.py` | R1: 6 components, R2: 1-3 objectives, R3: 3-5 materials, R4: Total time = class period |
+| agenda_validator | `agenda_slide_validator.py` | R5: Sequential time markers, R6: Descriptions under 60 chars |
 
 ---
 
@@ -60,6 +70,70 @@ DAILY GENERATION PIPELINE
 
 INPUT: {unit_plan, day_number, daily_input}
 OUTPUT: Complete daily lesson components (pre-validation)
+
+Step 0: AGENDA GENERATION (HARDCODED)
+=====================================
+Agent: agenda_generator
+Orchestrator: AgendaOrchestrator
+Skill: skills/enforcement/agenda_slide_generator.py (HARDCODED)
+Validator: skills/enforcement/agenda_slide_validator.py (HARDCODED)
+
+Input:
+  - unit_number: from unit_plan
+  - unit_name: from unit_plan
+  - day_number: day_number
+  - total_days: from unit_plan
+  - lesson_topic: from daily_input.topic
+  - learning_objectives: from daily_input.learning_objectives
+  - warmup_type: from daily_input.warmup.type OR auto-select
+  - activity_type: from daily_input.activity.type OR auto-select
+  - class_period: "standard" | "block" | "shortened" | "extended"
+
+Output: agenda.json
+  - agenda_data:
+    - unit_info: "Unit X: [Name] - Day Y/Z"
+    - lesson_title: topic
+    - total_duration: 56 | 90 | 45 | 75
+    - components: [6 items with timing]
+    - learning_objectives_display: ["1. ...", "2. ...", "3. ..."]
+    - materials_preview: [3-5 items]
+  - slide_content:
+    - slide_number: 1
+    - slide_type: "agenda"
+    - title: unit_info
+    - body_sections: [agenda_items, objectives]
+    - presenter_notes: verbatim script
+  - validation:
+    - valid: true | false
+    - score: 0-100
+    - issues: []
+    - warnings: []
+
+HARDCODED Rules (CANNOT BE BYPASSED):
+  R1: Total duration must equal class period
+  R2: Exactly 6 components required
+  R3: 1-3 learning objectives required
+  R4: 3-5 materials required
+  R5: Time markers must be sequential
+  R6: Descriptions must be under 60 characters
+
+Visual Layout (Slide 1):
+┌─────────────────────────────────────────┐
+│  Unit X: [Name] - Day Y/Z               │
+│  "[Lesson Title]"                       │
+├─────────────────────────────────────────┤
+│  TODAY'S AGENDA                         │
+│  ☐ Agenda & Objectives (5 min)          │
+│  ☐ Warmup (5 min)                       │
+│  ☐ Lecture (15 min)                     │
+│  ☐ Activity (15 min)                    │
+│  ☐ Reflection & Exit Ticket (10 min)    │
+├─────────────────────────────────────────┤
+│  OBJECTIVES                             │
+│  1. [Measurable objective]              │
+│  2. [Measurable objective]              │
+└─────────────────────────────────────────┘
+
 
 Step 1: LESSON PLAN GENERATION
 ==============================

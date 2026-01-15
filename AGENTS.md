@@ -393,6 +393,34 @@ These agents are hardcoded and cannot be bypassed:
 | agenda_slide_generator | `skills/enforcement/agenda_slide_generator.py` | Generate Slide 1 agenda content | R1: 6 components, R2: 1-3 objectives, R3: 3-5 materials |
 | agenda_slide_validator | `skills/enforcement/agenda_slide_validator.py` | Validate agenda structure | R1: Total time = class period, R2: Sequential time markers |
 
+### Agenda Orchestrator (HARDCODED)
+
+| Orchestrator | File | Purpose |
+|--------------|------|---------|
+| AgendaOrchestrator | `orchestrators/component_orchestrators.py` | Coordinates agenda generation with validation |
+
+**AgendaOrchestrator Features:**
+- Generates complete agenda slide content for Slide 1
+- Validates against all hardcoded rules (R1-R6)
+- Supports multiple class periods (standard, block, shortened, extended)
+- Returns `ComponentResult` with validation status and score
+- Includes `generate_for_unit()` method for batch generation
+
+### Agenda Schemas
+
+| Schema | File | Purpose |
+|--------|------|---------|
+| Input Schema | `agents/schemas/agenda_input.schema.json` | Validates agenda generation input |
+| Output Schema | `agents/schemas/agenda_output.schema.json` | Validates agenda generation output |
+
+### Agenda Sample Inputs
+
+| Sample | File | Class Period |
+|--------|------|--------------|
+| Standard | `inputs/sample_theater/sample_agenda_standard.json` | 56 min |
+| Block | `inputs/sample_theater/sample_agenda_block.json` | 90 min |
+| Shortened | `inputs/sample_theater/sample_agenda_shortened.json` | 45 min |
+
 **Agenda Slide Visual Layout:**
 ```
 ┌─────────────────────────────────────────┐
@@ -473,6 +501,13 @@ The Shakespeare unit includes complete Romeo and Juliet coverage:
 
 ## Version History
 
+- **v2.5** (2026-01-15): Complete Agenda Architecture
+  - Added AgendaOrchestrator to component_orchestrators.py
+  - Created agenda_input.schema.json and agenda_output.schema.json
+  - Added sample inputs: sample_agenda_standard.json, sample_agenda_block.json, sample_agenda_shortened.json
+  - Updated daily_generation_orchestrator.md with Step 0: Agenda Generation
+  - Integrated agenda_slide_generator into run_rj_unit_generation.py
+  - Full validation pipeline for agenda slides
 - **v2.4** (2026-01-15): Agenda Slide Integration
   - Added agenda_slide_generator hardcoded skill
   - Added agenda_slide_validator hardcoded skill
