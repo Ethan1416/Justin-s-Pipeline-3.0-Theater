@@ -253,10 +253,19 @@ def generate_agenda_slide(
     if len(learning_objectives) < MIN_OBJECTIVES:
         learning_objectives = [f"Understand {lesson_topic}"]
 
-    # Truncate long objectives
+    # Truncate long objectives at word boundaries (smart truncation)
+    def smart_truncate_objective(obj: str, max_chars: int = MAX_OBJECTIVE_CHARS) -> str:
+        if len(obj) <= max_chars:
+            return obj
+        # Find last space before limit
+        truncated = obj[:max_chars]
+        last_space = truncated.rfind(' ')
+        if last_space > max_chars // 2:  # Only truncate at word if reasonable
+            return truncated[:last_space]
+        return truncated  # Fall back to hard truncate if no good word boundary
+
     learning_objectives = [
-        obj[:MAX_OBJECTIVE_CHARS] if len(obj) > MAX_OBJECTIVE_CHARS else obj
-        for obj in learning_objectives
+        smart_truncate_objective(obj) for obj in learning_objectives
     ]
 
     # Get timing configuration
