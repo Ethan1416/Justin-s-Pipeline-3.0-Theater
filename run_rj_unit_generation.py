@@ -66,6 +66,13 @@ from agents import (
 # Import content database for real educational content
 from rj_content_database import get_day_content, RJ_CONTENT_DATABASE
 
+# Import agenda slide generator (HARDCODED skill)
+from skills.enforcement.agenda_slide_generator import (
+    generate_agenda_slide,
+    generate_agenda_slide_visual,
+    agenda_to_slide_content,
+)
+
 # Import PowerPoint generator
 try:
     from pptx import Presentation
@@ -799,8 +806,39 @@ _Use this space to take notes during class:_
         # Build list of all slides to create
         all_slides_content = []
 
-        # Slide 1: Agenda
-        agenda_body = f"Day {day_data['day']}: {day_data['topic']}"
+        # Slide 1: Agenda (using HARDCODED agenda_slide_generator)
+        agenda_slide = generate_agenda_slide(
+            unit_number=3,
+            unit_name="Romeo and Juliet",
+            day_number=day_data['day'],
+            total_days=30,
+            lesson_topic=day_data['topic'],
+            learning_objectives=day_data['learning_objectives'],
+            warmup_type="physical" if day_data['day_type'] == "activity" else "mental",
+            warmup_connection=day_data['warmup'].get('connection_to_lesson', ''),
+            activity_type="scene_work" if day_data['day_type'] == "reading" else "group_discussion",
+            activity_topic=day_data['activity']['name'],
+            additional_materials=day_data.get('materials_list', []),
+        )
+        agenda_visual = generate_agenda_slide_visual(agenda_slide)
+
+        # Build structured agenda body with checkboxes
+        agenda_lines = [
+            f"Unit 3: Romeo and Juliet - Day {day_data['day']}/30",
+            f'"{day_data["topic"]}"',
+            "",
+            "TODAY'S AGENDA",
+        ]
+        for comp in agenda_slide.components:
+            if comp.component_type.value != "buffer":
+                agenda_lines.append(f"☐ {comp.display_name} ({comp.duration_minutes} min)")
+        agenda_lines.append("")
+        agenda_lines.append("OBJECTIVES")
+        for i, obj in enumerate(agenda_slide.learning_objectives, 1):
+            agenda_lines.append(f"{i}. {obj}")
+
+        agenda_body = "\n".join(agenda_lines)
+
         all_slides_content.append({
             "title": f"Today's Agenda - Day {day_data['day']}",
             "body": agenda_body,
