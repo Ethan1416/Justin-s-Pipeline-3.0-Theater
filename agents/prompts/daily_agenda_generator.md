@@ -1,14 +1,50 @@
 # Daily Agenda Generator
 
 ## Purpose
-Generate structured 56-minute daily agendas for theater education lessons with precise timing and clear objectives.
+Generate structured daily agendas for theater education lessons with precise timing, clear objectives, and PowerPoint Slide 1 visual layout.
 
 ## HARDCODED SKILLS
 ```yaml
 skills:
+  - agenda_slide_generator      # skills/enforcement/agenda_slide_generator.py
+  - agenda_slide_validator      # skills/enforcement/agenda_slide_validator.py
   - timing_allocator
   - word_count_analyzer
 ```
+
+## Slide 1 Visual Layout (HARDCODED)
+
+The agenda slide (Slide 1) MUST follow this exact visual layout:
+
+```
+┌─────────────────────────────────────────┐
+│  Unit 3: Shakespeare - Day 12/25        │  ← Header (unit info)
+│  "The Balcony Scene"                    │  ← Lesson Title (in quotes)
+├─────────────────────────────────────────┤
+│  TODAY'S AGENDA                         │  ← Section header
+│  ☐ Agenda & Objectives (5 min)          │  ← Checkbox format
+│  ☐ Warmup (5 min)                       │
+│  ☐ Lecture (15 min)                     │
+│  ☐ Activity (15 min)                    │
+│  ☐ Reflection & Exit Ticket (10 min)    │
+├─────────────────────────────────────────┤
+│  OBJECTIVES                             │  ← Section header
+│  1. Analyze Romeo's use of metaphor     │  ← Numbered, measurable
+│  2. Perform 10 lines with partner       │
+└─────────────────────────────────────────┘
+```
+
+### Slide 1 Content Requirements
+
+| Element | Format | Max Length |
+|---------|--------|------------|
+| Header | "Unit X: [Name] - Day Y/Z" | 45 chars |
+| Lesson Title | In quotes, title case | 40 chars |
+| Agenda Items | "☐ [Component] (X min)" | 35 chars |
+| Objectives | "N. [Measurable verb]..." | 50 chars |
+
+### Buffer Component
+The buffer/transition time (6 min) is NOT displayed on the agenda slide but IS included in timing calculations.
 
 ## Input Schema
 ```json
@@ -94,18 +130,52 @@ skills:
 }
 ```
 
-## Timing Requirements
-The 56-minute class period is divided as follows:
+## Class Period Configurations (HARDCODED)
 
-| Component | Duration | Purpose |
-|-----------|----------|---------|
-| Agenda & Objectives | 5 min | Set expectations, review goals |
-| Warmup | 5 min | Physical/vocal/mental preparation |
-| Lecture | 15 min | Verbatim presenter notes delivery |
-| Activity | 15 min | Hands-on application (1.5 setup + 11 work + 2.5 share) |
-| Reflection | 10 min | Journal + exit ticket |
-| Buffer | 6 min | Transitions, cleanup, flexibility |
-| **TOTAL** | **56 min** | |
+The pipeline supports multiple class period types:
+
+| Schedule | Duration | Use Case |
+|----------|----------|----------|
+| **standard** | 56 min | Default daily schedule |
+| **block** | 90 min | Block schedule days |
+| **shortened** | 45 min | Assembly/pep rally days |
+| **extended** | 75 min | Extended period days |
+
+## Timing Requirements
+
+### Standard 56-Minute Period (Default)
+
+| Component | Duration | Start | End | Purpose |
+|-----------|----------|-------|-----|---------|
+| Agenda & Objectives | 5 min | 0:00 | 5:00 | Set expectations, review goals |
+| Warmup | 5 min | 5:00 | 10:00 | Physical/vocal/mental preparation |
+| Lecture | 15 min | 10:00 | 25:00 | Verbatim presenter notes delivery |
+| Activity | 15 min | 25:00 | 40:00 | Hands-on application |
+| Reflection | 10 min | 40:00 | 50:00 | Journal + exit ticket |
+| Buffer | 6 min | 50:00 | 56:00 | Transitions, cleanup, flexibility |
+| **TOTAL** | **56 min** | | | |
+
+### Block 90-Minute Period
+
+| Component | Duration | Start | End |
+|-----------|----------|-------|-----|
+| Agenda & Objectives | 5 min | 0:00 | 5:00 |
+| Warmup | 10 min | 5:00 | 15:00 |
+| Lecture | 25 min | 15:00 | 40:00 |
+| Activity | 30 min | 40:00 | 70:00 |
+| Reflection | 15 min | 70:00 | 85:00 |
+| Buffer | 5 min | 85:00 | 90:00 |
+
+### Shortened 45-Minute Period
+
+| Component | Duration | Start | End |
+|-----------|----------|-------|-----|
+| Agenda & Objectives | 3 min | 0:00 | 3:00 |
+| Warmup | 5 min | 3:00 | 8:00 |
+| Lecture | 12 min | 8:00 | 20:00 |
+| Activity | 12 min | 20:00 | 32:00 |
+| Reflection | 8 min | 32:00 | 40:00 |
+| Buffer | 5 min | 40:00 | 45:00 |
 
 ## Generation Rules
 

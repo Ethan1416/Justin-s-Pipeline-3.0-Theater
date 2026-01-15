@@ -386,6 +386,40 @@ See `THEATER_PIPELINE_ARCHITECTURE.md` for:
 
 These agents are hardcoded and cannot be bypassed:
 
+### Agenda Slide Agents (HARDCODED)
+
+| Agent | File | Purpose | Hardcoded Rules |
+|-------|------|---------|-----------------|
+| agenda_slide_generator | `skills/enforcement/agenda_slide_generator.py` | Generate Slide 1 agenda content | R1: 6 components, R2: 1-3 objectives, R3: 3-5 materials |
+| agenda_slide_validator | `skills/enforcement/agenda_slide_validator.py` | Validate agenda structure | R1: Total time = class period, R2: Sequential time markers |
+
+**Agenda Slide Visual Layout:**
+```
+┌─────────────────────────────────────────┐
+│  Unit X: [Name] - Day Y/Z               │  ← Header
+│  "[Lesson Title]"                       │  ← Title in quotes
+├─────────────────────────────────────────┤
+│  TODAY'S AGENDA                         │
+│  ☐ Agenda & Objectives (5 min)          │
+│  ☐ Warmup (5 min)                       │
+│  ☐ Lecture (15 min)                     │
+│  ☐ Activity (15 min)                    │
+│  ☐ Reflection & Exit Ticket (10 min)    │
+├─────────────────────────────────────────┤
+│  OBJECTIVES                             │
+│  1. [Measurable objective]              │
+│  2. [Measurable objective]              │
+└─────────────────────────────────────────┘
+```
+
+**Supported Class Periods:**
+| Schedule | Duration | Adjustments |
+|----------|----------|-------------|
+| standard | 56 min | Default timing |
+| block | 90 min | Double activity time |
+| shortened | 45 min | Reduced all components |
+| extended | 75 min | Moderate increases |
+
 ### Instructional Framework Agents
 
 | Agent | File | Purpose | Hardcoded Rules |
@@ -439,6 +473,13 @@ The Shakespeare unit includes complete Romeo and Juliet coverage:
 
 ## Version History
 
+- **v2.4** (2026-01-15): Agenda Slide Integration
+  - Added agenda_slide_generator hardcoded skill
+  - Added agenda_slide_validator hardcoded skill
+  - Updated daily_agenda_generator.md with Slide 1 visual layout
+  - Added support for multiple class periods (standard, block, shortened, extended)
+  - Added validation rules for objectives (1-3), materials (3-5), components (6)
+  - Added presenter notes generation for agenda slide
 - **v2.3** (2026-01-09): Instructional Framework Integration
   - Added scaffolding generator with gradual release model
   - Added formative activities generator with objective alignment
@@ -472,5 +513,5 @@ The Shakespeare unit includes complete Romeo and Juliet coverage:
 
 ---
 
-**Last Updated:** 2026-01-09
+**Last Updated:** 2026-01-15
 **Pipeline Owner:** Theater Education Department
